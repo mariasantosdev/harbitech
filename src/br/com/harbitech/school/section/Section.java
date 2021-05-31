@@ -1,4 +1,4 @@
-package section;
+package br.com.harbitech.school.section;
 
 import br.com.harbitech.school.course.Course;
 

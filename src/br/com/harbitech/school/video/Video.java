@@ -1,8 +1,6 @@
-package video;
+package br.com.harbitech.school.video;
 
-import activity.Activity;
-import activity.StatusIndicationActivity;
-import section.Section;
+import br.com.harbitech.school.section.Section;
 
 import java.time.OffsetDateTime;
 

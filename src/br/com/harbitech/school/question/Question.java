@@ -1,8 +1,8 @@
-package question;
+package br.com.harbitech.school.question;
 
-import activity.Activity;
-import activity.StatusIndicationActivity;
-import section.Section;
+import br.com.harbitech.school.activity.Activity;
+import br.com.harbitech.school.activity.StatusIndicationActivity;
+import br.com.harbitech.school.section.Section;
 
 public class Question extends Activity {
 
@@ -29,4 +29,7 @@ public class Question extends Activity {
     TypeAnswer getAnswer() {
         return answer;
     }
+
+
+
 }

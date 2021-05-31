@@ -1,7 +1,7 @@
-package alternative;
+package br.com.harbitech.school.alternative;
 
 
-import question.Question;
+import br.com.harbitech.school.question.Question;
 
 public class Alternative {
 

@@ -2,8 +2,6 @@ package br.com.harbitech.school.activity;
 
 import br.com.harbitech.school.section.Section;
 
-import java.net.URI;
-
 public class Activity {
 
     private String codeUrl;
