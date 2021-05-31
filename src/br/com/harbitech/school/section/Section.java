@@ -4,6 +4,7 @@ import br.com.harbitech.school.course.Course;
 
 public class Section {
 
+    private Long id;
     private String name;
     private String codeUrl;
     private int orderVisualization;
@@ -11,14 +12,19 @@ public class Section {
     private TypeIndicationTest indicationTest;
     private Course course;
 
-    public Section(String name, String codeUrl, int orderVisualization, TypeIndicationSection indicationSection,
+    public Section(Long id, String name, String codeUrl, int orderVisualization, TypeIndicationSection indicationSection,
                    TypeIndicationTest indicationTest, Course course) {
+        this.id = id;
         this.name = name;
         this.codeUrl = codeUrl;
         this.orderVisualization = orderVisualization;
         this.indicationSection = indicationSection;
         this.indicationTest = indicationTest;
         this.course = course;
+    }
+
+    public Long getId() {
+        return id;
     }
 
     String getName() {

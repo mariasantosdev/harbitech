@@ -4,6 +4,7 @@ import br.com.harbitech.school.category.Category;
 
 public class SubCategory {
 
+    private Long id;
     private String name;
     private String codeUrl;
     private String description;
@@ -12,8 +13,9 @@ public class SubCategory {
     private int orderVisualization;
     private Category category;
 
-    public SubCategory(String name, String codeUrl, String description, String studyGuide,
+    public SubCategory(Long id, String name, String codeUrl, String description, String studyGuide,
                        TypeIndicationSubCategory indicationCategory, int orderVisualization, Category category) {
+        this.id = id;
         this.name = name;
         this.codeUrl = codeUrl;
         this.description = description;
@@ -21,6 +23,10 @@ public class SubCategory {
         this.indicationCategory = indicationCategory;
         this.orderVisualization = orderVisualization;
         this.category = category;
+    }
+
+    public Long getId() {
+        return id;
     }
 
     String getName() {

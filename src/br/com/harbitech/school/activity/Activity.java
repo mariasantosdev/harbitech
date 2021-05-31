@@ -4,19 +4,25 @@ import br.com.harbitech.school.section.Section;
 
 public abstract class Activity {
 
+    private Long id;
     private String codeUrl;
     private String title;
     private String description;
     private StatusIndicationActivity indication;
     private Section section;
 
-    public Activity(String codeUrl, String title, String description, StatusIndicationActivity indication,
+    public Activity(Long id, String codeUrl, String title, String description, StatusIndicationActivity indication,
                     Section section) {
+        this.id = id;
         this.codeUrl = codeUrl;
         this.title = title;
         this.description = description;
         this.indication = indication;
         this.section = section;
+    }
+
+    Long getId() {
+        return id;
     }
 
     String getCodeUrl() {

@@ -6,6 +6,7 @@ import java.time.OffsetDateTime;
 
 public class Course {
 
+    private Long id;
     private String codeUrl;
     private String name;
     private OffsetDateTime completionTime;
@@ -16,9 +17,10 @@ public class Course {
     private String developedSkills;
     private SubCategory subCategory;
 
-    public Course(String codeUrl, String name, OffsetDateTime completionTime,
+    public Course(Long id, String codeUrl, String name, OffsetDateTime completionTime,
                   TypeVisibilityCourse visibilityCourse, String targetAudience, String instructor,
                   String description, String developedSkills, SubCategory subCategory) {
+        this.id = id;
         this.codeUrl = codeUrl;
         this.name = name;
         this.completionTime = completionTime;
@@ -28,6 +30,10 @@ public class Course {
         this.description = description;
         this.developedSkills = developedSkills;
         this.subCategory = subCategory;
+    }
+
+    public Long getId() {
+        return id;
     }
 
     public String getCodeUrl() {

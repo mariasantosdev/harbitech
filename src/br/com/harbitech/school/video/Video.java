@@ -12,9 +12,9 @@ public class Video extends Activity {
    private OffsetDateTime minutesOfVideo;
    private String transition;
 
-   public Video(String codeUrl, String title, String description, StatusIndicationActivity indication,
+   public Video(Long id, String codeUrl, String title, String description, StatusIndicationActivity indication,
                 Section section, String codeUrl1, OffsetDateTime minutesOfVideo, String transition) {
-      super(codeUrl, title, description, indication, section);
+      super(id, codeUrl, title, description, indication, section);
       this.codeUrl = codeUrl1;
       this.minutesOfVideo = minutesOfVideo;
       this.transition = transition;

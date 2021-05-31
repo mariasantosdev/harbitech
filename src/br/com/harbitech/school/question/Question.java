@@ -12,14 +12,9 @@ public class Question extends Activity {
 
     public Question(String codeUrl, String title, String description, StatusIndicationActivity indication,
                     Section section, Long id, String enunciated, TypeAnswer answer) {
-        super(codeUrl, title, description, indication, section);
-        this.id = id;
+        super(id, codeUrl, title, description, indication, section);
         this.enunciated = enunciated;
         this.answer = answer;
-    }
-
-    Long getId() {
-        return id;
     }
 
     String getEnunciated() {

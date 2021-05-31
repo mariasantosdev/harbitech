@@ -2,6 +2,7 @@ package br.com.harbitech.school.category;
 
 public class Category {
 
+    private Long id;
     private String name;
     private String codeUrl;
     private String description;
@@ -11,9 +12,10 @@ public class Category {
     private String PathImageOfIcon;
     private String codeColorHtml;
 
-    public Category(String name, String codeUrl, String description, String studyGuide,
+    public Category(Long id,String name, String codeUrl, String description, String studyGuide,
                     TypeIndicationCategory indicationCategory, int orderVisualization,
                     String pathImageOfIcon, String codeColorHtml) {
+        this.id = id;
         this.name = name;
         this.codeUrl = codeUrl;
         this.description = description;
@@ -22,6 +24,10 @@ public class Category {
         this.orderVisualization = orderVisualization;
         PathImageOfIcon = pathImageOfIcon;
         this.codeColorHtml = codeColorHtml;
+    }
+
+    Long getId() {
+        return id;
     }
 
     String getName() {
