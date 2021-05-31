@@ -1,5 +1,7 @@
 package br.com.harbitech.school.course;
 
+import br.com.harbitech.school.subcategory.SubCategory;
+
 import java.time.OffsetDateTime;
 
 public class Course {
@@ -13,11 +15,11 @@ public class Course {
     private String instrutor;
     private String ementa;
     private String habilidadesDesenvolvidas;
-    private Course course;
+    private SubCategory subCategory;
 
     public Course(Long id, String codeUrl, String name, OffsetDateTime tempoFinalizacao,
                   TypeVisibilityCourse visibilityCourse, String publicoAlvo, String instrutor,
-                  String ementa, String habilidadesDesenvolvidas, Course course) {
+                  String ementa, String habilidadesDesenvolvidas, SubCategory subCategory) {
         this.id = id;
         this.codeUrl = codeUrl;
         this.name = name;
@@ -27,7 +29,7 @@ public class Course {
         this.instrutor = instrutor;
         this.ementa = ementa;
         this.habilidadesDesenvolvidas = habilidadesDesenvolvidas;
-        this.course = course;
+        this.subCategory = subCategory;
     }
 
     Long getId() {
@@ -66,8 +68,8 @@ public class Course {
       return habilidadesDesenvolvidas;
    }
 
-    public Course getCourse() {
-        return course;
+    public SubCategory getSubCategory() {
+        return subCategory;
     }
 
     public static void validateUrl(String codeUrl) {
