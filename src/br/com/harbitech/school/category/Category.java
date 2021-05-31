@@ -9,7 +9,7 @@ public class Category {
     private String studyGuide;
     private TypeIndicationCategory indicationCategory;
     private int orderVisualization;
-    private String PathImageOfIcon;
+    private String pathImageOfIcon;
     private String codeColorHtml;
 
     public Category(Long id,String name, String codeUrl, String description, String studyGuide,
@@ -22,7 +22,7 @@ public class Category {
         this.studyGuide = studyGuide;
         this.indicationCategory = indicationCategory;
         this.orderVisualization = orderVisualization;
-        PathImageOfIcon = pathImageOfIcon;
+        this.pathImageOfIcon = pathImageOfIcon;
         this.codeColorHtml = codeColorHtml;
     }
 
@@ -55,7 +55,7 @@ public class Category {
     }
 
     String getPathImageOfIcon() {
-        return PathImageOfIcon;
+        return pathImageOfIcon;
     }
 
     String getCodeColorHtml() {

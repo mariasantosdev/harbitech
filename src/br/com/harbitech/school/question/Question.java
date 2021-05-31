@@ -9,8 +9,8 @@ public class Question extends Activity {
     private String enunciated;
     private TypeAnswer answer;
 
-    public Question(String codeUrl, String title, String description, StatusIndicationActivity indication,
-                    Section section, Long id, String enunciated, TypeAnswer answer) {
+    public Question(Long id, String codeUrl, String title, String description, StatusIndicationActivity indication,
+                    Section section, String enunciated, TypeAnswer answer) {
         super(id, codeUrl, title, description, indication, section);
         this.enunciated = enunciated;
         this.answer = answer;
