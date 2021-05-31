@@ -1,7 +1,7 @@
 package br.com.harbitech.school.activity;
 
-import br.com.harbitech.school.handler.ValidationUrlCode;
-import br.com.harbitech.school.handler.ValidationUtilUrlCode;
+import br.com.harbitech.school.validation.ValidationUrlCode;
+import br.com.harbitech.school.validation.ValidationUtilUrlCode;
 import br.com.harbitech.school.section.Section;
 
 public abstract class Activity implements ValidationUrlCode {
@@ -12,7 +12,6 @@ public abstract class Activity implements ValidationUrlCode {
     private String description;
     private StatusIndicationActivity indication;
     private Section section;
-
     private ValidationUtilUrlCode validateUtil;
 
     public Activity(){

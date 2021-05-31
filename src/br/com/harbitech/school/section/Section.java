@@ -1,7 +1,7 @@
 package br.com.harbitech.school.section;
 
-import br.com.harbitech.school.handler.ValidationUrlCode;
-import br.com.harbitech.school.handler.ValidationUtilUrlCode;
+import br.com.harbitech.school.validation.ValidationUrlCode;
+import br.com.harbitech.school.validation.ValidationUtilUrlCode;
 import br.com.harbitech.school.course.Course;
 
 public class Section implements ValidationUrlCode {

@@ -1,4 +1,4 @@
-package br.com.harbitech.school.handler;
+package br.com.harbitech.school.validation;
 
 public class ValidationUtilUrlCode {
 
