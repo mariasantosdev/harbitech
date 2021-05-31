@@ -1,9 +1,8 @@
 package br.com.harbitech.school.category;
 
-import br.com.harbitech.school.validation.ValidationUrlCode;
 import br.com.harbitech.school.validation.ValidationUtilUrlCode;
 
-public class Category implements ValidationUrlCode {
+public class Category {
 
     private Long id;
     private String name;
@@ -16,7 +15,7 @@ public class Category implements ValidationUrlCode {
     private String codeColorHtml;
     private ValidationUtilUrlCode validateUtil;
 
-    public Category(){
+    public Category() {
         this.validateUtil = new ValidationUtilUrlCode();
     }
 
@@ -56,14 +55,9 @@ public class Category implements ValidationUrlCode {
         return codeColorHtml;
     }
 
-    @Override
-    public void setCodeUrl(String codeUrl){
-        this.validateUtil.setCodeUrl(codeUrl);
-    }
-
-    @Override
-    public void validateUrl(String codeUrl){
-        this.validateUtil.validateUrl(codeUrl);
+    void setCodeUrl(String codeUrl) {
+        ValidationUtilUrlCode.validateUrl(codeUrl) ;
+        this.codeUrl = codeUrl;
     }
 }
 

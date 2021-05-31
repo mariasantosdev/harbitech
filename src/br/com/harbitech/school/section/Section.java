@@ -1,10 +1,9 @@
 package br.com.harbitech.school.section;
 
-import br.com.harbitech.school.validation.ValidationUrlCode;
 import br.com.harbitech.school.validation.ValidationUtilUrlCode;
 import br.com.harbitech.school.course.Course;
 
-public class Section implements ValidationUrlCode {
+public class Section {
 
     private Long id;
     private String name;
@@ -48,13 +47,8 @@ public class Section implements ValidationUrlCode {
         return course;
     }
 
-    @Override
-    public void setCodeUrl(String codeUrl){
-        this.validateUtil.setCodeUrl(codeUrl);
-    }
-
-    @Override
-    public void validateUrl(String codeUrl){
-        this.validateUtil.validateUrl(codeUrl);
+    void setCodeUrl(String codeUrl) {
+        ValidationUtilUrlCode.validateUrl(codeUrl) ;
+        this.codeUrl = codeUrl;
     }
 }

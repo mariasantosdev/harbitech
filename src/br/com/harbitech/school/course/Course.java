@@ -1,12 +1,11 @@
 package br.com.harbitech.school.course;
 
-import br.com.harbitech.school.validation.ValidationUrlCode;
 import br.com.harbitech.school.validation.ValidationUtilUrlCode;
 import br.com.harbitech.school.subcategory.SubCategory;
 
 import java.time.OffsetDateTime;
 
-public class Course implements ValidationUrlCode {
+public class Course {
 
     private Long id;
     private String codeUrl;
@@ -64,13 +63,8 @@ public class Course implements ValidationUrlCode {
         return subCategory;
     }
 
-    @Override
-    public void setCodeUrl(String codeUrl){
-        this.validateUtil.setCodeUrl(codeUrl);
-    }
-
-    @Override
-    public void validateUrl(String codeUrl){
-        this.validateUtil.validateUrl(codeUrl);
+    void setCodeUrl(String codeUrl) {
+        ValidationUtilUrlCode.validateUrl(codeUrl);
+        this.codeUrl = codeUrl;
     }
 }

@@ -1,10 +1,9 @@
 package br.com.harbitech.school.subcategory;
 
-import br.com.harbitech.school.validation.ValidationUrlCode;
 import br.com.harbitech.school.validation.ValidationUtilUrlCode;
 import br.com.harbitech.school.category.Category;
 
-public class SubCategory implements ValidationUrlCode {
+public class SubCategory {
 
     private Long id;
     private String name;
@@ -53,13 +52,8 @@ public class SubCategory implements ValidationUrlCode {
         return category;
     }
 
-    @Override
-    public void setCodeUrl(String codeUrl){
-        this.validateUtil.setCodeUrl(codeUrl);
-    }
-
-    @Override
-    public void validateUrl(String codeUrl){
-        this.validateUtil.validateUrl(codeUrl);
+    void setCodeUrl(String codeUrl) {
+        ValidationUtilUrlCode.validateUrl(codeUrl) ;
+        this.codeUrl = codeUrl;
     }
 }
