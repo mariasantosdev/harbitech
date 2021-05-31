@@ -1,6 +1,9 @@
 package br.com.harbitech.school.category;
 
-public class Category {
+import br.com.harbitech.school.handler.ValidationUrlCode;
+import br.com.harbitech.school.handler.ValidationUtilUrlCode;
+
+public class Category implements ValidationUrlCode {
 
     private Long id;
     private String name;
@@ -11,19 +14,10 @@ public class Category {
     private int orderVisualization;
     private String pathImageOfIcon;
     private String codeColorHtml;
+    private ValidationUtilUrlCode validateUtil;
 
-    public Category(Long id,String name, String codeUrl, String description, String studyGuide,
-                    TypeIndicationCategory indicationCategory, int orderVisualization,
-                    String pathImageOfIcon, String codeColorHtml) {
-        this.id = id;
-        this.name = name;
-        this.codeUrl = codeUrl;
-        this.description = description;
-        this.studyGuide = studyGuide;
-        this.indicationCategory = indicationCategory;
-        this.orderVisualization = orderVisualization;
-        this.pathImageOfIcon = pathImageOfIcon;
-        this.codeColorHtml = codeColorHtml;
+    public Category(){
+        this.validateUtil = new ValidationUtilUrlCode();
     }
 
     Long getId() {
@@ -62,12 +56,14 @@ public class Category {
         return codeColorHtml;
     }
 
-    static void validateUrl(String codeUrl) {
-        boolean validacao = codeUrl.matches("[a-z]*");
-        if (!validacao) {
-            throw new RuntimeException("Não validado");
-        }
-        System.out.println("Validado");
+    @Override
+    public void setCodeUrl(String codeUrl){
+        this.validateUtil.setCodeUrl(codeUrl);
+    }
+
+    @Override
+    public void validateUrl(String codeUrl){
+        this.validateUtil.validateUrl(codeUrl);
     }
 }
 

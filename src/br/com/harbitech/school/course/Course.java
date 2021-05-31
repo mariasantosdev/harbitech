@@ -1,10 +1,12 @@
 package br.com.harbitech.school.course;
 
+import br.com.harbitech.school.handler.ValidationUrlCode;
+import br.com.harbitech.school.handler.ValidationUtilUrlCode;
 import br.com.harbitech.school.subcategory.SubCategory;
 
 import java.time.OffsetDateTime;
 
-public class Course {
+public class Course implements ValidationUrlCode {
 
     private Long id;
     private String codeUrl;
@@ -17,19 +19,10 @@ public class Course {
     private String developedSkills;
     private SubCategory subCategory;
 
-    public Course(Long id, String codeUrl, String name, OffsetDateTime completionTime,
-                  TypeVisibilityCourse visibilityCourse, String targetAudience, String instructor,
-                  String description, String developedSkills, SubCategory subCategory) {
-        this.id = id;
-        this.codeUrl = codeUrl;
-        this.name = name;
-        this.completionTime = completionTime;
-        this.visibilityCourse = visibilityCourse;
-        this.targetAudience = targetAudience;
-        this.instructor = instructor;
-        this.description = description;
-        this.developedSkills = developedSkills;
-        this.subCategory = subCategory;
+    private ValidationUtilUrlCode validateUtil;
+
+    public Course(){
+        this.validateUtil = new ValidationUtilUrlCode();
     }
 
     Long getId() {
@@ -72,11 +65,13 @@ public class Course {
         return subCategory;
     }
 
-    static void validateUrl(String codeUrl) {
-        boolean validacao = codeUrl.matches("[a-z]*");
-        if (!validacao) {
-            throw new RuntimeException("Não validado");
-        }
-        System.out.println("Validado");
+    @Override
+    public void setCodeUrl(String codeUrl){
+        this.validateUtil.setCodeUrl(codeUrl);
+    }
+
+    @Override
+    public void validateUrl(String codeUrl){
+        this.validateUtil.validateUrl(codeUrl);
     }
 }

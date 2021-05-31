@@ -1,8 +1,10 @@
 package br.com.harbitech.school.activity;
 
+import br.com.harbitech.school.handler.ValidationUrlCode;
+import br.com.harbitech.school.handler.ValidationUtilUrlCode;
 import br.com.harbitech.school.section.Section;
 
-public abstract class Activity {
+public abstract class Activity implements ValidationUrlCode {
 
     private Long id;
     private String codeUrl;
@@ -11,14 +13,10 @@ public abstract class Activity {
     private StatusIndicationActivity indication;
     private Section section;
 
-    public Activity(Long id, String codeUrl, String title, String description, StatusIndicationActivity indication,
-                    Section section) {
-        this.id = id;
-        this.codeUrl = codeUrl;
-        this.title = title;
-        this.description = description;
-        this.indication = indication;
-        this.section = section;
+    private ValidationUtilUrlCode validateUtil;
+
+    public Activity(){
+        this.validateUtil = new ValidationUtilUrlCode();
     }
 
     Long getId() {
@@ -45,11 +43,14 @@ public abstract class Activity {
         return section;
     }
 
-    static void validateUrl(String codeUrl) {
-        boolean validacao = codeUrl.matches("[a-z]*");
-        if (!validacao) {
-            throw new RuntimeException("Não validado");
-        }
-        System.out.println("Validado");
+    @Override
+    public void setCodeUrl(String codeUrl){
+        this.validateUtil.setCodeUrl(codeUrl);
     }
+
+    @Override
+    public void validateUrl(String codeUrl){
+        this.validateUtil.validateUrl(codeUrl);
+    }
+
 }

@@ -12,12 +12,8 @@ public class Video extends Activity {
    private OffsetDateTime minutesOfVideo;
    private String transition;
 
-   public Video(Long id, String codeUrl, String title, String description, StatusIndicationActivity indication,
-                Section section, String url, OffsetDateTime minutesOfVideo, String transition) {
-      super(id, codeUrl, title, description, indication, section);
-      this.url = url;
-      this.minutesOfVideo = minutesOfVideo;
-      this.transition = transition;
+   public Video() {
+    super();
    }
 
    String getUrl() {

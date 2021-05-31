@@ -8,10 +8,8 @@ public class Explanation extends Activity {
 
     private String description;
 
-    public Explanation(Long id, String codeUrl, String title, String description, StatusIndicationActivity indication,
-                       Section section, String description1) {
-        super(id, codeUrl, title, description, indication, section);
-        this.description = description1;
+    public Explanation() {
+        super();
     }
 
     String getDescription() {
