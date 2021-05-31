@@ -7,7 +7,6 @@ import br.com.harbitech.school.section.Section;
 public class Explanation extends Activity {
     private String description;
 
-
     public Explanation(String codeUrl, String title, String description, StatusIndicationActivity indication,
                        Section section, String description1) {
         super(codeUrl, title, description, indication, section);

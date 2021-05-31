@@ -1,6 +1,5 @@
 package br.com.harbitech.school.alternative;
 
-
 import br.com.harbitech.school.question.Question;
 
 public class Alternative {

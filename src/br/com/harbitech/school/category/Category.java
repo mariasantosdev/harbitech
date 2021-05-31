@@ -1,8 +1,6 @@
 package br.com.harbitech.school.category;
 
-import java.util.regex.PatternSyntaxException;
-
-public class Category<matches, validacao> {
+public class Category {
 
     private String name;
     private String codeUrl;
@@ -58,14 +56,12 @@ public class Category<matches, validacao> {
         return codeColorHtml;
     }
 
-   public static void validateUrl(String codeUrl) {
-       boolean validacao = codeUrl.substring(0, codeUrl.length()).matches("[a-z]*");
-       try {
-           if (validacao) {
-               System.out.println("Validado");
-           }
-       }
-       catch (PatternSyntaxException p) {
-       }
-   }
+    public static void validateUrl(String codeUrl) {
+        boolean validacao = codeUrl.matches("[a-z]*");
+        if (!validacao) {
+            throw new RuntimeException("Não validado");
+        }
+        System.out.println("Validado");
+    }
 }
+

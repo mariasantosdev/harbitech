@@ -70,6 +70,11 @@ public class Course {
         return course;
     }
 
-    //TODO Lance exceções para valores que não são válidos. Favoreça o uso de exceções padrão do próprio Java.
-
+    public static void validateUrl(String codeUrl) {
+        boolean validacao = codeUrl.matches("[a-z]*");
+        if (!validacao) {
+            throw new RuntimeException("Não validado");
+        }
+        System.out.println("Validado");
+    }
 }

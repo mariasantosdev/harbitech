@@ -50,4 +50,12 @@ public class SubCategory {
     Category getCategory() {
         return category;
     }
+
+    public static void validateUrl(String codeUrl) {
+        boolean validacao = codeUrl.matches("[a-z]*");
+        if (!validacao) {
+            throw new RuntimeException("Não validado");
+        }
+        System.out.println("Validado");
+    }
 }

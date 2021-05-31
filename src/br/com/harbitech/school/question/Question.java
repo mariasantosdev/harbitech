@@ -29,5 +29,4 @@ public class Question extends Activity {
     TypeAnswer getAnswer() {
         return answer;
     }
-
 }
