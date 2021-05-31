@@ -1,5 +1,7 @@
 package br.com.harbitech.school.video;
 
+import br.com.harbitech.school.activity.Activity;
+import br.com.harbitech.school.activity.StatusIndicationActivity;
 import br.com.harbitech.school.section.Section;
 
 import java.time.OffsetDateTime;

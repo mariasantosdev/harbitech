@@ -30,6 +30,4 @@ public class Question extends Activity {
         return answer;
     }
 
-
-
 }
