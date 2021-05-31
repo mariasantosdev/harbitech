@@ -2,7 +2,7 @@ package br.com.harbitech.school.activity;
 
 import br.com.harbitech.school.section.Section;
 
-public class Activity {
+public abstract class Activity {
 
     private String codeUrl;
     private String title;
