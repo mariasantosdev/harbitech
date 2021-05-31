@@ -54,7 +54,7 @@ public class Category {
         return orderVisualization;
     }
 
-    public String getPathImageOfIcon() {
+    String getPathImageOfIcon() {
         return PathImageOfIcon;
     }
 
@@ -62,7 +62,7 @@ public class Category {
         return codeColorHtml;
     }
 
-    public static void validateUrl(String codeUrl) {
+    static void validateUrl(String codeUrl) {
         boolean validacao = codeUrl.matches("[a-z]*");
         if (!validacao) {
             throw new RuntimeException("Não validado");

@@ -32,47 +32,47 @@ public class Course {
         this.subCategory = subCategory;
     }
 
-    public Long getId() {
+    Long getId() {
         return id;
     }
 
-    public String getCodeUrl() {
+    String getCodeUrl() {
         return codeUrl;
     }
 
-    public String getName() {
+    String getName() {
         return name;
     }
 
-    public OffsetDateTime getCompletionTime() {
+    OffsetDateTime getCompletionTime() {
         return completionTime;
     }
 
-    public TypeVisibilityCourse getVisibilityCourse() {
+    TypeVisibilityCourse getVisibilityCourse() {
         return visibilityCourse;
     }
 
-    public String getTargetAudience() {
+    String getTargetAudience() {
         return targetAudience;
     }
 
-    public String getInstructor() {
+    String getInstructor() {
         return instructor;
     }
 
-    public String getDescription() {
+    String getDescription() {
         return description;
     }
 
-    public String getDevelopedSkills() {
+    String getDevelopedSkills() {
         return developedSkills;
     }
 
-    public SubCategory getSubCategory() {
+    SubCategory getSubCategory() {
         return subCategory;
     }
 
-    public static void validateUrl(String codeUrl) {
+    static void validateUrl(String codeUrl) {
         boolean validacao = codeUrl.matches("[a-z]*");
         if (!validacao) {
             throw new RuntimeException("Não validado");

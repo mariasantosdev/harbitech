@@ -5,6 +5,7 @@ import br.com.harbitech.school.activity.StatusIndicationActivity;
 import br.com.harbitech.school.section.Section;
 
 public class Explanation extends Activity {
+
     private String description;
 
     public Explanation(Long id, String codeUrl, String title, String description, StatusIndicationActivity indication,

@@ -6,7 +6,6 @@ import br.com.harbitech.school.section.Section;
 
 public class Question extends Activity {
 
-    private Long id;
     private String enunciated;
     private TypeAnswer answer;
 

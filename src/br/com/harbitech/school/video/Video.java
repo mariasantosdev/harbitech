@@ -8,20 +8,17 @@ import java.time.OffsetDateTime;
 
 public class Video extends Activity {
 
-   private String codeUrl;
+   private String url;
    private OffsetDateTime minutesOfVideo;
    private String transition;
 
+
    public Video(Long id, String codeUrl, String title, String description, StatusIndicationActivity indication,
-                Section section, String codeUrl1, OffsetDateTime minutesOfVideo, String transition) {
+                Section section, String url, OffsetDateTime minutesOfVideo, String transition) {
       super(id, codeUrl, title, description, indication, section);
-      this.codeUrl = codeUrl1;
+      this.url = url;
       this.minutesOfVideo = minutesOfVideo;
       this.transition = transition;
-   }
-
-   String getCodeUrl() {
-      return codeUrl;
    }
 
    OffsetDateTime getMinutesOfVideo() {

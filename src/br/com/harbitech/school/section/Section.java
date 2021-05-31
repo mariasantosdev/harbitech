@@ -23,7 +23,7 @@ public class Section {
         this.course = course;
     }
 
-    public Long getId() {
+    Long getId() {
         return id;
     }
 
@@ -51,7 +51,7 @@ public class Section {
         return course;
     }
 
-    public static void validateUrl(String codeUrl) {
+    static void validateUrl(String codeUrl) {
         boolean validacao = codeUrl.matches("[a-z]*");
         if (!validacao) {
             throw new RuntimeException("Não validado");

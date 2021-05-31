@@ -25,7 +25,7 @@ public class SubCategory {
         this.category = category;
     }
 
-    public Long getId() {
+    Long getId() {
         return id;
     }
 
@@ -57,7 +57,7 @@ public class SubCategory {
         return category;
     }
 
-    public static void validateUrl(String codeUrl) {
+    static void validateUrl(String codeUrl) {
         boolean validacao = codeUrl.matches("[a-z]*");
         if (!validacao) {
             throw new RuntimeException("Não validado");
