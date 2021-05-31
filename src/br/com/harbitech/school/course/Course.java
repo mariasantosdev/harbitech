@@ -6,67 +6,61 @@ import java.time.OffsetDateTime;
 
 public class Course {
 
-    private Long id;
     private String codeUrl;
     private String name;
-    private OffsetDateTime tempoFinalizacao;
+    private OffsetDateTime completionTime;
     private TypeVisibilityCourse visibilityCourse;
-    private String publicoAlvo;
-    private String instrutor;
-    private String ementa;
-    private String habilidadesDesenvolvidas;
+    private String targetAudience;
+    private String instructor;
+    private String description;
+    private String developedSkills;
     private SubCategory subCategory;
 
-    public Course(Long id, String codeUrl, String name, OffsetDateTime tempoFinalizacao,
-                  TypeVisibilityCourse visibilityCourse, String publicoAlvo, String instrutor,
-                  String ementa, String habilidadesDesenvolvidas, SubCategory subCategory) {
-        this.id = id;
+    public Course(String codeUrl, String name, OffsetDateTime completionTime,
+                  TypeVisibilityCourse visibilityCourse, String targetAudience, String instructor,
+                  String description, String developedSkills, SubCategory subCategory) {
         this.codeUrl = codeUrl;
         this.name = name;
-        this.tempoFinalizacao = tempoFinalizacao;
+        this.completionTime = completionTime;
         this.visibilityCourse = visibilityCourse;
-        this.publicoAlvo = publicoAlvo;
-        this.instrutor = instrutor;
-        this.ementa = ementa;
-        this.habilidadesDesenvolvidas = habilidadesDesenvolvidas;
+        this.targetAudience = targetAudience;
+        this.instructor = instructor;
+        this.description = description;
+        this.developedSkills = developedSkills;
         this.subCategory = subCategory;
     }
 
-    Long getId() {
-      return id;
-   }
+    public String getCodeUrl() {
+        return codeUrl;
+    }
 
-    String getCodeUrl() {
-      return codeUrl;
-   }
+    public String getName() {
+        return name;
+    }
 
-    String getName() {
-      return name;
-   }
+    public OffsetDateTime getCompletionTime() {
+        return completionTime;
+    }
 
-    OffsetDateTime getTempoFinalizacao() {
-      return tempoFinalizacao;
-   }
+    public TypeVisibilityCourse getVisibilityCourse() {
+        return visibilityCourse;
+    }
 
-    TypeVisibilityCourse getVisibilityCourse() {
-      return visibilityCourse;
-   }
+    public String getTargetAudience() {
+        return targetAudience;
+    }
 
-    String getPublicoAlvo() {
-      return publicoAlvo;
-   }
+    public String getInstructor() {
+        return instructor;
+    }
 
-    String getInstrutor() {
-      return instrutor;
-   }
+    public String getDescription() {
+        return description;
+    }
 
-    String getEmenta() {
-      return ementa;
-   }
-
-    String getHabilidadesDesenvolvidas() {
-      return habilidadesDesenvolvidas;
-   }
+    public String getDevelopedSkills() {
+        return developedSkills;
+    }
 
     public SubCategory getSubCategory() {
         return subCategory;
