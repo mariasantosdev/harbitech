@@ -17,10 +17,10 @@ public class SubCategory {
     private Category category;
 
     public SubCategory(String name, String codeUrl, Category category){
-        validateNonBlankText(name, "O nome da categoria não pode estar em branco.");
-        validateNonBlankText(codeUrl, "O código da URL da categoria não pode estar em branco.");
+        validateNonBlankText(name, "O nome da sub-categoria não pode estar em branco.");
+        validateNonBlankText(codeUrl, "O código da URL da sub-categoria não pode estar em branco.");
         validateNonNullClass(category, "Não existe uma categoria associada.");
-        validateUrl(codeUrl, "O código da url da categoria está incorreto (só aceita letras minúsculas e hífen): " + codeUrl) ;
+        validateUrl(codeUrl, "O código da url da sub-categoria está incorreto (só aceita letras minúsculas e hífen): " + codeUrl) ;
 
         this.name = name;
         this.codeUrl = codeUrl;

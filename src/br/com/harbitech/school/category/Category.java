@@ -18,7 +18,7 @@ public class Category {
     public Category(String name, String codeUrl) {
         validateNonBlankText(name, "O nome da categoria não pode estar em branco.");
         validateNonBlankText(codeUrl, "O código da URL da categoria não pode estar em branco.");
-        validateUrl(codeUrl, "O código da url da categoria está incorreto (só aceita letras minúsculas e hífen): " + codeUrl) ;
+        validateUrl(codeUrl, "O código da url da categoria está incorreto (só aceita letras minúsculas e hífen): " + codeUrl);
 
         this.name = name;
         this.codeUrl = codeUrl;

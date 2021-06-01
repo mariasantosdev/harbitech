@@ -1,5 +1,5 @@
 package br.com.harbitech.school.course;
 
-enum TypeVisibilityCourse {
+enum CourseVisibility {
     PUBLIC, PRIVATE
 }

@@ -1,5 +1,5 @@
 package br.com.harbitech.school.section;
 
-enum TypeIndicationSection {
+enum SectionStatus {
     INACTIVE, ACTIVE
 }

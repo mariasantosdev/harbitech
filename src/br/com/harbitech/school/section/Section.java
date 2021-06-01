@@ -1,7 +1,8 @@
 package br.com.harbitech.school.section;
 
-import br.com.harbitech.school.validation.ValidationUtil;
 import br.com.harbitech.school.course.Course;
+
+import static br.com.harbitech.school.validation.ValidationUtil.*;
 
 public class Section {
 
@@ -9,14 +10,21 @@ public class Section {
     private String name;
     private String codeUrl;
     private int orderVisualization;
-    private TypeIndicationSection indicationSection;
-    private TypeIndicationTest indicationTest;
+    private SectionStatus status;
+    private SectionType type;
     private Course course;
 
-    private ValidationUtil validateUtil;
+    public Section(String name, String codeUrl, Course course){
+        validateNonBlankText(name, "O nome da seção não pode estar em branco.");
+        validateNonBlankText(codeUrl, "O código da URL da seção não pode estar em branco.");
+        validateUrl(codeUrl, "O código da url da seção está incorreto (só aceita letras minúsculas e hífen): " + codeUrl);
+        validateNonNullClass(course,"Não existe um curso associado");
 
-    public Section(){
-        this.validateUtil = new ValidationUtil();
+        this.name = name;
+        this.codeUrl = codeUrl;
+        this.course = course;
+        this.status = SectionStatus.INACTIVE;
+        this.type = SectionType.LECTURE;
     }
 
     Long getId() {
@@ -35,16 +43,24 @@ public class Section {
         return orderVisualization;
     }
 
-    TypeIndicationSection getIndicationSection() {
-        return indicationSection;
-    }
-
-    TypeIndicationTest getIndicationTest() {
-        return indicationTest;
+    SectionType getType() {
+        return type;
     }
 
     Course getCourse() {
         return course;
     }
 
+    @Override
+    public String toString() {
+        return "Section{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", codeUrl='" + codeUrl + '\'' +
+                ", orderVisualization=" + orderVisualization +
+                ", status=" + status +
+                ", type=" + type +
+                ", course=" + course +
+                '}';
+    }
 }

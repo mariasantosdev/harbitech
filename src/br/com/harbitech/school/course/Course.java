@@ -3,24 +3,34 @@ package br.com.harbitech.school.course;
 import br.com.harbitech.school.validation.ValidationUtil;
 import br.com.harbitech.school.subcategory.SubCategory;
 
-import java.time.OffsetDateTime;
+import static br.com.harbitech.school.validation.ValidationUtil.*;
 
 public class Course {
 
     private Long id;
-    private String codeUrl;
     private String name;
-    private OffsetDateTime completionTime;
-    private TypeVisibilityCourse visibilityCourse;
+    private String codeUrl;
+    private int completionTimeInHours;
+    private CourseVisibility visibility;
     private String targetAudience;
     private String instructor;
     private String description;
     private String developedSkills;
     private SubCategory subCategory;
-    private ValidationUtil validateUtil;
 
-    public Course(){
-        this.validateUtil = new ValidationUtil();
+    public Course(String name, String codeUrl, int completionTimeInHours, String instructor){
+        validateNonBlankText(name, "O nome do curso não pode estar em branco.");
+        validateNonBlankText(codeUrl, "O código do curso não pode estar em branco.");
+        validateNonBlankText(instructor, "O nome do instrutor não pode estar em branco");
+        validateUrl(codeUrl, "O código da url do curso está incorreto (só aceita letras minúsculas e hífen): " + codeUrl);
+        validateMaximumTime(completionTimeInHours,"O tempo máximo para finalização é de 20 horas");
+        validateMinimumTime(completionTimeInHours, "O tempo mínimo para a finalização é de 1 hora");
+
+        this.name = name;
+        this.codeUrl = codeUrl;
+        this.completionTimeInHours = completionTimeInHours;
+        this.instructor = instructor;
+        this.visibility = CourseVisibility.PRIVATE;
     }
 
     Long getId() {
@@ -35,12 +45,8 @@ public class Course {
         return name;
     }
 
-    OffsetDateTime getCompletionTime() {
-        return completionTime;
-    }
-
-    TypeVisibilityCourse getVisibilityCourse() {
-        return visibilityCourse;
+    int getCompletionTimeInHours() {
+        return completionTimeInHours;
     }
 
     String getTargetAudience() {
@@ -63,4 +69,19 @@ public class Course {
         return subCategory;
     }
 
+    @Override
+    public String toString() {
+        return "Course{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", codeUrl='" + codeUrl + '\'' +
+                ", completionTimeInHours=" + completionTimeInHours +
+                ", visibility=" + visibility +
+                ", targetAudience='" + targetAudience + '\'' +
+                ", instructor='" + instructor + '\'' +
+                ", description='" + description + '\'' +
+                ", developedSkills='" + developedSkills + '\'' +
+                ", subCategory=" + subCategory +
+                '}';
+    }
 }
