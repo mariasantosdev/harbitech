@@ -1,5 +1,5 @@
 package br.com.harbitech.school.activity;
 
-public enum StatusIndicationActivity {
+public enum ActivityStatus {
     ACTIVITY, INACTIVITE
 }
