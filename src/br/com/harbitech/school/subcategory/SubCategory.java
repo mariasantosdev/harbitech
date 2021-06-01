@@ -1,6 +1,6 @@
 package br.com.harbitech.school.subcategory;
 
-import br.com.harbitech.school.validation.ValidationUtilUrlCode;
+import br.com.harbitech.school.validation.ValidationUtil;
 import br.com.harbitech.school.category.Category;
 
 public class SubCategory {
@@ -13,10 +13,10 @@ public class SubCategory {
     private TypeIndicationSubCategory indicationCategory;
     private int orderVisualization;
     private Category category;
-    private ValidationUtilUrlCode validateUtil;
+    private ValidationUtil validateUtil;
 
     public SubCategory(){
-        this.validateUtil = new ValidationUtilUrlCode();
+        this.validateUtil = new ValidationUtil();
     }
 
 
@@ -52,8 +52,4 @@ public class SubCategory {
         return category;
     }
 
-    public void setCodeUrl(String codeUrl) {
-        ValidationUtilUrlCode.validateUrl(codeUrl) ;
-        this.codeUrl = codeUrl;
-    }
 }

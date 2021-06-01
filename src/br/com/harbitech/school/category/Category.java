@@ -1,6 +1,7 @@
 package br.com.harbitech.school.category;
 
-import br.com.harbitech.school.validation.ValidationUtilUrlCode;
+import static br.com.harbitech.school.validation.ValidationUtil.validateNonBlankText;
+import static br.com.harbitech.school.validation.ValidationUtil.validateUrl;
 
 public class Category {
 
@@ -9,14 +10,19 @@ public class Category {
     private String codeUrl;
     private String description;
     private String studyGuide;
-    private TypeIndicationCategory indicationCategory;
+    private CategoryStatus status;
     private int orderVisualization;
-    private String pathImageOfIcon;
-    private String codeColorHtml;
-    private ValidationUtilUrlCode validateUtil;
+    private String iconPath;
+    private String htmlHexColorCode;
 
-    public Category() {
-        this.validateUtil = new ValidationUtilUrlCode();
+    public Category(String name, String codeUrl) {
+        validateNonBlankText(name, "O nome da categoria não pode estar em branco.");
+        validateNonBlankText(codeUrl, "O código da URL da categoria não pode estar em branco.");
+        validateUrl(codeUrl, "O código da url da categoria está incorreto (só aceita letras minúsculas e hífen): " + codeUrl) ;
+
+        this.name = name;
+        this.codeUrl = codeUrl;
+        this.status = CategoryStatus.INACTIVE;
     }
 
     Long getId() {
@@ -39,25 +45,35 @@ public class Category {
         return studyGuide;
     }
 
-    TypeIndicationCategory getIndicationCategory() {
-        return indicationCategory;
+    CategoryStatus getStatus() {
+        return status;
     }
 
     int getOrderVisualization() {
         return orderVisualization;
     }
 
-    String getPathImageOfIcon() {
-        return pathImageOfIcon;
+    String getIconPath() {
+        return iconPath;
     }
 
-    String getCodeColorHtml() {
-        return codeColorHtml;
+    String getHtmlHexColorCode() {
+        return htmlHexColorCode;
     }
 
-    public void setCodeUrl(String codeUrl) {
-        ValidationUtilUrlCode.validateUrl(codeUrl) ;
-        this.codeUrl = codeUrl;
+    @Override
+    public String toString() {
+        return "Category{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", codeUrl='" + codeUrl + '\'' +
+                ", description='" + description + '\'' +
+                ", studyGuide='" + studyGuide + '\'' +
+                ", status=" + status +
+                ", orderVisualization=" + orderVisualization +
+                ", iconPath='" + iconPath + '\'' +
+                ", htmlHexColorCode='" + htmlHexColorCode + '\'' +
+                '}';
     }
 }
 
