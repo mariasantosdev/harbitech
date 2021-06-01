@@ -8,6 +8,12 @@ public class ValidationUtil {
         }
     }
 
+    public static void validateNonNullClass(Object object, String errorMessage){
+        if (object == null){
+            throw new IllegalArgumentException(errorMessage);
+        }
+    }
+
     public static void validateUrl(String codeUrl, String errorMessage) {
         boolean validacao = codeUrl.matches("[-a-z]+");
         if (!validacao) {

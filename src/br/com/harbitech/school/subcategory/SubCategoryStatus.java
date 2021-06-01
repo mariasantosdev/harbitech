@@ -1,5 +1,5 @@
 package br.com.harbitech.school.subcategory;
 
-enum TypeIndicationSubCategory {
+enum SubCategoryStatus {
     INACTIVE, ACTIVE
 }

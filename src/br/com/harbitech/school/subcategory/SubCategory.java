@@ -3,6 +3,8 @@ package br.com.harbitech.school.subcategory;
 import br.com.harbitech.school.validation.ValidationUtil;
 import br.com.harbitech.school.category.Category;
 
+import static br.com.harbitech.school.validation.ValidationUtil.*;
+
 public class SubCategory {
 
     private Long id;
@@ -10,13 +12,20 @@ public class SubCategory {
     private String codeUrl;
     private String description;
     private String studyGuide;
-    private TypeIndicationSubCategory indicationCategory;
+    private SubCategoryStatus status;
     private int orderVisualization;
     private Category category;
-    private ValidationUtil validateUtil;
 
-    public SubCategory(){
-        this.validateUtil = new ValidationUtil();
+    public SubCategory(String name, String codeUrl, Category category){
+        validateNonBlankText(name, "O nome da categoria não pode estar em branco.");
+        validateNonBlankText(codeUrl, "O código da URL da categoria não pode estar em branco.");
+        validateNonNullClass(category, "Não existe uma categoria associada.");
+        validateUrl(codeUrl, "O código da url da categoria está incorreto (só aceita letras minúsculas e hífen): " + codeUrl) ;
+
+        this.name = name;
+        this.codeUrl = codeUrl;
+        this.category = category;
+        this.status = SubCategoryStatus.INACTIVE;
     }
 
 
@@ -40,8 +49,8 @@ public class SubCategory {
         return studyGuide;
     }
 
-    TypeIndicationSubCategory getIndicationCategory() {
-        return indicationCategory;
+    SubCategoryStatus getStatus() {
+        return status;
     }
 
     int getOrderVisualization() {
@@ -52,4 +61,17 @@ public class SubCategory {
         return category;
     }
 
+    @Override
+    public String toString() {
+        return "SubCategory{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", codeUrl='" + codeUrl + '\'' +
+                ", description='" + description + '\'' +
+                ", studyGuide='" + studyGuide + '\'' +
+                ", status=" + status +
+                ", orderVisualization=" + orderVisualization +
+                ", category=" + category +
+                '}';
+    }
 }

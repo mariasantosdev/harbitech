@@ -1,4 +1,5 @@
 import br.com.harbitech.school.category.Category;
+import br.com.harbitech.school.subcategory.SubCategory;
 
 public class HarbitechApplication {
 
@@ -8,6 +9,8 @@ public class HarbitechApplication {
 
         Category devops = new Category("DevOps", "dev-ops");
         System.out.println(devops);
+
+        SubCategory subCategory = new SubCategory("Linux","dev-ops",programacao);
 
 //        Category semNome = new Category(null, "programacao");
 //        Category nomeVazio = new Category("", "programacao");
