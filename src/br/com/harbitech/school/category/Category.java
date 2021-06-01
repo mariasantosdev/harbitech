@@ -55,7 +55,7 @@ public class Category {
         return codeColorHtml;
     }
 
-    void setCodeUrl(String codeUrl) {
+    public void setCodeUrl(String codeUrl) {
         ValidationUtilUrlCode.validateUrl(codeUrl) ;
         this.codeUrl = codeUrl;
     }

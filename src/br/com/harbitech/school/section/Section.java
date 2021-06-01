@@ -47,7 +47,7 @@ public class Section {
         return course;
     }
 
-    void setCodeUrl(String codeUrl) {
+    public void setCodeUrl(String codeUrl) {
         ValidationUtilUrlCode.validateUrl(codeUrl) ;
         this.codeUrl = codeUrl;
     }

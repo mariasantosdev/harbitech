@@ -52,7 +52,7 @@ public class SubCategory {
         return category;
     }
 
-    void setCodeUrl(String codeUrl) {
+    public void setCodeUrl(String codeUrl) {
         ValidationUtilUrlCode.validateUrl(codeUrl) ;
         this.codeUrl = codeUrl;
     }
