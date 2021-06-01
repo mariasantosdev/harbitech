@@ -10,7 +10,7 @@ public class SubCategory {
     private String codeUrl;
     private String description;
     private String studyGuide;
-    private TypeIndicationSubCategory indicationCategory;
+    private SubCategoryStatus status;
     private int orderVisualization;
     private Category category;
     private ValidationUtil validateUtil;
