@@ -18,7 +18,7 @@ public class Section {
         validateNonBlankText(name, "O nome da seção não pode estar em branco.");
         validateNonBlankText(codeUrl, "O código da URL da seção não pode estar em branco.");
         validateUrl(codeUrl, "O código da url da seção está incorreto (só aceita letras minúsculas e hífen): " + codeUrl);
-        validateNonNullClass(course,"Não existe um curso associado");
+        validateNonNullClass(course,"Não existe um curso associado a essa seção");
 
         this.name = name;
         this.codeUrl = codeUrl;

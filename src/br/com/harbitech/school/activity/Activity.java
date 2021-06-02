@@ -18,7 +18,7 @@ public abstract class Activity {
         validateNonBlankText(title, "O nome da atividade não pode estar em branco.");
         validateNonBlankText(codeUrl, "O código da URL da atividade não pode estar em branco.");
         validateUrl(codeUrl, "O código da url do curso está incorreto (só aceita letras minúsculas e hífen): " + codeUrl);
-        validateNonNullClass(section, "Não existe uma seção associada.");
+        validateNonNullClass(section, "Não existe uma seção associada a essa atividade.");
 
         this.title = title;
         this.codeUrl = codeUrl;

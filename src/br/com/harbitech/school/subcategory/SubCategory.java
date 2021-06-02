@@ -19,7 +19,7 @@ public class SubCategory {
     public SubCategory(String name, String codeUrl, Category category){
         validateNonBlankText(name, "O nome da sub-categoria não pode estar em branco.");
         validateNonBlankText(codeUrl, "O código da URL da sub-categoria não pode estar em branco.");
-        validateNonNullClass(category, "Não existe uma categoria associada.");
+        validateNonNullClass(category, "A sub-categoria deve ter uma categoria associada.");
         validateUrl(codeUrl, "O código da url da sub-categoria está incorreto (só aceita letras minúsculas e hífen): " + codeUrl) ;
 
         this.name = name;

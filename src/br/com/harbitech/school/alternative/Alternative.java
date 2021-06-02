@@ -10,16 +10,16 @@ public class Alternative {
    private Long id;
    private String text;
    private int orderVisualization;
-   private AlternativeType type;
+   private boolean correct;
    private String justification;
    private Question question;
 
-   public Alternative(String text, Question question) {
+   public Alternative(String text, Question question, boolean correct) {
       validateNonBlankText(text, "O texto explicativo não pode estar em branco.");
       validateNonNullClass(question, "Não existe uma questão associada a essa alternativa.");
       this.text = text;
       this.question = question;
-      this.type = AlternativeType.INCORRECT;
+      this.correct = correct;
    }
 
    Long getId() {
@@ -30,8 +30,8 @@ public class Alternative {
       return text;
    }
 
-   AlternativeType getType() {
-      return type;
+   boolean isCorrect() {
+      return correct;
    }
 
    int getOrderVisualization() {
@@ -52,7 +52,7 @@ public class Alternative {
               "id=" + id +
               ", text='" + text + '\'' +
               ", orderVisualization=" + orderVisualization +
-              ", type=" + type +
+              ", correct=" + correct +
               ", justification='" + justification + '\'' +
               ", question=" + question +
               '}';

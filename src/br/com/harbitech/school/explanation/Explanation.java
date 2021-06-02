@@ -13,7 +13,6 @@ public class Explanation extends Activity {
         super(title, codeUrl, section);
         validateNonBlankText(title, "O texto de explicação não pode estar em branco.");
         this.text = text;
-
     }
 
     String getText() {

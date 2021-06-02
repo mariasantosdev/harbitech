@@ -14,14 +14,8 @@ public class ValidationUtil {
         }
     }
 
-    public static void validateMinimumTime(int time, String errorMessage){
-        if(time < 1){
-            throw new IllegalArgumentException(errorMessage);
-        }
-    }
-
-    public static void validateMaximumTime(int time, String errorMessage){
-        if(time > 20){
+    public static void validateInterval(int value, int minimumValue, int maximumValue, String errorMessage){
+        if(value < minimumValue || value > maximumValue){
             throw new IllegalArgumentException(errorMessage);
         }
     }

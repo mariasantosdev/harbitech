@@ -3,14 +3,12 @@ package br.com.harbitech.school.video;
 import br.com.harbitech.school.activity.Activity;
 import br.com.harbitech.school.section.Section;
 
-import java.time.OffsetDateTime;
-
 import static br.com.harbitech.school.validation.ValidationUtil.validateNonBlankText;
 
 public class Video extends Activity {
 
    private String url;
-   private int minutesOfVideo;
+   private int timeInMinutes;
    private String transcription;
 
    public Video(String title, String codeUrl, Section section, String url) {
@@ -23,8 +21,8 @@ public class Video extends Activity {
       return url;
    }
 
-   int getMinutesOfVideo() {
-      return minutesOfVideo;
+   int getTimeInMinutes() {
+      return timeInMinutes;
    }
 
    String getTranscription() {
@@ -35,7 +33,7 @@ public class Video extends Activity {
    public String toString() {
       return "Video{" +
               "url='" + url + '\'' +
-              ", minutesOfVideo=" + minutesOfVideo +
+              ", timeInMinutes=" + timeInMinutes +
               ", transcription='" + transcription + '\'' +
               '}';
    }

@@ -14,7 +14,7 @@ public class Question extends Activity {
         super(title, codeUrl, section);
         validateNonBlankText(text, "O enunciado da questão é obrigatório.");
         this.text = text;
-        this.type = AnswerType.MULTIPLE_ANSWER;
+        this.type = AnswerType.SINGLE_CHOICE;
     }
 
     String getText() {
