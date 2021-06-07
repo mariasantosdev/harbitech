@@ -1,9 +1,11 @@
 package br.com.harbitech.school.category;
 
+import java.io.Serializable;
+
 import static br.com.harbitech.school.validation.ValidationUtil.validateNonBlankText;
 import static br.com.harbitech.school.validation.ValidationUtil.validateUrl;
 
-public class Category {
+public class Category implements Serializable {
 
     private Long id;
     private String name;
