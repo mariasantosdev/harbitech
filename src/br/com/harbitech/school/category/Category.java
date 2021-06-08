@@ -31,11 +31,11 @@ public class Category implements Serializable {
         return id;
     }
 
-    String getName() {
+    public String getName() {
         return name;
     }
 
-    String getCodeUrl() {
+    public String getCodeUrl() {
         return codeUrl;
     }
 

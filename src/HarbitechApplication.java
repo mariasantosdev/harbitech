@@ -17,55 +17,29 @@ import java.util.Scanner;
 public class HarbitechApplication {
 
     public static void main(String[] args) throws Exception {
-//        Category programacao = new Category("Programação", "programacao");
-//        System.out.println(programacao);
-//
-//        Category devops = new Category("DevOps", "dev-ops");
-//        System.out.println(devops);
-//
-//        SubCategory subCategory = new SubCategory("Linux","linux",devops);
-//        System.out.println(subCategory);
 
-//        Course course = new Course("programação com java","java-spring",64,"Maria");
-//        Course course = new Course("POO-Java","java-spring",20, "Maria");
-//        Course course = new Course("POO-Java","java-spring",0, "Maria");
-//         System.out.println(course);
+        List<Category> categories = new ArrayList<Category>();
 
-//        Category semNome = new Category(null, "programacao");
-//        Category nomeVazio = new Category("", "programacao");
-//        Category nomeEmBranco = new Category("   ", "programacao");
-//
-//        Category devops = new Category("DevOps", "DEVOPS");
-//        Category devops = new Category("DevOps", "DEV OPS");
-//        Category devops = new Category("DevOps", "dev ops");
-
-//        Section section = new Section("introdução ao git","git",course);
-//        System.out.println(section);
-        Locale.setDefault(new Locale("PT", "br"));
-        Scanner scanner = new Scanner(new File("planilha-dados-escola - Categoria.csv"));
-        while(scanner.hasNextLine()){
-            String line = scanner.nextLine();
-            System.out.println(line);
-        }
-
-        List<Category> list = new ArrayList<Category>();
-
-        list.add(new Category("DevOps", "dev-ops"));
-
-        Category category = new Category("DevOps", "dev-ops");
-        list.add(category);
+        Category category = new Category("Devops", "dev-ops");
+        categories.add(category);
 
         ObjectOutputStream output = new ObjectOutputStream(new FileOutputStream
-                ("planilha-dados-escola - Categoria.csv"));
-        output.writeObject(category);
+                ("planilha-dados-escola - Categoria.csv",true));
 
-
-        scanner.close();
-
+        output.writeObject("\n" + category.toString());
         output.close();
 
 
+        Scanner scanner = new Scanner(new File("planilha-dados-escola - Categoria.csv"), "UTF-8");
+        while(scanner.hasNextLine()){
+            String line = scanner.nextLine();
+            System.out.println(line);
+
+            Scanner lineScanner = new Scanner(line);
         }
+        scanner.close();
+
     }
+}
 
 
