@@ -41,11 +41,11 @@ public class Course {
         return codeUrl;
     }
 
-    String getName() {
+    public String getName() {
         return name;
     }
 
-    int getCompletionTimeInHours() {
+    public int getCompletionTimeInHours() {
         return completionTimeInHours;
     }
 
@@ -65,7 +65,7 @@ public class Course {
         return developedSkills;
     }
 
-    SubCategory getSubCategory() {
+    public SubCategory getSubCategory() {
         return subCategory;
     }
 
