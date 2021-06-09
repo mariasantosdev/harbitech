@@ -45,12 +45,13 @@ public class HarbitechApplication {
         try {
             ObjectOutputStream output = new ObjectOutputStream(new FileOutputStream
                     ("planilha-dados-escola - Categoria.html", true));
+            Course course = new Course("JAVA-POO","java-poo",4,"Nico");
 
             category.setDescription("Programe nas principais linguagens desde o nível iniciante até o avançado");
             category.setIconPath("https://www.alura.com.br/assets/api/formacoes/categorias/512/programacao-transparent.png");
             category.setHtmlHexColorCode("##c898");
-            category.TotalTimeInHoursOfCourse();
-            category.TotalCourses();
+            category.totalTimeInHoursOfCourse();
+            category.totalCourses();
             category.setAllSubCategorys();
             categories.add(category);
 

@@ -10,8 +10,9 @@ public class CategoryFile {
 
     public static void main(String[] args) {
 
+
         try {
-            Scanner scanner = new Scanner(new File("planilha-dados-escola - Curso.csv"), "UTF-8");
+            Scanner scanner = new Scanner(new File("planilha-dados-escola - Categoria.csv"), "UTF-8");
             while (scanner.hasNextLine()) {
                 String line = scanner.nextLine();
             }
@@ -31,7 +32,7 @@ public class CategoryFile {
 
         try {
             ObjectOutputStream output = new ObjectOutputStream(new FileOutputStream
-                    ("planilha-dados-escola - Curso.csv", true));
+                    ("planilha-dados-escola - Categoria.csv", true));
 
             output.writeObject("\n" + category.toString());
             output.close();

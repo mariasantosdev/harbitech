@@ -1,8 +1,6 @@
 package br.com.harbitech.school.FileManipulation;
 
-import br.com.harbitech.school.category.Category;
 import br.com.harbitech.school.course.Course;
-import br.com.harbitech.school.subcategory.SubCategory;
 
 import java.io.*;
 import java.util.ArrayList;
@@ -12,7 +10,8 @@ public class CoursesFile {
     public static void main(String[] args) {
 
         try {
-            Scanner scanner = new Scanner(new File("planilha-dados-escola - Curso.csv"), "UTF-8");
+            Scanner scanner = new Scanner(new File("planilha-dados-escola - Curso.csv"),
+                    "UTF-8");
             while (scanner.hasNextLine()) {
                 String line = scanner.nextLine();
             }
@@ -22,9 +21,8 @@ public class CoursesFile {
             e.getMessage();
         }
 
-        Course course = new Course("Começando com Spring MVC","spring-mvc",
+        Course course = new Course("Começando com Spring MVC", "spring-mvc",
                 12, "Nico");
-
 
         var courses = new ArrayList<Course>();
 

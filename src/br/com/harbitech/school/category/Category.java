@@ -94,11 +94,11 @@ public class Category {
         this.courses.forEach(s -> System.out.println(s.getSubCategory().toString()));
     }
 
-    public int TotalCourses() {
+    public int totalCourses() {
         return this.courses.size();
     }
 
-    public int TotalTimeInHoursOfCourse() {
+    public int totalTimeInHoursOfCourse() {
         return this.courses.stream().mapToInt(Course::getCompletionTimeInHours).sum();
     }
 
