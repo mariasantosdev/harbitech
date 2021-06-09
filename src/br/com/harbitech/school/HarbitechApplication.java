@@ -1,3 +1,5 @@
+package br.com.harbitech.school;
+
 import br.com.harbitech.school.category.Category;
 import br.com.harbitech.school.course.Course;
 import br.com.harbitech.school.section.Section;

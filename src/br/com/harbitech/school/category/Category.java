@@ -1,12 +1,13 @@
 package br.com.harbitech.school.category;
 
-import java.io.Serializable;
-
 import br.com.harbitech.school.course.Course;
 import br.com.harbitech.school.subcategory.SubCategory;
 
-import java.util.*;
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 import static br.com.harbitech.school.validation.ValidationUtil.validateNonBlankText;
 import static br.com.harbitech.school.validation.ValidationUtil.validateUrl;
@@ -33,6 +34,18 @@ public class Category implements Serializable {
         this.name = name;
         this.codeUrl = codeUrl;
         this.status = CategoryStatus.INACTIVE;
+        this.orderVisualization = -1;
+    }
+
+    public Category(String name, String codeUrl, String description, String studyGuide, CategoryStatus status, int orderVisualization, String iconPath, String htmlHexColorCode) {
+        this.name = name;
+        this.codeUrl = codeUrl;
+        this.description = description;
+        this.studyGuide = studyGuide;
+        this.status = status;
+        this.orderVisualization = orderVisualization;
+        this.iconPath = iconPath;
+        this.htmlHexColorCode = htmlHexColorCode;
     }
 
     Long getId() {
