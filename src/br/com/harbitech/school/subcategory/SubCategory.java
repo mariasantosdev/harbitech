@@ -1,7 +1,11 @@
 package br.com.harbitech.school.subcategory;
 
+import br.com.harbitech.school.course.Course;
 import br.com.harbitech.school.validation.ValidationUtil;
 import br.com.harbitech.school.category.Category;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import static br.com.harbitech.school.validation.ValidationUtil.*;
 
@@ -28,12 +32,11 @@ public class SubCategory {
         this.status = SubCategoryStatus.INACTIVE;
     }
 
-
     Long getId() {
         return id;
     }
 
-    String getName() {
+    public String getName() {
         return name;
     }
 
@@ -41,7 +44,7 @@ public class SubCategory {
         return codeUrl;
     }
 
-    String getDescription() {
+    public String getDescription() {
         return description;
     }
 
@@ -59,6 +62,34 @@ public class SubCategory {
 
     Category getCategory() {
         return category;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setCodeUrl(String codeUrl) {
+        this.codeUrl = codeUrl;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public void setStudyGuide(String studyGuide) {
+        this.studyGuide = studyGuide;
+    }
+
+    public void setStatus(SubCategoryStatus status) {
+        this.status = status;
+    }
+
+    public void setOrderVisualization(int orderVisualization) {
+        this.orderVisualization = orderVisualization;
+    }
+
+    public void setCategory(Category category) {
+        this.category = category;
     }
 
     @Override

@@ -3,43 +3,63 @@ import br.com.harbitech.school.course.Course;
 import br.com.harbitech.school.section.Section;
 import br.com.harbitech.school.subcategory.SubCategory;
 
-import java.io.*;
-import java.nio.charset.Charset;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectOutputStream;
 import java.util.ArrayList;
-import java.util.List;
-import java.util.Locale;
-import java.util.Scanner;
-
 
 public class HarbitechApplication {
 
-    public static void main(String[] args) throws Exception {
+    public static void main(String[] args) {
+//        Category programacao = new Category("Programação", "programacao");
+//        System.out.println(programacao);
+//
+//        Category devops = new Category("DevOps", "dev-ops");
+//        System.out.println(devops);
+//
+//        SubCategory subCategory = new SubCategory("Linux","linux",devops);
+//        System.out.println(subCategory);
 
-        List<Category> categories = new ArrayList<Category>();
+//        Course course = new Course("programação com java","java-spring",64,"Maria");
+//        Course course = new Course("POO-Java","java-spring",20, "Maria");
+//        Course course = new Course("POO-Java","java-spring",0, "Maria");
+//         System.out.println(course);
+
+//        Category semNome = new Category(null, "programacao");
+//        Category nomeVazio = new Category("", "programacao");
+//        Category nomeEmBranco = new Category("   ", "programacao");
+//
+//        Category devops = new Category("DevOps", "DEVOPS");
+//        Category devops = new Category("DevOps", "DEV OPS");
+//        Category devops = new Category("DevOps", "dev ops");
+
+//        Section section = new Section("introdução ao git","git",course);
+//        System.out.println(section);
+
 
         Category category = new Category("Devops", "dev-ops");
-        categories.add(category);
+        SubCategory subCategory = new SubCategory("Linux","linux",category);
 
-        ObjectOutputStream output = new ObjectOutputStream(new FileOutputStream
-                ("planilha-dados-escola - Categoria.csv",true));
+        var categories = new ArrayList<Category>();
 
-        output.writeObject("\n" + category.toString());
-        output.close();
+        try {
+            ObjectOutputStream output = new ObjectOutputStream(new FileOutputStream
+                    ("planilha-dados-escola - Categoria.html", true));
+            Course course = new Course("JAVA-POO","java-poo",4,"Nico");
 
+            category.setDescription("Programe nas principais linguagens desde o nível iniciante até o avançado");
+            category.setIconPath("https://www.alura.com.br/assets/api/formacoes/categorias/512/programacao-transparent.png");
+            category.setHtmlHexColorCode("##c898");
+            category.totalTimeInHoursOfCourse();
+            category.totalCourses();
+            category.setAllSubCategorys();
+            categories.add(category);
 
-        Scanner scanner = new Scanner(new File("planilha-dados-escola - Categoria.csv"), "UTF-8");
-        while(scanner.hasNextLine()){
-            String line = scanner.nextLine();
-            System.out.println(line);
-
-            Scanner lineScanner = new Scanner(line);
+            output.writeObject("\n" + category.toString());
+            output.close();
         }
-        scanner.close();
-
+        catch (IOException e) {
+            e.getMessage();
+        }
     }
 }
-
-
