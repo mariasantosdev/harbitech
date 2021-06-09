@@ -35,31 +35,30 @@ public class HarbitechApplication {
 
 //        Section section = new Section("introdução ao git","git",course);
 //        System.out.println(section);
-//
+
 
         Category category = new Category("Devops", "dev-ops");
         SubCategory subCategory = new SubCategory("Linux","linux",category);
 
         var categories = new ArrayList<Category>();
 
-        category.setDescription("Programe nas principais linguagens desde o nível iniciante até o avançado");
-        category.setIconPath("https://www.alura.com.br/assets/api/formacoes/categorias/512/programacao-transparent.png");
-        category.setHtmlHexColorCode("##c898");
-        category.TotalTimeInHoursOfCourse();
-        category.TotalCourses();
-        category.setAllSubCategorys();
-        categories.add(category);
-
         try {
             ObjectOutputStream output = new ObjectOutputStream(new FileOutputStream
-                    ("planilha-dados-escola - Categoria.csv", true));
+                    ("planilha-dados-escola - Categoria.html", true));
+
+            category.setDescription("Programe nas principais linguagens desde o nível iniciante até o avançado");
+            category.setIconPath("https://www.alura.com.br/assets/api/formacoes/categorias/512/programacao-transparent.png");
+            category.setHtmlHexColorCode("##c898");
+            category.TotalTimeInHoursOfCourse();
+            category.TotalCourses();
+            category.setAllSubCategorys();
+            categories.add(category);
 
             output.writeObject("\n" + category.toString());
             output.close();
-        } catch (IOException e) {
+        }
+        catch (IOException e) {
             e.getMessage();
         }
-
     }
-
 }

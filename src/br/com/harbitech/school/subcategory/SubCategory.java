@@ -68,6 +68,30 @@ public class SubCategory {
         this.name = name;
     }
 
+    public void setCodeUrl(String codeUrl) {
+        this.codeUrl = codeUrl;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public void setStudyGuide(String studyGuide) {
+        this.studyGuide = studyGuide;
+    }
+
+    public void setStatus(SubCategoryStatus status) {
+        this.status = status;
+    }
+
+    public void setOrderVisualization(int orderVisualization) {
+        this.orderVisualization = orderVisualization;
+    }
+
+    public void setCategory(Category category) {
+        this.category = category;
+    }
+
     @Override
     public String toString() {
         return "SubCategory{" +
