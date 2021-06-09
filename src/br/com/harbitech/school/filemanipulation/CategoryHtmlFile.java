@@ -1,4 +1,4 @@
-package br.com.harbitech.school.FileManipulation;
+package br.com.harbitech.school.filemanipulation;
 
 import br.com.harbitech.school.category.Category;
 import br.com.harbitech.school.course.Course;

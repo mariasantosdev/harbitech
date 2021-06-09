@@ -1,29 +1,34 @@
-package br.com.harbitech.school.category;
+package br.com.harbitech.school.filemanipulation;
+
+import br.com.harbitech.school.category.Category;
 
 import java.io.*;
 import java.util.ArrayList;
-import java.util.List;
-import java.util.Locale;
 import java.util.Scanner;
 
-public class CategoryFileManipulation {
-    public static void main(String[] args) throws Exception {
+public class CategoryFile {
 
-        Category category = new Category("Devops", "dev-ops");
+    public static void main(String[] args) {
 
-        List<Category> categories = new ArrayList<Category>();
-
-        categories.add(category);
         try {
-            Scanner scanner = new Scanner(new File("planilha-dados-escola - Categoria.csv"), "UTF-8");
+            Scanner scanner = new Scanner(new File("planilha-dados-escola - Categoria.csv"),
+                    "UTF-8");
             while (scanner.hasNextLine()) {
                 String line = scanner.nextLine();
-                System.out.println(line);
             }
             scanner.close();
         } catch (FileNotFoundException e) {
             e.getMessage();
         }
+
+        Category category = new Category("Devops", "dev-ops");
+
+//        category.setHtmlHexColorCode("#lx123");
+//        category.setDescription("Aprenda linux e estude Git!");
+
+        var categories = new ArrayList<Category>();
+
+        categories.add(category);
 
         try {
             ObjectOutputStream output = new ObjectOutputStream(new FileOutputStream
