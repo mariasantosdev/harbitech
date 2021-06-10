@@ -28,9 +28,20 @@ public class Course {
 
         this.name = name;
         this.codeUrl = codeUrl;
-        this.completionTimeInHours = completionTimeInHours;
+        this.completionTimeInHours = -1;
         this.instructor = instructor;
         this.visibility = CourseVisibility.PRIVATE;
+    }
+
+    public Course(String name, String codeUrl, int completionTimeInHours,
+                  String targetAudience, String instructor, String description, String developedSkills) {
+        this.name = name;
+        this.codeUrl = codeUrl;
+        this.completionTimeInHours = completionTimeInHours;
+        this.targetAudience = targetAudience;
+        this.instructor = instructor;
+        this.description = description;
+        this.developedSkills = developedSkills;
     }
 
     Long getId() {

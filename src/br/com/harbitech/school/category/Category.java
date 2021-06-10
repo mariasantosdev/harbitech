@@ -37,7 +37,8 @@ public class Category implements Serializable {
         this.orderVisualization = -1;
     }
 
-    public Category(String name, String codeUrl, String description, String studyGuide, CategoryStatus status, int orderVisualization, String iconPath, String htmlHexColorCode) {
+    public Category(String name, String codeUrl, String description, String studyGuide, CategoryStatus status,
+                    int orderVisualization, String iconPath, String htmlHexColorCode) {
         this.name = name;
         this.codeUrl = codeUrl;
         this.description = description;
@@ -60,7 +61,7 @@ public class Category implements Serializable {
         return codeUrl;
     }
 
-    String getDescription() {
+    public String getDescription() {
         return description;
     }
 
@@ -68,19 +69,19 @@ public class Category implements Serializable {
         return studyGuide;
     }
 
-    CategoryStatus getStatus() {
+    public CategoryStatus getStatus() {
         return status;
     }
 
-    int getOrderVisualization() {
+    public int getOrderVisualization() {
         return orderVisualization;
     }
 
-    String getIconPath() {
+    public String getIconPath() {
         return iconPath;
     }
 
-    String getHtmlHexColorCode() {
+    public String getHtmlHexColorCode() {
         return htmlHexColorCode;
     }
 
