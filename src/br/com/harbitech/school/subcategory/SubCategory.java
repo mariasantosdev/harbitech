@@ -20,6 +20,9 @@ public class SubCategory {
     private int orderVisualization;
     private Category category;
 
+    public  SubCategory(String name){
+        this.name = name;
+    }
     public SubCategory(String name, String codeUrl, Category category){
         validateNonBlankText(name, "O nome da sub-categoria não pode estar em branco.");
         validateNonBlankText(codeUrl, "O código da URL da sub-categoria não pode estar em branco.");

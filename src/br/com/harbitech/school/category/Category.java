@@ -5,9 +5,7 @@ import br.com.harbitech.school.subcategory.SubCategory;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 import static br.com.harbitech.school.validation.ValidationUtil.validateNonBlankText;
 import static br.com.harbitech.school.validation.ValidationUtil.validateUrl;
@@ -24,7 +22,7 @@ public class Category implements Serializable {
     private String iconPath;
     private String htmlHexColorCode;
     private List<SubCategory> subCategorys = new ArrayList<>();
-    private Set<Course> courses = new HashSet<>();
+    private List<Course> courses = new ArrayList<>();
 
     public Category(String name, String codeUrl) {
         validateNonBlankText(name, "O nome da categoria não pode estar em branco.");

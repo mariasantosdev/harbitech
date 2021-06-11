@@ -80,6 +80,42 @@ public class Course {
         return subCategory;
     }
 
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setCodeUrl(String codeUrl) {
+        this.codeUrl = codeUrl;
+    }
+
+    public void setCompletionTimeInHours(int completionTimeInHours) {
+        this.completionTimeInHours = completionTimeInHours;
+    }
+
+    public void setVisibility(CourseVisibility visibility) {
+        this.visibility = visibility;
+    }
+
+    public void setTargetAudience(String targetAudience) {
+        this.targetAudience = targetAudience;
+    }
+
+    public void setInstructor(String instructor) {
+        this.instructor = instructor;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public void setDevelopedSkills(String developedSkills) {
+        this.developedSkills = developedSkills;
+    }
+
+    public void setSubCategory(SubCategory subCategory) {
+        this.subCategory = subCategory;
+    }
+
     @Override
     public String toString() {
         return "Course{" +
