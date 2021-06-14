@@ -20,7 +20,7 @@ public class Category {
     private int orderVisualization;
     private String iconPath;
     private String htmlHexColorCode;
-    private List<SubCategory> subCategorys = new ArrayList<>();
+    private List<SubCategory> subCategories = new ArrayList<>();
     private List<Course> courses = new ArrayList<>();
 
     public Category(String name, String codeUrl) {
@@ -92,8 +92,8 @@ public class Category {
     }
 
     public void setAllSubCategorys() {
-        this.subCategorys.forEach(s -> System.out.println(s.getName().toString()));
-        this.subCategorys.forEach(s -> System.out.println(s.getDescription().toString()));
+        this.subCategories.forEach(s -> System.out.println(s.getName().toString()));
+        this.subCategories.forEach(s -> System.out.println(s.getDescription().toString()));
 //        this.courses.forEach(s -> System.out.println(s.getSubCategory());
     }
 

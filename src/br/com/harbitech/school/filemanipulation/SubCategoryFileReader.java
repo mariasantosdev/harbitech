@@ -5,16 +5,16 @@ import br.com.harbitech.school.subcategory.SubCategory;
 import br.com.harbitech.school.subcategory.SubCategoryStatus;
 
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.*;
 
 public class SubCategoryFileReader {
 
-    public static void main(String[] args) throws IOException {
-
-        InputStream inputStream = new FileInputStream("planilha-dados-escola - Subcategoria.csv");
-        LinkedList<SubCategory> subCategories = new LinkedList<SubCategory>();
+    public List<SubCategory> readSubCategoriesFromFile(String filePath) throws FileNotFoundException {
+        InputStream inputStream = new FileInputStream(filePath);
+        List<SubCategory> subCategories = new LinkedList<SubCategory>();
         try (Scanner scanner = new Scanner(inputStream, "UTF-8")) {
             scanner.nextLine();
 
@@ -39,23 +39,13 @@ public class SubCategoryFileReader {
 
                 SubCategory subCategory = new SubCategory(subCategoryName, subCategoryCodeUrl,
                         order, subcategoryDescription, null,
-                        SubCategoryStatus.from(subcategoryStatus),category);
-                subCategories.push(subCategory);
+                        SubCategoryStatus.from(subcategoryStatus), category);
+                subCategories.add(subCategory);
             }
-            System.out.println("Exibindo subcategorias\n");
-
-            while (!subCategories.isEmpty()) {
-                SubCategory subCategory = subCategories.pop();
-
-                subCategory.getName();
-                subCategory.getCodeUrl();
-                subCategory.getOrderVisualization();
-                subCategory.getDescription();
-                subCategory.getStatus();
-                subCategory.getCategory().getName();
-                System.out.println(subCategory);
-            }
+            System.out.println("Exibindo sub-categorias");
         }
+        return subCategories;
     }
 }
+
 

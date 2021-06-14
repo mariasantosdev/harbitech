@@ -30,6 +30,8 @@ public class CategoryHtmlFile {
                 printStream.println("<td>" + c.getOrderVisualization() + "</td>");
                 printStream.println("<td>" + c.getIconPath() + "</td>");
                 printStream.println("<td>" + c.getHtmlHexColorCode() + "</td>");
+                printStream.println("<td>" + c.totalTimeInHoursOfCourse() + "</td>");
+
                 printStream.println("</tr>");
             }
 
