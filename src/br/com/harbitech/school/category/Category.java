@@ -3,14 +3,13 @@ package br.com.harbitech.school.category;
 import br.com.harbitech.school.course.Course;
 import br.com.harbitech.school.subcategory.SubCategory;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 import static br.com.harbitech.school.validation.ValidationUtil.validateNonBlankText;
 import static br.com.harbitech.school.validation.ValidationUtil.validateUrl;
 
-public class Category implements Serializable {
+public class Category {
 
     private Long id;
     private String name;
@@ -35,6 +34,11 @@ public class Category implements Serializable {
         this.orderVisualization = -1;
     }
 
+
+    public Category(String name) {
+        this.name = name;
+    }
+
     public Category(String name, String codeUrl, String description, String studyGuide, CategoryStatus status,
                     int orderVisualization, String iconPath, String htmlHexColorCode) {
         this.name = name;
@@ -45,6 +49,10 @@ public class Category implements Serializable {
         this.orderVisualization = orderVisualization;
         this.iconPath = iconPath;
         this.htmlHexColorCode = htmlHexColorCode;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     Long getId() {
@@ -83,30 +91,10 @@ public class Category implements Serializable {
         return htmlHexColorCode;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public void setCodeUrl(String codeUrl) {
-        this.codeUrl = codeUrl;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public void setIconPath(String iconPath) {
-        this.iconPath = iconPath;
-    }
-
-    public void setHtmlHexColorCode(String htmlHexColorCode) {
-        this.htmlHexColorCode = htmlHexColorCode;
-    }
-
     public void setAllSubCategorys() {
         this.subCategorys.forEach(s -> System.out.println(s.getName().toString()));
         this.subCategorys.forEach(s -> System.out.println(s.getDescription().toString()));
-        this.courses.forEach(s -> System.out.println(s.getSubCategory().toString()));
+//        this.courses.forEach(s -> System.out.println(s.getSubCategory());
     }
 
     public int totalCourses() {

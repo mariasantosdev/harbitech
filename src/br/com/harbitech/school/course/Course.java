@@ -1,6 +1,5 @@
 package br.com.harbitech.school.course;
 
-import br.com.harbitech.school.validation.ValidationUtil;
 import br.com.harbitech.school.subcategory.SubCategory;
 
 import static br.com.harbitech.school.validation.ValidationUtil.*;
@@ -33,15 +32,18 @@ public class Course {
         this.visibility = CourseVisibility.PRIVATE;
     }
 
-    public Course(String name, String codeUrl, int completionTimeInHours,
-                  String targetAudience, String instructor, String description, String developedSkills) {
+    public Course(String name, String codeUrl, int completionTimeInHours, CourseVisibility visibility,
+                  String targetAudience, String instructor, String description,
+                  String developedSkills, SubCategory subCategory) {
         this.name = name;
         this.codeUrl = codeUrl;
         this.completionTimeInHours = completionTimeInHours;
+        this.visibility = visibility;
         this.targetAudience = targetAudience;
         this.instructor = instructor;
         this.description = description;
         this.developedSkills = developedSkills;
+        this.subCategory = subCategory;
     }
 
     Long getId() {

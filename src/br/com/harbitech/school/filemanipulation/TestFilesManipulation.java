@@ -3,6 +3,7 @@ package br.com.harbitech.school.filemanipulation;
 import br.com.harbitech.school.category.Category;
 
 import java.io.IOException;
+import java.util.Collections;
 import java.util.List;
 
 public class TestFilesManipulation {

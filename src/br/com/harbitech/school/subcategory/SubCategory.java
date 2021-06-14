@@ -1,11 +1,11 @@
 package br.com.harbitech.school.subcategory;
 
+import br.com.harbitech.school.category.CategoryStatus;
 import br.com.harbitech.school.course.Course;
 import br.com.harbitech.school.validation.ValidationUtil;
 import br.com.harbitech.school.category.Category;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 import static br.com.harbitech.school.validation.ValidationUtil.*;
 
@@ -20,9 +20,10 @@ public class SubCategory {
     private int orderVisualization;
     private Category category;
 
-    public  SubCategory(String name){
+    public SubCategory(String name) {
         this.name = name;
     }
+
     public SubCategory(String name, String codeUrl, Category category){
         validateNonBlankText(name, "O nome da sub-categoria não pode estar em branco.");
         validateNonBlankText(codeUrl, "O código da URL da sub-categoria não pode estar em branco.");
@@ -33,6 +34,20 @@ public class SubCategory {
         this.codeUrl = codeUrl;
         this.category = category;
         this.status = SubCategoryStatus.INACTIVE;
+        this.orderVisualization = -1;
+    }
+
+
+    public SubCategory(String name, String codeUrl, int orderVisualization,
+                       String description, String studyGuide,
+                       SubCategoryStatus status, Category category) {
+        this.name = name;
+        this.codeUrl = codeUrl;
+        this.description = description;
+        this.studyGuide = studyGuide;
+        this.status = status;
+        this.orderVisualization = orderVisualization;
+        this.category = category;
     }
 
     Long getId() {
@@ -43,7 +58,7 @@ public class SubCategory {
         return name;
     }
 
-    String getCodeUrl() {
+    public String getCodeUrl() {
         return codeUrl;
     }
 
@@ -55,44 +70,16 @@ public class SubCategory {
         return studyGuide;
     }
 
-    SubCategoryStatus getStatus() {
+    public SubCategoryStatus getStatus() {
         return status;
     }
 
-    int getOrderVisualization() {
+    public int getOrderVisualization() {
         return orderVisualization;
     }
 
-    Category getCategory() {
+    public Category getCategory() {
         return category;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public void setCodeUrl(String codeUrl) {
-        this.codeUrl = codeUrl;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public void setStudyGuide(String studyGuide) {
-        this.studyGuide = studyGuide;
-    }
-
-    public void setStatus(SubCategoryStatus status) {
-        this.status = status;
-    }
-
-    public void setOrderVisualization(int orderVisualization) {
-        this.orderVisualization = orderVisualization;
-    }
-
-    public void setCategory(Category category) {
-        this.category = category;
     }
 
     @Override
