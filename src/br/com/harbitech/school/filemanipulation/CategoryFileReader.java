@@ -20,7 +20,7 @@ public class CategoryFileReader {
                 String[] categoryData = line.split(",");
                 String categoryName = categoryData[0];
                 String categoryCodeUrl = categoryData[1];
-                String categoryOrder  = categoryData[2];
+                String categoryOrder = categoryData[2];
                 String categoryDescription = categoryData[3];
                 String categoryStatus = categoryData[4];
                 String categoryIcon = categoryData[5];
@@ -28,16 +28,16 @@ public class CategoryFileReader {
 
                 int order = -1;
 
-                if(!categoryOrder.isBlank()){
+                if (!categoryOrder.isBlank()) {
                     order = Integer.parseInt(categoryOrder);
                 }
 
                 Category category = new Category(categoryName, categoryCodeUrl, categoryDescription, null,
-                        CategoryStatus.from(categoryStatus),order, categoryIcon, categoryColor);
+                        CategoryStatus.from(categoryStatus), order, categoryIcon, categoryColor);
 
                 categories.add(category);
             }
-            System.out.println("Exibindo Categorias\n");
+            System.out.println("Exibindo Categorias:\n");
         }
         return categories;
     }

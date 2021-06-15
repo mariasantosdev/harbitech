@@ -1,6 +1,7 @@
 package br.com.harbitech.school.filemanipulation;
 
 import br.com.harbitech.school.category.Category;
+import br.com.harbitech.school.course.Course;
 import br.com.harbitech.school.subcategory.SubCategory;
 
 import java.io.IOException;
@@ -18,6 +19,13 @@ public class TestFilesManipulation {
         List<SubCategory> subCategories = subCategoryFileReader.readSubCategoriesFromFile
                 ("planilha-dados-escola - Subcategoria.csv");
         subCategories.forEach(System.out::println);
+
+        CourseFileReader courseFileReader = new CourseFileReader();
+        List<Course> courses = courseFileReader.readCoursesFromFile("planilha-dados-escola - Curso.csv");
+        courses.forEach(System.out::println);
+
+        CategoryHtmlPageGenerator categoryHtmlReportGenerator = new CategoryHtmlPageGenerator();
+        categoryHtmlReportGenerator.generate("planilha-dados-escola - Categoria.html");
     }
 }
 

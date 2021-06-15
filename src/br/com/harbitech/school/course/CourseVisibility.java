@@ -1,14 +1,23 @@
 package br.com.harbitech.school.course;
 
+import java.util.Arrays;
+
 public enum CourseVisibility {
-    PUBLIC, PRIVATE;
+    PUBLIC("PÚBLICA"), PRIVATE("PRIVADA");
+    private final String description;
+
+    CourseVisibility(String description) {
+        this.description = description;
+    }
+
+    public String getDescription() {
+        return description;
+    }
 
     public static CourseVisibility from(String text) {
-        if ("PÚBLICA".equals(text)) {
-            return PUBLIC;
-        } else if ("PRIVADA".equals(text)) {
-            return PRIVATE;
-        }
-        throw new IllegalArgumentException("Texto da categoria inválido: " + text);
+        return Arrays.stream(CourseVisibility.values())
+                .filter(visibility -> visibility.getDescription().equals(text))
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException("Texto da categoria inválido: " + text));
     }
 }

@@ -1,11 +1,11 @@
 package br.com.harbitech.school.subcategory;
 
-import br.com.harbitech.school.category.CategoryStatus;
 import br.com.harbitech.school.course.Course;
-import br.com.harbitech.school.validation.ValidationUtil;
 import br.com.harbitech.school.category.Category;
 
 import java.util.*;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import static br.com.harbitech.school.validation.ValidationUtil.*;
 
@@ -19,9 +19,10 @@ public class SubCategory {
     private SubCategoryStatus status;
     private int orderVisualization;
     private Category category;
+    private List<Course> courses = new ArrayList<>();
 
-    public SubCategory(String name) {
-        this.name = name;
+    public SubCategory(String codeUrl) {
+        this.codeUrl = codeUrl;
     }
 
     public SubCategory(String name, String codeUrl, Category category){
@@ -41,6 +42,11 @@ public class SubCategory {
     public SubCategory(String name, String codeUrl, int orderVisualization,
                        String description, String studyGuide,
                        SubCategoryStatus status, Category category) {
+        validateNonBlankText(name, "O nome da sub-categoria não pode estar em branco.");
+        validateNonBlankText(codeUrl, "O código da URL da sub-categoria não pode estar em branco.");
+        validateNonNullClass(category, "A sub-categoria deve ter uma categoria associada.");
+        validateUrl(codeUrl, "O código da url da sub-categoria está incorreto (só aceita letras minúsculas e hífen): " + codeUrl) ;
+
         this.name = name;
         this.codeUrl = codeUrl;
         this.description = description;
@@ -54,6 +60,15 @@ public class SubCategory {
         return id;
     }
 
+
+    public List<Course> getCourses() {
+        return courses;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
     public String getName() {
         return name;
     }
@@ -62,24 +77,25 @@ public class SubCategory {
         return codeUrl;
     }
 
-    public String getDescription() {
-        return description;
-    }
-
-    String getStudyGuide() {
-        return studyGuide;
-    }
-
-    public SubCategoryStatus getStatus() {
-        return status;
-    }
-
-    public int getOrderVisualization() {
+    int getOrderVisualization() {
         return orderVisualization;
     }
 
     public Category getCategory() {
         return category;
+    }
+
+    int totalCourses() {
+        return this.courses.size();
+    }
+
+    public List <String> nameCourses() {
+        Stream<String> names = courses.stream().map(Course::getName);
+        return names.collect(Collectors.toList());
+    }
+
+    public int totalTimeInHoursOfCourse() {
+        return this.courses.stream().mapToInt(Course::getCompletionTimeInHours).sum();
     }
 
     @Override

@@ -5,14 +5,13 @@ import br.com.harbitech.school.subcategory.SubCategory;
 import br.com.harbitech.school.subcategory.SubCategoryStatus;
 
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.*;
 
 public class SubCategoryFileReader {
 
-    public List<SubCategory> readSubCategoriesFromFile(String filePath) throws FileNotFoundException {
+    public List<SubCategory> readSubCategoriesFromFile(String filePath) throws IOException {
         InputStream inputStream = new FileInputStream(filePath);
         List<SubCategory> subCategories = new LinkedList<SubCategory>();
         try (Scanner scanner = new Scanner(inputStream, "UTF-8")) {
@@ -27,7 +26,7 @@ public class SubCategoryFileReader {
                 String subCategoryOrder = subcategoryData[2];
                 String subcategoryDescription = subcategoryData[3];
                 String subcategoryStatus = subcategoryData[4];
-                String categoryName = subcategoryData[5];
+                String categoryUrlCode = subcategoryData[5];
 
                 int order = -1;
 
@@ -35,14 +34,14 @@ public class SubCategoryFileReader {
                     order = Integer.parseInt(subCategoryOrder);
                 }
 
-                Category category = new Category(categoryName);
+                Category category = new Category(categoryUrlCode);
 
                 SubCategory subCategory = new SubCategory(subCategoryName, subCategoryCodeUrl,
                         order, subcategoryDescription, null,
                         SubCategoryStatus.from(subcategoryStatus), category);
                 subCategories.add(subCategory);
             }
-            System.out.println("Exibindo sub-categorias");
+            System.out.println("Exibindo sub-categorias:\n");
         }
         return subCategories;
     }

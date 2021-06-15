@@ -33,8 +33,15 @@ public class Course {
     }
 
     public Course(String name, String codeUrl, int completionTimeInHours, CourseVisibility visibility,
-                  String targetAudience, String instructor, String description,
-                  String developedSkills, SubCategory subCategory) {
+                  String targetAudience, String instructor, String description, String developedSkills,
+                  SubCategory subCategory) {
+        validateNonBlankText(name, "O nome do curso não pode estar em branco.");
+        validateNonBlankText(codeUrl, "O código do curso não pode estar em branco.");
+        validateNonBlankText(instructor, "O nome do instrutor não pode estar em branco");
+        validateUrl(codeUrl, "O código da url do curso está incorreto (só aceita letras minúsculas e hífen): " + codeUrl);
+        validateInterval(completionTimeInHours,1,20,"O tempo estimado deve estar " +
+                "entre 1 hora até 20 horas.");
+
         this.name = name;
         this.codeUrl = codeUrl;
         this.completionTimeInHours = completionTimeInHours;
@@ -44,14 +51,6 @@ public class Course {
         this.description = description;
         this.developedSkills = developedSkills;
         this.subCategory = subCategory;
-    }
-
-    Long getId() {
-        return id;
-    }
-
-    String getCodeUrl() {
-        return codeUrl;
     }
 
     public String getName() {
@@ -62,60 +61,12 @@ public class Course {
         return completionTimeInHours;
     }
 
-    String getTargetAudience() {
-        return targetAudience;
-    }
-
-    String getInstructor() {
-        return instructor;
-    }
-
-    String getDescription() {
-        return description;
-    }
-
-    String getDevelopedSkills() {
-        return developedSkills;
-    }
-
     public SubCategory getSubCategory() {
         return subCategory;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public void setCodeUrl(String codeUrl) {
-        this.codeUrl = codeUrl;
-    }
-
     public void setCompletionTimeInHours(int completionTimeInHours) {
         this.completionTimeInHours = completionTimeInHours;
-    }
-
-    public void setVisibility(CourseVisibility visibility) {
-        this.visibility = visibility;
-    }
-
-    public void setTargetAudience(String targetAudience) {
-        this.targetAudience = targetAudience;
-    }
-
-    public void setInstructor(String instructor) {
-        this.instructor = instructor;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public void setDevelopedSkills(String developedSkills) {
-        this.developedSkills = developedSkills;
-    }
-
-    public void setSubCategory(SubCategory subCategory) {
-        this.subCategory = subCategory;
     }
 
     @Override

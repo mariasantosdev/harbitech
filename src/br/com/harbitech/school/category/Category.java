@@ -1,10 +1,11 @@
 package br.com.harbitech.school.category;
 
-import br.com.harbitech.school.course.Course;
 import br.com.harbitech.school.subcategory.SubCategory;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import static br.com.harbitech.school.validation.ValidationUtil.validateNonBlankText;
 import static br.com.harbitech.school.validation.ValidationUtil.validateUrl;
@@ -21,7 +22,6 @@ public class Category {
     private String iconPath;
     private String htmlHexColorCode;
     private List<SubCategory> subCategories = new ArrayList<>();
-    private List<Course> courses = new ArrayList<>();
 
     public Category(String name, String codeUrl) {
         validateNonBlankText(name, "O nome da categoria não pode estar em branco.");
@@ -35,8 +35,8 @@ public class Category {
     }
 
 
-    public Category(String name) {
-        this.name = name;
+    public Category(String codeUrl) {
+        this.codeUrl = codeUrl;
     }
 
     public Category(String name, String codeUrl, String description, String studyGuide, CategoryStatus status,
@@ -55,8 +55,8 @@ public class Category {
         this.name = name;
     }
 
-    Long getId() {
-        return id;
+    public List<SubCategory> getSubCategories() {
+        return subCategories;
     }
 
     public String getName() {
@@ -69,10 +69,6 @@ public class Category {
 
     public String getDescription() {
         return description;
-    }
-
-    String getStudyGuide() {
-        return studyGuide;
     }
 
     public CategoryStatus getStatus() {
@@ -91,18 +87,27 @@ public class Category {
         return htmlHexColorCode;
     }
 
-    public void setAllSubCategorys() {
-        this.subCategories.forEach(s -> System.out.println(s.getName().toString()));
-        this.subCategories.forEach(s -> System.out.println(s.getDescription().toString()));
-//        this.courses.forEach(s -> System.out.println(s.getSubCategory());
+    public int totalCourses() {
+        return this.subCategories.size();
     }
 
-    public int totalCourses() {
-        return this.courses.size();
+    public List<String> subCategoryDescription(){
+        Stream<String> descriptions = subCategories.stream().map(SubCategory::getDescription);
+        return descriptions.collect(Collectors.toList());
+    }
+
+    public List<String> subCategoryName(){
+        Stream<String> names = subCategories.stream().map(SubCategory::getName);
+        return names.collect(Collectors.toList());
+        }
+
+    public List<List<String>> nameCourses(){
+        Stream<List<String>> names = subCategories.stream().map(SubCategory::nameCourses);
+        return names.collect(Collectors.toList());
     }
 
     public int totalTimeInHoursOfCourse() {
-        return this.courses.stream().mapToInt(Course::getCompletionTimeInHours).sum();
+       return this.subCategories.stream().mapToInt(SubCategory::totalTimeInHoursOfCourse).sum();
     }
 
     @Override
