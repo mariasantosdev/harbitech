@@ -31,7 +31,7 @@ public class CategoryHtmlPageGenerator {
         printStream.println("<tr>");
         printStream.println("</tr>");
 
-        for (Category c: categories){
+        for (Category c : categories) {
             printStream.println("<tr align =center>");
             printStream.println("<td>" + c.getName() + "</td>");
             printStream.println("<td>" + c.getCodeUrl() + "</td>");

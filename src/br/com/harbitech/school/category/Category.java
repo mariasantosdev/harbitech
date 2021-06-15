@@ -23,6 +23,21 @@ public class Category {
     private String htmlHexColorCode;
     private List<SubCategory> subCategories = new ArrayList<>();
 
+    public Category(String name, String codeUrl, String description, String studyGuide, CategoryStatus status,
+                    int orderVisualization, String iconPath, String htmlHexColorCode) {
+        validateNonBlankText(name, "O nome da categoria não pode estar em branco.");
+        validateNonBlankText(codeUrl, "O código da URL da categoria não pode estar em branco.");
+        validateUrl(codeUrl, "O código da url da categoria está incorreto (só aceita letras minúsculas e hífen): " + codeUrl);
+        this.name = name;
+        this.codeUrl = codeUrl;
+        this.description = description;
+        this.studyGuide = studyGuide;
+        this.status = status;
+        this.orderVisualization = orderVisualization;
+        this.iconPath = iconPath;
+        this.htmlHexColorCode = htmlHexColorCode;
+    }
+
     public Category(String name, String codeUrl) {
         validateNonBlankText(name, "O nome da categoria não pode estar em branco.");
         validateNonBlankText(codeUrl, "O código da URL da categoria não pode estar em branco.");
@@ -34,21 +49,8 @@ public class Category {
         this.orderVisualization = -1;
     }
 
-
     public Category(String codeUrl) {
         this.codeUrl = codeUrl;
-    }
-
-    public Category(String name, String codeUrl, String description, String studyGuide, CategoryStatus status,
-                    int orderVisualization, String iconPath, String htmlHexColorCode) {
-        this.name = name;
-        this.codeUrl = codeUrl;
-        this.description = description;
-        this.studyGuide = studyGuide;
-        this.status = status;
-        this.orderVisualization = orderVisualization;
-        this.iconPath = iconPath;
-        this.htmlHexColorCode = htmlHexColorCode;
     }
 
     public void setName(String name) {

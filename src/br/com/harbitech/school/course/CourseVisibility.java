@@ -4,20 +4,21 @@ import java.util.Arrays;
 
 public enum CourseVisibility {
     PUBLIC("PÚBLICA"), PRIVATE("PRIVADA");
-    private final String description;
+
+    private String description;
 
     CourseVisibility(String description) {
         this.description = description;
     }
 
-    public String getDescription() {
+    private String getDescription() {
         return description;
     }
 
-    public static CourseVisibility from(String text) {
+    public static final CourseVisibility from(String text) {
         return Arrays.stream(CourseVisibility.values())
                 .filter(visibility -> visibility.getDescription().equals(text))
                 .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("Texto da categoria inválido: " + text));
+                .orElseThrow(() -> new IllegalArgumentException("Texto do curso inválido: " + text));
     }
 }

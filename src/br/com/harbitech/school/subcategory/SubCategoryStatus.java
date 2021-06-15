@@ -1,14 +1,24 @@
 package br.com.harbitech.school.subcategory;
 
-public enum SubCategoryStatus {
-    INACTIVE, ACTIVE;
+import java.util.Arrays;
 
-    public static SubCategoryStatus from(String text) {
-        if ("ATIVA".equals(text)) {
-            return ACTIVE;
-        } else if ("INATIVA".equals(text)) {
-            return INACTIVE;
-        }
-        throw new IllegalArgumentException("Texto da sub-categoria inválido: " + text);
+public enum SubCategoryStatus {
+    INACTIVE("INATIVA"), ACTIVE("ATIVA");
+
+    private String description;
+
+    SubCategoryStatus(String description) {
+        this.description = description;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public static final SubCategoryStatus from(String text) {
+        return Arrays.stream(SubCategoryStatus.values())
+                .filter(status -> status.getDescription().equals(text))
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException("Texto da sub-categoria inválido: " + text));
     }
 }

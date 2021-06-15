@@ -25,20 +25,6 @@ public class SubCategory {
         this.codeUrl = codeUrl;
     }
 
-    public SubCategory(String name, String codeUrl, Category category){
-        validateNonBlankText(name, "O nome da sub-categoria não pode estar em branco.");
-        validateNonBlankText(codeUrl, "O código da URL da sub-categoria não pode estar em branco.");
-        validateNonNullClass(category, "A sub-categoria deve ter uma categoria associada.");
-        validateUrl(codeUrl, "O código da url da sub-categoria está incorreto (só aceita letras minúsculas e hífen): " + codeUrl) ;
-
-        this.name = name;
-        this.codeUrl = codeUrl;
-        this.category = category;
-        this.status = SubCategoryStatus.INACTIVE;
-        this.orderVisualization = -1;
-    }
-
-
     public SubCategory(String name, String codeUrl, int orderVisualization,
                        String description, String studyGuide,
                        SubCategoryStatus status, Category category) {
@@ -56,10 +42,22 @@ public class SubCategory {
         this.category = category;
     }
 
+    public SubCategory(String name, String codeUrl, Category category){
+        validateNonBlankText(name, "O nome da sub-categoria não pode estar em branco.");
+        validateNonBlankText(codeUrl, "O código da URL da sub-categoria não pode estar em branco.");
+        validateNonNullClass(category, "A sub-categoria deve ter uma categoria associada.");
+        validateUrl(codeUrl, "O código da url da sub-categoria está incorreto (só aceita letras minúsculas e hífen): " + codeUrl) ;
+
+        this.name = name;
+        this.codeUrl = codeUrl;
+        this.category = category;
+        this.status = SubCategoryStatus.INACTIVE;
+        this.orderVisualization = -1;
+    }
+
     Long getId() {
         return id;
     }
-
 
     public List<Course> getCourses() {
         return courses;
@@ -77,16 +75,8 @@ public class SubCategory {
         return codeUrl;
     }
 
-    int getOrderVisualization() {
-        return orderVisualization;
-    }
-
     public Category getCategory() {
         return category;
-    }
-
-    int totalCourses() {
-        return this.courses.size();
     }
 
     public List <String> nameCourses() {

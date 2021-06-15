@@ -1,15 +1,24 @@
 package br.com.harbitech.school.category;
 
-public enum CategoryStatus {
-    INACTIVE, ACTIVE;
+import java.util.Arrays;
 
-    public static CategoryStatus from(String text) {
-        if ("ATIVA".equals(text)) {
-            return ACTIVE;
-        } else if ("INATIVA".equals(text)) {
-            return INACTIVE;
-        }
-        throw new IllegalArgumentException("Texto da categoria inválido: " + text);
+public enum CategoryStatus {
+    INACTIVE("INATIVA"), ACTIVE("ATIVA");
+
+    private String description;
+
+    CategoryStatus(String description) {
+        this.description = description;
     }
 
+    private String getDescription() {
+        return description;
+    }
+
+    public static final CategoryStatus from(String text) {
+        return Arrays.stream(CategoryStatus.values())
+                .filter(status -> status.getDescription().equals(text))
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException("Texto da categoria inválido: " + text));
+    }
 }

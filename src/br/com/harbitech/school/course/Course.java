@@ -17,21 +17,6 @@ public class Course {
     private String developedSkills;
     private SubCategory subCategory;
 
-    public Course(String name, String codeUrl, int completionTimeInHours, String instructor){
-        validateNonBlankText(name, "O nome do curso não pode estar em branco.");
-        validateNonBlankText(codeUrl, "O código do curso não pode estar em branco.");
-        validateNonBlankText(instructor, "O nome do instrutor não pode estar em branco");
-        validateUrl(codeUrl, "O código da url do curso está incorreto (só aceita letras minúsculas e hífen): " + codeUrl);
-        validateInterval(completionTimeInHours,1,20,"O tempo estimado deve estar " +
-                "entre 1 hora até 20 horas.");
-
-        this.name = name;
-        this.codeUrl = codeUrl;
-        this.completionTimeInHours = -1;
-        this.instructor = instructor;
-        this.visibility = CourseVisibility.PRIVATE;
-    }
-
     public Course(String name, String codeUrl, int completionTimeInHours, CourseVisibility visibility,
                   String targetAudience, String instructor, String description, String developedSkills,
                   SubCategory subCategory) {
@@ -53,6 +38,21 @@ public class Course {
         this.subCategory = subCategory;
     }
 
+    public Course(String name, String codeUrl, int completionTimeInHours, String instructor){
+        validateNonBlankText(name, "O nome do curso não pode estar em branco.");
+        validateNonBlankText(codeUrl, "O código do curso não pode estar em branco.");
+        validateNonBlankText(instructor, "O nome do instrutor não pode estar em branco");
+        validateUrl(codeUrl, "O código da url do curso está incorreto (só aceita letras minúsculas e hífen): " + codeUrl);
+        validateInterval(completionTimeInHours,1,20,"O tempo estimado deve estar " +
+                "entre 1 hora até 20 horas.");
+
+        this.name = name;
+        this.codeUrl = codeUrl;
+        this.completionTimeInHours = -1;
+        this.instructor = instructor;
+        this.visibility = CourseVisibility.PRIVATE;
+    }
+
     public String getName() {
         return name;
     }
@@ -63,10 +63,6 @@ public class Course {
 
     public SubCategory getSubCategory() {
         return subCategory;
-    }
-
-    public void setCompletionTimeInHours(int completionTimeInHours) {
-        this.completionTimeInHours = completionTimeInHours;
     }
 
     @Override
