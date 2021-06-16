@@ -21,10 +21,6 @@ public class SubCategory {
     private Category category;
     private List<Course> courses = new ArrayList<>();
 
-    public SubCategory(String codeUrl) {
-        this.codeUrl = codeUrl;
-    }
-
     public SubCategory(String name, String codeUrl, int orderVisualization,
                        String description, String studyGuide,
                        SubCategoryStatus status, Category category) {
@@ -40,6 +36,7 @@ public class SubCategory {
         this.status = status;
         this.orderVisualization = orderVisualization;
         this.category = category;
+        this.category.addSubcategory(this);
     }
 
     public SubCategory(String name, String codeUrl, Category category){
@@ -59,12 +56,25 @@ public class SubCategory {
         return id;
     }
 
+    public String getDescription() {
+        return description;
+    }
+
     public List<Course> getCourses() {
         return courses;
     }
 
-    public String getDescription() {
-        return description;
+    public int totalCourses() {
+       return courses.size();
+    }
+
+    public List <String> nameCourses() {
+        Stream<String> names = courses.stream().map(Course::getName);
+        return names.collect(Collectors.toList());
+    }
+
+    public int totalTimeInHoursOfCourse() {
+        return this.courses.stream().mapToInt(Course::getCompletionTimeInHours).sum();
     }
 
     public String getName() {
@@ -79,15 +89,6 @@ public class SubCategory {
         return category;
     }
 
-    public List <String> nameCourses() {
-        Stream<String> names = courses.stream().map(Course::getName);
-        return names.collect(Collectors.toList());
-    }
-
-    public int totalTimeInHoursOfCourse() {
-        return this.courses.stream().mapToInt(Course::getCompletionTimeInHours).sum();
-    }
-
     @Override
     public String toString() {
         return "SubCategory{" +
@@ -100,5 +101,9 @@ public class SubCategory {
                 ", orderVisualization=" + orderVisualization +
                 ", category=" + category +
                 '}';
+    }
+
+    public void addCourse(Course course) {
+        this.courses.add(course);
     }
 }

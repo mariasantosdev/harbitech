@@ -5,7 +5,9 @@ import br.com.harbitech.school.course.Course;
 import br.com.harbitech.school.subcategory.SubCategory;
 
 import java.io.*;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class CategoryHtmlPageGenerator {
 
@@ -42,9 +44,9 @@ public class CategoryHtmlPageGenerator {
             printStream.println("<td>" + c.getHtmlHexColorCode() + "</td>");
             printStream.println("<td>" + c.totalCourses() + "</td>");
             printStream.println("<td>" + c.totalTimeInHoursOfCourse() + "</td>");
-            printStream.println("<td>" + c.subCategoryName() + "</td>");
+//            printStream.println("<td>" + c.subCategoryName() + "</td>");
             printStream.println("<td>" + c.subCategoryDescription() + "</td>");
-            printStream.println("<td>" + c.nameCourses() + "</td>");
+//            printStream.println("<td>" + c.nameCourses() + "</td>");
 
             printStream.println("</tr>");
         }
@@ -60,36 +62,22 @@ public class CategoryHtmlPageGenerator {
         CategoryFileReader categoryFileReader = new CategoryFileReader();
         List<Category> categories = categoryFileReader.readCategoriesFromFile("planilha-dados-escola - Categoria.csv");
 
+        Map<String, Category> categoryMap = new HashMap<>();
+        for (Category c : categories) {
+            categoryMap.put(c.getCodeUrl(), c);
+        }
+
         SubCategoryFileReader subCategoryFileReader = new SubCategoryFileReader();
-        List<SubCategory> subCategories = subCategoryFileReader.readSubCategoriesFromFile("planilha-dados-escola - Subcategoria.csv");
+        List<SubCategory> subCategories = subCategoryFileReader.readSubCategoriesFromFile("planilha-dados-escola - Subcategoria.csv", categoryMap);
+
+        Map<String, SubCategory> subCategoryMap = new HashMap<>();
+        for (SubCategory sc : subCategories) {
+            subCategoryMap.put(sc.getCodeUrl(), sc);
+        }
 
         CourseFileReader courseFileReader = new CourseFileReader();
-        List<Course> courses = courseFileReader.readCoursesFromFile("planilha-dados-escola - Curso.csv");
-
-        for (SubCategory subCategory : subCategories) {
-            for (Course course : courses) {
-                if (isCourseBelongsToSubCategory(subCategory, course)) {
-                    subCategory.getCourses().add(course);
-                }
-            }
-        }
-
-        for (Category category : categories) {
-            for (SubCategory subCategory : subCategories) {
-                if (isSubCategoryBelongsToCategory(category, subCategory)) {
-                    category.getSubCategories().add(subCategory);
-                }
-            }
-        }
+        List<Course> courses = courseFileReader.readCoursesFromFile("planilha-dados-escola - Curso.csv", subCategoryMap);
         return categories;
-    }
-
-    private boolean isCourseBelongsToSubCategory(SubCategory subCategory, Course course) {
-        return subCategory.getCodeUrl().equals(course.getSubCategory().getCodeUrl());
-    }
-
-    private boolean isSubCategoryBelongsToCategory(Category category, SubCategory subCategory) {
-        return subCategory.getCategory().getCodeUrl().equals(category.getCodeUrl());
     }
 }
 

@@ -11,7 +11,8 @@ import java.util.*;
 
 public class SubCategoryFileReader {
 
-    public List<SubCategory> readSubCategoriesFromFile(String filePath) throws IOException {
+    public List<SubCategory> readSubCategoriesFromFile(String filePath, Map<String,Category> categoryMap) throws IOException {
+
         InputStream inputStream = new FileInputStream(filePath);
         List<SubCategory> subCategories = new LinkedList<SubCategory>();
         try (Scanner scanner = new Scanner(inputStream, "UTF-8")) {
@@ -34,7 +35,8 @@ public class SubCategoryFileReader {
                     order = Integer.parseInt(subCategoryOrder);
                 }
 
-                Category category = new Category(categoryUrlCode);
+                Category category = Optional.ofNullable(categoryMap.get(categoryUrlCode))
+                        .orElseThrow(() -> new IllegalArgumentException("Código da subcategoria não encontrado" + categoryUrlCode));
 
                 SubCategory subCategory = new SubCategory(subCategoryName, subCategoryCodeUrl,
                         order, subcategoryDescription, null,

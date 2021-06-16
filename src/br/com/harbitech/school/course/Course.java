@@ -36,6 +36,7 @@ public class Course {
         this.description = description;
         this.developedSkills = developedSkills;
         this.subCategory = subCategory;
+        this.subCategory.addCourse(this);
     }
 
     public Course(String name, String codeUrl, int completionTimeInHours, String instructor){
@@ -64,6 +65,7 @@ public class Course {
     public SubCategory getSubCategory() {
         return subCategory;
     }
+
 
     @Override
     public String toString() {

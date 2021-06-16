@@ -49,10 +49,6 @@ public class Category {
         this.orderVisualization = -1;
     }
 
-    public Category(String codeUrl) {
-        this.codeUrl = codeUrl;
-    }
-
     public void setName(String name) {
         this.name = name;
     }
@@ -90,7 +86,7 @@ public class Category {
     }
 
     public int totalCourses() {
-        return this.subCategories.size();
+        return this.subCategories.stream().mapToInt(SubCategory::totalCourses).sum();
     }
 
     public List<String> subCategoryDescription(){
@@ -98,10 +94,7 @@ public class Category {
         return descriptions.collect(Collectors.toList());
     }
 
-    public List<String> subCategoryName(){
-        Stream<String> names = subCategories.stream().map(SubCategory::getName);
-        return names.collect(Collectors.toList());
-        }
+        //TODO RENOMEAR PARA ALL ALGUMA COISA E ORDENAR(PELO CAMPO ORDER)
 
     public List<List<String>> nameCourses(){
         Stream<List<String>> names = subCategories.stream().map(SubCategory::nameCourses);
@@ -125,6 +118,10 @@ public class Category {
                 ", iconPath='" + iconPath + '\'' +
                 ", htmlHexColorCode='" + htmlHexColorCode + '\'' +
                 '}';
+    }
+
+    public void addSubcategory(SubCategory subCategory) {
+        this.subCategories.add(subCategory);
     }
 }
 

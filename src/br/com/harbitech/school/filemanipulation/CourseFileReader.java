@@ -7,13 +7,11 @@ import br.com.harbitech.school.subcategory.SubCategory;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
 
 public class CourseFileReader {
 
-    public List<Course> readCoursesFromFile(String filePath) throws IOException {
+    public List<Course> readCoursesFromFile(String filePath, Map<String,SubCategory> subCategoryMap) throws IOException {
         InputStream inputStream = new FileInputStream(filePath);
         List<Course> courses = new LinkedList<Course>();
         try (Scanner scanner = new Scanner(inputStream, "UTF-8")) {
@@ -39,7 +37,8 @@ public class CourseFileReader {
                     order = Integer.parseInt(courseCompletionTimeInHours);
                 }
 
-                SubCategory subCategory = new SubCategory(subCategoryUrlCode);
+                SubCategory subCategory = Optional.ofNullable(subCategoryMap.get(subCategoryUrlCode))
+                        .orElseThrow(() -> new IllegalArgumentException("Código da subcategoria não encontrado" + subCategoryUrlCode));
 
                 Course course = new Course(courseName, courseCodeUrl, order, CourseVisibility.from(courseVisibility),
                         courseTargetAudience, courseInstructor, courseDescription, courseDevelopedSkills, subCategory);
