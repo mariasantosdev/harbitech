@@ -44,9 +44,7 @@ public class CategoryHtmlPageGenerator {
             printStream.println("<td>" + c.getHtmlHexColorCode() + "</td>");
             printStream.println("<td>" + c.totalCourses() + "</td>");
             printStream.println("<td>" + c.totalTimeInHoursOfCourse() + "</td>");
-//            printStream.println("<td>" + c.subCategoryName() + "</td>");
-            printStream.println("<td>" + c.subCategoryDescription() + "</td>");
-//            printStream.println("<td>" + c.nameCourses() + "</td>");
+            printStream.println("<td>" + c.allSubCategories()+ "</td>");
 
             printStream.println("</tr>");
         }

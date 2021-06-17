@@ -2,15 +2,14 @@ package br.com.harbitech.school.category;
 
 import br.com.harbitech.school.subcategory.SubCategory;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import static br.com.harbitech.school.validation.ValidationUtil.validateNonBlankText;
 import static br.com.harbitech.school.validation.ValidationUtil.validateUrl;
 
-public class Category {
+public class Category{
 
     private Long id;
     private String name;
@@ -89,17 +88,16 @@ public class Category {
         return this.subCategories.stream().mapToInt(SubCategory::totalCourses).sum();
     }
 
-    public List<String> subCategoryDescription(){
-        Stream<String> descriptions = subCategories.stream().map(SubCategory::getDescription);
-        return descriptions.collect(Collectors.toList());
+    public List<SubCategory> allSubCategories() {
+        for (SubCategory sc : subCategories) {
+            sc.getName();
+            sc.getDescription();
+            sc.nameCourses();
+        return subCategories;
+        }
+        return null;
     }
-
-        //TODO RENOMEAR PARA ALL ALGUMA COISA E ORDENAR(PELO CAMPO ORDER)
-
-    public List<List<String>> nameCourses(){
-        Stream<List<String>> names = subCategories.stream().map(SubCategory::nameCourses);
-        return names.collect(Collectors.toList());
-    }
+    //TODO RENOMEAR PARA ALL ALGUMA COISA E ORDENAR(PELO CAMPO ORDER)
 
     public int totalTimeInHoursOfCourse() {
        return this.subCategories.stream().mapToInt(SubCategory::totalTimeInHoursOfCourse).sum();
@@ -123,5 +121,6 @@ public class Category {
     public void addSubcategory(SubCategory subCategory) {
         this.subCategories.add(subCategory);
     }
+
 }
 

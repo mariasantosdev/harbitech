@@ -1,5 +1,6 @@
 package br.com.harbitech.school.subcategory;
 
+import br.com.harbitech.school.category.CategoryStatus;
 import br.com.harbitech.school.course.Course;
 import br.com.harbitech.school.category.Category;
 
@@ -9,7 +10,7 @@ import java.util.stream.Stream;
 
 import static br.com.harbitech.school.validation.ValidationUtil.*;
 
-public class SubCategory {
+public class SubCategory implements Comparable<SubCategory>{
 
     private Long id;
     private String name;
@@ -52,9 +53,14 @@ public class SubCategory {
         this.orderVisualization = -1;
     }
 
+    public int getOrderVisualization() {
+        return orderVisualization;
+    }
+
     Long getId() {
         return id;
     }
+
 
     public String getDescription() {
         return description;
@@ -105,5 +111,13 @@ public class SubCategory {
 
     public void addCourse(Course course) {
         this.courses.add(course);
+    }
+
+    @Override
+    public int compareTo(SubCategory otherSubCategory) {
+        if (otherSubCategory.getOrderVisualization() < this.orderVisualization) {
+            return otherSubCategory.getOrderVisualization();
+        }
+        return this.orderVisualization;
     }
 }

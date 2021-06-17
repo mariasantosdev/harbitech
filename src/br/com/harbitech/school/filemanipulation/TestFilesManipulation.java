@@ -6,7 +6,9 @@ import br.com.harbitech.school.subcategory.SubCategory;
 
 import java.io.IOException;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class TestFilesManipulation {
     public static void main(String[] args) throws IOException {
@@ -15,17 +17,30 @@ public class TestFilesManipulation {
                 ("planilha-dados-escola - Categoria.csv");
         categories.forEach(System.out::println);
 
+        Map<String, Category> categoryMap = new HashMap<>();
+        for (Category c : categories) {
+            categoryMap.put(c.getCodeUrl(), c);
+        }
+
         SubCategoryFileReader subCategoryFileReader = new SubCategoryFileReader();
-        List<SubCategory> subCategories = subCategoryFileReader.readSubCategoriesFromFile
-                ("planilha-dados-escola - Subcategoria.csv",categories);
+        List<SubCategory> subCategories = subCategoryFileReader.readSubCategoriesFromFile("planilha-dados-escola - Subcategoria.csv", categoryMap);
         subCategories.forEach(System.out::println);
-//
+
 //        CourseFileReader courseFileReader = new CourseFileReader();
 //        List<Course> courses = courseFileReader.readCoursesFromFile("planilha-dados-escola - Curso.csv");
 //        courses.forEach(System.out::println);
 //
 //        CategoryHtmlPageGenerator categoryHtmlReportGenerator = new CategoryHtmlPageGenerator();
 //        categoryHtmlReportGenerator.generate("planilha-dados-escola - Categoria.html");
+
+        Map<String, SubCategory> subCategoryMap = new HashMap<>();
+        for (SubCategory sc : subCategories) {
+            subCategoryMap.put(sc.getCodeUrl(), sc);
+        }
+
+        CourseFileReader courseFileReader = new CourseFileReader();
+        List<Course> courses = courseFileReader.readCoursesFromFile("planilha-dados-escola - Curso.csv", subCategoryMap);
+        courses.forEach(System.out::println);
     }
 }
 
