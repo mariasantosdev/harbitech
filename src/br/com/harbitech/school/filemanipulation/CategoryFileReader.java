@@ -32,7 +32,7 @@ public class CategoryFileReader {
                     order = Integer.parseInt(categoryOrder);
                 }
 
-                Category category = new Category(categoryName, categoryCodeUrl, categoryDescription, null,
+                Category category = new Category(categoryName, categoryCodeUrl, categoryDescription,
                         CategoryStatus.from(categoryStatus), order, categoryIcon, categoryColor);
 
                 categories.add(category);

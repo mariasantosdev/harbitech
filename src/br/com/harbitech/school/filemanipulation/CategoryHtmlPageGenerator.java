@@ -28,6 +28,7 @@ public class CategoryHtmlPageGenerator {
     private void writePage(List<Category> categories, PrintStream printStream) {
         printStream.println("<html>");
         printStream.println("<head>");
+        printStream.println("</head>");
         printStream.println("<body>");
         printStream.println("<table border=1 frame=void rules=rows>");
         printStream.println("<tr>");
@@ -62,7 +63,6 @@ public class CategoryHtmlPageGenerator {
         }
         printStream.println("</table>");
         printStream.println("</body>");
-        printStream.println("</head>");
         printStream.println("</html>");
     }
 

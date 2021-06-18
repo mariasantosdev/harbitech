@@ -31,19 +31,14 @@ public class Category {
         this.orderVisualization = -1;
     }
 
-    public Category(String name, String codeUrl,String description, String studyGuide, CategoryStatus status,
+    public Category(String name, String codeUrl,String description, CategoryStatus status,
                     int orderVisualization, String iconPath, String htmlHexColorCode) {
         this(name,codeUrl);
         this.description = description;
-        this.studyGuide = studyGuide;
         this.status = status;
         this.orderVisualization = orderVisualization;
         this.iconPath = iconPath;
         this.htmlHexColorCode = htmlHexColorCode;
-    }
-
-    public void setName(String name) {
-        this.name = name;
     }
 
     public List<SubCategory> getSubCategories() {

@@ -27,7 +27,7 @@ public class Course {
 
         this.name = name;
         this.codeUrl = codeUrl;
-        this.completionTimeInHours = -1;
+        this.completionTimeInHours = completionTimeInHours;
         this.instructor = instructor;
         this.visibility = CourseVisibility.PRIVATE;
     }
@@ -36,9 +36,6 @@ public class Course {
                   String targetAudience, String instructor, String description, String developedSkills,
                   SubCategory subCategory) {
         this(name, codeUrl, completionTimeInHours, instructor);
-        this.name = name;
-        this.codeUrl = codeUrl;
-        this.completionTimeInHours = completionTimeInHours;
         this.visibility = visibility;
         this.targetAudience = targetAudience;
         this.instructor = instructor;
