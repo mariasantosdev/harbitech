@@ -3,13 +3,11 @@ package br.com.harbitech.school.category;
 import br.com.harbitech.school.subcategory.SubCategory;
 
 import java.util.*;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import static br.com.harbitech.school.validation.ValidationUtil.validateNonBlankText;
 import static br.com.harbitech.school.validation.ValidationUtil.validateUrl;
 
-public class Category{
+public class Category {
 
     private Long id;
     private String name;
@@ -22,21 +20,6 @@ public class Category{
     private String htmlHexColorCode;
     private List<SubCategory> subCategories = new ArrayList<>();
 
-    public Category(String name, String codeUrl, String description, String studyGuide, CategoryStatus status,
-                    int orderVisualization, String iconPath, String htmlHexColorCode) {
-        validateNonBlankText(name, "O nome da categoria não pode estar em branco.");
-        validateNonBlankText(codeUrl, "O código da URL da categoria não pode estar em branco.");
-        validateUrl(codeUrl, "O código da url da categoria está incorreto (só aceita letras minúsculas e hífen): " + codeUrl);
-        this.name = name;
-        this.codeUrl = codeUrl;
-        this.description = description;
-        this.studyGuide = studyGuide;
-        this.status = status;
-        this.orderVisualization = orderVisualization;
-        this.iconPath = iconPath;
-        this.htmlHexColorCode = htmlHexColorCode;
-    }
-
     public Category(String name, String codeUrl) {
         validateNonBlankText(name, "O nome da categoria não pode estar em branco.");
         validateNonBlankText(codeUrl, "O código da URL da categoria não pode estar em branco.");
@@ -46,6 +29,17 @@ public class Category{
         this.codeUrl = codeUrl;
         this.status = CategoryStatus.INACTIVE;
         this.orderVisualization = -1;
+    }
+
+    public Category(String name, String codeUrl,String description, String studyGuide, CategoryStatus status,
+                    int orderVisualization, String iconPath, String htmlHexColorCode) {
+        this(name,codeUrl);
+        this.description = description;
+        this.studyGuide = studyGuide;
+        this.status = status;
+        this.orderVisualization = orderVisualization;
+        this.iconPath = iconPath;
+        this.htmlHexColorCode = htmlHexColorCode;
     }
 
     public void setName(String name) {
@@ -72,10 +66,6 @@ public class Category{
         return status;
     }
 
-    public int getOrderVisualization() {
-        return orderVisualization;
-    }
-
     public String getIconPath() {
         return iconPath;
     }
@@ -87,17 +77,6 @@ public class Category{
     public int totalCourses() {
         return this.subCategories.stream().mapToInt(SubCategory::totalCourses).sum();
     }
-
-    public List<SubCategory> allSubCategories() {
-        for (SubCategory sc : subCategories) {
-            sc.getName();
-            sc.getDescription();
-            sc.nameCourses();
-        return subCategories;
-        }
-        return null;
-    }
-    //TODO RENOMEAR PARA ALL ALGUMA COISA E ORDENAR(PELO CAMPO ORDER)
 
     public int totalTimeInHoursOfCourse() {
        return this.subCategories.stream().mapToInt(SubCategory::totalTimeInHoursOfCourse).sum();

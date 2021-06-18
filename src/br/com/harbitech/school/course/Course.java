@@ -17,28 +17,6 @@ public class Course {
     private String developedSkills;
     private SubCategory subCategory;
 
-    public Course(String name, String codeUrl, int completionTimeInHours, CourseVisibility visibility,
-                  String targetAudience, String instructor, String description, String developedSkills,
-                  SubCategory subCategory) {
-        validateNonBlankText(name, "O nome do curso não pode estar em branco.");
-        validateNonBlankText(codeUrl, "O código do curso não pode estar em branco.");
-        validateNonBlankText(instructor, "O nome do instrutor não pode estar em branco");
-        validateUrl(codeUrl, "O código da url do curso está incorreto (só aceita letras minúsculas e hífen): " + codeUrl);
-        validateInterval(completionTimeInHours,1,20,"O tempo estimado deve estar " +
-                "entre 1 hora até 20 horas.");
-
-        this.name = name;
-        this.codeUrl = codeUrl;
-        this.completionTimeInHours = completionTimeInHours;
-        this.visibility = visibility;
-        this.targetAudience = targetAudience;
-        this.instructor = instructor;
-        this.description = description;
-        this.developedSkills = developedSkills;
-        this.subCategory = subCategory;
-        this.subCategory.addCourse(this);
-    }
-
     public Course(String name, String codeUrl, int completionTimeInHours, String instructor){
         validateNonBlankText(name, "O nome do curso não pode estar em branco.");
         validateNonBlankText(codeUrl, "O código do curso não pode estar em branco.");
@@ -54,6 +32,22 @@ public class Course {
         this.visibility = CourseVisibility.PRIVATE;
     }
 
+    public Course(String name, String codeUrl, int completionTimeInHours, CourseVisibility visibility,
+                  String targetAudience, String instructor, String description, String developedSkills,
+                  SubCategory subCategory) {
+        this(name, codeUrl, completionTimeInHours, instructor);
+        this.name = name;
+        this.codeUrl = codeUrl;
+        this.completionTimeInHours = completionTimeInHours;
+        this.visibility = visibility;
+        this.targetAudience = targetAudience;
+        this.instructor = instructor;
+        this.description = description;
+        this.developedSkills = developedSkills;
+        this.subCategory = subCategory;
+        this.subCategory.addCourse(this);
+    }
+
     public String getName() {
         return name;
     }
@@ -65,7 +59,6 @@ public class Course {
     public SubCategory getSubCategory() {
         return subCategory;
     }
-
 
     @Override
     public String toString() {

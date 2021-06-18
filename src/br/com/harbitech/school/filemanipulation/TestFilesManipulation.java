@@ -26,21 +26,24 @@ public class TestFilesManipulation {
         List<SubCategory> subCategories = subCategoryFileReader.readSubCategoriesFromFile("planilha-dados-escola - Subcategoria.csv", categoryMap);
         subCategories.forEach(System.out::println);
 
-//        CourseFileReader courseFileReader = new CourseFileReader();
-//        List<Course> courses = courseFileReader.readCoursesFromFile("planilha-dados-escola - Curso.csv");
-//        courses.forEach(System.out::println);
-//
-//        CategoryHtmlPageGenerator categoryHtmlReportGenerator = new CategoryHtmlPageGenerator();
-//        categoryHtmlReportGenerator.generate("planilha-dados-escola - Categoria.html");
-
         Map<String, SubCategory> subCategoryMap = new HashMap<>();
         for (SubCategory sc : subCategories) {
             subCategoryMap.put(sc.getCodeUrl(), sc);
         }
 
         CourseFileReader courseFileReader = new CourseFileReader();
-        List<Course> courses = courseFileReader.readCoursesFromFile("planilha-dados-escola - Curso.csv", subCategoryMap);
+        List<Course> courses = courseFileReader.readCoursesFromFile("planilha-dados-escola - Curso2.csv", subCategoryMap);
         courses.forEach(System.out::println);
+
+        //        Map<String, SubCategory> subCategoryMap = new HashMap<>();
+//        for (SubCategory sc : subCategories) {
+//            subCategoryMap.put(sc.getCodeUrl(), sc);
+//        }
+//
+//        CourseFileReader courseFileReader = new CourseFileReader();
+//        List<Course> courses = courseFileReader.readCoursesFromFile("planilha-dados-escola - Curso.csv", subCategoryMap);
+//        courses.forEach(System.out::println);
+
     }
 }
 

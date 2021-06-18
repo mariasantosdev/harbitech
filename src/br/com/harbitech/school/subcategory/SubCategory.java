@@ -1,6 +1,5 @@
 package br.com.harbitech.school.subcategory;
 
-import br.com.harbitech.school.category.CategoryStatus;
 import br.com.harbitech.school.course.Course;
 import br.com.harbitech.school.category.Category;
 
@@ -22,24 +21,6 @@ public class SubCategory implements Comparable<SubCategory>{
     private Category category;
     private List<Course> courses = new ArrayList<>();
 
-    public SubCategory(String name, String codeUrl, int orderVisualization,
-                       String description, String studyGuide,
-                       SubCategoryStatus status, Category category) {
-        validateNonBlankText(name, "O nome da sub-categoria não pode estar em branco.");
-        validateNonBlankText(codeUrl, "O código da URL da sub-categoria não pode estar em branco.");
-        validateNonNullClass(category, "A sub-categoria deve ter uma categoria associada.");
-        validateUrl(codeUrl, "O código da url da sub-categoria está incorreto (só aceita letras minúsculas e hífen): " + codeUrl) ;
-
-        this.name = name;
-        this.codeUrl = codeUrl;
-        this.description = description;
-        this.studyGuide = studyGuide;
-        this.status = status;
-        this.orderVisualization = orderVisualization;
-        this.category = category;
-        this.category.addSubcategory(this);
-    }
-
     public SubCategory(String name, String codeUrl, Category category){
         validateNonBlankText(name, "O nome da sub-categoria não pode estar em branco.");
         validateNonBlankText(codeUrl, "O código da URL da sub-categoria não pode estar em branco.");
@@ -53,6 +34,21 @@ public class SubCategory implements Comparable<SubCategory>{
         this.orderVisualization = -1;
     }
 
+    public SubCategory(String name, String codeUrl, int orderVisualization,
+                       String description, String studyGuide,
+                       SubCategoryStatus status, Category category) {
+
+        this(name,codeUrl,category);
+        this.name = name;
+        this.codeUrl = codeUrl;
+        this.description = description;
+        this.studyGuide = studyGuide;
+        this.status = status;
+        this.orderVisualization = orderVisualization;
+        this.category = category;
+        this.category.addSubcategory(this);
+    }
+
     public int getOrderVisualization() {
         return orderVisualization;
     }
@@ -60,7 +56,6 @@ public class SubCategory implements Comparable<SubCategory>{
     Long getId() {
         return id;
     }
-
 
     public String getDescription() {
         return description;
@@ -74,7 +69,7 @@ public class SubCategory implements Comparable<SubCategory>{
        return courses.size();
     }
 
-    public List <String> nameCourses() {
+    public List <String> nameOfCourses() {
         Stream<String> names = courses.stream().map(Course::getName);
         return names.collect(Collectors.toList());
     }
@@ -109,15 +104,15 @@ public class SubCategory implements Comparable<SubCategory>{
                 '}';
     }
 
-    public void addCourse(Course course) {
-        this.courses.add(course);
-    }
-
     @Override
     public int compareTo(SubCategory otherSubCategory) {
         if (otherSubCategory.getOrderVisualization() < this.orderVisualization) {
             return otherSubCategory.getOrderVisualization();
         }
         return this.orderVisualization;
+    }
+
+    public void addCourse(Course course) {
+        this.courses.add(course);
     }
 }
