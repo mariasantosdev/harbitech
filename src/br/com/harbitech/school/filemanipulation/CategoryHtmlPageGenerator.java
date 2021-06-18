@@ -37,9 +37,7 @@ public class CategoryHtmlPageGenerator {
         printStream.println("<th>" + "Cor" + "</th>");
         printStream.println("<th>" + "Número de cursos" + "</th>");
         printStream.println("<th>" + "Total de horas estimadas dos cursos" + "</th>");
-        printStream.println("<th>" + "Nomes das subcategorias" + "</th>");
-        printStream.println("<th>" + "Descrição das subcategorias" + "</th>");
-        printStream.println("<th>" + "Nomes dos cursos das subcategorias" + "</th>");
+        printStream.println("<th>" + "Subcategorias" + "</th>");
         printStream.println("</tr>");
 
         for (Category c : categories) {
@@ -54,25 +52,14 @@ public class CategoryHtmlPageGenerator {
             for (SubCategory sc : c.getSubCategories()) {
                 printStream.println(sc.getName() + "<br>");
                 printStream.println("<br>");
-            }
-            printStream.println("</td>");
-            printStream.println("<td>");
-            for (SubCategory sc : c.getSubCategories()) {
                 printStream.println(sc.getDescription() + "<br>");
                 printStream.println("<br>");
-            }
-            printStream.println("</td>");
-
-            printStream.println("<td>");
-            for (SubCategory sc : c.getSubCategories()) {
                 printStream.println(sc.nameOfCourses() + "<br>");
                 printStream.println("<br>");
             }
             printStream.println("</td>");
             printStream.println("</tr>");
         }
-
-        printStream.println("</tr>");
         printStream.println("</table>");
         printStream.println("</body>");
         printStream.println("</head>");
