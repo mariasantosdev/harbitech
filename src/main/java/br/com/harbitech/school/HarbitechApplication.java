@@ -27,7 +27,5 @@ public class HarbitechApplication {
 
 //        Section section = new Section("introdução ao git","git",course);
 //        System.out.println(section);
-
-
     }
 }
