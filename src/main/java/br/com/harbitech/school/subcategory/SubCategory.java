@@ -90,6 +90,14 @@ public class SubCategory implements Comparable<SubCategory>{
         return category;
     }
 
+    public String getStudyGuide() {
+        return studyGuide;
+    }
+
+    public SubCategoryStatus getStatus() {
+        return status;
+    }
+
     @Override
     public String toString() {
         return "SubCategory{" +

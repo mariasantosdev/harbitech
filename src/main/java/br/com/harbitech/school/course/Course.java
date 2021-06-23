@@ -46,6 +46,30 @@ public class Course {
         this.subCategory.addCourse(this);
     }
 
+    public String getCodeUrl() {
+        return codeUrl;
+    }
+
+    public CourseVisibility getVisibility() {
+        return visibility;
+    }
+
+    public String getTargetAudience() {
+        return targetAudience;
+    }
+
+    public String getInstructor() {
+        return instructor;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public String getDevelopedSkills() {
+        return developedSkills;
+    }
+
     public String getName() {
         return name;
     }

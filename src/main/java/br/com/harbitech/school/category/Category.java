@@ -41,6 +41,14 @@ public class Category {
         this.htmlHexColorCode = htmlHexColorCode;
     }
 
+    public String getStudyGuide() {
+        return studyGuide;
+    }
+
+    public int getOrderVisualization() {
+        return orderVisualization;
+    }
+
     public List<SubCategory> getSubCategories() {
         return subCategories;
     }

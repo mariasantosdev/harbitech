@@ -35,7 +35,7 @@ public class TestFilesManipulation {
         List<Course> courses = courseFileReader.readCoursesFromFile("planilha-dados-escola - Curso2.csv", subCategoryMap);
         courses.forEach(System.out::println);
 
-        //        Map<String, SubCategory> subCategoryMap = new HashMap<>();
+//                Map<String, SubCategory> subCategoryMap = new HashMap<>();
 //        for (SubCategory sc : subCategories) {
 //            subCategoryMap.put(sc.getCodeUrl(), sc);
 //        }
