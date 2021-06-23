@@ -12,8 +12,9 @@ public class CourseTest {
 
     @BeforeEach
     public void addNewSubCategory() {
+        Category category = new Category("Programação", "programacao");
         this.subCategory = new SubCategory("Java", "java",
-                new Category("Programação", "programacao"));
+                category);
     }
 
     @Test
@@ -21,6 +22,7 @@ public class CourseTest {
         Course course = new Course("Git e Github para Sobrevivência",
                 "git-e-github-para-sobrevivencia", 3, "Nico", subCategory);
         System.out.println(course);
+        //TODO ASSERT PARA CRIAR UM NOVO CURSO
     }
 
     @Test
@@ -93,7 +95,7 @@ public class CourseTest {
     @Test
     public void shouldValidateIncorrectDescriptionEnum() {
         assertThrows(IllegalArgumentException.class, () -> new Course("Git e Github para Sobrevivência",
-                "git-e-github-para-sobrevivencia", 3, CourseVisibility.from("PÚBLICAA"),
+                "git-e-github-para-sobrevivencia", 3, CourseVisibility.from("UMA_VISIBILIDADE_INVALIDA"),
                 "Desenvolvedores em qualquer linguagem ou plataforma que desejam mais segurança para " +
                         "seus projetos " + "com as ferramentas de controle de versão Git e GitHub.",
                 "Nico", "Desenvolvedores em qualquer linguagem ou plataforma devem aprender " +
@@ -103,13 +105,14 @@ public class CourseTest {
 
     @Test
     public void shouldValidateCorrectDescriptionEnum() {
-        assertThrows(IllegalArgumentException.class, () -> new Course("Git e Github para Sobrevivência",
-                "git-e-github-para-sobrevivencia", 3, CourseVisibility.from("PÚBLICAA"),
+         new Course("Git e Github para Sobrevivência",
+                "git-e-github-para-sobrevivencia", 3, CourseVisibility.from("PÚBLICA"),
                 "Desenvolvedores em qualquer linguagem ou plataforma que desejam mais segurança para " +
                         "seus projetos " + "com as ferramentas de controle de versão Git e GitHub.",
                 "Nico", "Desenvolvedores em qualquer linguagem ou plataforma devem aprender " +
                 "git e github pois são ferramentas muito cobradas no mercado", "Entenda como funciona o" +
-                " git e conheça comandos essenciais para se trabalhar em equipe.", subCategory));
+                " git e conheça comandos essenciais para se trabalhar em equipe.", subCategory);
+         //TODO COLOCAR ASSERT
     }
 
     @Test

@@ -18,6 +18,8 @@ public class SubCategoryTest {
     public void shouldAddNewSubCategory() {
     SubCategory subCategory = new SubCategory("Java","java",category);
     System.out.println(subCategory);
+
+    //TODO ASSERT EM TODOS QUE CRIAM UMA SUBCATEGORIA
     }
 
     @Test
@@ -74,7 +76,7 @@ public class SubCategoryTest {
                 1, "Java é " + "uma grande plataforma presente em todo lugar: de " +
                 "corporações à bancos e governo.  Desenvolva aplicações robustas com um back-end e construa APIs.",
                 "Desde seu primeiro hello world até conceitos mais avançados de POO",
-                SubCategoryStatus.from("ATIVAA"),category));
+                SubCategoryStatus.from("UM_STATUS_INVALIDO"),category));
     }
 
     @Test
@@ -84,5 +86,6 @@ public class SubCategoryTest {
                 "corporações à bancos e governo.  Desenvolva aplicações robustas com um back-end e construa APIs.",
                 "Desde seu primeiro hello world até conceitos mais avançados de POO",
                 SubCategoryStatus.from("ATIVA"), category);
+        //TODO COLOCAR ASSER PARA TESTAR
     }
 }

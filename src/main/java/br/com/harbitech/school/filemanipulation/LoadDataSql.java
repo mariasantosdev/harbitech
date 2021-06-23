@@ -13,7 +13,7 @@ import java.util.*;
 public class LoadDataSql {
     public static void main(String[] args) throws IOException {
         LoadDataSql loadDataSql = new LoadDataSql();
-        loadDataSql.generate("/home/madu/Área de Trabalho/ProjetosAluraDEV/Desafio-levelup-semana1/Harbitech/harbitech.sql");
+        loadDataSql.generate("/home/madu/Área de Trabalho/ProjetosAluraDEV/Desafio-levelup-semana1/Harbitech/harbitech_data.sql");
     }
 
     public void generate(String filePath) throws IOException {
@@ -36,7 +36,7 @@ public class LoadDataSql {
         CourseFileReader courseFileReader = new CourseFileReader();
         List<Course> courses = courseFileReader.readCoursesFromFile("planilha-dados-escola - Curso2.csv", subCategoryMap);
 
-        try (OutputStream outputStream = new FileOutputStream(filePath, true);
+        try (OutputStream outputStream = new FileOutputStream(filePath, false);
              PrintStream printStream = new PrintStream(outputStream)) {
             writeCategoriesInsert(categories, printStream);
             writeSubcategoriesInsert(subCategories, printStream);
@@ -72,7 +72,7 @@ public class LoadDataSql {
             SubCategoryStatus subcategoryStatus = sc.getStatus();
             String categoryCodeUrl = sc.getCategory().getCodeUrl();
 
-            String sqlSubcategory = "INSERT INTO SubCategory (name, code_url,order_visualization,description,status,category_code_url)"
+            String sqlSubcategory = "INSERT INTO Subcategory (name, code_url,order_visualization,description,status,category_code_url)"
                     + " VALUES ('%s','%s','%s','%s','%s','%s');";
 
             printStream.println(String.format(sqlSubcategory, subcategoryName, subcategoryCodeUrl,

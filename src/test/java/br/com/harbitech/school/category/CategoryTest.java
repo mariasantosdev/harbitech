@@ -1,12 +1,7 @@
 package br.com.harbitech.school.category;
 
-import br.com.harbitech.school.filemanipulation.CategoryFileReader;
 import org.junit.jupiter.api.Test;
 
-import java.io.IOException;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -14,8 +9,9 @@ public class CategoryTest {
 
     @Test
     public void shouldAddNewCategory(){
-        Category category = new Category("DevOps", "dev-ops");
-        System.out.println(category);
+        Category category = assertDoesNotThrow(() -> new Category("DevOps", "dev-ops"),"Erro de validação ao criar categoria.");
+        assertEquals("DevOps",category.getName());
+        assertEquals("dev-ops",category.getCodeUrl());
     }
 
     @Test
@@ -64,32 +60,19 @@ public class CategoryTest {
     }
     @Test
     public void shouldValidateIncorrectDescriptionEnum(){
-        assertThrows(IllegalArgumentException.class,() -> new Category("Programação", "programacao",
-                "Programe nas principais linguagens de programação",
-                CategoryStatus.from("INAATIVA"), 1,
-                "https://www.alura.com.br/assets/api/formacoes/categorias/512/programacao-transparent.png",
-                "#00c86f"));
-    }
-
-    @Test
-    public void shouldValidateCorrectDescriptionEnum() {
         new Category("Programação", "programacao",
                 "Programe nas principais linguagens de programação",
-                CategoryStatus.from("INATIVA"), 1,
+                CategoryStatus.from("UMA_CATEGORIA_INVALIDA"), 1,
                 "https://www.alura.com.br/assets/api/formacoes/categorias/512/programacao-transparent.png",
                 "#00c86f");
     }
 
     @Test
-    public void should() throws IOException {
-        CategoryFileReader categoryFileReader = new CategoryFileReader();
-        List<Category> categories = categoryFileReader.readCategoriesFromFile
-                ("planilha-dados-escola - Categoria.csv");
-        categories.forEach(System.out::println);
-
-        Map<String, Category> categoryMap = new HashMap<>();
-        for (Category c : categories) {
-            categoryMap.put(c.getCodeUrl(), c);
-        }
+    public void shouldValidateCorrectDescriptionEnum() {
+       assertDoesNotThrow(()-> (new Category("Programação", "programacao",
+                "Programe nas principais linguagens de programação",
+                CategoryStatus.from("INATIVA"), 1,
+                "https://www.alura.com.br/assets/api/formacoes/categorias/512/programacao-transparent.png",
+                "#00c86f")),"Erro de validação ao criar categoria.");
     }
 }
