@@ -1,9 +1,6 @@
 package br.com.harbitech.school.validation;
 
 public class ValidationUtil {
-    public static void main(String[] args) {
-        validateUrl("angular-cli","asd");
-    }
 
     public static void validateNonBlankText(String text, String errorMessage) {
         if (text == null || text.isBlank()) {

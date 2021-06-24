@@ -72,8 +72,8 @@ public class LoadDataSql {
             SubCategoryStatus subcategoryStatus = sc.getStatus();
             String categoryCodeUrl = sc.getCategory().getCodeUrl();
 
-            String sqlSubcategory = "INSERT INTO Subcategory (name,code_url,order_visualization,description,status,code_url) SELECT code_url FROM Category"
-                    + " VALUES ('%s','%s','%s','%s','%s','%s');";
+            String sqlSubcategory = "INSERT INTO Subcategory (name,code_url,order_visualization,description,status,category_id) " +
+                    "VALUES ('%s','%s','%s','%s','%s',(SELECT id from Category where code_url = '%s'));";
 
             printStream.println(String.format(sqlSubcategory, subcategoryName, subcategoryCodeUrl,
                     subcategoryOrder, subcategoryDescription, subcategoryStatus, categoryCodeUrl));
@@ -95,7 +95,8 @@ public class LoadDataSql {
 
             String sqlCourse = "INSERT INTO Course (name, code_url,completion_time_in_hours,visibility," +
                     "target_audience,instructor,description,developed_skills,subcategory_id)"
-                    + " VALUES ('%s','%s','%s','%s','%s','%s','%s','%s','%s');";
+                    + " VALUES ('%s','%s','%s','%s','%s','%s','%s','%s'," +
+                    "(SELECT id from Subcategory where code_url = '%s'));";
 
             printStream.println(String.format(sqlCourse, courseName, courseCodeUrl,
                     courseCompletionTimeInHours,visibility,courseTargetAudience,courseInstructor,courseDescription,

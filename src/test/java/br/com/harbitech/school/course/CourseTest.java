@@ -1,7 +1,6 @@
 package br.com.harbitech.school.course;
 
 import br.com.harbitech.school.category.Category;
-import br.com.harbitech.school.category.CategoryStatus;
 import br.com.harbitech.school.subcategory.SubCategory;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
