@@ -60,11 +60,11 @@ public class CategoryTest {
     }
     @Test
     public void shouldValidateIncorrectDescriptionEnum(){
-        new Category("Programação", "programacao",
+        assertThrows(IllegalArgumentException.class,() -> new Category("Programação", "programacao",
                 "Programe nas principais linguagens de programação",
                 CategoryStatus.from("UMA_CATEGORIA_INVALIDA"), 1,
                 "https://www.alura.com.br/assets/api/formacoes/categorias/512/programacao-transparent.png",
-                "#00c86f");
+                "#00c86f"));
     }
 
     @Test

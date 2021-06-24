@@ -72,7 +72,7 @@ public class LoadDataSql {
             SubCategoryStatus subcategoryStatus = sc.getStatus();
             String categoryCodeUrl = sc.getCategory().getCodeUrl();
 
-            String sqlSubcategory = "INSERT INTO Subcategory (name, code_url,order_visualization,description,status,category_code_url)"
+            String sqlSubcategory = "INSERT INTO Subcategory (name,code_url,order_visualization,description,status,code_url) SELECT code_url FROM Category"
                     + " VALUES ('%s','%s','%s','%s','%s','%s');";
 
             printStream.println(String.format(sqlSubcategory, subcategoryName, subcategoryCodeUrl,
@@ -94,7 +94,7 @@ public class LoadDataSql {
             String subCategoryUrlCode = c.getSubCategory().getCodeUrl();
 
             String sqlCourse = "INSERT INTO Course (name, code_url,completion_time_in_hours,visibility," +
-                    "target_audience,instructor,description,developed_skills,subcategory_code_url)"
+                    "target_audience,instructor,description,developed_skills,subcategory_id)"
                     + " VALUES ('%s','%s','%s','%s','%s','%s','%s','%s','%s');";
 
             printStream.println(String.format(sqlCourse, courseName, courseCodeUrl,

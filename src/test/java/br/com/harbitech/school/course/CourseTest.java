@@ -1,6 +1,7 @@
 package br.com.harbitech.school.course;
 
 import br.com.harbitech.school.category.Category;
+import br.com.harbitech.school.category.CategoryStatus;
 import br.com.harbitech.school.subcategory.SubCategory;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -13,16 +14,14 @@ public class CourseTest {
     @BeforeEach
     public void addNewSubCategory() {
         Category category = new Category("Programação", "programacao");
-        this.subCategory = new SubCategory("Java", "java",
-                category);
+        this.subCategory = new SubCategory("Java", "java", category);
     }
 
     @Test
     public void shouldAddNewCourse() {
-        Course course = new Course("Git e Github para Sobrevivência",
-                "git-e-github-para-sobrevivencia", 3, "Nico", subCategory);
-        System.out.println(course);
-        //TODO ASSERT PARA CRIAR UM NOVO CURSO
+        assertDoesNotThrow(() -> new Course("Git e Github para Sobrevivência",
+                "git-e-github-para-sobrevivencia", 3, "Nico", subCategory),
+                "Erro de validação ao criar um curso");
     }
 
     @Test
@@ -105,24 +104,25 @@ public class CourseTest {
 
     @Test
     public void shouldValidateCorrectDescriptionEnum() {
-         new Course("Git e Github para Sobrevivência",
+        assertDoesNotThrow (()-> (new Course("Git e Github para Sobrevivência",
                 "git-e-github-para-sobrevivencia", 3, CourseVisibility.from("PÚBLICA"),
                 "Desenvolvedores em qualquer linguagem ou plataforma que desejam mais segurança para " +
                         "seus projetos " + "com as ferramentas de controle de versão Git e GitHub.",
                 "Nico", "Desenvolvedores em qualquer linguagem ou plataforma devem aprender " +
                 "git e github pois são ferramentas muito cobradas no mercado", "Entenda como funciona o" +
-                " git e conheça comandos essenciais para se trabalhar em equipe.", subCategory);
-         //TODO COLOCAR ASSERT
+                " git e conheça comandos essenciais para se trabalhar em equipe.", subCategory)),
+                "Erro de validação ao criar um curso");
     }
 
     @Test
     public void shouldValidateCorrectCompletionTimeInHoursBecauseIsBetweenValuesValid(){
-        Course course = new Course("Git e Github para Sobrevivência",
-                "git-e-github-para-sobrevivencia", 5, "Nico", subCategory);
+        assertDoesNotThrow(() -> new Course("Git e Github para Sobrevivência",
+                "git-e-github-para-sobrevivencia", 5, "Nico", subCategory),
+                "Erro de validação ao criar um curso");
     }
 
     @Test
-    public void shouldValidateIncorrectCompletionTimeInHours(){
+    public void shouldValidateIncorrectCompletionTimeInHoursBecauseIsGreater(){
         assertThrows(IllegalArgumentException.class, () -> new Course("Git e Github para Sobrevivência",
                 "git-e-github-para-sobrevivencia", 21,
                 "Paulo Silveira", subCategory));
@@ -130,8 +130,22 @@ public class CourseTest {
 
     @Test
     public void shouldValidateCorrectCompletionTimeInHoursBecauseIsExactlyValue(){
-        Course course = new Course("Git e Github para Sobrevivência",
+        assertDoesNotThrow(() -> new Course("Git e Github para Sobrevivência",
                 "git-e-github-para-sobrevivencia", 20,
-                "Paulo Silveira", subCategory);
+                "Paulo Silveira", subCategory),"Erro de validação ao criar um curso");
+    }
+
+    @Test
+    public void shouldValidateCorrectCompletionTimeInHoursBecauseIsLimitValue(){
+        assertDoesNotThrow(() -> new Course("Git e Github para Sobrevivência",
+                "git-e-github-para-sobrevivencia", 1,
+                "Paulo Silveira", subCategory),"Erro de validação ao criar um curso");
+    }
+
+    @Test
+    public void shouldValidateIncorrectCompletionTimeInHoursBecauseIsLess(){
+        assertThrows(IllegalArgumentException.class, () ->  new Course("Git e Github para Sobrevivência",
+                "git-e-github-para-sobrevivencia", -1,
+                "Paulo Silveira", subCategory));
     }
 }

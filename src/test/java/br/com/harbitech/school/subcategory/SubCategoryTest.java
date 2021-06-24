@@ -1,6 +1,7 @@
 package br.com.harbitech.school.subcategory;
 
 import br.com.harbitech.school.category.Category;
+import br.com.harbitech.school.course.Course;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
@@ -16,10 +17,8 @@ public class SubCategoryTest {
 
     @Test
     public void shouldAddNewSubCategory() {
-    SubCategory subCategory = new SubCategory("Java","java",category);
-    System.out.println(subCategory);
-
-    //TODO ASSERT EM TODOS QUE CRIAM UMA SUBCATEGORIA
+        assertDoesNotThrow(() -> new SubCategory("Java","java",category),
+                "Erro de validação ao criar uma subcategoria");
     }
 
     @Test
@@ -81,11 +80,10 @@ public class SubCategoryTest {
 
     @Test
     public void shouldValidateCorrectDescriptionEnum() {
-        new SubCategory("Java", "java",
+        assertDoesNotThrow(() -> new SubCategory("Java", "java",
                 1, "Java é " + "uma grande plataforma presente em todo lugar: de " +
                 "corporações à bancos e governo.  Desenvolva aplicações robustas com um back-end e construa APIs.",
                 "Desde seu primeiro hello world até conceitos mais avançados de POO",
-                SubCategoryStatus.from("ATIVA"), category);
-        //TODO COLOCAR ASSER PARA TESTAR
+                SubCategoryStatus.from("ATIVA"), category), "Erro de validação ao criar um curso");
     }
 }

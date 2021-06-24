@@ -90,6 +90,9 @@ SELECT * FROM Question;
 SELECT * FROM Alternative;
 
 
+SHOW TABLES;
+
+
 
 
 
