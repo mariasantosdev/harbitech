@@ -11,7 +11,7 @@ public class SubCategoryTest {
     private Category category;
 
     @BeforeEach
-    public void shouldAddNewCategory(){
+    public void setUp(){
         this.category = new Category("Programação", "programacao");
     }
 

@@ -67,7 +67,7 @@ public class ValidationUtilTest {
 
     @Test
     public void shouldValidadeIncorrectIntervalBecauseValueIsLess() {
-        assertThrows(IllegalArgumentException.class, () -> validateInterval(1,4,25,
+        assertThrows(IllegalArgumentException.class, () -> validateInterval(3,4,25,
                 "Passe um valor maior"));
     }
 
