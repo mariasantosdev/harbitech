@@ -17,8 +17,10 @@ public class SubCategoryTest {
 
     @Test
     public void shouldAddNewSubCategory() {
-        assertDoesNotThrow(() -> new SubCategory("Java","java",category),
+        SubCategory subCategory = assertDoesNotThrow(() -> new SubCategory("Java", "java", category),
                 "Erro de validação ao criar uma subcategoria");
+        assertEquals("Java",subCategory.getName());
+        assertEquals("java",subCategory.getCodeUrl());
     }
 
     @Test

@@ -18,9 +18,13 @@ public class CourseTest {
 
     @Test
     public void shouldAddNewCourse() {
-        assertDoesNotThrow(() -> new Course("Git e Github para Sobrevivência",
-                "git-e-github-para-sobrevivencia", 3, "Nico", subCategory),
+        Course course = assertDoesNotThrow(() -> new Course("Git e Github para Sobrevivência",
+                        "git-e-github-para-sobrevivencia", 3, "Nico", subCategory),
                 "Erro de validação ao criar um curso");
+        assertEquals("Git e Github para Sobrevivência",course.getName());
+        assertEquals("git-e-github-para-sobrevivencia",course.getCodeUrl());
+        assertEquals(3,course.getCompletionTimeInHours());
+        assertEquals("Nico",course.getInstructor());
     }
 
     @Test
