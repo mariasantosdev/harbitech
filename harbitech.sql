@@ -26,7 +26,7 @@ FOREIGN KEY(category_id) REFERENCES Category(id));
 CREATE TABLE Course(
 id BIGINT UNIQUE PRIMARY KEY AUTO_INCREMENT NOT NULL,
 name VARCHAR(70) NOT NULL,
-code_url_course VARCHAR (70) NOT NULL UNIQUE,
+code_url VARCHAR (70) NOT NULL UNIQUE,
 completion_time_in_hours INT NOT NULL,
 visibility ENUM('public', 'private') DEFAULT 'private',
 target_audience VARCHAR(250),
@@ -88,25 +88,14 @@ FOREIGN KEY(question_id) REFERENCES Question(id));
 
 
 SELECT * FROM Category;
-SELECT * FROM Explanation;
 SELECT * FROM Subcategory;
 SELECT * FROM Course;
+SELECT * FROM Explanation;
 SELECT * FROM Section;
 SELECT * FROM Activity;
 SELECT * FROM Video;
 SELECT * FROM Question;
 SELECT * FROM Alternative;
-
-DROP TABLE Alternative;
-DROP TABLE Question;
-DROP TABLE Video;
-DROP TABLE Activity;
-DROP TABLE Section;
-DROP TABLE Course;
-DROP TABLE Subcategory;
-DROP TABLE Explanation;
-DROP TABLE Category;
-
 
 SHOW TABLES;
 
