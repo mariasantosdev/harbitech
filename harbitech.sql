@@ -99,50 +99,55 @@ SELECT * FROM Alternative;
 /*OPERAÇÕES PARA COMPLEMENTAR OS TESTES*/
 UPDATE Course SET visibility = 'PRIVATE' WHERE id =1
 
-
 /*RESOLUÇÃO DO DESAFIO*/
+/*- os dados de todas as categorias ativas, na ordem */
 SELECT * FROM Category WHERE status = 'ACTIVE' ORDER BY order_visualization;
 
+/*- os dados de todas as subcategorias ativas, na ordem */
 SELECT * FROM Subcategory WHERE status = 'ACTIVE' ORDER BY order_visualization;
 
+/*- os dados de todas os cursos públicos */
 SELECT * FROM Course WHERE visibility = 'PUBLIC';
 
+/*- os nomes das subcategorias que não tem descrições*/
 SELECT name AS Nome FROM Subcategory WHERE description = '';
 
+/*- os nomes de todas as categorias ativas com a respectiva quantidade de cursos públicos e total de horas 
+ * estimados dos cursos públicos associados (sendo 0 se não existir nenhum curso público)*/
 SELECT c.name AS Nome,COUNT(c2.id) AS Quantidade, COALESCE(SUM(c2.completion_time_in_hours),0) AS "Total de horas"  FROM Category c 
 LEFT JOIN Subcategory s ON c.id = s.category_id 
 LEFT JOIN Course c2 ON c2.subcategory_id = s.id
 WHERE c.status = 'ACTIVE' GROUP BY c.id;
 
+/*- os dados da categoria ativa que possui o maior número de subcategorias ativas*/
 SELECT s.name AS Nome FROM Subcategory s 
 JOIN Course c ON s.id = c.subcategory_id 
 WHERE s.status = 'ACTIVE' 
 GROUP BY s.id
 ORDER BY order_visualization; 
 
+/*- o nome e a quantidade de cursos do instrutor que tem mais cursos*/
 SELECT instructor AS instrutor,COUNT(*) AS "Quantidade de cursos" FROM Course c 
 GROUP BY 1
 ORDER BY 2 DESC
 LIMIT 1;  
 
-SELECT c.*,c2.visibility, SUM(c2.completion_time_in_hours) AS "Quantidade" FROM Category c
+/*- os dados da categoria ativa que possui o maior número de horas estimadas em cursos públicos, em apenas uma consulta*/
+SELECT c.name, SUM(c2.completion_time_in_hours) AS "Quantidade" FROM Category c
 LEFT JOIN Subcategory s ON c.id = s.category_id 
 LEFT JOIN Course c2 ON c2.subcategory_id = s.id
 WHERE c.status = 'ACTIVE'  AND c2.visibility ='PUBLIC'
-GROUP BY c.name 
-ORDER BY c2.completion_time_in_hours DESC
+GROUP BY c.name
+ORDER BY Quantidade DESC
 LIMIT 1;
 
-/*- os dados da categoria ativa que possui o maior número de subcategorias ativas*/
-SELECT * FROM Category c 
-LEFT JOIN Subcategory s ON c.id = s.category_id 
-WHERE c.status = 'ACTIVE' 
-ORDER BY s.status DESC
-LIMIT 1;
+/*- os nomes das subcategorias ativas e que tem algum curso, na ordem*/
+SELECT  DISTINCT s.name,s.order_visualization FROM Subcategory s 
+JOIN Course c ON c.subcategory_id = s.id
+WHERE s.status = 'ACTIVE'
+ORDER BY s.order_visualization 
 
-SHOW TABLES;
 
-SET GLOBAL sql_mode=(SELECT REPLACE(@@sql_mode,'ONLY_FULL_GROUP_BY',''));
 
 
 
