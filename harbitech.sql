@@ -86,7 +86,6 @@ justification VARCHAR(500),
 question_id BIGINT NOT NULL,
 FOREIGN KEY(question_id) REFERENCES Question(id));
 
-
 SELECT * FROM Category;
 SELECT * FROM Subcategory;
 SELECT * FROM Course;
@@ -96,6 +95,33 @@ SELECT * FROM Activity;
 SELECT * FROM Video;
 SELECT * FROM Question;
 SELECT * FROM Alternative;
+
+
+SELECT * FROM Category WHERE status = 'ACTIVE' ORDER BY order_visualization;
+
+SELECT * FROM Subcategory WHERE status = 'ACTIVE' ORDER BY order_visualization;
+
+SELECT * FROM Course WHERE visibility = 'PUBLIC';
+
+SELECT name AS Nome FROM Subcategory WHERE description = '';
+
+SELECT c.name AS Nome,COUNT(c2.id) AS Quantidade, COALESCE(SUM(c2.completion_time_in_hours),0) AS "Total de horas"  FROM Category c 
+LEFT JOIN Subcategory s ON c.id = s.category_id 
+LEFT JOIN Course c2 ON c2.subcategory_id = s.id
+WHERE c.status = 'ACTIVE' GROUP BY c.id;
+
+SELECT s.name AS Nome FROM Subcategory s 
+JOIN Course c ON s.id = c.subcategory_id 
+WHERE s.status = 'ACTIVE' 
+GROUP BY s.id
+ORDER BY order_visualization; 
+
+SELECT instructor AS instrutor,COUNT(*) AS "Quantidade de cursos" FROM Course c 
+GROUP BY 1
+ORDER BY 2 DESC
+LIMIT 1;  
+
+
 
 SHOW TABLES;
 
