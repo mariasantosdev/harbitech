@@ -96,7 +96,6 @@ SELECT * FROM Video;
 SELECT * FROM Question;
 SELECT * FROM Alternative;
 
-
 SELECT * FROM Category WHERE status = 'ACTIVE' ORDER BY order_visualization;
 
 SELECT * FROM Subcategory WHERE status = 'ACTIVE' ORDER BY order_visualization;
@@ -121,10 +120,24 @@ GROUP BY 1
 ORDER BY 2 DESC
 LIMIT 1;  
 
+SELECT c.*,c2.visibility, SUM(c2.completion_time_in_hours) AS "Quantidade" FROM Category c
+LEFT JOIN Subcategory s ON c.id = s.category_id 
+LEFT JOIN Course c2 ON c2.subcategory_id = s.id
+WHERE c.status = 'ACTIVE'  AND c2.visibility ='PUBLIC'
+GROUP BY c.name 
+ORDER BY c2.completion_time_in_hours DESC
+LIMIT 1;
 
+/*- os dados da categoria ativa que possui o maior número de subcategorias ativas*/
+SELECT * FROM Category c 
+LEFT JOIN Subcategory s ON c.id = s.category_id 
+WHERE c.status = 'ACTIVE' 
+ORDER BY s.status DESC
+LIMIT 1;
 
 SHOW TABLES;
 
+SET GLOBAL sql_mode=(SELECT REPLACE(@@sql_mode,'ONLY_FULL_GROUP_BY',''));
 
 
 

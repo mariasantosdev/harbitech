@@ -53,7 +53,7 @@ public class SubCategory implements Comparable<SubCategory>{
         return orderVisualization;
     }
 
-    Long getId() {
+    public Long getId() {
         return id;
     }
 
