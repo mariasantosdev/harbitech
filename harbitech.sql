@@ -88,7 +88,7 @@ FOREIGN KEY(question_id) REFERENCES Question(id));
 
 SELECT * FROM Category;
 SELECT * FROM Subcategory;
-SELECT * FROM Course;
+SELECT * FROM Course; 
 SELECT * FROM Explanation;
 SELECT * FROM Section;
 SELECT * FROM Activity;
@@ -96,6 +96,11 @@ SELECT * FROM Video;
 SELECT * FROM Question;
 SELECT * FROM Alternative;
 
+/*OPERAÇÕES PARA COMPLEMENTAR OS TESTES*/
+UPDATE Course SET visibility = 'PRIVATE' WHERE id =1
+
+
+/*RESOLUÇÃO DO DESAFIO*/
 SELECT * FROM Category WHERE status = 'ACTIVE' ORDER BY order_visualization;
 
 SELECT * FROM Subcategory WHERE status = 'ACTIVE' ORDER BY order_visualization;

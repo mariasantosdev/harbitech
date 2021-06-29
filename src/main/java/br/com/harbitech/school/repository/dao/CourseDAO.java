@@ -49,9 +49,11 @@ public class CourseDAO {
         }
     }
 
-    public void upgradeToPublicVisibility(){
-        String sql = "UPDATE FROM Course WHERE code_url = ?";
+    public void upgradeToPublicVisibility() throws SQLException{
+        String sql = "UPDATE Course SET visibility = 'PUBLIC'";
+        try (PreparedStatement pstm = connection.prepareStatement(sql)){
+            pstm.execute();
+        }
     }
-
 }
 
