@@ -41,8 +41,16 @@ public class CourseDAO {
         }
     }
 
-    public void delete(Course course) throws SQLException{
+    public void delete(String urlCode) throws SQLException{
         String sql = "DELETE FROM Course WHERE code_url = ?";
+        try (PreparedStatement pstm = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)){
+            pstm.setString(1, urlCode);
+            pstm.execute();
+        }
+    }
+
+    public void upgradeToPublicVisibility(){
+        String sql = "UPDATE FROM Course WHERE code_url = ?";
     }
 
 }

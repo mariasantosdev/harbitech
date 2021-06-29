@@ -27,7 +27,8 @@ public class TestaInsercaoProduto {
 
         try(Connection connection = new ConnectionFactory().retrieveConnection()){
             CourseDAO courseDAO = new CourseDAO(connection);
-            courseDAO.save(jdbc);
+//            courseDAO.save(jdbc);
+            courseDAO.delete("angular-cli");
         }
     }
 }
