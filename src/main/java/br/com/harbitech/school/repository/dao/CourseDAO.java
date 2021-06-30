@@ -71,7 +71,7 @@ public class CourseDAO {
         try (PreparedStatement pstm = connection.prepareStatement(sql)) {
             pstm.setString(1, CourseVisibility.PUBLIC.name());
             pstm.execute();
-            turnResultSetInCurso(courses,pstm);
+            turnResultSetInCurso(courses, pstm);
         }
         return courses;
     }
@@ -79,11 +79,6 @@ public class CourseDAO {
     private void turnResultSetInCurso(List<Course> courses, PreparedStatement pstm) throws SQLException {
         try (ResultSet rst = pstm.getResultSet()) {
             while (rst.next()) {
-
-//                Category category = new Category(rst.getString(10),rst.getString(11));
-//
-//                SubCategory subCategory = new SubCategory(rst.getString(12),rst.getString(13),
-//                       category);
 
                 Course course = new Course(rst.getString(2),
                         rst.getString(3), rst.getInt(4),
