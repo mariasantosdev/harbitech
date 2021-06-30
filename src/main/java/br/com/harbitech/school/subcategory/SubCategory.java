@@ -34,8 +34,7 @@ public class SubCategory implements Comparable<SubCategory>{
         this.orderVisualization = -1;
     }
 
-    public SubCategory(String name, String codeUrl, int orderVisualization,
-                       String description, String studyGuide,
+    public SubCategory(String name, String codeUrl, int orderVisualization, String description, String studyGuide,
                        SubCategoryStatus status, Category category) {
 
         this(name,codeUrl,category);
@@ -47,6 +46,13 @@ public class SubCategory implements Comparable<SubCategory>{
         this.orderVisualization = orderVisualization;
         this.category = category;
         this.category.addSubcategory(this);
+    }
+
+    public SubCategory(Long id,String name, String codeUrl, int orderVisualization,
+                       String description, String studyGuide,
+                       SubCategoryStatus status, Category category){
+        this(name, codeUrl, orderVisualization, description, studyGuide, status, category);
+        this.id = id;
     }
 
     public int getOrderVisualization() {

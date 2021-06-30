@@ -31,7 +31,7 @@ public class CourseCrudTest {
             courseDAO.save(jdbc);
 //            courseDAO.upgradeAllToPublicVisibility();
 //            courseDAO.delete("angular-cli");
-//            courseDAO.searchAllWithPublicVisibility();
+            courseDAO.searchAllWithPublicVisibility();
         }
     }
 }

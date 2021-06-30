@@ -143,7 +143,7 @@ LEFT JOIN Subcategory subcategory ON category.id = subcategory.category_id
 LEFT JOIN Course course ON course.subcategory_id = subcategory.id
 WHERE category.status = 'ACTIVE' GROUP BY category.id;
 
-/*- os dados da categoria ativa que possui o maior número de horas estimadas em cursos públicos, em apenas uma consulta*/
+/*- o nome da categoria ativa que possui o maior número de horas estimadas em cursos públicos, em apenas uma consulta*/
 SELECT 
 	category.name, 
 	SUM(course.completion_time_in_hours) AS "Quantidade" 
@@ -156,7 +156,16 @@ ORDER BY Quantidade DESC
 LIMIT 1;
 
 
-
+                SELECT 
+                course.id AS "id_curso", 
+                course.name AS "name_curso",
+                course.completion_time_in_hours,
+                subcategory.id AS "name_subcategory", 
+                subcategory.name AS "name_subcategory"
+                FROM Course course 
+                JOIN Subcategory subcategory ON course.subcategory_id = subcategory.id 
+                JOIN Category category ON subcategory.category_id = category.id
+               WHERE course.visibility = 'PUBLIC'
 
 
 

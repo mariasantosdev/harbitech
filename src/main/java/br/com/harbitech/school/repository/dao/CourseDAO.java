@@ -2,8 +2,10 @@ package br.com.harbitech.school.repository.dao;
 
 import br.com.harbitech.school.category.Category;
 import br.com.harbitech.school.course.Course;
+import br.com.harbitech.school.course.CourseDto;
 import br.com.harbitech.school.course.CourseVisibility;
 import br.com.harbitech.school.subcategory.SubCategory;
+import br.com.harbitech.school.subcategory.SubcategoryDto;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -62,14 +64,20 @@ public class CourseDAO {
         }
     }
 
-    public List<Course> searchAllWithPublicVisibility() throws SQLException {
-        List<Course> courses = new ArrayList<Course>();
+    public List<CourseDto> searchAllWithPublicVisibility() throws SQLException {
+        List<CourseDto> courses = new ArrayList<>();
         String sql = """
-                SELECT * FROM Course c 
-                JOIN Subcategory s ON c.subcategory_id = s.id 
-                JOIN Category cat ON s.category_id = cat.id
-               WHERE c.visibility = ?
-               """;
+                 SELECT
+                 course.id AS id_course,
+                 course.name AS name_course,
+                 course.completion_time_in_hours,
+                 subcategory.id AS id_subcategory,
+                 subcategory.name AS name_subcategory
+                 FROM Course course
+                 JOIN Subcategory subcategory ON course.subcategory_id = subcategory.id\s
+                 JOIN Category category ON subcategory.category_id = category.id
+                WHERE course.visibility = ?
+                """;
         try (PreparedStatement pstm = connection.prepareStatement(sql)) {
             pstm.setString(1, CourseVisibility.PUBLIC.name());
             pstm.execute();
@@ -78,16 +86,13 @@ public class CourseDAO {
         return courses;
     }
 
-    private void turnResultSetInCurso(List<Course> courses, PreparedStatement pstm) throws SQLException {
+    private void turnResultSetInCurso(List<CourseDto> courses, PreparedStatement pstm) throws SQLException {
         try (ResultSet rst = pstm.getResultSet()) {
             while (rst.next()) {
-                System.out.println(rst.getMetaData().getColumnName(2));
-                Course course = new Course(rst.getString("name"),
-                        rst.getString(3), rst.getInt(4),
-                        CourseVisibility.valueOf(rst.getString(5)), rst.getString(6),
-                        rst.getString(7), rst.getString(8), rst.getString(9),
-                        new SubCategory(rst.getString(12), rst.getString(13),
-                                new Category(rst.getString(20), rst.getString(21))));
+                CourseDto course = new CourseDto(rst.getLong("id_course"),
+                        rst.getString("name_course"), rst.getInt("completion_time_in_hours"),
+                        new SubcategoryDto(rst.getLong("id_subcategory"),
+                                rst.getString("name_subcategory")));
                 courses.add(course);
             }
         }
