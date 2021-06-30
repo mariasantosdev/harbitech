@@ -29,8 +29,9 @@ public class CourseCrudTest {
         try(Connection connection = new ConnectionFactory().retrieveConnection()){
             CourseDAO courseDAO = new CourseDAO(connection);
             courseDAO.save(jdbc);
-            courseDAO.upgradeAllToPublicVisibility();
-            courseDAO.delete("angular-cli");
+//            courseDAO.upgradeAllToPublicVisibility();
+//            courseDAO.delete("angular-cli");
+//            courseDAO.searchAllWithPublicVisibility();
         }
     }
 }

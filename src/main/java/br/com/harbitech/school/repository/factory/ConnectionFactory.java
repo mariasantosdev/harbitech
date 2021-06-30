@@ -2,6 +2,7 @@ package br.com.harbitech.school.repository.factory;
 import com.mchange.v2.c3p0.ComboPooledDataSource;
 
 import java.sql.Connection;
+import java.sql.DriverManager;
 import java.sql.SQLException;
 
 import javax.sql.DataSource;
@@ -21,6 +22,6 @@ public class ConnectionFactory {
     }
 
     public Connection retrieveConnection() throws SQLException {
-        return this.dataSource.getConnection();
+      return this.dataSource.getConnection();
     }
 }

@@ -64,10 +64,12 @@ public class CourseDAO {
 
     public List<Course> searchAllWithPublicVisibility() throws SQLException {
         List<Course> courses = new ArrayList<Course>();
-        String sql = "SELECT * FROM Course c\n" +
-                "LEFT JOIN Subcategory s ON c.subcategory_id = s.id \n" +
-                "LEFT JOIN Category c2 ON s.category_id = c2.id\n" +
-                " WHERE c.visibility = ?";
+        String sql = """
+                SELECT * FROM Course c 
+                JOIN Subcategory s ON c.subcategory_id = s.id 
+                JOIN Category cat ON s.category_id = cat.id
+               WHERE c.visibility = ?
+               """;
         try (PreparedStatement pstm = connection.prepareStatement(sql)) {
             pstm.setString(1, CourseVisibility.PUBLIC.name());
             pstm.execute();
@@ -79,8 +81,8 @@ public class CourseDAO {
     private void turnResultSetInCurso(List<Course> courses, PreparedStatement pstm) throws SQLException {
         try (ResultSet rst = pstm.getResultSet()) {
             while (rst.next()) {
-
-                Course course = new Course(rst.getString(2),
+                System.out.println(rst.getMetaData().getColumnName(2));
+                Course course = new Course(rst.getString("name"),
                         rst.getString(3), rst.getInt(4),
                         CourseVisibility.valueOf(rst.getString(5)), rst.getString(6),
                         rst.getString(7), rst.getString(8), rst.getString(9),

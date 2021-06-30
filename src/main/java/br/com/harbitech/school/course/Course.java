@@ -46,6 +46,14 @@ public class Course {
         this.subCategory.addCourse(this);
     }
 
+    public Course(Long id,String name, String codeUrl, int completionTimeInHours, CourseVisibility visibility,
+                  String targetAudience, String instructor, String description, String developedSkills,
+                  SubCategory subCategory) {
+        this(name, codeUrl, completionTimeInHours, visibility, targetAudience,
+                instructor, description, developedSkills, subCategory);
+        this.id = id;
+    }
+
     public String getCodeUrl() {
         return codeUrl;
     }

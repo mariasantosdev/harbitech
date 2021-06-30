@@ -13,5 +13,3 @@ INSERT INTO Course (name, code_url,completion_time_in_hours,visibility,target_au
 INSERT INTO Course (name, code_url,completion_time_in_hours,visibility,target_audience,instructor,description,developed_skills,subcategory_id) VALUES ('Angular CLI','angular-cli','20','PRIVATE','Alunos de Angular que querem conhecer mais sobre a CLI','Alvaro Camilo','- Conheça todos os comando da CLI do Angular. <br> - Saiba como funcionam as Workspaces no angular.json. <br> - Saiba como o Schematics pode aumentar sua produtividade <br> - Garanta consistência e otimizações para produção com o Builder.','',(SELECT id from Subcategory where code_url = 'java'));
 
 
-INSERT INTO Category (name,code_url,order_visualization,description,status,icon_path,html_hex_color_code) VALUES ('Front-end','front-end','1','Programe nas principais linguagens e plataformas. Iniciantes são bem vindos nos cursos de lógica e JavaScript.','ACTIVE','https://www.alura.com.br/assets/api/formacoes/categorias/512/programacao-transparent.png','#00c86f');
-
