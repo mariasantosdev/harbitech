@@ -1,15 +1,16 @@
-package br.com.harbitech.school.repository.factory;
+package br.com.harbitech.school.repository;
 
 import br.com.harbitech.school.category.Category;
 import br.com.harbitech.school.course.Course;
 import br.com.harbitech.school.course.CourseVisibility;
 import br.com.harbitech.school.repository.dao.CourseDAO;
+import br.com.harbitech.school.repository.factory.ConnectionFactory;
 import br.com.harbitech.school.subcategory.SubCategory;
 
 import java.sql.Connection;
 import java.sql.SQLException;
 
-public class TestaInsercaoProduto {
+public class CourseCrudTest {
     public static void main(String[] args) throws SQLException {
         Category category = new Category ("Programacao","programacao");
 
@@ -17,7 +18,7 @@ public class TestaInsercaoProduto {
 
         Course jdbc = new Course("Java e JDBC: Trabalhando com um banco de dados","jdbc",
                 12, CourseVisibility.from("PÚBLICA"),"Pessoas com uma base de POO e BD",
-                "João Vitor", "\n" +
+                "Paulo Silveira", "\n" +
                 "\n" +
                 "    Comunique-se com um banco de dados relacional\n" +
                 "    Indo além do Statement e do ResultSet\n" +
@@ -27,8 +28,8 @@ public class TestaInsercaoProduto {
 
         try(Connection connection = new ConnectionFactory().retrieveConnection()){
             CourseDAO courseDAO = new CourseDAO(connection);
-//            courseDAO.save(jdbc);
-            courseDAO.upgradeToPublicVisibility();
+            courseDAO.save(jdbc);
+            courseDAO.upgradeAllToPublicVisibility();
             courseDAO.delete("angular-cli");
         }
     }

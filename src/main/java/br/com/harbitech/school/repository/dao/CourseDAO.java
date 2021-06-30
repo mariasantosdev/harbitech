@@ -1,12 +1,16 @@
 package br.com.harbitech.school.repository.dao;
 
+import br.com.harbitech.school.category.Category;
 import br.com.harbitech.school.course.Course;
+import br.com.harbitech.school.course.CourseVisibility;
+import br.com.harbitech.school.subcategory.SubCategory;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.List;
 
 public class CourseDAO {
@@ -25,12 +29,12 @@ public class CourseDAO {
         try (PreparedStatement pstm = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
             pstm.setString(1, course.getName());
             pstm.setString(2, course.getCodeUrl());
-            pstm.setInt(3,course.getCompletionTimeInHours());
+            pstm.setInt(3, course.getCompletionTimeInHours());
             pstm.setString(4, String.valueOf(course.getVisibility()));
-            pstm.setString(5,course.getTargetAudience());
-            pstm.setString(6,course.getInstructor());
+            pstm.setString(5, course.getTargetAudience());
+            pstm.setString(6, course.getInstructor());
             pstm.setString(7, course.getDescription());
-            pstm.setString(8,course.getDevelopedSkills());
+            pstm.setString(8, course.getDevelopedSkills());
             pstm.setString(9, course.getSubCategory().getCodeUrl());
             pstm.execute();
 
@@ -42,21 +46,54 @@ public class CourseDAO {
         }
     }
 
-    public void delete(String urlCode) throws SQLException{
+    public void delete(String urlCode) throws SQLException {
         String sql = "DELETE FROM Course WHERE code_url = ?";
-        try (PreparedStatement pstm = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)){
+        try (PreparedStatement pstm = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
             pstm.setString(1, urlCode);
             pstm.execute();
         }
     }
 
-    public void upgradeToPublicVisibility() throws SQLException{
-        String sql = "UPDATE Course SET visibility = 'PUBLIC'";
-        try (PreparedStatement pstm = connection.prepareStatement(sql)){
+    public void upgradeAllToPublicVisibility() throws SQLException {
+        String sql = "UPDATE Course SET visibility = ?";
+        try (PreparedStatement pstm = connection.prepareStatement(sql)) {
+            pstm.setString(1, CourseVisibility.PUBLIC.name());
             pstm.execute();
         }
     }
 
-    public List<Course> 
+    public List<Course> searchAllWithPublicVisibility() throws SQLException {
+        List<Course> courses = new ArrayList<Course>();
+        String sql = "SELECT * FROM Course c\n" +
+                "LEFT JOIN Subcategory s ON c.subcategory_id = s.id \n" +
+                "LEFT JOIN Category c2 ON s.category_id = c2.id\n" +
+                " WHERE c.visibility = ?";
+        try (PreparedStatement pstm = connection.prepareStatement(sql)) {
+            pstm.setString(1, CourseVisibility.PUBLIC.name());
+            pstm.execute();
+            turnResultSetInCurso(courses,pstm);
+        }
+        return courses;
+    }
+
+    private void turnResultSetInCurso(List<Course> courses, PreparedStatement pstm) throws SQLException {
+        try (ResultSet rst = pstm.getResultSet()) {
+            while (rst.next()) {
+
+//                Category category = new Category(rst.getString(10),rst.getString(11));
+//
+//                SubCategory subCategory = new SubCategory(rst.getString(12),rst.getString(13),
+//                       category);
+
+                Course course = new Course(rst.getString(2),
+                        rst.getString(3), rst.getInt(4),
+                        CourseVisibility.valueOf(rst.getString(5)), rst.getString(6),
+                        rst.getString(7), rst.getString(8), rst.getString(9),
+                        new SubCategory(rst.getString(12), rst.getString(13),
+                                new Category(rst.getString(20), rst.getString(21))));
+                courses.add(course);
+            }
+        }
+    }
 }
 
