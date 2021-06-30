@@ -96,11 +96,6 @@ SELECT * FROM Video;
 SELECT * FROM Question;
 SELECT * FROM Alternative;
 
-/*OPERAÇÕES PARA COMPLEMENTAR OS TESTES*/
-UPDATE Course SET visibility = 'PRIVATE' WHERE id =1
-
-UPDATE Subcategory SET description = NULL WHERE id = 2
-
 /*- os dados de todas as categorias ativas, na ordem */
 SELECT * FROM Category WHERE status = 'ACTIVE' ORDER BY order_visualization;
 
@@ -155,17 +150,6 @@ GROUP BY category.name
 ORDER BY Quantidade DESC
 LIMIT 1;
 
-
-                SELECT 
-                course.id AS "id_curso", 
-                course.name AS "name_curso",
-                course.completion_time_in_hours,
-                subcategory.id AS "name_subcategory", 
-                subcategory.name AS "name_subcategory"
-                FROM Course course 
-                JOIN Subcategory subcategory ON course.subcategory_id = subcategory.id 
-                JOIN Category category ON subcategory.category_id = category.id
-               WHERE course.visibility = 'PUBLIC'
 
 
 

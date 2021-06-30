@@ -1,10 +1,8 @@
 package br.com.harbitech.school.repository.dao;
 
-import br.com.harbitech.school.category.Category;
 import br.com.harbitech.school.course.Course;
 import br.com.harbitech.school.course.CourseDto;
 import br.com.harbitech.school.course.CourseVisibility;
-import br.com.harbitech.school.subcategory.SubCategory;
 import br.com.harbitech.school.subcategory.SubcategoryDto;
 
 import java.sql.Connection;
@@ -67,15 +65,15 @@ public class CourseDAO {
     public List<CourseDto> searchAllWithPublicVisibility() throws SQLException {
         List<CourseDto> courses = new ArrayList<>();
         String sql = """
-                 SELECT
+                SELECT
                  course.id AS id_course,
                  course.name AS name_course,
                  course.completion_time_in_hours,
                  subcategory.id AS id_subcategory,
                  subcategory.name AS name_subcategory
-                 FROM Course course
-                 JOIN Subcategory subcategory ON course.subcategory_id = subcategory.id\s
-                 JOIN Category category ON subcategory.category_id = category.id
+                FROM Course course
+                JOIN Subcategory subcategory ON course.subcategory_id = subcategory.id\s
+                JOIN Category category ON subcategory.category_id = category.id
                 WHERE course.visibility = ?
                 """;
         try (PreparedStatement pstm = connection.prepareStatement(sql)) {
