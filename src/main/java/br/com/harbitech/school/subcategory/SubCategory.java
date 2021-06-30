@@ -48,8 +48,7 @@ public class SubCategory implements Comparable<SubCategory>{
         this.category.addSubcategory(this);
     }
 
-    public SubCategory(Long id,String name, String codeUrl, int orderVisualization,
-                       String description, String studyGuide,
+    public SubCategory(Long id,String name, String codeUrl, int orderVisualization, String description, String studyGuide,
                        SubCategoryStatus status, Category category){
         this(name, codeUrl, orderVisualization, description, studyGuide, status, category);
         this.id = id;
