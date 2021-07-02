@@ -22,9 +22,11 @@ public class CourseDAO {
     }
 
     public void save(Course course) throws SQLException {
-        String sql = "INSERT INTO Course (name, code_url,completion_time_in_hours,visibility,target_audience," +
-                "instructor,description,developed_skills,subcategory_id)" +
-                "VALUES (?, ?, ?, ?, ?, ?, ?, ?,(SELECT id from Subcategory where code_url = ?))";
+        String sql = """
+                INSERT INTO Course (name, code_url,completion_time_in_hours,visibility,target_audience,
+                instructor,description,developed_skills,subcategory_id)
+                VALUES (?, ?, ?, ?, ?, ?, ?, ? ,?)
+                """;
 
         try (PreparedStatement pstm = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
             pstm.setString(1, course.getName());
@@ -35,7 +37,7 @@ public class CourseDAO {
             pstm.setString(6, course.getInstructor());
             pstm.setString(7, course.getDescription());
             pstm.setString(8, course.getDevelopedSkills());
-            pstm.setString(9, course.getSubCategory().getCodeUrl());
+            pstm.setLong(9, course.getSubCategory().getId());
             pstm.execute();
 
             try (ResultSet rst = pstm.getGeneratedKeys()) {
@@ -48,14 +50,16 @@ public class CourseDAO {
 
     public void delete(String urlCode) throws SQLException {
         String sql = "DELETE FROM Course WHERE code_url = ?";
-        try (PreparedStatement pstm = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
+        try (PreparedStatement pstm = connection.prepareStatement(sql)) {
             pstm.setString(1, urlCode);
             pstm.execute();
         }
     }
 
     public void upgradeAllToPublicVisibility() throws SQLException {
-        String sql = "UPDATE Course SET visibility = ?";
+        String sql = """
+                UPDATE Course SET visibility = ?
+                """;
         try (PreparedStatement pstm = connection.prepareStatement(sql)) {
             pstm.setString(1, CourseVisibility.PUBLIC.name());
             pstm.execute();
@@ -79,12 +83,12 @@ public class CourseDAO {
         try (PreparedStatement pstm = connection.prepareStatement(sql)) {
             pstm.setString(1, CourseVisibility.PUBLIC.name());
             pstm.execute();
-            turnResultSetInCurso(courses, pstm);
+            turnResultSetInCourse(courses, pstm);
         }
         return courses;
     }
 
-    private void turnResultSetInCurso(List<CourseDto> courses, PreparedStatement pstm) throws SQLException {
+    private void turnResultSetInCourse(List<CourseDto> courses, PreparedStatement pstm) throws SQLException {
         try (ResultSet rst = pstm.getResultSet()) {
             while (rst.next()) {
                 CourseDto course = new CourseDto(rst.getLong("id_course"),

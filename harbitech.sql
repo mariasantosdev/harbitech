@@ -132,7 +132,7 @@ LIMIT 1
 SELECT
 	category.name AS Nome,
 	COUNT(course.id) AS Quantidade, 
-	COALESCE(SUM(course.completion_time_in_hours),NULL,0) AS "Total de horas" 
+	COALESCE(SUM(course.completion_time_in_hours),0) AS "Total de horas" 
 FROM Category category 
 LEFT JOIN Subcategory subcategory ON category.id = subcategory.category_id 
 LEFT JOIN Course course ON course.subcategory_id = subcategory.id

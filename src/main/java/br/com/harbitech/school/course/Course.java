@@ -54,6 +54,10 @@ public class Course {
         this.id = id;
     }
 
+    public Long getId() {
+        return id;
+    }
+
     public String getCodeUrl() {
         return codeUrl;
     }

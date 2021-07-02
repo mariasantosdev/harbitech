@@ -6,6 +6,7 @@ import br.com.harbitech.school.course.CourseVisibility;
 import br.com.harbitech.school.repository.dao.CourseDAO;
 import br.com.harbitech.school.repository.factory.ConnectionFactory;
 import br.com.harbitech.school.subcategory.SubCategory;
+import br.com.harbitech.school.subcategory.SubCategoryStatus;
 
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -14,7 +15,9 @@ public class CourseCrudTest {
     public static void main(String[] args) throws SQLException {
         Category category = new Category("Programacao", "programacao");
 
-        SubCategory subCategory = new SubCategory("Java", "java-e-persistencia", category);
+        SubCategory subCategory = new SubCategory(2L,"Java", "java-e-persistencia",
+                1,"Persistencia com banco de dados",null, SubCategoryStatus.ACTIVE,
+                category);
 
         Course jdbc = new Course("Java e JDBC: Trabalhando com um banco de dados", "jdbc",
                 12, CourseVisibility.from("PÚBLICA"), "Pessoas com uma base de POO e BD",
@@ -30,7 +33,7 @@ public class CourseCrudTest {
             CourseDAO courseDAO = new CourseDAO(connection);
 //            courseDAO.save(jdbc);
 //            courseDAO.upgradeAllToPublicVisibility();
-//            courseDAO.delete("angular-cli");
+            courseDAO.delete("jdbc");
         }
     }
 }
