@@ -2,22 +2,31 @@ package br.com.harbitech.school.course;
 
 import br.com.harbitech.school.subcategory.SubCategory;
 
-import javax.persistence.Entity;
+import javax.persistence.*;
 
 import static br.com.harbitech.school.validation.ValidationUtil.*;
 
 @Entity
 public class Course {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
+    @Column(name = "code_url")
     private String codeUrl;
+    @Column(name = "completion_time_in_hours")
     private int completionTimeInHours;
+    @Enumerated(EnumType.STRING)
     private CourseVisibility visibility;
+    @Column(name = "target_audience")
     private String targetAudience;
     private String instructor;
+    @Column(columnDefinition = "TEXT")
     private String description;
+    @Column(name = "developed_skills")
     private String developedSkills;
+    @ManyToOne(fetch = FetchType.LAZY)
     private SubCategory subCategory;
 
     public Course(String name, String codeUrl, int completionTimeInHours, String instructor, SubCategory subCategory){

@@ -29,6 +29,7 @@ public class Category {
     private String iconPath;
     @Column(name = "html_hex_color_code")
     private String htmlHexColorCode;
+    @OneToMany
     private List<SubCategory> subCategories = new ArrayList<>();
 
     public Category(String name, String codeUrl) {

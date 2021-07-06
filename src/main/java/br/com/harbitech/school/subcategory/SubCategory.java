@@ -3,22 +3,33 @@ package br.com.harbitech.school.subcategory;
 import br.com.harbitech.school.course.Course;
 import br.com.harbitech.school.category.Category;
 
+import javax.persistence.*;
 import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import static br.com.harbitech.school.validation.ValidationUtil.*;
 
+@Entity
 public class SubCategory implements Comparable<SubCategory>{
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
+    @Column(name = "code_url")
     private String codeUrl;
+    @Column(columnDefinition = "TEXT")
     private String description;
+    @Column(name = "study_guide", columnDefinition = "TEXT")
     private String studyGuide;
+    @Enumerated(EnumType.STRING)
     private SubCategoryStatus status;
+    @Column(name = "order_visualization")
     private int orderVisualization;
+    @ManyToOne(fetch = FetchType.LAZY)
     private Category category;
+    @OneToMany
     private List<Course> courses = new ArrayList<>();
 
     public SubCategory(String name, String codeUrl, Category category){
