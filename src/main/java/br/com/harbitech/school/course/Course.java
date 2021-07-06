@@ -7,6 +7,7 @@ import javax.persistence.*;
 import static br.com.harbitech.school.validation.ValidationUtil.*;
 
 @Entity
+@NamedQuery(name = "Course.allWithPublicVisibility", query = "SELECT c FROM Course c WHERE c.visibility = :visibility")
 public class Course {
 
     @Id
@@ -29,6 +30,11 @@ public class Course {
     private String developedSkills;
     @ManyToOne(fetch = FetchType.LAZY)
     private Subcategory subCategory;
+
+    @Deprecated
+    public Course(){
+
+    }
 
     public Course(String name, String codeUrl, int completionTimeInHours, String instructor, Subcategory subCategory){
         validateNonBlankText(name, "O nome do curso não pode estar em branco.");

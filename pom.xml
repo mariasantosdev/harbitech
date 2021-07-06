@@ -13,7 +13,6 @@
         <maven.compiler.source>16</maven.compiler.source>
         <maven.compiler.target>16</maven.compiler.target>
     </properties>
-
     <dependencies>
         <dependency>
             <groupId>org.junit.jupiter</groupId>
@@ -31,4 +30,5 @@
             <artifactId>hibernate-core</artifactId>
             <version>5.5.3.Final</version>
         </dependency>
+    </dependencies>
 </project>

@@ -88,13 +88,15 @@ FOREIGN KEY(question_id) REFERENCES Question(id));
 
 SELECT * FROM Category;
 SELECT * FROM Subcategory;
-SELECT * FROM Course; 
+SELECT * FROM Course; 	
 SELECT * FROM Explanation;
 SELECT * FROM Section;
 SELECT * FROM Activity;
 SELECT * FROM Video;
 SELECT * FROM Question;
 SELECT * FROM Alternative;
+
+UPDATE Course SET visibility = 'PRIVATE' WHERE id = 1
 
 /*- os dados de todas as categorias ativas, na ordem */
 SELECT * FROM Category WHERE status = 'ACTIVE' ORDER BY order_visualization;

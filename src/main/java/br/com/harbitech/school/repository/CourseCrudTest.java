@@ -2,6 +2,7 @@ package br.com.harbitech.school.repository;
 
 import br.com.harbitech.school.category.Category;
 import br.com.harbitech.school.course.Course;
+import br.com.harbitech.school.repository.dao.CategoryDao;
 import br.com.harbitech.school.repository.dao.CourseDao;
 import br.com.harbitech.school.subcategory.SubCategoryStatus;
 import br.com.harbitech.school.subcategory.Subcategory;
@@ -15,13 +16,13 @@ public class CourseCrudTest {
         EntityManager em = JPAUtil.getEntityManager();
         CourseDao courseDao = new CourseDao(em);
         registerCourse();
-
     }
 
     private static void registerCourse() {
 
         EntityManager em = JPAUtil.getEntityManager();
         CourseDao courseDao = new CourseDao(em);
+        CategoryDao categoryDao = new CategoryDao(em);
 
         Category category = new Category("DevOps","devops");
 
@@ -39,7 +40,9 @@ public class CourseCrudTest {
 
 //        courseDao.save(course);
 //        courseDao.delete("maven");
-        courseDao.upgradeAllToPublicVisibility();
+//        courseDao.upgradeAllToPublicVisibility();
+//        courseDao.searchAllWithPublicVisibility();
+        categoryDao.searchAllActive();
         em.getTransaction().commit();
         em.close();
     }

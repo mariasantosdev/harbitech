@@ -1,7 +1,11 @@
 package br.com.harbitech.school.repository.dao;
 
 import br.com.harbitech.school.course.Course;
+import br.com.harbitech.school.course.CourseDto;
 import br.com.harbitech.school.course.CourseVisibility;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
@@ -28,6 +32,11 @@ public class CourseDao {
         Query query = em.createQuery("UPDATE Course AS c SET c.visibility = :visibility")
                 .setParameter("visibility", CourseVisibility.PUBLIC);
         query.executeUpdate();
+    }
+
+    public List<Course> searchAllWithPublicVisibility() {
+      return em.createNamedQuery("Course.allWithPublicVisibility",Course.class)
+                .setParameter("visibility", CourseVisibility.PUBLIC).getResultList();
     }
 }
 

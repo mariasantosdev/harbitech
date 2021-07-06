@@ -33,6 +33,11 @@ public class Subcategory implements Comparable<Subcategory>{
     @OneToMany(mappedBy = "subCategory")
     private List<Course> courses = new ArrayList<>();
 
+    @Deprecated
+    public Subcategory(){
+
+    }
+
     public Subcategory(String name, String codeUrl, Category category){
         validateNonBlankText(name, "O nome da sub-categoria não pode estar em branco.");
         validateNonBlankText(codeUrl, "O código da URL da sub-categoria não pode estar em branco.");

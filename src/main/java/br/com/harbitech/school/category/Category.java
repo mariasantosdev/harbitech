@@ -9,6 +9,7 @@ import static br.com.harbitech.school.validation.ValidationUtil.validateNonBlank
 import static br.com.harbitech.school.validation.ValidationUtil.validateUrl;
 
 @Entity
+@NamedQuery(name = "Category.allActive", query = "SELECT c FROM Category c WHERE c.status = :status")
 public class Category {
 
     @Id
@@ -32,6 +33,11 @@ public class Category {
     private String htmlHexColorCode;
     @OneToMany(mappedBy = "category")
     private List<Subcategory> subCategories = new ArrayList<>();
+
+    @Deprecated
+    public Category(){
+
+    }
 
     public Category(String name, String codeUrl) {
         validateNonBlankText(name, "O nome da categoria não pode estar em branco.");
