@@ -1,6 +1,7 @@
 package br.com.harbitech.school.repository.dao;
 
 import br.com.harbitech.school.course.Course;
+import br.com.harbitech.school.course.CourseVisibility;
 
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
@@ -23,5 +24,10 @@ public class CourseDao {
         query.executeUpdate();
     }
 
+    public void upgradeAllToPublicVisibility() {
+        Query query = em.createQuery("UPDATE Course AS c SET c.visibility = :visibility")
+                .setParameter("visibility", CourseVisibility.PUBLIC);
+        query.executeUpdate();
+    }
 }
 

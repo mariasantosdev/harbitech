@@ -38,7 +38,8 @@ public class CourseCrudTest {
         em.getTransaction().begin();
 
 //        courseDao.save(course);
-        courseDao.delete("maven");
+//        courseDao.delete("maven");
+        courseDao.upgradeAllToPublicVisibility();
         em.getTransaction().commit();
         em.close();
     }
