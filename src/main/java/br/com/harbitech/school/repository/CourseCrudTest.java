@@ -18,8 +18,6 @@ public class CourseCrudTest {
 
     }
 
-
-
     private static void registerCourse() {
 
         EntityManager em = JPAUtil.getEntityManager();
@@ -39,8 +37,8 @@ public class CourseCrudTest {
 
         em.getTransaction().begin();
 
-        courseDao.save(course);
-
+//        courseDao.save(course);
+        courseDao.delete("maven");
         em.getTransaction().commit();
         em.close();
     }
