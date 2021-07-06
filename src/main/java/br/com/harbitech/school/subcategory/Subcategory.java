@@ -11,6 +11,10 @@ import java.util.stream.Stream;
 import static br.com.harbitech.school.validation.ValidationUtil.*;
 
 @Entity
+@NamedQuery(name = "Subcategory.allActive", query = "SELECT s FROM Subcategory s WHERE s.status = :status ORDER BY " +
+        "s.orderVisualization")
+@NamedQuery(name = "Subcategory.AllWithoutDescription", query = "SELECT s FROM Subcategory s WHERE s.description = '' " +
+        "OR s.description IS NULL")
 public class Subcategory implements Comparable<Subcategory>{
 
     @Id
@@ -35,7 +39,6 @@ public class Subcategory implements Comparable<Subcategory>{
 
     @Deprecated
     public Subcategory(){
-
     }
 
     public Subcategory(String name, String codeUrl, Category category){
