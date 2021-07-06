@@ -1,17 +1,27 @@
 package br.com.harbitech.school.activity;
 
-import br.com.harbitech.school.validation.ValidationUtil;
 import br.com.harbitech.school.section.Section;
 
-import static br.com.harbitech.school.validation.ValidationUtil.*;
+import javax.persistence.*;
 
+import static br.com.harbitech.school.validation.ValidationUtil.*;
+@Entity
+@Inheritance(strategy = InheritanceType.JOINED)
+@DiscriminatorColumn(name = "subtype", columnDefinition = "ENUM('VIDEO','QUESTION','EXPLANATION')")
 public abstract class Activity {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String title;
+    @Column(name = "code_url")
     private String codeUrl;
+    @Column(columnDefinition = "TEXT")
     private String text;
+    @Enumerated(EnumType.STRING)
+    @Column(columnDefinition = "ENUM")
     private ActivityStatus status;
+    @ManyToOne(fetch = FetchType.LAZY)
     private Section section;
 
     public Activity(String title, String codeUrl, Section section){

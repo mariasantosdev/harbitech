@@ -3,12 +3,19 @@ package br.com.harbitech.school.video;
 import br.com.harbitech.school.activity.Activity;
 import br.com.harbitech.school.section.Section;
 
-import static br.com.harbitech.school.validation.ValidationUtil.validateNonBlankText;
+import javax.persistence.Column;
+import javax.persistence.DiscriminatorValue;
+import javax.persistence.Entity;
 
+import static br.com.harbitech.school.validation.ValidationUtil.validateNonBlankText;
+@Entity
+@DiscriminatorValue("VIDEO")
 public class Video extends Activity {
 
    private String url;
+   @Column(name = "time_in_minutes")
    private int timeInMinutes;
+   @Column(columnDefinition = "TEXT")
    private String transcription;
 
    public Video(String title, String codeUrl, Section section, String url) {
