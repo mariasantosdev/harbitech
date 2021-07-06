@@ -2,38 +2,46 @@ package br.com.harbitech.school.repository;
 
 import br.com.harbitech.school.category.Category;
 import br.com.harbitech.school.course.Course;
-import br.com.harbitech.school.course.CourseVisibility;
-import br.com.harbitech.school.repository.dao.CourseDAO;
-import br.com.harbitech.school.repository.factory.ConnectionFactory;
-import br.com.harbitech.school.subcategory.SubCategory;
+import br.com.harbitech.school.repository.dao.CourseDao;
 import br.com.harbitech.school.subcategory.SubCategoryStatus;
+import br.com.harbitech.school.subcategory.Subcategory;
+import br.com.harbitech.school.util.JPAUtil;
 
-import java.sql.Connection;
-import java.sql.SQLException;
+import javax.persistence.EntityManager;
 
 public class CourseCrudTest {
-    public static void main(String[] args) throws SQLException {
-        Category category = new Category("Programacao", "programacao");
 
-        SubCategory subCategory = new SubCategory(2L,"Java", "java-e-persistencia",
-                1,"Persistencia com banco de dados",null, SubCategoryStatus.ACTIVE,
-                category);
+    public static void main(String[] args) {
+        EntityManager em = JPAUtil.getEntityManager();
+        CourseDao courseDao = new CourseDao(em);
+        registerCourse();
 
-        Course jdbc = new Course("Java e JDBC: Trabalhando com um banco de dados", "jdbc",
-                12, CourseVisibility.from("PÚBLICA"), "Pessoas com uma base de POO e BD",
-                "Paulo Silveira", "\n" +
-                "\n" +
-                "    Comunique-se com um banco de dados relacional\n" +
-                "    Indo além do Statement e do ResultSet\n" +
-                "    Encapsule o acesso em um DAO\n" +
-                "    Connection pool, datasources e outros recursos importantes\n" +
-                "\n", "Entender melhor o banco de dados e um CRUD", subCategory);
+    }
 
-        try (Connection connection = new ConnectionFactory().retrieveConnection()) {
-            CourseDAO courseDAO = new CourseDAO(connection);
-//            courseDAO.save(jdbc);
-//            courseDAO.upgradeAllToPublicVisibility();
-            courseDAO.delete("jdbc");
-        }
+
+
+    private static void registerCourse() {
+
+        EntityManager em = JPAUtil.getEntityManager();
+        CourseDao courseDao = new CourseDao(em);
+
+        Category category = new Category("DevOps","devops");
+
+        Subcategory subCategory = new Subcategory(5L,"Builds e Controle de versão",
+                "builds-e-controle-de-versao", 3,"O build é a construção da aplicação " +
+                "a partir do código fonte, que pode incluir várias etapas, como baixar dependências, compilar, " +
+                "empacotar, testar e analisar. Como estas são uma tarefas trabalhosas e repetitivas, existem " +
+                "ferramentas para autotomizar as etapas, facilitando e acelerando o desenvolvimento.",
+                "Administração de rede, segurança de aplicações e web services", SubCategoryStatus.ACTIVE,category);
+
+        Course course = new Course("Maven: Gerenciamento de dependências e build de aplicações Java","maven",8,
+                "Rodrigo Ferreira",subCategory);
+
+        em.getTransaction().begin();
+
+        courseDao.save(course);
+
+        em.getTransaction().commit();
+        em.close();
     }
 }

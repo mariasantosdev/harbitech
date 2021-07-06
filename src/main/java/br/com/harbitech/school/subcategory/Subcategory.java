@@ -11,7 +11,7 @@ import java.util.stream.Stream;
 import static br.com.harbitech.school.validation.ValidationUtil.*;
 
 @Entity
-public class SubCategory implements Comparable<SubCategory>{
+public class Subcategory implements Comparable<Subcategory>{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -24,15 +24,16 @@ public class SubCategory implements Comparable<SubCategory>{
     @Column(name = "study_guide", columnDefinition = "TEXT")
     private String studyGuide;
     @Enumerated(EnumType.STRING)
+    @Column(columnDefinition = "ENUM")
     private SubCategoryStatus status;
     @Column(name = "order_visualization")
     private int orderVisualization;
     @ManyToOne(fetch = FetchType.LAZY)
     private Category category;
-    @OneToMany
+    @OneToMany(mappedBy = "subCategory")
     private List<Course> courses = new ArrayList<>();
 
-    public SubCategory(String name, String codeUrl, Category category){
+    public Subcategory(String name, String codeUrl, Category category){
         validateNonBlankText(name, "O nome da sub-categoria não pode estar em branco.");
         validateNonBlankText(codeUrl, "O código da URL da sub-categoria não pode estar em branco.");
         validateNonNullClass(category, "A sub-categoria deve ter uma categoria associada.");
@@ -45,7 +46,7 @@ public class SubCategory implements Comparable<SubCategory>{
         this.orderVisualization = -1;
     }
 
-    public SubCategory(String name, String codeUrl, int orderVisualization, String description, String studyGuide,
+    public Subcategory(String name, String codeUrl, int orderVisualization, String description, String studyGuide,
                        SubCategoryStatus status, Category category) {
 
         this(name,codeUrl,category);
@@ -59,7 +60,7 @@ public class SubCategory implements Comparable<SubCategory>{
         this.category.addSubcategory(this);
     }
 
-    public SubCategory(Long id,String name, String codeUrl, int orderVisualization, String description, String studyGuide,
+    public Subcategory(Long id, String name, String codeUrl, int orderVisualization, String description, String studyGuide,
                        SubCategoryStatus status, Category category){
         this(name, codeUrl, orderVisualization, description, studyGuide, status, category);
         this.id = id;
@@ -129,7 +130,7 @@ public class SubCategory implements Comparable<SubCategory>{
     }
 
     @Override
-    public int compareTo(SubCategory otherSubCategory) {
+    public int compareTo(Subcategory otherSubCategory) {
         if (otherSubCategory.getOrderVisualization() < this.orderVisualization) {
             return otherSubCategory.getOrderVisualization();
         }

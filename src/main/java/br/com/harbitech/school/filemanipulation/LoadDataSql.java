@@ -4,7 +4,7 @@ import br.com.harbitech.school.category.Category;
 import br.com.harbitech.school.category.CategoryStatus;
 import br.com.harbitech.school.course.Course;
 import br.com.harbitech.school.course.CourseVisibility;
-import br.com.harbitech.school.subcategory.SubCategory;
+import br.com.harbitech.school.subcategory.Subcategory;
 import br.com.harbitech.school.subcategory.SubCategoryStatus;
 
 import java.io.*;
@@ -26,10 +26,10 @@ public class LoadDataSql {
         }
 
         SubCategoryFileReader subCategoryFileReader = new SubCategoryFileReader();
-        List<SubCategory> subCategories = subCategoryFileReader.readSubCategoriesFromFile("planilha-dados-escola - Subcategoria.csv", categoryMap);
+        List<Subcategory> subCategories = subCategoryFileReader.readSubCategoriesFromFile("planilha-dados-escola - Subcategoria.csv", categoryMap);
 
-        Map<String, SubCategory> subCategoryMap = new HashMap<>();
-        for (SubCategory sc : subCategories) {
+        Map<String, Subcategory> subCategoryMap = new HashMap<>();
+        for (Subcategory sc : subCategories) {
             subCategoryMap.put(sc.getCodeUrl(), sc);
         }
 
@@ -63,8 +63,8 @@ public class LoadDataSql {
         }
     }
 
-    private void writeSubcategoriesInsert(List<SubCategory> subcategories, PrintStream printStream) {
-        for (SubCategory sc : subcategories) {
+    private void writeSubcategoriesInsert(List<Subcategory> subcategories, PrintStream printStream) {
+        for (Subcategory sc : subcategories) {
             String subcategoryName = sc.getName();
             String subcategoryCodeUrl = sc.getCodeUrl();
             Integer subcategoryOrder = sc.getOrderVisualization();

@@ -2,7 +2,7 @@ package br.com.harbitech.school.filemanipulation;
 
 import br.com.harbitech.school.category.Category;
 import br.com.harbitech.school.course.Course;
-import br.com.harbitech.school.subcategory.SubCategory;
+import br.com.harbitech.school.subcategory.Subcategory;
 
 import java.io.*;
 import java.util.HashMap;
@@ -51,7 +51,7 @@ public class CategoryHtmlPageGenerator {
             printStream.println("<td>" + c.totalTimeInHoursOfCourse() + "</td>");
             printStream.println("<td>");
 
-            for (SubCategory sc : c.getSubCategories()) {
+            for (Subcategory sc : c.getSubCategories()) {
                 printStream.println(sc.getName() + "<br>");
                 printStream.println("<br>");
                 printStream.println(sc.getDescription() + "<br>");
@@ -77,10 +77,10 @@ public class CategoryHtmlPageGenerator {
         }
 
         SubCategoryFileReader subCategoryFileReader = new SubCategoryFileReader();
-        List<SubCategory> subCategories = subCategoryFileReader.readSubCategoriesFromFile("planilha-dados-escola - Subcategoria.csv", categoryMap);
+        List<Subcategory> subCategories = subCategoryFileReader.readSubCategoriesFromFile("planilha-dados-escola - Subcategoria.csv", categoryMap);
 
-        Map<String, SubCategory> subCategoryMap = new HashMap<>();
-        for (SubCategory sc : subCategories) {
+        Map<String, Subcategory> subCategoryMap = new HashMap<>();
+        for (Subcategory sc : subCategories) {
             subCategoryMap.put(sc.getCodeUrl(), sc);
         }
 

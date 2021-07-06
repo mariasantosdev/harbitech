@@ -2,10 +2,9 @@ package br.com.harbitech.school.filemanipulation;
 
 import br.com.harbitech.school.category.Category;
 import br.com.harbitech.school.course.Course;
-import br.com.harbitech.school.subcategory.SubCategory;
+import br.com.harbitech.school.subcategory.Subcategory;
 
 import java.io.IOException;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -23,11 +22,11 @@ public class TestFilesManipulation {
         }
 
         SubCategoryFileReader subCategoryFileReader = new SubCategoryFileReader();
-        List<SubCategory> subCategories = subCategoryFileReader.readSubCategoriesFromFile("planilha-dados-escola - Subcategoria.csv", categoryMap);
+        List<Subcategory> subCategories = subCategoryFileReader.readSubCategoriesFromFile("planilha-dados-escola - Subcategoria.csv", categoryMap);
         subCategories.forEach(System.out::println);
 
-        Map<String, SubCategory> subCategoryMap = new HashMap<>();
-        for (SubCategory sc : subCategories) {
+        Map<String, Subcategory> subCategoryMap = new HashMap<>();
+        for (Subcategory sc : subCategories) {
             subCategoryMap.put(sc.getCodeUrl(), sc);
         }
 

@@ -1,6 +1,5 @@
 package br.com.harbitech.school.course;
 
-import br.com.harbitech.school.subcategory.SubCategory;
 import br.com.harbitech.school.subcategory.SubcategoryDto;
 
 public class CourseDto {
