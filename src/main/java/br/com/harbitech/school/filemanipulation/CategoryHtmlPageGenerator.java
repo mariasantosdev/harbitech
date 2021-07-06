@@ -50,6 +50,7 @@ public class CategoryHtmlPageGenerator {
             printStream.println("<td>" + c.totalCourses() + "</td>");
             printStream.println("<td>" + c.totalTimeInHoursOfCourse() + "</td>");
             printStream.println("<td>");
+
             for (SubCategory sc : c.getSubCategories()) {
                 printStream.println(sc.getName() + "<br>");
                 printStream.println("<br>");
