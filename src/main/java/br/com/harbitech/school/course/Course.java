@@ -2,8 +2,11 @@ package br.com.harbitech.school.course;
 
 import br.com.harbitech.school.subcategory.SubCategory;
 
+import javax.persistence.Entity;
+
 import static br.com.harbitech.school.validation.ValidationUtil.*;
 
+@Entity
 public class Course {
 
     private Long id;

@@ -2,21 +2,32 @@ package br.com.harbitech.school.category;
 
 import br.com.harbitech.school.subcategory.SubCategory;
 
+import javax.persistence.*;
 import java.util.*;
 
 import static br.com.harbitech.school.validation.ValidationUtil.validateNonBlankText;
 import static br.com.harbitech.school.validation.ValidationUtil.validateUrl;
 
+@Entity
 public class Category {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
+    @Column(name = "code_url")
     private String codeUrl;
+    @Column(columnDefinition = "TEXT")
     private String description;
+    @Column(name = "study_guide", columnDefinition = "TEXT")
     private String studyGuide;
+    @Enumerated(EnumType.STRING)
     private CategoryStatus status;
+    @Column(name = "order_visualization")
     private int orderVisualization;
+    @Column(name = "icon_path")
     private String iconPath;
+    @Column(name = "html_hex_color_code")
     private String htmlHexColorCode;
     private List<SubCategory> subCategories = new ArrayList<>();
 
