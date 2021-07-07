@@ -33,7 +33,7 @@ public class CategoryDaoTest {
     }
 
     @Test
-    void shouldValidateCorrectQueryWithAllCategoriesActive() {
+    void shouldReturnAllWithActiveStatus() {
         Category category = new CategoryBuilder()
                 .withName("Mobile")
                 .withCodeUrl("mobile")
@@ -52,17 +52,17 @@ public class CategoryDaoTest {
         em.persist(category);
         List<Category> categories = this.dao.searchAllActive();
 
-        assertDoesNotThrow(() -> categories);
+        assertFalse(categories.isEmpty());
     }
 
     @Test
-    void shouldValidateCorrectQueryButItDoesNotHaveRegistry() {
+    void shouldReturnEmptyBecauseDoNotHaveAnyCategory() {
         List<Category> categories = this.dao.searchAllActive();
         assertTrue(categories.isEmpty());
     }
 
     @Test
-    void shouldValidateCorrectQueryButItDoesNotHaveRegistryBecauseOnlyCategoryIsInactive() {
+    void shouldReturnEmptyBecauseOnlyCategoryIsInactive() {
         Category category = new CategoryBuilder()
                 .withName("Mobile")
                 .withCodeUrl("mobile")

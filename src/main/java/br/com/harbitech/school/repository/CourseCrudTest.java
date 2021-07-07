@@ -10,6 +10,7 @@ import br.com.harbitech.school.subcategory.Subcategory;
 import br.com.harbitech.school.util.JPAUtil;
 
 import javax.persistence.EntityManager;
+import java.util.List;
 
 public class CourseCrudTest {
 
@@ -40,9 +41,14 @@ public class CourseCrudTest {
 
         em.getTransaction().begin();
 
-//        courseDao.save(course);
+        courseDao.save(course);
 //        courseDao.delete("maven");
 //        courseDao.upgradeAllToPublicVisibility();
+//        List<Course> allCourses = courseDao.findAll();
+//        for (Course c : allCourses) {
+//            c.publish();
+//        }
+
         em.getTransaction().commit();
         em.close();
     }

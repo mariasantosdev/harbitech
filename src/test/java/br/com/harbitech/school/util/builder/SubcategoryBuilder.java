@@ -1,12 +1,10 @@
 package br.com.harbitech.school.util.builder;
 
 import br.com.harbitech.school.category.Category;
-import br.com.harbitech.school.category.CategoryStatus;
 import br.com.harbitech.school.subcategory.SubCategoryStatus;
 import br.com.harbitech.school.subcategory.Subcategory;
 
-import java.util.Locale;
-
+//TODO CONSTRUTOR COM OS ATRIBUTOS OBRIGATORIOS DE SUBCATEGORY
 public class SubcategoryBuilder {
     private String name;
     private String codeUrl;

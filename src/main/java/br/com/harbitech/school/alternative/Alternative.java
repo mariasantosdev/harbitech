@@ -2,16 +2,22 @@ package br.com.harbitech.school.alternative;
 
 import br.com.harbitech.school.question.Question;
 
+import javax.persistence.*;
+
 import static br.com.harbitech.school.validation.ValidationUtil.validateNonBlankText;
 import static br.com.harbitech.school.validation.ValidationUtil.validateNonNullClass;
-
+@Entity
 public class Alternative {
-
+   @Id
+   @GeneratedValue(strategy = GenerationType.IDENTITY)
    private Long id;
+   @Column(columnDefinition = "TEXT")
    private String text;
+   @Column(name = "order_visualization")
    private int orderVisualization;
    private boolean correct;
    private String justification;
+   @ManyToOne
    private Question question;
 
    public Alternative(String text, Question question, boolean correct) {

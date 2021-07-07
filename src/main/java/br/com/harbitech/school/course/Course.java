@@ -132,4 +132,8 @@ public class Course {
                 ", subCategory=" + subCategory +
                 '}';
     }
+
+    public void publish() {
+        this.visibility = CourseVisibility.PUBLIC;
+    }
 }

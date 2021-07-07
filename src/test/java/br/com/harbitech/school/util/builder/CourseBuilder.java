@@ -1,6 +1,5 @@
 package br.com.harbitech.school.util.builder;
 
-import br.com.harbitech.school.category.Category;
 import br.com.harbitech.school.course.Course;
 import br.com.harbitech.school.course.CourseVisibility;
 import br.com.harbitech.school.subcategory.Subcategory;

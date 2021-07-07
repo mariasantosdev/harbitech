@@ -12,7 +12,7 @@ import javax.persistence.Query;
 
 public class CourseDao {
 
-    private EntityManager em;
+    private final EntityManager em;
 
     public CourseDao(EntityManager em){
         this.em = em;
@@ -23,13 +23,13 @@ public class CourseDao {
     }
 
     public void delete(String codeUrl) {
-        Query query = em.createQuery("DELETE FROM Course AS c WHERE c.codeUrl = :codeUrl")
+        Query query = em.createQuery("DELETE FROM Course c WHERE c.codeUrl = :codeUrl")
                 .setParameter("codeUrl", codeUrl);
         query.executeUpdate();
     }
 
     public void upgradeAllToPublicVisibility() {
-        Query query = em.createQuery("UPDATE Course AS c SET c.visibility = :visibility")
+        Query query = em.createQuery("UPDATE Course c SET c.visibility = :visibility")
                 .setParameter("visibility", CourseVisibility.PUBLIC);
         query.executeUpdate();
     }
@@ -37,6 +37,10 @@ public class CourseDao {
     public List<Course> searchAllWithPublicVisibility() {
       return em.createNamedQuery("Course.allWithPublicVisibility",Course.class)
                 .setParameter("visibility", CourseVisibility.PUBLIC).getResultList();
+    }
+
+    public List<Course> findAll(){
+        return em.createQuery("SELECT c FROM Course c", Course.class).getResultList();
     }
 }
 
