@@ -43,10 +43,6 @@ public class CourseCrudTest {
 //        courseDao.save(course);
 //        courseDao.delete("maven");
 //        courseDao.upgradeAllToPublicVisibility();
-//        courseDao.searchAllWithPublicVisibility();
-//        categoryDao.searchAllActive();
-//        subcategory.searchAllActive();
-        subcategory.searchAllWithoutDescription();
         em.getTransaction().commit();
         em.close();
     }
