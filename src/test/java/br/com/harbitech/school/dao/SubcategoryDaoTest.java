@@ -2,28 +2,30 @@ package br.com.harbitech.school.dao;
 
 import br.com.harbitech.school.category.Category;
 import br.com.harbitech.school.category.CategoryStatus;
-import br.com.harbitech.school.repository.dao.CategoryDao;
+import br.com.harbitech.school.repository.dao.SubcategoryDao;
+import br.com.harbitech.school.subcategory.SubCategoryStatus;
+import br.com.harbitech.school.subcategory.Subcategory;
 import br.com.harbitech.school.util.JPAUtil;
 import br.com.harbitech.school.util.builder.CategoryBuilder;
+import br.com.harbitech.school.util.builder.SubcategoryBuilder;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.util.List;
-
 import javax.persistence.EntityManager;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
-public class CategoryDaoTest {
+public class SubcategoryDaoTest {
 
-    private CategoryDao dao;
+    private SubcategoryDao dao;
     private EntityManager em;
 
     @BeforeEach
     public void setUp() {
         this.em = JPAUtil.getEntityManager();
-        this.dao = new CategoryDao(em);
+        this.dao = new SubcategoryDao(em);
         em.getTransaction().begin();
     }
 
@@ -33,7 +35,7 @@ public class CategoryDaoTest {
     }
 
     @Test
-    void shouldValidateCorrectQueryWithAllCategoriesActive() {
+    void shouldValidateCorrectQueryWithAllSubcategoriesActive() {
         Category category = new CategoryBuilder()
                 .withName("Mobile")
                 .withCodeUrl("mobile")
@@ -50,6 +52,19 @@ public class CategoryDaoTest {
                 .withHtmlHexColorCode("#FFFF00")
                 .create();
         em.persist(category);
-        List<Category> categories = assertDoesNotThrow(() -> this.dao.searchAllActive());
+
+        Subcategory subcategory = new SubcategoryBuilder()
+                .withName("Android")
+                .withCodeUrl("android")
+                .withDescription("Crie aplicativos móveis para as principais plataformas, smartphones e tablets. " +
+                        "Aprenda frameworks multiplataforma como Flutter e React Native e saiba como criar apps" +
+                        " nativas para Android e iOS. Desenvolva também jogos mobile com Unity. Saiba como ")
+                .withStudyGuide("Android, Testes automatizados e arquitetura android")
+                .withStatus(SubCategoryStatus.ACTIVE)
+                .withOrderVisualization(1)
+                .withCategory(category)
+                .create();
+        em.persist(subcategory);
+        List<Subcategory> subcategories = assertDoesNotThrow(() -> this.dao.searchAllActive());
     }
 }

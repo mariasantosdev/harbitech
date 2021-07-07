@@ -4,7 +4,6 @@ import br.com.harbitech.school.category.Category;
 import br.com.harbitech.school.category.CategoryStatus;
 
 public class CategoryBuilder {
-    private Long id;
     private String name;
     private String codeUrl;
     private String description;
