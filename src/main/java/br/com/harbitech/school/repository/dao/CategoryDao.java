@@ -19,4 +19,5 @@ public class CategoryDao {
         return em.createNamedQuery("Category.allActive", Category.class)
                 .setParameter("status", CategoryStatus.ACTIVE).getResultList();
     }
+
 }

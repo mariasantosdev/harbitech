@@ -13,7 +13,7 @@ import static br.com.harbitech.school.validation.ValidationUtil.*;
 @Entity
 @NamedQuery(name = "Subcategory.allActive", query = "SELECT s FROM Subcategory s WHERE s.status = :status ORDER BY " +
         "s.orderVisualization")
-@NamedQuery(name = "Subcategory.AllWithoutDescription", query = "SELECT s FROM Subcategory s WHERE s.description = '' " +
+@NamedQuery(name = "Subcategory.AllWithoutDescription", query = "SELECT s.name FROM Subcategory s WHERE s.description = '' " +
         "OR s.description IS NULL")
 public class Subcategory implements Comparable<Subcategory>{
 

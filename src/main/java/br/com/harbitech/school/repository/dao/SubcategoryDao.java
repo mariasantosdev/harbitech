@@ -18,9 +18,8 @@ public class SubcategoryDao {
                 .setParameter("status", SubCategoryStatus.ACTIVE).getResultList();
     }
 
-    public List<Subcategory> searchAllWithoutDescription(){
-        return em.createNamedQuery("Subcategory.AllWithoutDescription", Subcategory.class).getResultList();
-//                .setParameter("status", SubCategoryStatus.ACTIVE).getResultList();
+    public List<String> searchAllWithoutDescription(){
+        return em.createNamedQuery("Subcategory.AllWithoutDescription", String.class).getResultList();
     }
 
 }

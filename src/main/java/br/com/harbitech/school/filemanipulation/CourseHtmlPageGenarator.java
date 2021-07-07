@@ -34,17 +34,17 @@ public class CourseHtmlPageGenarator {
 
         SubcategoryDao subcategoryDao = new SubcategoryDao(em);
         List<Subcategory> subcategories = subcategoryDao.searchAllActive();
-//        List<Subcategory> subcategoriesWithOutDescription = subcategoryDao.searchAllWithoutDescription();
+        List<String> subcategoriesWithOutDescription = subcategoryDao.searchAllWithoutDescription();
 
         try (OutputStream outputStream = new FileOutputStream(filePath);
              PrintStream printStream = new PrintStream(outputStream)){
 
-             writePage(courses,categories,subcategories, printStream);
+             writePage(courses,categories,subcategories, subcategoriesWithOutDescription,printStream);
         }
     }
 
     private void writePage(List<Course> courses, List<Category> categories,List<Subcategory> subcategories,
-                           PrintStream printStream) {
+                          List <String> subcategoriesWithOutDescription, PrintStream printStream) {
         printStream.println("<html>");
         printStream.println("<head>");
         printStream.println("</head>");
@@ -139,6 +139,18 @@ public class CourseHtmlPageGenarator {
 
         }
         printStream.println("</table>");
+
+        printStream.println("</br>");
+        printStream.println("</br>");
+        printStream.println("</br>");
+        printStream.println("</br>");
+
+        printStream.println("<table border=1 frame=void rules=rows>");
+        printStream.println("<tr>");
+        printStream.println("<th>" + "Subcategorias que não tem descrição:" + "</th>");
+        printStream.println("</tr>");
+            printStream.println("<tr align =center>");
+            printStream.println("<td>" + subcategoriesWithOutDescription + "</td>");
 
         printStream.println("</body>");
         printStream.println("</html>");
