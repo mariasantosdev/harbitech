@@ -19,7 +19,7 @@ public class CourseDao {
     }
 
     public void save(Course course) {
-        if (course == null) {
+        if (course.getId() == null) {
             this.em.persist(course);
         }
         this.em.merge(course);
@@ -31,7 +31,7 @@ public class CourseDao {
         query.executeUpdate();
     }
 
-    public void upgradeAllToPublicVisibility() {
+    public void updateAllToPublicVisibility() {
         Query query = em.createQuery("UPDATE Course c SET c.visibility = :visibility")
                 .setParameter("visibility", CourseVisibility.PUBLIC);
         query.executeUpdate();

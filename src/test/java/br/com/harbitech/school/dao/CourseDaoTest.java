@@ -18,7 +18,9 @@ import org.junit.jupiter.api.Test;
 import javax.persistence.EntityManager;
 import java.util.List;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
+
 
 public class CourseDaoTest {
 
@@ -65,25 +67,13 @@ public class CourseDaoTest {
 
     @Test
     void shouldReturnAllPublicVisibilities() {
-        Course course = new CourseBuilder("Android parte 3: Refinando o projeto",
-                "android-refinando-projeto","Alex Felipe",subcategory)
-                .withCompletionTimeInHours(10)
-                .withVisibility(CourseVisibility.PUBLIC)
-                .withTargetAudience("Pessoas com foco em java/kotlin/desenvolvimento mobile")
-                .withDescription("\n" +
-                        "\n" +
-                        "    Implementar um layout personalizado para um AdapterView\n" +
-                        "    Entender e utilizar a entidade Application do Android Framework\n" +
-                        "    Interagir com o usuário por meio de dialogs\n" +
-                        "    Analisar possíveis melhorias no projeto por meio do inspetor de código\n" +
-                        "    Compreender e resolver tópicos apresentado no resultado da inspeção de código\n" +
-                        "\n")
-                .withDevelopedSkills("Aprenda a refatorar, usando os principios de SOLID nesse curso")
-                .create();
-        em.persist(course);
+        androidCourse(CourseVisibility.PUBLIC);
 
         List<Course> courses = this.dao.searchAllWithPublicVisibility();
-        assertFalse(courses.isEmpty());
+        assertThat(courses)
+                .hasSize(1)
+                .extracting(Course::getCodeUrl)
+                .containsExactly("android-refinando-projeto");
     }
 
     @Test
@@ -94,22 +84,7 @@ public class CourseDaoTest {
 
     @Test
     void shouldReturnEmptyBecauseOnlyCourseIsPrivate() {
-        Course course = new CourseBuilder("Android parte 3: Refinando o projeto",
-                "android-refinando-projeto","Alex Felipe",subcategory)
-                .withCompletionTimeInHours(10)
-                .withVisibility(CourseVisibility.PRIVATE)
-                .withTargetAudience("Pessoas com foco em java/kotlin/desenvolvimento mobile")
-                .withDescription("\n" +
-                        "\n" +
-                        "    Implementar um layout personalizado para um AdapterView\n" +
-                        "    Entender e utilizar a entidade Application do Android Framework\n" +
-                        "    Interagir com o usuário por meio de dialogs\n" +
-                        "    Analisar possíveis melhorias no projeto por meio do inspetor de código\n" +
-                        "    Compreender e resolver tópicos apresentado no resultado da inspeção de código\n" +
-                        "\n")
-                .withDevelopedSkills("Aprenda a refatorar, usando os principios de SOLID nesse curso")
-                .create();
-        em.persist(course);
+        androidCourse(CourseVisibility.PRIVATE);
 
         List<Course> courses = this.dao.searchAllWithPublicVisibility();
 
@@ -117,27 +92,67 @@ public class CourseDaoTest {
     }
 
     @Test
-    void shouldUReturnAllupdated() {
-        Course course = new CourseBuilder("Android parte 3: Refinando o projeto",
-                "android-refinando-projeto","Alex Felipe",subcategory)
+    void shouldUpdateAllToPublicVisibility() {
+        androidCourse(CourseVisibility.PRIVATE);
+        jpaCouse(CourseVisibility.PRIVATE);
+        servletCourse(CourseVisibility.PUBLIC);
+
+        this.dao.updateAllToPublicVisibility();
+
+        em.clear();
+
+        List<Course> courses = this.dao.findAll();
+        assertThat(courses)
+                .hasSize(3)
+                .allMatch(course -> CourseVisibility.PUBLIC.equals(course.getVisibility()));
+    }
+
+    private Course androidCourse(CourseVisibility visibility) {
+        Course androidCourse = new CourseBuilder("Android parte 3: Refinando o projeto",
+                "android-refinando-projeto", "Alex Felipe", subcategory)
                 .withCompletionTimeInHours(10)
-                .withVisibility(CourseVisibility.PRIVATE)
+                .withVisibility(visibility)
                 .withTargetAudience("Pessoas com foco em java/kotlin/desenvolvimento mobile")
-                .withDescription("\n" +
-                        "\n" +
-                        "    Implementar um layout personalizado para um AdapterView\n" +
-                        "    Entender e utilizar a entidade Application do Android Framework\n" +
-                        "    Interagir com o usuário por meio de dialogs\n" +
-                        "    Analisar possíveis melhorias no projeto por meio do inspetor de código\n" +
-                        "    Compreender e resolver tópicos apresentado no resultado da inspeção de código\n" +
-                        "\n")
+                .withDescription("""
+                            Implementar um layout personalizado para um AdapterView
+                            Entender e utilizar a entidade Application do Android Framework
+                            Interagir com o usuário por meio de dialogs
+                            Analisar possíveis melhorias no projeto por meio do inspetor de código
+                            Compreender e resolver tópicos apresentado no resultado da inspeção de código
+                        """)
                 .withDevelopedSkills("Aprenda a refatorar, usando os principios de SOLID nesse curso")
                 .create();
+        em.persist(androidCourse);
+        return androidCourse;
+    }
 
-        this.dao.save(course);
+    private Course jpaCouse(CourseVisibility visibility) {
+        Course jpaCourse = new CourseBuilder("Persistência com JPA: Introdução ao Hibernate",
+                "persistencia-jpa-introducao-hibernate", "Rodrigo Ferreira", subcategory)
+                .withCompletionTimeInHours(8)
+                .withVisibility(visibility)
+                .withTargetAudience("Pessoas que queiram aprender como funciona a JPA.")
+                .withDescription("""
+                        Cardinalidade do relacionamento
+                         """)
+                .withDevelopedSkills("Realize o mapeamento de entidades JPA e seus relacionamentos")
+                .create();
+        em.persist(jpaCourse);
+        return jpaCourse;
+    }
 
-        this.dao.upgradeAllToPublicVisibility();
-
-        assertTrue(course.getVisibility().equals(CourseVisibility.PUBLIC));
+    private Course servletCourse(CourseVisibility visibility) {
+        Course servletCourse = new CourseBuilder("Java Servlet: Fundamentos da programação web Java",
+                "servlets-fundamentos-programacao-web-java","Nico Steppat",subcategory)
+                .withCompletionTimeInHours(10)
+                .withVisibility(visibility)
+                .withTargetAudience("Programadores que conhecem a linguagem java e começarão a trabalhar na web.")
+                .withDescription("""
+                                   Gere HTML dinamicamente com JSP e JSTL
+                                    """)
+                .withDevelopedSkills("Crie uma CRUD completa")
+                .create();
+        em.persist(servletCourse);
+        return servletCourse;
     }
 }
