@@ -29,9 +29,7 @@ public class SubcategoryDaoTest {
         this.dao = new SubcategoryDao(em);
         em.getTransaction().begin();
 
-        this.category = new CategoryBuilder()
-                .withName("Mobile")
-                .withCodeUrl("mobile")
+        this.category = new CategoryBuilder("Mobile", "mobile")
                 .withDescription("Crie aplicativos móveis para as principais plataformas, smartphones e tablets. " +
                         "Aprenda frameworks multiplataforma como Flutter e React Native e saiba como criar apps" +
                         " nativas para Android e iOS. Desenvolva também jogos mobile com Unity. Saiba como ")
@@ -54,18 +52,15 @@ public class SubcategoryDaoTest {
 
     @Test
     void shouldReturnAllWithActiveStatus() {
-        Subcategory subcategory = new SubcategoryBuilder()
-                .withName("Android")
-                .withCodeUrl("android")
+        Subcategory android = new SubcategoryBuilder("Android","android",category)
                 .withDescription("Crie aplicativos móveis para as principais plataformas, smartphones e tablets. " +
                         "Aprenda frameworks multiplataforma como Flutter e React Native e saiba como criar apps" +
                         " nativas para Android e iOS. Desenvolva também jogos mobile com Unity. Saiba como ")
                 .withStudyGuide("Android, Testes automatizados e arquitetura android")
                 .withStatus(SubCategoryStatus.ACTIVE)
                 .withOrderVisualization(1)
-                .withCategory(category)
                 .create();
-        em.persist(subcategory);
+        em.persist(android);
 
         List<Subcategory> subcategories = this.dao.searchAllActive();
 
@@ -80,18 +75,15 @@ public class SubcategoryDaoTest {
 
     @Test
     void shouldReturnEmptyBecauseOnlySubcategoryIsInactive()  {
-        Subcategory subcategory = new SubcategoryBuilder()
-                .withName("Android")
-                .withCodeUrl("android")
+        Subcategory android = new SubcategoryBuilder("Android","android",category)
                 .withDescription("Crie aplicativos móveis para as principais plataformas, smartphones e tablets. " +
                         "Aprenda frameworks multiplataforma como Flutter e React Native e saiba como criar apps" +
                         " nativas para Android e iOS. Desenvolva também jogos mobile com Unity. Saiba como ")
                 .withStudyGuide("Android, Testes automatizados e arquitetura android")
                 .withStatus(SubCategoryStatus.INACTIVE)
                 .withOrderVisualization(1)
-                .withCategory(category)
                 .create();
-        em.persist(subcategory);
+        em.persist(android);
         assertDoesNotThrow(() -> this.dao.searchAllActive());
 
         List<Subcategory> subcategories = this.dao.searchAllActive();
@@ -100,34 +92,53 @@ public class SubcategoryDaoTest {
 
     @Test
     void shouldReturnAllWithDescriptionNull() {
-        Subcategory subcategory = new SubcategoryBuilder()
-                .withName("Android")
-                .withCodeUrl("android")
+        Subcategory android = new SubcategoryBuilder("Android","android",category)
                 .withDescription(null)
                 .withStatus(SubCategoryStatus.INACTIVE)
                 .withOrderVisualization(1)
-                .withCategory(category)
                 .create();
-        em.persist(subcategory);
-        assertDoesNotThrow(() -> this.dao.searchAllActive());
-        //TODO ASSERTNOT NULL
+        em.persist(android);
+
+        List<String> subcategories = this.dao.searchAllWithoutDescription();
+        assertFalse(subcategories.isEmpty());
     }
 
-//    @Test
-//    void shouldReturnEmptyBecauseOnlySubcategoryIsWithDescription() {
-//        Subcategory subcategory = new SubcategoryBuilder()
-//                .withName("Android")
-//                .withCodeUrl("android")
-//                .withDescription("")
-//                .withStatus(SubCategoryStatus.INACTIVE)
-//                .withOrderVisualization(1)
-//                .withCategory(category)
-//                .create();
-//        em.persist(subcategory);
-//
-//        assertDoesNotThrow(() -> this.dao.searchAllActive());
-//
-//        List<Subcategory> subcategories = this.dao.searchAllActive();
-//        assertTrue(subcategories.isEmpty());
-//    }
+    @Test
+    void shouldReturnAllWithDescriptionEmpty(){
+        Subcategory subcategory = new SubcategoryBuilder("Android","android",category)
+                .withDescription("")
+                .withStatus(SubCategoryStatus.INACTIVE)
+                .withOrderVisualization(1)
+                .create();
+        em.persist(subcategory);
+
+        List<String> subcategories = this.dao.searchAllWithoutDescription();
+        assertFalse(subcategories.isEmpty());
+    }
+
+    @Test
+    void shouldReturnLowestOrderOfVisualizationOfActiveSubcategories(){
+        Subcategory android = new SubcategoryBuilder("Android","android",category)
+                .withDescription("Crie sua primeira app Android com suporte ao Kotlin\n" +
+                        "Construa classes modelos e entenda o que são properties\n" +
+                        "Adicione comportamentos em outras classes com a extension function\n" +
+                        "Crie classes enums")
+                .withStatus(SubCategoryStatus.ACTIVE)
+                .withOrderVisualization(1)
+                .create();
+        em.persist(android);
+
+        Subcategory flutter = new SubcategoryBuilder("Flutter","flutter",category)
+                .withDescription("Aprenda a utilizar o Flutter, programar em Dart e criar seu primeiro projeto\n" +
+                        "Entenda o que é Widget e como funciona a árvore de Widgets\n" +
+                        "Crie layouts com Widgets do Material Design")
+                .withStatus(SubCategoryStatus.ACTIVE)
+                .withOrderVisualization(1)
+                .create();
+        em.persist(flutter);
+
+        List<Subcategory> subcategories = this.dao.searchAllActive();
+
+        assertEquals(subcategories.get(0),android);
+    }
 }

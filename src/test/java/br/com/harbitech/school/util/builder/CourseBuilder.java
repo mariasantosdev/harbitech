@@ -15,13 +15,11 @@ public class CourseBuilder {
     private String developedSkills;
     private Subcategory subCategory;
 
-    public CourseBuilder withName(String name){
+    public CourseBuilder(String name, String codeUrl, String instructor, Subcategory subCategory) {
         this.name = name;
-        return this;
-    }
-    public CourseBuilder withCodeUrl(String codeUrl){
         this.codeUrl = codeUrl;
-        return this;
+        this.instructor = instructor;
+        this.subCategory = subCategory;
     }
 
     public CourseBuilder withCompletionTimeInHours(Integer completionTimeInHours){
@@ -51,10 +49,6 @@ public class CourseBuilder {
 
     public CourseBuilder withDevelopedSkills(String developedSkills){
         this.developedSkills = developedSkills;
-        return this;
-    }
-    public CourseBuilder withSubcategory(Subcategory subcategory){
-        this.subCategory = subcategory;
         return this;
     }
 

@@ -13,13 +13,9 @@ public class CategoryBuilder {
     private String iconPath;
     private String htmlHexColorCode;
 
-    public CategoryBuilder withName(String name){
+    public CategoryBuilder(String name, String codeUrl) {
         this.name = name;
-        return this;
-    }
-    public CategoryBuilder withCodeUrl(String codeUrl){
         this.codeUrl = codeUrl;
-        return this;
     }
 
     public CategoryBuilder withDescription(String description){

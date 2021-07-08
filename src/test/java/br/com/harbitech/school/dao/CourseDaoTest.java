@@ -18,8 +18,7 @@ import org.junit.jupiter.api.Test;
 import javax.persistence.EntityManager;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class CourseDaoTest {
 
@@ -33,9 +32,7 @@ public class CourseDaoTest {
         this.em = JPAUtil.getEntityManager();
         this.dao = new CourseDao(em);
         em.getTransaction().begin();
-        this.category = new CategoryBuilder()
-                .withName("Mobile")
-                .withCodeUrl("mobile")
+        this.category = new CategoryBuilder("Mobile", "mobile")
                 .withDescription("Crie aplicativos móveis para as principais plataformas, smartphones e tablets. " +
                         "Aprenda frameworks multiplataforma como Flutter e React Native e saiba como criar apps" +
                         " nativas para Android e iOS. Desenvolva também jogos mobile com Unity. Saiba como ")
@@ -50,16 +47,13 @@ public class CourseDaoTest {
                 .create();
         em.persist(category);
 
-        this.subcategory = new SubcategoryBuilder()
-                .withName("Android")
-                .withCodeUrl("android")
+        this.subcategory = new SubcategoryBuilder("Android","android",category)
                 .withDescription("Crie aplicativos móveis para as principais plataformas, smartphones e tablets. " +
                         "Aprenda frameworks multiplataforma como Flutter e React Native e saiba como criar apps" +
                         " nativas para Android e iOS. Desenvolva também jogos mobile com Unity. Saiba como ")
                 .withStudyGuide("Android, Testes automatizados e arquitetura android")
                 .withStatus(SubCategoryStatus.ACTIVE)
                 .withOrderVisualization(1)
-                .withCategory(category)
                 .create();
         em.persist(subcategory);
     }
@@ -71,13 +65,11 @@ public class CourseDaoTest {
 
     @Test
     void shouldReturnAllPublicVisibilities() {
-        Course course = new CourseBuilder()
-                .withName("Android parte 3: Refinando o projeto")
-                .withCodeUrl("android-refinando-projeto")
+        Course course = new CourseBuilder("Android parte 3: Refinando o projeto",
+                "android-refinando-projeto","Alex Felipe",subcategory)
                 .withCompletionTimeInHours(10)
                 .withVisibility(CourseVisibility.PUBLIC)
                 .withTargetAudience("Pessoas com foco em java/kotlin/desenvolvimento mobile")
-                .withInstructor("Alex Felipe")
                 .withDescription("\n" +
                         "\n" +
                         "    Implementar um layout personalizado para um AdapterView\n" +
@@ -87,11 +79,11 @@ public class CourseDaoTest {
                         "    Compreender e resolver tópicos apresentado no resultado da inspeção de código\n" +
                         "\n")
                 .withDevelopedSkills("Aprenda a refatorar, usando os principios de SOLID nesse curso")
-                .withSubcategory(subcategory)
                 .create();
         em.persist(course);
 
-        List<Course> courses = assertDoesNotThrow(() -> this.dao.searchAllWithPublicVisibility());
+        List<Course> courses = this.dao.searchAllWithPublicVisibility();
+        assertFalse(courses.isEmpty());
     }
 
     @Test
@@ -102,13 +94,11 @@ public class CourseDaoTest {
 
     @Test
     void shouldReturnEmptyBecauseOnlyCourseIsPrivate() {
-        Course course = new CourseBuilder()
-                .withName("Android parte 3: Refinando o projeto")
-                .withCodeUrl("android-refinando-projeto")
+        Course course = new CourseBuilder("Android parte 3: Refinando o projeto",
+                "android-refinando-projeto","Alex Felipe",subcategory)
                 .withCompletionTimeInHours(10)
                 .withVisibility(CourseVisibility.PRIVATE)
                 .withTargetAudience("Pessoas com foco em java/kotlin/desenvolvimento mobile")
-                .withInstructor("Alex Felipe")
                 .withDescription("\n" +
                         "\n" +
                         "    Implementar um layout personalizado para um AdapterView\n" +
@@ -118,12 +108,36 @@ public class CourseDaoTest {
                         "    Compreender e resolver tópicos apresentado no resultado da inspeção de código\n" +
                         "\n")
                 .withDevelopedSkills("Aprenda a refatorar, usando os principios de SOLID nesse curso")
-                .withSubcategory(subcategory)
                 .create();
         em.persist(course);
 
         List<Course> courses = this.dao.searchAllWithPublicVisibility();
 
         assertTrue(courses.isEmpty());
+    }
+
+    @Test
+    void shouldUReturnAllupdated() {
+        Course course = new CourseBuilder("Android parte 3: Refinando o projeto",
+                "android-refinando-projeto","Alex Felipe",subcategory)
+                .withCompletionTimeInHours(10)
+                .withVisibility(CourseVisibility.PRIVATE)
+                .withTargetAudience("Pessoas com foco em java/kotlin/desenvolvimento mobile")
+                .withDescription("\n" +
+                        "\n" +
+                        "    Implementar um layout personalizado para um AdapterView\n" +
+                        "    Entender e utilizar a entidade Application do Android Framework\n" +
+                        "    Interagir com o usuário por meio de dialogs\n" +
+                        "    Analisar possíveis melhorias no projeto por meio do inspetor de código\n" +
+                        "    Compreender e resolver tópicos apresentado no resultado da inspeção de código\n" +
+                        "\n")
+                .withDevelopedSkills("Aprenda a refatorar, usando os principios de SOLID nesse curso")
+                .create();
+
+        this.dao.save(course);
+
+        this.dao.upgradeAllToPublicVisibility();
+
+        assertTrue(course.getVisibility().equals(CourseVisibility.PUBLIC));
     }
 }

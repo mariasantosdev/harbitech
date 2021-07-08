@@ -10,7 +10,6 @@ import br.com.harbitech.school.subcategory.Subcategory;
 import br.com.harbitech.school.util.JPAUtil;
 
 import javax.persistence.EntityManager;
-import java.util.List;
 
 public class CourseCrudTest {
 
@@ -36,7 +35,7 @@ public class CourseCrudTest {
                 "ferramentas para autotomizar as etapas, facilitando e acelerando o desenvolvimento.",
                 "Administração de rede, segurança de aplicações e web services", SubCategoryStatus.ACTIVE,category);
 
-        Course course = new Course("Maven: Gerenciamento de dependências e build de aplicações Java","maven",8,
+        Course course = new Course("Maven Gerenciamento de dependências e build de aplicações Java","maven",8,
                 "Rodrigo Ferreira",subCategory);
 
         em.getTransaction().begin();

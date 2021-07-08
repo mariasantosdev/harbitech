@@ -4,7 +4,6 @@ import br.com.harbitech.school.category.Category;
 import br.com.harbitech.school.subcategory.SubCategoryStatus;
 import br.com.harbitech.school.subcategory.Subcategory;
 
-//TODO CONSTRUTOR COM OS ATRIBUTOS OBRIGATORIOS DE SUBCATEGORY
 public class SubcategoryBuilder {
     private String name;
     private String codeUrl;
@@ -14,13 +13,10 @@ public class SubcategoryBuilder {
     private int orderVisualization;
     private Category category;
 
-    public SubcategoryBuilder withName(String name){
+    public SubcategoryBuilder(String name, String codeUrl, Category category) {
         this.name = name;
-        return this;
-    }
-    public SubcategoryBuilder withCodeUrl(String codeUrl){
         this.codeUrl = codeUrl;
-        return this;
+        this.category = category;
     }
 
     public  SubcategoryBuilder withDescription(String description){
@@ -40,11 +36,6 @@ public class SubcategoryBuilder {
 
     public  SubcategoryBuilder withOrderVisualization(Integer orderVisualization){
         this.orderVisualization = orderVisualization;
-        return this;
-    }
-
-    public SubcategoryBuilder withCategory(Category category){
-        this.category = category;
         return this;
     }
 

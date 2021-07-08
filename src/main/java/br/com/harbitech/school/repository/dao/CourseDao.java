@@ -14,12 +14,15 @@ public class CourseDao {
 
     private final EntityManager em;
 
-    public CourseDao(EntityManager em){
+    public CourseDao(EntityManager em) {
         this.em = em;
     }
 
     public void save(Course course) {
-        this.em.persist(course);
+        if (course == null) {
+            this.em.persist(course);
+        }
+        this.em.merge(course);
     }
 
     public void delete(String codeUrl) {
