@@ -11,7 +11,7 @@ import br.com.harbitech.school.util.JPAUtil;
 
 import javax.persistence.EntityManager;
 
-public class CourseCrudTest {
+public class CourseCrud {
 
     public static void main(String[] args) {
         EntityManager em = JPAUtil.getEntityManager();

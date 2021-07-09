@@ -16,6 +16,7 @@ import javax.persistence.EntityManager;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
 
 public class SubcategoryDaoTest {
 
@@ -52,41 +53,29 @@ public class SubcategoryDaoTest {
 
     @Test
     void shouldReturnAllWithActiveStatus() {
-        Subcategory android = new SubcategoryBuilder("Android","android",category)
-                .withDescription("Crie aplicativos móveis para as principais plataformas, smartphones e tablets. " +
-                        "Aprenda frameworks multiplataforma como Flutter e React Native e saiba como criar apps" +
-                        " nativas para Android e iOS. Desenvolva também jogos mobile com Unity. Saiba como ")
-                .withStudyGuide("Android, Testes automatizados e arquitetura android")
-                .withStatus(SubCategoryStatus.ACTIVE)
-                .withOrderVisualization(1)
-                .create();
-        em.persist(android);
+        androidSubcategory(SubCategoryStatus.ACTIVE);
 
         List<Subcategory> subcategories = this.dao.searchAllActive();
 
-        assertFalse(subcategories.isEmpty());
+        assertThat(subcategories)
+                .hasSize(1)
+                .extracting(Subcategory::getCodeUrl)
+                .containsExactly("android");
     }
 
     @Test
     void shouldReturnEmptyBecauseDoNotHaveAnySubcategory() {
         List<Subcategory> subcategories = this.dao.searchAllActive();
+
         assertTrue(subcategories.isEmpty());
     }
 
     @Test
     void shouldReturnEmptyBecauseOnlySubcategoryIsInactive()  {
-        Subcategory android = new SubcategoryBuilder("Android","android",category)
-                .withDescription("Crie aplicativos móveis para as principais plataformas, smartphones e tablets. " +
-                        "Aprenda frameworks multiplataforma como Flutter e React Native e saiba como criar apps" +
-                        " nativas para Android e iOS. Desenvolva também jogos mobile com Unity. Saiba como ")
-                .withStudyGuide("Android, Testes automatizados e arquitetura android")
-                .withStatus(SubCategoryStatus.INACTIVE)
-                .withOrderVisualization(1)
-                .create();
-        em.persist(android);
-        assertDoesNotThrow(() -> this.dao.searchAllActive());
+        androidSubcategory(SubCategoryStatus.INACTIVE);
 
         List<Subcategory> subcategories = this.dao.searchAllActive();
+
         assertTrue(subcategories.isEmpty());
     }
 
@@ -100,6 +89,7 @@ public class SubcategoryDaoTest {
         em.persist(android);
 
         List<String> subcategories = this.dao.searchAllWithoutDescription();
+
         assertFalse(subcategories.isEmpty());
     }
 
@@ -113,32 +103,42 @@ public class SubcategoryDaoTest {
         em.persist(subcategory);
 
         List<String> subcategories = this.dao.searchAllWithoutDescription();
+
         assertFalse(subcategories.isEmpty());
     }
 
     @Test
     void shouldReturnLowestOrderOfVisualizationOfActiveSubcategories(){
-        Subcategory android = new SubcategoryBuilder("Android","android",category)
-                .withDescription("Crie sua primeira app Android com suporte ao Kotlin\n" +
-                        "Construa classes modelos e entenda o que são properties\n" +
-                        "Adicione comportamentos em outras classes com a extension function\n" +
-                        "Crie classes enums")
-                .withStatus(SubCategoryStatus.ACTIVE)
-                .withOrderVisualization(1)
-                .create();
-        em.persist(android);
-
-        Subcategory flutter = new SubcategoryBuilder("Flutter","flutter",category)
-                .withDescription("Aprenda a utilizar o Flutter, programar em Dart e criar seu primeiro projeto\n" +
-                        "Entenda o que é Widget e como funciona a árvore de Widgets\n" +
-                        "Crie layouts com Widgets do Material Design")
-                .withStatus(SubCategoryStatus.ACTIVE)
-                .withOrderVisualization(1)
-                .create();
-        em.persist(flutter);
+        Subcategory android = androidSubcategory(SubCategoryStatus.ACTIVE);
+        flutterSubcategory(SubCategoryStatus.ACTIVE);
 
         List<Subcategory> subcategories = this.dao.searchAllActive();
 
         assertEquals(subcategories.get(0),android);
+    }
+
+    private Subcategory flutterSubcategory(SubCategoryStatus status) {
+        Subcategory flutter = new SubcategoryBuilder("Flutter","flutter",category)
+                .withDescription("Aprenda a utilizar o Flutter, programar em Dart e criar seu primeiro projeto\n" +
+                        "Entenda o que é Widget e como funciona a árvore de Widgets\n" +
+                        "Crie layouts com Widgets do Material Design")
+                .withStatus(status)
+                .withOrderVisualization(1)
+                .create();
+        em.persist(flutter);
+        return flutter;
+    }
+
+    private Subcategory androidSubcategory(SubCategoryStatus status) {
+        Subcategory android = new SubcategoryBuilder("Android","android",category)
+                .withDescription("Crie aplicativos móveis para as principais plataformas, smartphones e tablets. " +
+                        "Aprenda frameworks multiplataforma como Flutter e React Native e saiba como criar apps" +
+                        " nativas para Android e iOS. Desenvolva também jogos mobile com Unity. Saiba como ")
+                .withStudyGuide("Android, Testes automatizados e arquitetura android")
+                .withStatus(status)
+                .withOrderVisualization(1)
+                .create();
+        em.persist(android);
+        return android;
     }
 }
