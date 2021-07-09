@@ -115,29 +115,4 @@ public class CourseDaoTest {
 
         assertTrue(courses.isEmpty());
     }
-
-    @Test
-    void shouldUReturnAllupdated() {
-        Course course = new CourseBuilder("Android parte 3: Refinando o projeto",
-                "android-refinando-projeto","Alex Felipe",subcategory)
-                .withCompletionTimeInHours(10)
-                .withVisibility(CourseVisibility.PRIVATE)
-                .withTargetAudience("Pessoas com foco em java/kotlin/desenvolvimento mobile")
-                .withDescription("\n" +
-                        "\n" +
-                        "    Implementar um layout personalizado para um AdapterView\n" +
-                        "    Entender e utilizar a entidade Application do Android Framework\n" +
-                        "    Interagir com o usuário por meio de dialogs\n" +
-                        "    Analisar possíveis melhorias no projeto por meio do inspetor de código\n" +
-                        "    Compreender e resolver tópicos apresentado no resultado da inspeção de código\n" +
-                        "\n")
-                .withDevelopedSkills("Aprenda a refatorar, usando os principios de SOLID nesse curso")
-                .create();
-
-        this.dao.save(course);
-
-        this.dao.upgradeAllToPublicVisibility();
-
-        assertTrue(course.getVisibility().equals(CourseVisibility.PUBLIC));
-    }
 }

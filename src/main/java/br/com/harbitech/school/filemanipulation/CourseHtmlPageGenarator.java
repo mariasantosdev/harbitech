@@ -34,6 +34,7 @@ public class CourseHtmlPageGenarator {
 
         SubcategoryDao subcategoryDao = new SubcategoryDao(em);
         List<Subcategory> subcategories = subcategoryDao.searchAllActive();
+
         List<String> subcategoriesWithOutDescription = subcategoryDao.searchAllWithoutDescription();
 
         try (OutputStream outputStream = new FileOutputStream(filePath);

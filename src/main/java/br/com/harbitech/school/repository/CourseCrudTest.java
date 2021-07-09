@@ -23,8 +23,6 @@ public class CourseCrudTest {
 
         EntityManager em = JPAUtil.getEntityManager();
         CourseDao courseDao = new CourseDao(em);
-        CategoryDao categoryDao = new CategoryDao(em);
-        SubcategoryDao subcategory = new SubcategoryDao(em);
 
         Category category = new Category("DevOps","devops");
 
@@ -44,9 +42,7 @@ public class CourseCrudTest {
 //        courseDao.delete("maven");
 //        courseDao.upgradeAllToPublicVisibility();
 //        List<Course> allCourses = courseDao.findAll();
-//        for (Course c : allCourses) {
-//            c.publish();
-//        }
+
 
         em.getTransaction().commit();
         em.close();
