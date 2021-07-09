@@ -93,7 +93,7 @@ public class CategoryDaoTest {
                         " nativas para Android e iOS. Desenvolva também jogos mobile com Unity. Saiba como ")
                 .withStudyGuide("Android, Testes automatizados, arquitetura android e flutter")
                 .withStatus(status)
-                .withOrderVisualization(1)
+                .withOrderVisualization(3)
                 .withIconPath("https://www.google.com/search?q=forma%C3%A7%C3%A3o+mobile+alura+icon&client=ubuntu&hs=" +
                         "PUH&channel=fs&sxsrf=ALeKk01O4vjVbL33VupNCbN27rcLhDfgmQ:1625529442736&source=lnms&tbm=i" +
                         "sch&sa=X&ved=2ahUKEwjW-IWIkc3xAhWLK7kGHVP_BVUQ_AUoAXoECAEQAw&biw=1445&bih=733#imgrc=xIoKd" +

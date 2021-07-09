@@ -90,7 +90,7 @@ public class SubcategoryDaoTest {
 
         List<String> subcategories = this.dao.searchAllWithoutDescription();
 
-        assertFalse(subcategories.isEmpty());
+        assertThat(subcategories).contains("Android");
     }
 
     @Test
@@ -104,7 +104,7 @@ public class SubcategoryDaoTest {
 
         List<String> subcategories = this.dao.searchAllWithoutDescription();
 
-        assertFalse(subcategories.isEmpty());
+        assertThat(subcategories).contains("Android");
     }
 
     @Test
@@ -117,18 +117,6 @@ public class SubcategoryDaoTest {
         assertEquals(subcategories.get(0),android);
     }
 
-    private Subcategory flutterSubcategory(SubCategoryStatus status) {
-        Subcategory flutter = new SubcategoryBuilder("Flutter","flutter",category)
-                .withDescription("Aprenda a utilizar o Flutter, programar em Dart e criar seu primeiro projeto\n" +
-                        "Entenda o que é Widget e como funciona a árvore de Widgets\n" +
-                        "Crie layouts com Widgets do Material Design")
-                .withStatus(status)
-                .withOrderVisualization(1)
-                .create();
-        em.persist(flutter);
-        return flutter;
-    }
-
     private Subcategory androidSubcategory(SubCategoryStatus status) {
         Subcategory android = new SubcategoryBuilder("Android","android",category)
                 .withDescription("Crie aplicativos móveis para as principais plataformas, smartphones e tablets. " +
@@ -136,9 +124,21 @@ public class SubcategoryDaoTest {
                         " nativas para Android e iOS. Desenvolva também jogos mobile com Unity. Saiba como ")
                 .withStudyGuide("Android, Testes automatizados e arquitetura android")
                 .withStatus(status)
-                .withOrderVisualization(1)
+                .withOrderVisualization(2)
                 .create();
         em.persist(android);
         return android;
+    }
+
+    private Subcategory flutterSubcategory(SubCategoryStatus status) {
+        Subcategory flutter = new SubcategoryBuilder("Flutter","flutter",category)
+                .withDescription("Aprenda a utilizar o Flutter, programar em Dart e criar seu primeiro projeto\n" +
+                        "Entenda o que é Widget e como funciona a árvore de Widgets\n" +
+                        "Crie layouts com Widgets do Material Design")
+                .withStatus(status)
+                .withOrderVisualization(5)
+                .create();
+        em.persist(flutter);
+        return flutter;
     }
 }
