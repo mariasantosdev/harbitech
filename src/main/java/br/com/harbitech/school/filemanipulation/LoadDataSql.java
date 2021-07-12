@@ -13,7 +13,7 @@ import java.util.*;
 public class LoadDataSql {
     public static void main(String[] args) throws IOException {
         LoadDataSql loadDataSql = new LoadDataSql();
-        loadDataSql.generate("/home/madu/Área de Trabalho/ProjetosAluraDEV/Desafio-levelup-semana1/Harbitech/harbitech_data.sql");
+        loadDataSql.generate("/home/madu/Desktop/Harbitech/harbitech_data.sql");
     }
 
     public void generate(String filePath) throws IOException {

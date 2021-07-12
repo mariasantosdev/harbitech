@@ -38,8 +38,8 @@ public class CourseCrud {
 
         em.getTransaction().begin();
 
-        courseDao.save(course);
-//        courseDao.delete("maven");
+//        courseDao.save(course);
+        courseDao.delete("maven");
 //        courseDao.upgradeAllToPublicVisibility();
 //        List<Course> allCourses = courseDao.findAll();
 
