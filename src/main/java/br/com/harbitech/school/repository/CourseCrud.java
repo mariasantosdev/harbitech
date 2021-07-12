@@ -10,12 +10,13 @@ import br.com.harbitech.school.subcategory.Subcategory;
 import br.com.harbitech.school.util.JPAUtil;
 
 import javax.persistence.EntityManager;
+import java.util.List;
 
 public class CourseCrud {
 
     public static void main(String[] args) {
-        EntityManager em = JPAUtil.getEntityManager();
-        CourseDao courseDao = new CourseDao(em);
+//        EntityManager em = JPAUtil.getEntityManager();
+//        CourseDao courseDao = new CourseDao(em);
         registerCourse();
     }
 
@@ -23,6 +24,7 @@ public class CourseCrud {
 
         EntityManager em = JPAUtil.getEntityManager();
         CourseDao courseDao = new CourseDao(em);
+        CategoryDao categoryDao = new CategoryDao();
 
         Category category = new Category("DevOps","devops");
 
@@ -36,15 +38,17 @@ public class CourseCrud {
         Course course = new Course("Maven Gerenciamento de dependências e build de aplicações Java","maven",8,
                 "Rodrigo Ferreira",subCategory);
 
-        em.getTransaction().begin();
+//        em.getTransaction().begin();
 
 //        courseDao.save(course);
-        courseDao.delete("maven");
+//        courseDao.delete("maven");
 //        courseDao.upgradeAllToPublicVisibility();
 //        List<Course> allCourses = courseDao.findAll();
+        List<Category> all = categoryDao.findAll();
+        all.forEach(System.out::println);
 
 
-        em.getTransaction().commit();
-        em.close();
+//        em.getTransaction().commit();
+//        em.close();
     }
 }
