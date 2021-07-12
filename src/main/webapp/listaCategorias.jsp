@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
          pageEncoding="ISO-8859-1"%>
-<%@ page import="java.util.List, br.com.harbitech.school.category.Category"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -8,28 +8,33 @@
     <title>Harbitech</title>
 </head>
 <body>
+<center><h1>Lista de categorias</h1> <br/></center>
+<table border=1 frame=void rules=rows>
 
-<tr>
-    <th scope="col">Nome</th>
-    <th scope="col">Código da url</th>
-    <th scope="col">Descrição</th>
-    <th scope="col">Ícone</th>
-    <th scope="col">Cor</th>
-    <%
-        List<Category> categories = (List<Category>)request.getAttribute("categories");
-        for (Category c: categories) {
-    %>
-    <th><%= c.getName() %><th/>
-    <th><%= c.getCodeUrl() %><th/>
-    <th><%= c.getDescription() %><th/>
-    <th><%= c.getIconPath() %><th/>
-    <th><%= c.getHtmlHexColorCode() %><th/>
+<tr align =center>
+    <th scope="row">Nome</th>
+    <th scope="row">Código da url</th>
+    <th scope="row">Descrição &ensp;</th>
+    <th scope="row">Ícone</th>
+    <th scope="row">Cor</th>
+    </tr>
+
+    <tr>
+        <c:forEach items="${categories}" var="category">
+    <tr>
+    <td scope="row">${category.name} <td/>
+    <td scope="row">${category.codeUrl}<td/>
+    <td scope="row">${category.description}<td/>
+    <td scope="row">${category.iconPath}<td/>
+    <td scope="row">${category.htmlHexColorCode}<td/>
+    </tr>
+        </c:forEach>
+    </td>
+
     <br>
     <br>
-    <%
-        }
-    %>
 
 </tr>
+</table>
 </body>
 </html>
