@@ -10,7 +10,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.List;
 
 @WebServlet("/mostraCategoria")
 public class ExhibitionCategoryServlet extends HttpServlet {
@@ -20,11 +19,11 @@ public class ExhibitionCategoryServlet extends HttpServlet {
         String codeUrl = request.getParameter("codeUrl");
 
         CategoryDao categoryDao = new CategoryDao();
-        List<Category> categoy = categoryDao.findByCode(codeUrl);
+        Category category = categoryDao.findByCode(codeUrl);
 
-        request.setAttribute("category", categoy);
+        request.setAttribute("category", category);
 
-        RequestDispatcher rd = request.getRequestDispatcher("/formAlteraCategoria.jsp");
+        RequestDispatcher rd = request.getRequestDispatcher("/formUpdateCategory.jsp");
         rd.forward(request, response);
     }
 }

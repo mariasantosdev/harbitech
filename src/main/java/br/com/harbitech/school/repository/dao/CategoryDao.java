@@ -50,14 +50,13 @@ public class CategoryDao {
         transaction.commit();
     }
 
-    public List<Category> findByCode(String codeUrl){
+    public Category findByCode(String codeUrl){
         EntityTransaction transaction = em.getTransaction();
         transaction.begin();
-        List<Category> categories = em.createQuery("SELECT c FROM Category c WHERE c.codeUrl = :codeUrl",
-                Category.class)
-        .setParameter("codeUrl", codeUrl)
-                .getResultList();
+        Category category = em.createQuery("SELECT c FROM Category c WHERE c.codeUrl = :codeUrl", Category.class)
+                .setParameter("codeUrl", codeUrl)
+                .getSingleResult();
         transaction.commit();
-        return categories;
+        return category;
     }
 }
