@@ -44,10 +44,10 @@ public class CategoryDao {
     }
 
     public void save(Category category) {
-        if (category.getId() == null) {
-            this.em.persist(category);
-        }
-        this.em.merge(category);
+        EntityTransaction transaction = em.getTransaction();
+        transaction.begin();
+        this.em.persist(category);
+        transaction.commit();
     }
 
     public List<Category> findByCode(String codeUrl){

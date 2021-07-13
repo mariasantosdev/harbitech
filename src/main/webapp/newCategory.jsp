@@ -2,6 +2,7 @@
 
 <html>
 	<body>
+	<a href="http://localhost:8080/harbitech/listaCategorias">Ir para lista de categorias</a><br><br>
 	
 		<c:if test="${not empty category}">
 			Categoria ${ category } cadastrada com sucesso!

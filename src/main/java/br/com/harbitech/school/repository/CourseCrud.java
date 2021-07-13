@@ -26,7 +26,7 @@ public class CourseCrud {
         CourseDao courseDao = new CourseDao(em);
         CategoryDao categoryDao = new CategoryDao();
 
-        Category category = new Category("DevOps","devops");
+        Category category = new Category("DevOpsa","devopsa");
 
         Subcategory subCategory = new Subcategory(5L,"Builds e Controle de versão",
                 "builds-e-controle-de-versao", 3,"O build é a construção da aplicação " +
@@ -44,9 +44,7 @@ public class CourseCrud {
 //        courseDao.delete("maven");
 //        courseDao.upgradeAllToPublicVisibility();
 //        List<Course> allCourses = courseDao.findAll();
-        List<Category> devops = categoryDao.findByCode("devops");
-        devops.forEach(System.out::println);
-
+//        List<Category> devops = categoryDao.findByCode("devops");
 
 //        em.getTransaction().commit();
 //        em.close();

@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 @WebServlet("/removeCategoria")
-public class RemoveCategoryServlet extends HttpServlet{
+public class MakesCategoryInactiveServlet extends HttpServlet{
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
@@ -19,7 +19,7 @@ public class RemoveCategoryServlet extends HttpServlet{
         CategoryDao categoryDao = new CategoryDao();
         categoryDao.changeStatusToInactive(codeUrl);
 
-        response.sendRedirect("/listaCategorias");
+        response.sendRedirect("listaCategorias");
 
     }
 }
