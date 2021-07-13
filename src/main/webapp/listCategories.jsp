@@ -9,6 +9,7 @@
 </head>
 <body>
 <center><h1>Lista de categorias</h1> <br/></center>
+<a href="http://localhost:8080/harbitech/formNewCategory.jsp">Cadastrar uma nova categoria</a><br><br>
 <table border=1 frame=void rules=rows>
 
 <tr align =center>
