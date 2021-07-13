@@ -61,6 +61,12 @@ public class Category {
         this.htmlHexColorCode = htmlHexColorCode;
     }
 
+    public Category(String name, String codeUrl, String description, String studyGuide, CategoryStatus status,
+                    int orderVisualization, String iconPath, String htmlHexColorCode) {
+        this(name,codeUrl,description,status,orderVisualization,iconPath,htmlHexColorCode);
+        this.studyGuide = studyGuide;
+    }
+
     public Long getId() {
         return id;
     }

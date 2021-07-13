@@ -1,5 +1,5 @@
 CREATE DATABASE harbitech;
-USE harbitech;
+harbitech;
 
 CREATE TABLE Category(
 id BIGINT PRIMARY KEY AUTO_INCREMENT,

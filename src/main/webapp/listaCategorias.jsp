@@ -14,9 +14,10 @@
 <tr align =center>
     <th scope="row">Nome</th>
     <th scope="row">Código da url</th>
-    <th scope="row">Descrição &ensp;</th>
+    <th scope="row">Descrição</th>
     <th scope="row">Ícone</th>
     <th scope="row">Cor</th>
+    <th scope="row">Status</th>
     </tr>
 
     <tr>
@@ -27,6 +28,9 @@
     <td scope="row">${category.description}<td/>
     <td scope="row">${category.iconPath}<td/>
     <td scope="row">${category.htmlHexColorCode}<td/>
+    <td scope="row">${category.status}<td/>
+    <a href="/harbitech/mostraCategoria?codeUrl=${category.codeUrl }">edita</a>
+    <a href="/harbitech/removeCategoria?codeUrl=${category.codeUrl }">remove</a>
     </tr>
         </c:forEach>
     </td>

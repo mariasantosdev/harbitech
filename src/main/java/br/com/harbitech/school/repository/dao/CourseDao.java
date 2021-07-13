@@ -45,5 +45,6 @@ public class CourseDao {
     public List<Course> findAll(){
         return em.createQuery("SELECT c FROM Course c", Course.class).getResultList();
     }
+
 }
 

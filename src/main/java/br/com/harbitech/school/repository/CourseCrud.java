@@ -44,8 +44,8 @@ public class CourseCrud {
 //        courseDao.delete("maven");
 //        courseDao.upgradeAllToPublicVisibility();
 //        List<Course> allCourses = courseDao.findAll();
-        List<Category> all = categoryDao.findAll();
-        all.forEach(System.out::println);
+        List<Category> devops = categoryDao.findByCode("devops");
+        devops.forEach(System.out::println);
 
 
 //        em.getTransaction().commit();

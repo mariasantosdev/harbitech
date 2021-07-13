@@ -33,4 +33,31 @@ public class CategoryDao {
         transaction.commit();
         return categories;
     }
+
+    public void delete(String codeUrl) {
+        EntityTransaction transaction = em.getTransaction();
+        transaction.begin();
+        Query query = em.createQuery("DELETE FROM Category c WHERE c.codeUrl = :codeUrl")
+                .setParameter("codeUrl", codeUrl);
+        query.executeUpdate();
+        transaction.commit();
+    }
+
+    public void save(Category category) {
+        if (category.getId() == null) {
+            this.em.persist(category);
+        }
+        this.em.merge(category);
+    }
+
+    public List<Category> findByCode(String codeUrl){
+        EntityTransaction transaction = em.getTransaction();
+        transaction.begin();
+        List<Category> categories = em.createQuery("SELECT c FROM Category c WHERE c.codeUrl = :codeUrl",
+                Category.class)
+        .setParameter("codeUrl", codeUrl)
+                .getResultList();
+        transaction.commit();
+        return categories;
+    }
 }
