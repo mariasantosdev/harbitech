@@ -34,10 +34,10 @@ public class CategoryDao {
         return categories;
     }
 
-    public void delete(String codeUrl) {
+    public void changeStatusToInactive(String codeUrl) {
         EntityTransaction transaction = em.getTransaction();
         transaction.begin();
-        Query query = em.createQuery("DELETE FROM Category c WHERE c.codeUrl = :codeUrl")
+        Query query = em.createQuery("UPDATE Category SET status = 'INACTIVE' WHERE codeUrl = :codeUrl")
                 .setParameter("codeUrl", codeUrl);
         query.executeUpdate();
         transaction.commit();

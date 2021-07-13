@@ -4,7 +4,7 @@
 	<body>
 	
 		<c:if test="${not empty category}">
-			Empresa ${ category } cadastrada com sucesso!
+			Categoria ${ category } cadastrada com sucesso!
 		</c:if>
 		
 		<c:if test="${empty category}">

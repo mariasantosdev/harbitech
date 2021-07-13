@@ -17,7 +17,7 @@ public class RemoveCategoryServlet extends HttpServlet{
         String codeUrl = request.getParameter("codeUrl");
 
         CategoryDao categoryDao = new CategoryDao();
-        categoryDao.delete(codeUrl);
+        categoryDao.changeStatusToInactive(codeUrl);
 
         response.sendRedirect("/listaCategorias");
 

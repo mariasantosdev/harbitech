@@ -23,7 +23,7 @@ public class CategoryServlet extends HttpServlet {
 
         request.setAttribute("categories", categories);
 
-        RequestDispatcher rd = request.getRequestDispatcher("/listaCategorias.jsp");
+        RequestDispatcher rd = request.getRequestDispatcher("listaCategorias.jsp");
         rd.forward(request, response);
 
     }
