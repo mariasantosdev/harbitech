@@ -115,6 +115,38 @@ public class Category {
        return this.subCategories.stream().mapToInt(Subcategory::totalTimeInHoursOfCourse).sum();
     }
 
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setCodeUrl(String codeUrl) {
+        this.codeUrl = codeUrl;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public void setStudyGuide(String studyGuide) {
+        this.studyGuide = studyGuide;
+    }
+
+    public void setStatus(CategoryStatus status) {
+        this.status = status;
+    }
+
+    public void setOrderVisualization(int orderVisualization) {
+        this.orderVisualization = orderVisualization;
+    }
+
+    public void setIconPath(String iconPath) {
+        this.iconPath = iconPath;
+    }
+
+    public void setHtmlHexColorCode(String htmlHexColorCode) {
+        this.htmlHexColorCode = htmlHexColorCode;
+    }
+
     @Override
     public String toString() {
         return "Category{" +

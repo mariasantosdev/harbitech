@@ -50,11 +50,28 @@ public class CategoryDao {
         transaction.commit();
     }
 
+    public void update(Category category) {
+        EntityTransaction transaction = em.getTransaction();
+        transaction.begin();
+        em.merge(category);
+        transaction.commit();
+    }
+
     public Category findByCode(String codeUrl){
         EntityTransaction transaction = em.getTransaction();
         transaction.begin();
         Category category = em.createQuery("SELECT c FROM Category c WHERE c.codeUrl = :codeUrl", Category.class)
                 .setParameter("codeUrl", codeUrl)
+                .getSingleResult();
+        transaction.commit();
+        return category;
+    }
+
+    public Category findById(Long id){
+        EntityTransaction transaction = em.getTransaction();
+        transaction.begin();
+        Category category = em.createQuery("SELECT c FROM Category c WHERE c.id = :id", Category.class)
+                .setParameter("id", id)
                 .getSingleResult();
         transaction.commit();
         return category;

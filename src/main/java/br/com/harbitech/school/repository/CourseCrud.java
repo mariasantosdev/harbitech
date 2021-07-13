@@ -46,7 +46,6 @@ public class CourseCrud {
 //        List<Course> allCourses = courseDao.findAll();
 //        List<Category> devops = categoryDao.findByCode("devops");
 
-
 //        em.getTransaction().commit();
 //        em.close();
     }

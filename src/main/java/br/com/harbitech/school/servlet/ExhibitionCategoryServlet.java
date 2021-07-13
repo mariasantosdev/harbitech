@@ -16,10 +16,11 @@ public class ExhibitionCategoryServlet extends HttpServlet {
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-        String codeUrl = request.getParameter("codeUrl");
+        String paramId = request.getParameter("id");
+        Long id = Long.valueOf(paramId);
 
         CategoryDao categoryDao = new CategoryDao();
-        Category category = categoryDao.findByCode(codeUrl);
+        Category category = categoryDao.findById(id);
 
         request.setAttribute("category", category);
 

@@ -30,7 +30,7 @@
     <td scope="row">${category.iconPath}<td/>
     <td scope="row">${category.htmlHexColorCode}<td/>
     <td scope="row">${category.status}<td/>
-    <a href="/harbitech/mostraCategoria?codeUrl=${category.codeUrl }">edita</a><br><br>
+    <a href="/harbitech/mostraCategoria?id=${category.id }">edita</a><br><br>
     <a href="/harbitech/removeCategoria?codeUrl=${category.codeUrl }">Tornar categoria inativa</a>
     </tr>
         </c:forEach>
