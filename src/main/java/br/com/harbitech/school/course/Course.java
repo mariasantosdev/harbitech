@@ -7,7 +7,7 @@ import javax.persistence.*;
 import static br.com.harbitech.school.validation.ValidationUtil.*;
 
 @Entity
-@NamedQuery(name = "Course.allWithPublicVisibility", query = "SELECT c FROM Course c WHERE c.visibility = :visibility")
+@NamedQuery(name = "Course.findAllWithVisibility", query = "SELECT c FROM Course c WHERE c.visibility = :visibility")
 public class Course {
 
     @Id

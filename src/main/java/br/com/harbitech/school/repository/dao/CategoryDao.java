@@ -4,7 +4,6 @@ import br.com.harbitech.school.category.Category;
 import br.com.harbitech.school.category.CategoryStatus;
 
 import javax.persistence.EntityManager;
-import javax.persistence.Query;
 import java.util.List;
 
 public class CategoryDao {
@@ -16,7 +15,7 @@ public class CategoryDao {
     }
 
     public List<Category> searchAllActive() {
-        return em.createNamedQuery("Category.allActive", Category.class)
+        return em.createNamedQuery("Category.allWithStatus", Category.class)
                 .setParameter("status", CategoryStatus.ACTIVE).getResultList();
     }
 
