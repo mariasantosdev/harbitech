@@ -4,6 +4,7 @@ import br.com.harbitech.school.course.Course;
 import br.com.harbitech.school.category.Category;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -15,7 +16,7 @@ import static br.com.harbitech.school.validation.ValidationUtil.*;
         "s.orderVisualization")
 @NamedQuery(name = "Subcategory.AllWithoutDescription", query = "SELECT s.name FROM Subcategory s WHERE s.description = '' " +
         "OR s.description IS NULL")
-public class Subcategory implements Comparable<Subcategory>{
+public class Subcategory implements Comparable<Subcategory>, Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

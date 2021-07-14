@@ -12,7 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
 
-@WebServlet(urlPatterns="/listaDeCategorias")
+@WebServlet(urlPatterns= "/listaCategorias")
 public class AllCategoriesServlet extends HttpServlet {
 
     @Override

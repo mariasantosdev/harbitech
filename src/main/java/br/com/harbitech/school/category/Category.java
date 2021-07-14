@@ -3,6 +3,7 @@ package br.com.harbitech.school.category;
 import br.com.harbitech.school.subcategory.Subcategory;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.*;
 
 import static br.com.harbitech.school.validation.ValidationUtil.validateNonBlankText;
@@ -11,7 +12,7 @@ import static br.com.harbitech.school.validation.ValidationUtil.validateUrl;
 @Entity
 @NamedQuery(name = "Category.allActive", query = "SELECT c FROM Category c WHERE c.status = :status ORDER BY " +
         "c.orderVisualization")
-public class Category {
+public class Category implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

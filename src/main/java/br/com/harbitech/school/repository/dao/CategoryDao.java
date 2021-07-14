@@ -12,7 +12,6 @@ import java.util.List;
 
 public class CategoryDao {
 
-//    private EntityManager em;
    private EntityManager em = JPAUtil.getEntityManager();
 
     public CategoryDao(EntityManager em){

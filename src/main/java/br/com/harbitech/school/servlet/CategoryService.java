@@ -14,7 +14,7 @@ import java.io.IOException;
 
 import java.util.List;
 
-@WebServlet(urlPatterns="/todascategorias")
+@WebServlet(urlPatterns="/api/todascategorias")
 public class CategoryService extends HttpServlet {
     protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 

@@ -18,7 +18,7 @@
   Descrição: <input type="text" name="description"  /><br><br>
   Guia de estudos: <input type="text" name="studyGuide"  /><br><br>
   Status: <input type="text" name="status" /><br><br>
-  Ordem de visualização: <input type="text" name="orderVisualization" /><br><br>
+  Ordem de visualização: <input type="number" name="orderVisualization" /><br><br>
   Caminho do icone: <input type="text" name="iconPath" /><br><br>
   Cor em hexa-decimal: <input type="text" name="htmlHexColorCode" /><br><br>
 

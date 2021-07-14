@@ -30,7 +30,6 @@ public class UpdateCategoryServelet extends HttpServlet {
         String iconPath = request.getParameter("iconPath");
         String htmlHexColorCode = request.getParameter("htmlHexColorCode");
 
-
         CategoryDao categoryDao = new CategoryDao();
 
         Category category = categoryDao.findById(id);
