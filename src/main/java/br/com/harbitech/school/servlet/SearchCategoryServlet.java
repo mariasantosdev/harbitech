@@ -10,22 +10,21 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.List;
 
-@WebServlet(urlPatterns="/listaCategorias")
-public class CategoryServlet extends HttpServlet {
+@WebServlet("/mostraCategoria")
+public class SearchCategoryServlet extends HttpServlet {
 
-    @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException,IOException {
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+        String paramId = request.getParameter("id");
+        Long id = Long.valueOf(paramId);
 
         CategoryDao categoryDao = new CategoryDao();
-        List<Category> categories = categoryDao.findAll();
+        Category category = categoryDao.findById(id);
 
-        request.setAttribute("categories", categories);
+        request.setAttribute("category", category);
 
-        RequestDispatcher rd = request.getRequestDispatcher("listCategories.jsp");
+        RequestDispatcher rd = request.getRequestDispatcher("/formUpdateCategory.jsp");
         rd.forward(request, response);
-
     }
 }
-

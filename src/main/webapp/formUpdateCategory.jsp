@@ -13,7 +13,7 @@
 
 <form action="${linkNewCategoryServlet }" method="post">
 
-  Nome: <input type="text" name="nome" value="${category.name }" /><br><br>
+  Nome: <input type="text" name="name" value="${category.name }" /><br><br>
   Código url: <input type="text" name="codeUrl" value="${category.codeUrl }"/><br><br>
   Descrição: <input type="text" name="description" value="${category.description }" /><br><br>
   Guia de estudos: <input type="text" name="studyGuide" value="${category.studyGuide }" /><br><br>
