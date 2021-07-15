@@ -3,25 +3,45 @@ package br.com.harbitech.school.subcategory;
 import br.com.harbitech.school.course.Course;
 import br.com.harbitech.school.category.Category;
 
+import javax.persistence.*;
 import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import static br.com.harbitech.school.validation.ValidationUtil.*;
 
-public class SubCategory implements Comparable<SubCategory>{
+@Entity
+@NamedQuery(name = "Subcategory.allActive", query = "SELECT s FROM Subcategory s WHERE s.status = :status ORDER BY " +
+        "s.orderVisualization")
+@NamedQuery(name = "Subcategory.AllWithoutDescription", query = "SELECT s.name FROM Subcategory s WHERE s.description = '' " +
+        "OR s.description IS NULL")
+public class Subcategory implements Comparable<Subcategory>{
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
+    @Column(name = "code_url")
     private String codeUrl;
+    @Column(columnDefinition = "TEXT")
     private String description;
+    @Column(name = "study_guide", columnDefinition = "TEXT")
     private String studyGuide;
+    @Enumerated(EnumType.STRING)
+    @Column(columnDefinition = "ENUM")
     private SubCategoryStatus status;
+    @Column(name = "order_visualization")
     private int orderVisualization;
+    @ManyToOne(fetch = FetchType.LAZY)
     private Category category;
+    @OneToMany(mappedBy = "subCategory")
     private List<Course> courses = new ArrayList<>();
 
-    public SubCategory(String name, String codeUrl, Category category){
+    @Deprecated
+    public Subcategory(){
+    }
+
+    public Subcategory(String name, String codeUrl, Category category){
         validateNonBlankText(name, "O nome da sub-categoria não pode estar em branco.");
         validateNonBlankText(codeUrl, "O código da URL da sub-categoria não pode estar em branco.");
         validateNonNullClass(category, "A sub-categoria deve ter uma categoria associada.");
@@ -34,7 +54,7 @@ public class SubCategory implements Comparable<SubCategory>{
         this.orderVisualization = -1;
     }
 
-    public SubCategory(String name, String codeUrl, int orderVisualization, String description, String studyGuide,
+    public Subcategory(String name, String codeUrl, int orderVisualization, String description, String studyGuide,
                        SubCategoryStatus status, Category category) {
 
         this(name,codeUrl,category);
@@ -48,7 +68,7 @@ public class SubCategory implements Comparable<SubCategory>{
         this.category.addSubcategory(this);
     }
 
-    public SubCategory(Long id,String name, String codeUrl, int orderVisualization, String description, String studyGuide,
+    public Subcategory(Long id, String name, String codeUrl, int orderVisualization, String description, String studyGuide,
                        SubCategoryStatus status, Category category){
         this(name, codeUrl, orderVisualization, description, studyGuide, status, category);
         this.id = id;
@@ -118,7 +138,7 @@ public class SubCategory implements Comparable<SubCategory>{
     }
 
     @Override
-    public int compareTo(SubCategory otherSubCategory) {
+    public int compareTo(Subcategory otherSubCategory) {
         if (otherSubCategory.getOrderVisualization() < this.orderVisualization) {
             return otherSubCategory.getOrderVisualization();
         }

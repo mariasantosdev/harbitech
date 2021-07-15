@@ -1,4 +1,5 @@
-INSERT INTO Category (name,code_url,order_visualization,description,status,icon_path,html_hex_color_code) VALUES ('Programação,'programacao','1','Programe nas principais linguagens e plataformas. Iniciantes são bem vindos nos cursos de lógica e JavaScript.','ACTIVE','https://www.alura.com.br/assets/api/formacoes/categorias/512/programacao-transparent.png','#00c86f');
+use harbitech;
+INSERT INTO Category (name,code_url,order_visualization,description,status,icon_path,html_hex_color_code) VALUES ('Programação','programacao','1','Programe nas principais linguagens e plataformas. Iniciantes são bem vindos nos cursos de lógica e JavaScript.','ACTIVE','https://www.alura.com.br/assets/api/formacoes/categorias/512/programacao-transparent.png','#00c86f');
 INSERT INTO Category (name,code_url,order_visualization,description,status,icon_path,html_hex_color_code) VALUES ('DevOps','devops','2','Aprenda Git. Entenda a entrega contínua. Estude Linux. Gerencie servidores na nuvem. Explore o mundo de Internet das coisas e da robótica.','ACTIVE','https://www.alura.com.br/assets/api/formacoes/categorias/512/devops-transparent.png','#f16165');
 INSERT INTO Category (name,code_url,order_visualization,description,status,icon_path,html_hex_color_code) VALUES ('Business','business','-1','Agilidade. Práticas de gestão. Vendas. Liderança.','INACTIVE','https://www.alura.com.br/assets/api/formacoes/categorias/512/inovacao-gestao-transparent.png','#ff8c2a');
 INSERT INTO Subcategory (name,code_url,order_visualization,description,status,category_id) VALUES ('Java','java','1','Java é uma grande plataforma presente em todo lugar: de corporações à bancos e governo. Desenvolva aplicações robustas com um back-end e construa APIs.','ACTIVE',(SELECT id from Category where code_url = 'programacao'));
@@ -12,4 +13,60 @@ INSERT INTO Course (name, code_url,completion_time_in_hours,visibility,target_au
 INSERT INTO Course (name, code_url,completion_time_in_hours,visibility,target_audience,instructor,description,developed_skills,subcategory_id) VALUES ('Java JRE e JDK: Escreva o seu primeiro código com Eclipse','java-primeiros-passos','8','PUBLIC','Desenvolvedores que querem começar com a linguagem Java.','Paulo Silveira','-O que é Java? <br> *A plataforma Java <br> *Benefício da JVM <br> *Quais características? <br> *Quais sistemas? <br> *Bytecode vs EXE? <br> *Sobre o Bytecode <br> *Para saber mais: o nome Bytecode <br>  <br> -Instalação e o primeiro programa <br> *Instalação do JDK no Windows <br> *JRE vs JDK <br> *Para saber mais: JVM vs JRE vs JDK <br> *Compile e rode seu primeiro programa Java <br> *Entrada da aplicação <br> *Sobre a compilação e execução <br> *Compilar e executar <br> *Mão na massa: Instalando o JDK <br> *Mão na massa: Escrevendo nosso primeiro código <br>  <br> -Começando com Eclipse <br> *Instalando o Eclipse <br> *Mão na massa: Instale a IDE Eclipse <br> *Sobre IDEs e editores <br> *Dentro do Eclipse IDE <br> *Nosso programa rodando no Eclipse <br> *Mão na massa: Rodando nosso programa no Eclipse <br> *Projeto Java <br> *Sobre a View Navigator <br>  <br> -Tipos e variáveis <br> *Tipo inteiro: int <br> *Criando uma variável numérica <br> *Mão na massa: Utilizando o tipo int <br> *Tipo flutuante: double <br> *Operações entre numeros <br> *Mão na massa: Utilizando o tipo double <br> *Conversões e outros tipos <br> *Imprimindo texto e números <br> *Mão na massa: Algumas conversões em Java <br> *Para saber mais: Type Casting <br>  <br> -Trabalhando com caracteres <br> *Char e String <br> *Declarando String e char <br> *Qual será o resultado? <br> *Variáveis guardam valores <br> *Concatenação de String e inteiros <br> *Mão na massa: Praticando char e String <br>  <br> -Praticando condicionais <br> *Testes com IF <br> *Trabalhando com if <br> *Mão na massa: A condicional if <br> *Boolean condicionais <br> *Tipo boolean <br> *Operador lógico <br> *Mão na massa: Um pouco mais de if <br> *Escopo e inicialização de variáveis <br> *Declaração da variável <br> *Mão na massa: Escopo de variáveis <br> *Opcional: Alíquota com ifs <br> *Para saber mais: o comando switch <br>  <br> -Controlando fluxo com laços <br> *Laço com while <br> *Enquanto isso o while... <br> *Fixando o laço while <br> *Escopo nos laços <br> *Um erro de compilação... <br> *Laço com for <br> *Transformando while em for <br> *Mão na massa: Laços <br> *Laços encadeados <br> *Mais laços com break <br> *Fixando o comando break <br> *Exercitando laços aninhados e break <br> *Mão na massa: Aprofundando laços <br> *Desafio Opcional: Múltiplos de 3 <br> *Desafio opcional: Fatorial','JVM? JDK? JRE? Aprenda o que são essas siglas? <br> Compile e execute código java <br> Aprenda a usar Eclipse <br> Veja como usar variáveis e controle de fluxo <br> Conheça os principais tipos do Java',(SELECT id from Subcategory where code_url = 'java'));
 INSERT INTO Course (name, code_url,completion_time_in_hours,visibility,target_audience,instructor,description,developed_skills,subcategory_id) VALUES ('Angular CLI','angular-cli','20','PRIVATE','Alunos de Angular que querem conhecer mais sobre a CLI','Alvaro Camilo','- Conheça todos os comando da CLI do Angular. <br> - Saiba como funcionam as Workspaces no angular.json. <br> - Saiba como o Schematics pode aumentar sua produtividade <br> - Garanta consistência e otimizações para produção com o Builder.','',(SELECT id from Subcategory where code_url = 'java'));
 
+UPDATE Category SET status = 'ACTIVE';
 
+UPDATE Course SET visibility = 'PRIVATE' WHERE id = 1;
+
+/*- os dados de todas as categorias ativas, na ordem */
+SELECT * FROM Category WHERE status = 'ACTIVE' ORDER BY order_visualization;
+
+/*- os dados de todas as subcategorias ativas, na ordem */
+SELECT * FROM Subcategory WHERE status = 'ACTIVE' ORDER BY order_visualization;
+
+/*- os dados de todas os cursos públicos */
+SELECT * FROM Course WHERE visibility = 'PUBLIC';
+
+/*- os nomes das subcategorias que não tem descrições*/
+SELECT name AS Nome FROM Subcategory WHERE description = '' OR description IS NULL;
+
+/*- os nomes das subcategorias ativas e que tem algum curso, na ordem*/
+SELECT 
+DISTINCT 
+	subcategory.name,
+	subcategory.order_visualization 
+FROM Subcategory subcategory 
+JOIN Course course ON course.subcategory_id = subcategory.id
+WHERE subcategory.status = 'ACTIVE'
+ORDER BY subcategory.order_visualization; 
+
+/*- o nome e a quantidade de cursos do instrutor que tem mais cursos*/
+SELECT 
+	instructor AS instrutor,
+	COUNT(*) AS quantidade 
+FROM Course course 
+GROUP BY instructor 
+ORDER BY quantidade DESC
+LIMIT 1;
+
+/*- os nomes de todas as categorias ativas com a respectiva quantidade de cursos públicos e total de horas 
+ * estimados dos cursos públicos associados (sendo 0 se não existir nenhum curso público)*/
+SELECT
+	category.name AS Nome,
+	COUNT(course.id) AS Quantidade, 
+	COALESCE(SUM(course.completion_time_in_hours),0) AS "Total de horas" 
+FROM Category category 
+LEFT JOIN Subcategory subcategory ON category.id = subcategory.category_id 
+LEFT JOIN Course course ON course.subcategory_id = subcategory.id
+WHERE category.status = 'ACTIVE' GROUP BY category.id;
+
+/*- o nome da categoria ativa que possui o maior número de horas estimadas em cursos públicos, em apenas uma consulta*/
+SELECT 
+	category.name, 
+	SUM(course.completion_time_in_hours) AS "Quantidade" 
+FROM Category category 
+LEFT JOIN Subcategory subcategory ON category.id = subcategory.category_id 
+LEFT JOIN Course course ON course.subcategory_id = subcategory.id
+WHERE category.status = 'ACTIVE'  AND course.visibility ='PUBLIC'
+GROUP BY category.name
+ORDER BY Quantidade DESC
+LIMIT 1;

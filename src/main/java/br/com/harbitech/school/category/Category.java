@@ -1,24 +1,44 @@
 package br.com.harbitech.school.category;
 
-import br.com.harbitech.school.subcategory.SubCategory;
+import br.com.harbitech.school.subcategory.Subcategory;
 
+import javax.persistence.*;
 import java.util.*;
 
 import static br.com.harbitech.school.validation.ValidationUtil.validateNonBlankText;
 import static br.com.harbitech.school.validation.ValidationUtil.validateUrl;
 
+@Entity
+@NamedQuery(name = "Category.allWithStatus", query = "SELECT c FROM Category c WHERE c.status = :status ORDER BY " +
+        "c.orderVisualization")
 public class Category {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
+    @Column(name = "code_url")
     private String codeUrl;
+    @Column(columnDefinition = "TEXT")
     private String description;
+    @Column(name = "study_guide", columnDefinition = "TEXT")
     private String studyGuide;
+    @Enumerated(EnumType.STRING)
+    @Column(columnDefinition = "ENUM")
     private CategoryStatus status;
+    @Column(name = "order_visualization")
     private int orderVisualization;
+    @Column(name = "icon_path")
     private String iconPath;
+    @Column(name = "html_hex_color_code")
     private String htmlHexColorCode;
-    private List<SubCategory> subCategories = new ArrayList<>();
+    @OneToMany(mappedBy = "category")
+    private List<Subcategory> subCategories = new ArrayList<>();
+
+    @Deprecated
+    public Category(){
+
+    }
 
     public Category(String name, String codeUrl) {
         validateNonBlankText(name, "O nome da categoria não pode estar em branco.");
@@ -41,6 +61,10 @@ public class Category {
         this.htmlHexColorCode = htmlHexColorCode;
     }
 
+    public Long getId() {
+        return id;
+    }
+
     public String getStudyGuide() {
         return studyGuide;
     }
@@ -49,7 +73,7 @@ public class Category {
         return orderVisualization;
     }
 
-    public List<SubCategory> getSubCategories() {
+    public List<Subcategory> getSubCategories() {
         return subCategories;
     }
 
@@ -78,11 +102,11 @@ public class Category {
     }
 
     public int totalCourses() {
-        return this.subCategories.stream().mapToInt(SubCategory::totalCourses).sum();
+        return this.subCategories.stream().mapToInt(Subcategory::totalCourses).sum();
     }
 
     public int totalTimeInHoursOfCourse() {
-       return this.subCategories.stream().mapToInt(SubCategory::totalTimeInHoursOfCourse).sum();
+       return this.subCategories.stream().mapToInt(Subcategory::totalTimeInHoursOfCourse).sum();
     }
 
     @Override
@@ -100,7 +124,7 @@ public class Category {
                 '}';
     }
 
-    public void addSubcategory(SubCategory subCategory) {
+    public void addSubcategory(Subcategory subCategory) {
         this.subCategories.add(subCategory);
     }
 

@@ -2,7 +2,7 @@ package br.com.harbitech.school.filemanipulation;
 
 import br.com.harbitech.school.course.Course;
 import br.com.harbitech.school.course.CourseVisibility;
-import br.com.harbitech.school.subcategory.SubCategory;
+import br.com.harbitech.school.subcategory.Subcategory;
 
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -11,7 +11,7 @@ import java.util.*;
 
 public class CourseFileReader {
 
-    public List<Course> readCoursesFromFile(String filePath, Map<String,SubCategory> subCategoryMap) throws IOException {
+    public List<Course> readCoursesFromFile(String filePath, Map<String, Subcategory> subCategoryMap) throws IOException {
         InputStream inputStream = new FileInputStream(filePath);
         List<Course> courses = new LinkedList<Course>();
         try (Scanner scanner = new Scanner(inputStream, "UTF-8")) {
@@ -37,7 +37,7 @@ public class CourseFileReader {
                     order = Integer.parseInt(courseCompletionTimeInHours);
                 }
 
-                SubCategory subCategory = Optional.ofNullable(subCategoryMap.get(subCategoryUrlCode))
+                Subcategory subCategory = Optional.ofNullable(subCategoryMap.get(subCategoryUrlCode))
                         .orElseThrow(() -> new IllegalArgumentException("Código da subcategoria não encontrado" + subCategoryUrlCode));
 
                 Course course = new Course(courseName, courseCodeUrl, order, CourseVisibility.from(courseVisibility),

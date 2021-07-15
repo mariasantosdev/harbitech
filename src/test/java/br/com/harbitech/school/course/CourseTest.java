@@ -1,19 +1,19 @@
 package br.com.harbitech.school.course;
 
 import br.com.harbitech.school.category.Category;
-import br.com.harbitech.school.subcategory.SubCategory;
+import br.com.harbitech.school.subcategory.Subcategory;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class CourseTest {
 
-    private SubCategory subCategory;
+    private Subcategory subCategory;
 
     @BeforeEach
     public void setUp() {
         Category category = new Category("Programação", "programacao");
-        this.subCategory = new SubCategory("Java", "java", category);
+        this.subCategory = new Subcategory("Java", "java", category);
     }
 
     @Test

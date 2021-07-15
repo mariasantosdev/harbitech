@@ -88,7 +88,7 @@ FOREIGN KEY(question_id) REFERENCES Question(id));
 
 SELECT * FROM Category;
 SELECT * FROM Subcategory;
-SELECT * FROM Course; 
+SELECT * FROM Course; 	
 SELECT * FROM Explanation;
 SELECT * FROM Section;
 SELECT * FROM Activity;
@@ -96,59 +96,6 @@ SELECT * FROM Video;
 SELECT * FROM Question;
 SELECT * FROM Alternative;
 
-/*- os dados de todas as categorias ativas, na ordem */
-SELECT * FROM Category WHERE status = 'ACTIVE' ORDER BY order_visualization;
-
-/*- os dados de todas as subcategorias ativas, na ordem */
-SELECT * FROM Subcategory WHERE status = 'ACTIVE' ORDER BY order_visualization;
-
-/*- os dados de todas os cursos públicos */
-SELECT * FROM Course WHERE visibility = 'PUBLIC';
-
-/*- os nomes das subcategorias que não tem descrições*/
-SELECT name AS Nome FROM Subcategory WHERE description = '' OR description IS NULL;
-
-/*- os nomes das subcategorias ativas e que tem algum curso, na ordem*/
-SELECT 
-DISTINCT 
-	subcategory.name,
-	subcategory.order_visualization 
-FROM Subcategory subcategory 
-JOIN Course course ON course.subcategory_id = subcategory.id
-WHERE subcategory.status = 'ACTIVE'
-ORDER BY subcategory.order_visualization 
-
-/*- o nome e a quantidade de cursos do instrutor que tem mais cursos*/
-SELECT 
-	instructor AS instrutor,
-	COUNT(*) AS quantidade 
-FROM Course course 
-GROUP BY instructor 
-ORDER BY quantidade DESC
-LIMIT 1
-
-/*- os nomes de todas as categorias ativas com a respectiva quantidade de cursos públicos e total de horas 
- * estimados dos cursos públicos associados (sendo 0 se não existir nenhum curso público)*/
-SELECT
-	category.name AS Nome,
-	COUNT(course.id) AS Quantidade, 
-	COALESCE(SUM(course.completion_time_in_hours),0) AS "Total de horas" 
-FROM Category category 
-LEFT JOIN Subcategory subcategory ON category.id = subcategory.category_id 
-LEFT JOIN Course course ON course.subcategory_id = subcategory.id
-WHERE category.status = 'ACTIVE' GROUP BY category.id;
-
-/*- o nome da categoria ativa que possui o maior número de horas estimadas em cursos públicos, em apenas uma consulta*/
-SELECT 
-	category.name, 
-	SUM(course.completion_time_in_hours) AS "Quantidade" 
-FROM Category category 
-LEFT JOIN Subcategory subcategory ON category.id = subcategory.category_id 
-LEFT JOIN Course course ON course.subcategory_id = subcategory.id
-WHERE category.status = 'ACTIVE'  AND course.visibility ='PUBLIC'
-GROUP BY category.name
-ORDER BY Quantidade DESC
-LIMIT 1;
 
 
 
