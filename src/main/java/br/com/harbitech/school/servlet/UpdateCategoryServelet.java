@@ -4,7 +4,9 @@ import br.com.harbitech.school.category.Category;
 import br.com.harbitech.school.category.CategoryDto;
 import br.com.harbitech.school.category.CategoryStatus;
 import br.com.harbitech.school.repository.dao.CategoryDao;
+import br.com.harbitech.school.util.JPAUtil;
 
+import javax.persistence.EntityManager;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -31,9 +33,13 @@ public class UpdateCategoryServelet extends HttpServlet {
         String iconPath = request.getParameter("iconPath");
         String htmlHexColorCode = request.getParameter("htmlHexColorCode");
 
-        CategoryDao categoryDao = new CategoryDao();
+        EntityManager em = JPAUtil.getEntityManager();
+        CategoryDao categoryDao = new CategoryDao(em);
+
+        em.getTransaction().begin();
 
         Category category = categoryDao.findById(id);
+
         category.setName(name);
         category.setHtmlHexColorCode(htmlHexColorCode);
         category.setCodeUrl(codeUrl);
@@ -44,6 +50,9 @@ public class UpdateCategoryServelet extends HttpServlet {
         category.setOrderVisualization(orderVisualization);
 
         categoryDao.update(category);
+        em.getTransaction().commit();
+        em.close();
+
         response.sendRedirect("listaCategorias");
     }
 }

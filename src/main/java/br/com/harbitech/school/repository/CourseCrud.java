@@ -25,7 +25,6 @@ public class CourseCrud {
 
         EntityManager em = JPAUtil.getEntityManager();
         CourseDao courseDao = new CourseDao(em);
-        CategoryDao categoryDao = new CategoryDao();
 
         Category category = new Category("DevOpsa","devopsa");
 
@@ -40,14 +39,14 @@ public class CourseCrud {
                 "Rodrigo Ferreira",subCategory);
 
 //        em.getTransaction().begin();
-
+//
 //        courseDao.save(course);
 //        courseDao.delete("maven");
 //        courseDao.upgradeAllToPublicVisibility();
 //        List<Course> allCourses = courseDao.findAll();
 //        List<Category> devops = categoryDao.findByCode("devops");
 
-//        em.getTransaction().commit();
-//        em.close();
+        em.getTransaction().commit();
+        em.close();
     }
 }

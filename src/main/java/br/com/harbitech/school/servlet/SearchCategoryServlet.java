@@ -3,7 +3,9 @@ package br.com.harbitech.school.servlet;
 import br.com.harbitech.school.category.Category;
 import br.com.harbitech.school.category.CategoryDto;
 import br.com.harbitech.school.repository.dao.CategoryDao;
+import br.com.harbitech.school.util.JPAUtil;
 
+import javax.persistence.EntityManager;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -20,8 +22,13 @@ public class SearchCategoryServlet extends HttpServlet {
         String paramId = request.getParameter("id");
         Long id = Long.valueOf(paramId);
 
-        CategoryDao categoryDao = new CategoryDao();
+        EntityManager em = JPAUtil.getEntityManager();
+
+        CategoryDao categoryDao = new CategoryDao(em);
+        em.getTransaction().begin();
         Category category = categoryDao.findById(id);
+        em.getTransaction().commit();
+        em.close();
 
         request.setAttribute("category", category);
 

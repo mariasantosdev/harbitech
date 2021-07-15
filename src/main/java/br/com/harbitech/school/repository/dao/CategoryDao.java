@@ -1,24 +1,18 @@
 package br.com.harbitech.school.repository.dao;
 
 import br.com.harbitech.school.category.Category;
-import br.com.harbitech.school.category.CategoryDto;
 import br.com.harbitech.school.category.CategoryStatus;
-import br.com.harbitech.school.util.JPAUtil;
-import org.hibernate.transform.Transformers;
 
 import javax.persistence.EntityManager;
-import javax.persistence.EntityTransaction;
 import javax.persistence.Query;
 import java.util.List;
 
 public class CategoryDao {
 
-   private EntityManager em = JPAUtil.getEntityManager();
+    private final EntityManager em;
 
     public CategoryDao(EntityManager em){
         this.em = em;
-    }
-    public CategoryDao(){
     }
 
     public List<Category> searchAllActive() {
@@ -27,53 +21,35 @@ public class CategoryDao {
     }
 
     public List<Category> findAll(){
-        EntityTransaction transaction = em.getTransaction();
-        transaction.begin();
         List<Category> categories = em.createQuery("SELECT c FROM Category c", Category.class).getResultList();
-        transaction.commit();
         return categories;
     }
 
     public void changeStatusToInactive(String codeUrl) {
-        EntityTransaction transaction = em.getTransaction();
-        transaction.begin();
         Query query = em.createQuery("UPDATE Category SET status = 'INACTIVE' WHERE codeUrl = :codeUrl")
                 .setParameter("codeUrl", codeUrl);
         query.executeUpdate();
-        transaction.commit();
     }
 
     public void save(Category category) {
-        EntityTransaction transaction = em.getTransaction();
-        transaction.begin();
         this.em.persist(category);
-        transaction.commit();
     }
 
     public void update(Category category) {
-        EntityTransaction transaction = em.getTransaction();
-        transaction.begin();
         em.merge(category);
-        transaction.commit();
     }
 
     public Category findByCodeUrl(String codeUrl){
-        EntityTransaction transaction = em.getTransaction();
-        transaction.begin();
         Category category = em.createQuery("SELECT c FROM Category c WHERE c.codeUrl = :codeUrl", Category.class)
                 .setParameter("codeUrl", codeUrl)
                 .getSingleResult();
-        transaction.commit();
         return category;
     }
 
     public Category findById(Long id){
-        EntityTransaction transaction = em.getTransaction();
-        transaction.begin();
         Category category = em.createQuery("SELECT c FROM Category c WHERE c.id = :id", Category.class)
                 .setParameter("id", id)
                 .getSingleResult();
-        transaction.commit();
         return category;
     }
 }

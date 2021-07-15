@@ -1,7 +1,9 @@
 package br.com.harbitech.school.servlet;
 
 import br.com.harbitech.school.repository.dao.CategoryDao;
+import br.com.harbitech.school.util.JPAUtil;
 
+import javax.persistence.EntityManager;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -16,8 +18,14 @@ public class MakesCategoryInactiveServlet extends HttpServlet{
 
         String codeUrl = request.getParameter("codeUrl");
 
-        CategoryDao categoryDao = new CategoryDao();
+        EntityManager em = JPAUtil.getEntityManager();
+
+        CategoryDao categoryDao = new CategoryDao(em);
+
+        em.getTransaction().begin();
         categoryDao.changeStatusToInactive(codeUrl);
+        em.getTransaction().commit();
+        em.close();
 
         response.sendRedirect("listaCategorias");
 

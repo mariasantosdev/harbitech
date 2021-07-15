@@ -3,7 +3,9 @@ package br.com.harbitech.school.servlet;
 import br.com.harbitech.school.category.Category;
 import br.com.harbitech.school.category.CategoryStatus;
 import br.com.harbitech.school.repository.dao.CategoryDao;
+import br.com.harbitech.school.util.JPAUtil;
 
+import javax.persistence.EntityManager;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -31,8 +33,14 @@ public class NewCategoryServlet extends HttpServlet {
         Category category = new Category(name,codeUrl,description,studyGuide,categoryStatus,orderVisualization,
                 iconPath,htmlHexColorCode);
 
-        CategoryDao categoryDao = new CategoryDao();
+        EntityManager em = JPAUtil.getEntityManager();
+
+        CategoryDao categoryDao = new CategoryDao(em);
+
+        em.getTransaction().begin();
         categoryDao.save(category);
+        em.getTransaction().commit();
+        em.close();
 
         RequestDispatcher rd = request.getRequestDispatcher("/newCategory.jsp");
         request.setAttribute("category", category.getName());

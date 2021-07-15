@@ -3,9 +3,11 @@ package br.com.harbitech.school.servlet;
 import br.com.harbitech.school.category.Category;
 import br.com.harbitech.school.category.CategoryDto;
 import br.com.harbitech.school.repository.dao.CategoryDao;
+import br.com.harbitech.school.util.JPAUtil;
 import com.google.gson.Gson;
 import com.thoughtworks.xstream.XStream;
 
+import javax.persistence.EntityManager;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -19,8 +21,16 @@ import java.util.List;
 public class CategoryService extends HttpServlet {
     protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-        CategoryDao categoryDao = new CategoryDao();
+        EntityManager em = JPAUtil.getEntityManager();
+
+        CategoryDao categoryDao = new CategoryDao(em);
         List<Category> categories = categoryDao.findAll();
+
+        em.getTransaction().commit();
+        em.close();
+
+        CategoryDto categoryDto = new CategoryDto();
+        categoryDto.convert(categories);
 
         String valueOfHeader = request.getHeader("Accept");
 
@@ -29,14 +39,14 @@ public class CategoryService extends HttpServlet {
         if (valueOfHeader.contains("xml")) {
             XStream xstream = new XStream();
             xstream.alias("categories", Category.class);
-            String xml = xstream.toXML(categories);
+            String xml = xstream.toXML(categoryDto);
 
             response.setContentType("application/xml");
             response.getWriter().print(xml);
 
         } else if (valueOfHeader.contains("json")) {
             Gson gson = new Gson();
-            String json = gson.toJson(categories);
+            String json = gson.toJson(categoryDto);
 
             response.setContentType("application/json");
             response.getWriter().print(json);
