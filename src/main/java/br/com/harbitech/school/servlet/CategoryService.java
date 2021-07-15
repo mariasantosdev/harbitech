@@ -51,8 +51,8 @@ public class CategoryService extends HttpServlet {
             response.setContentType("application/json");
             response.getWriter().print(json);
         } else {
-            response.setContentType("application/json");
-            response.getWriter().print("{'message':'no content'}");
+            response.sendError(HttpServletResponse.SC_UNSUPPORTED_MEDIA_TYPE, "Media type not supported: "
+                    + valueOfHeader);
         }
     }
 }
