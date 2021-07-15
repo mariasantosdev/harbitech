@@ -62,12 +62,17 @@ public class CategoryDaoTest {
 
     @Test
     void shouldReturnLowestOrderOfVisualizationOfActiveCategories() {
-        Category dataScience = dataScienceCategory(CategoryStatus.ACTIVE);
+        dataScienceCategory(CategoryStatus.ACTIVE);
         mobileCategory(CategoryStatus.ACTIVE);
 
         List<Category> categories = this.dao.searchAllActive();
 
-        assertEquals(categories.get(0), dataScience);
+        String codeUrlFromFirstCategory = categories.get(0).getCodeUrl();
+
+        assertThat(categories)
+                .hasSize(2)
+                .allMatch(course -> codeUrlFromFirstCategory.equals("data-science"));
+
     }
 
     private Category dataScienceCategory(CategoryStatus status) {

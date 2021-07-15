@@ -2,6 +2,7 @@ package br.com.harbitech.school.dao;
 
 import br.com.harbitech.school.category.Category;
 import br.com.harbitech.school.category.CategoryStatus;
+import br.com.harbitech.school.course.CourseVisibility;
 import br.com.harbitech.school.repository.dao.SubcategoryDao;
 import br.com.harbitech.school.subcategory.SubCategoryStatus;
 import br.com.harbitech.school.subcategory.Subcategory;
@@ -109,12 +110,17 @@ public class SubcategoryDaoTest {
 
     @Test
     void shouldReturnLowestOrderOfVisualizationOfActiveSubcategories(){
-        Subcategory android = androidSubcategory(SubCategoryStatus.ACTIVE);
+        androidSubcategory(SubCategoryStatus.ACTIVE);
         flutterSubcategory(SubCategoryStatus.ACTIVE);
 
         List<Subcategory> subcategories = this.dao.searchAllActive();
 
-        assertEquals(subcategories.get(0),android);
+        String codeUrlFromFirstSubcategory = subcategories.get(0).getCodeUrl();
+
+                assertThat(subcategories)
+                .hasSize(2)
+                .allMatch(course -> codeUrlFromFirstSubcategory.equals("android"));
+
     }
 
     private Subcategory androidSubcategory(SubCategoryStatus status) {
