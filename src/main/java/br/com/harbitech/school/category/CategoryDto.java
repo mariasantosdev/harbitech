@@ -13,7 +13,7 @@ public class CategoryDto {
     private String iconPath;
     private String htmlHexColorCode;
 
-    public CategoryDto(){
+    public CategoryDto (){
 
     }
 

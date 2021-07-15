@@ -24,11 +24,11 @@ public class CategoryService extends HttpServlet {
         EntityManager em = JPAUtil.getEntityManager();
 
         CategoryDao categoryDao = new CategoryDao(em);
+        em.getTransaction().begin();
         List<Category> categories = categoryDao.findAll();
 
         em.getTransaction().commit();
         em.close();
-
         CategoryDto categoryDto = new CategoryDto();
         categoryDto.convert(categories);
 
