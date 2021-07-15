@@ -22,11 +22,11 @@ public class CategoryService extends HttpServlet {
         CategoryDao categoryDao = new CategoryDao();
         List<Category> categories = categoryDao.findAll();
 
-        String value = request.getHeader("Accept");
+        String valueOfHeader = request.getHeader("Accept");
 
-        System.out.println(value);
+        System.out.println(valueOfHeader);
 
-        if (value.contains("xml")) {
+        if (valueOfHeader.contains("xml")) {
             XStream xstream = new XStream();
             xstream.alias("categories", Category.class);
             String xml = xstream.toXML(categories);
@@ -34,7 +34,7 @@ public class CategoryService extends HttpServlet {
             response.setContentType("application/xml");
             response.getWriter().print(xml);
 
-        } else if (value.contains("json")) {
+        } else if (valueOfHeader.contains("json")) {
             Gson gson = new Gson();
             String json = gson.toJson(categories);
 

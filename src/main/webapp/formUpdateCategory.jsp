@@ -17,7 +17,10 @@
   Código url: <input type="text" name="codeUrl" value="${category.codeUrl }"/><br><br>
   Descrição: <input type="text" name="description" value="${category.description }" /><br><br>
   Guia de estudos: <input type="text" name="studyGuide" value="${category.studyGuide }" /><br><br>
-  Status: <input type="text" name="status" value="${category.status }"/><br><br>
+  Status: <select  name="status" value="${category.status }">
+  <option>ACTIVE</option>
+  <option>INACTIVE</option>
+</select><br><br>
   Ordem de visualização: <input type="number" name="orderVisualization" value="${category.orderVisualization }"/><br><br>
   Caminho do icone: <input type="text" name="iconPath" value="${category.iconPath }"/><br><br>
   Cor em hexa-decimal: <input type="text" name="htmlHexColorCode" value="${category.htmlHexColorCode }"/><br><br>

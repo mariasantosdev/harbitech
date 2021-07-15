@@ -166,6 +166,5 @@ public class Category implements Serializable {
     public void addSubcategory(Subcategory subCategory) {
         this.subCategories.add(subCategory);
     }
-
 }
 
