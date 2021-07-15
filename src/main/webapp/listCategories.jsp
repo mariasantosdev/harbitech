@@ -19,8 +19,7 @@
     <th scope="row">Ícone</th>
     <th scope="row">Cor</th>
     <th scope="row">Status</th>
-    </tr>
-
+</tr>
     <tr>
         <c:forEach items="${categories}" var="category">
     <tr>
@@ -30,8 +29,8 @@
     <td scope="row">${category.iconPath}<td/>
     <td scope="row">${category.htmlHexColorCode}<td/>
     <td scope="row">${category.status}<td/>
-    <a href="/harbitech/mostraCategoria?id=${category.id }">edita</a><br><br>
-    <a href="/harbitech/removeCategoria?codeUrl=${category.codeUrl }">Tornar categoria inativa</a>
+    <a href="/harbitech/editaCategoria?id=${category.id }">edita</a><br><br>
+    <a href="/harbitech/inativaCategoria?codeUrl=${category.codeUrl }">Tornar categoria inativa</a>
     </tr>
         </c:forEach>
     </td>
