@@ -36,7 +36,7 @@ public class CourseDao {
     }
 
     public List<Course> searchAllWithPublicVisibility() {
-      return em.createNamedQuery("Course.findAllWithVisibility",Course.class)
+      return em.createNamedQuery("Course.allWithPublicVisibility",Course.class)
                 .setParameter("visibility", CourseVisibility.PUBLIC).getResultList();
     }
 

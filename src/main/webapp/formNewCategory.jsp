@@ -17,7 +17,10 @@
   Código url: <input type="text" name="codeUrl"  /><br><br>
   Descrição: <input type="text" name="description"  /><br><br>
   Guia de estudos: <input type="text" name="studyGuide"  /><br><br>
-  Status: <input type="text" name="status" /><br><br>
+  Status: <select  name="status">
+    <option>ACTIVE</option>
+    <option>INACTIVE</option>
+  </select><br><br>
   Ordem de visualização: <input type="number" name="orderVisualization" /><br><br>
   Caminho do icone: <input type="text" name="iconPath" /><br><br>
   Cor em hexa-decimal: <input type="text" name="htmlHexColorCode" /><br><br>

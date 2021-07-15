@@ -1,6 +1,7 @@
 package br.com.harbitech.school.repository;
 
 import br.com.harbitech.school.category.Category;
+import br.com.harbitech.school.category.CategoryDto;
 import br.com.harbitech.school.course.Course;
 import br.com.harbitech.school.repository.dao.CategoryDao;
 import br.com.harbitech.school.repository.dao.CourseDao;
@@ -11,6 +12,7 @@ import br.com.harbitech.school.util.JPAUtil;
 
 import javax.persistence.EntityManager;
 import java.util.List;
+import java.util.function.Consumer;
 
 public class CourseCrud {
 

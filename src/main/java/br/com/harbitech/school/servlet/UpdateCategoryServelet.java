@@ -1,6 +1,7 @@
 package br.com.harbitech.school.servlet;
 
 import br.com.harbitech.school.category.Category;
+import br.com.harbitech.school.category.CategoryDto;
 import br.com.harbitech.school.category.CategoryStatus;
 import br.com.harbitech.school.repository.dao.CategoryDao;
 

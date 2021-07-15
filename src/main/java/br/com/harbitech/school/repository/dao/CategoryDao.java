@@ -1,8 +1,10 @@
 package br.com.harbitech.school.repository.dao;
 
 import br.com.harbitech.school.category.Category;
+import br.com.harbitech.school.category.CategoryDto;
 import br.com.harbitech.school.category.CategoryStatus;
 import br.com.harbitech.school.util.JPAUtil;
+import org.hibernate.transform.Transformers;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
@@ -55,7 +57,7 @@ public class CategoryDao {
         transaction.commit();
     }
 
-    public Category findByCode(String codeUrl){
+    public Category findByCodeUrl(String codeUrl){
         EntityTransaction transaction = em.getTransaction();
         transaction.begin();
         Category category = em.createQuery("SELECT c FROM Category c WHERE c.codeUrl = :codeUrl", Category.class)
