@@ -10,7 +10,7 @@ import static br.com.harbitech.school.validation.ValidationUtil.validateNonBlank
 import static br.com.harbitech.school.validation.ValidationUtil.validateUrl;
 
 @Entity
-@NamedQuery(name = "Category.allActive", query = "SELECT c FROM Category c WHERE c.status = :status ORDER BY " +
+@NamedQuery(name = "Category.allWithStatus", query = "SELECT c FROM Category c WHERE c.status = :status ORDER BY " +
         "c.orderVisualization")
 public class Category implements Serializable {
 

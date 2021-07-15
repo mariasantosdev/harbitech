@@ -67,6 +67,7 @@ public class CourseHtmlPageGenarator {
         for (Course c : courses) {
             printStream.println("<tr align =center>");
             printStream.println("<td>" + c.getId() + "</td>");
+            printStream.println("<td>" + c.getCodeUrl() + "</td>");
             printStream.println("<td>" + c.getName() + "</td>");
             printStream.println("<td>" + c.getCompletionTimeInHours() + "</td>");
             printStream.println("<td>" + c.getVisibility() + "</td>");
@@ -106,8 +107,6 @@ public class CourseHtmlPageGenarator {
             printStream.println("<td>" + c.getOrderVisualization() + "</td>");
             printStream.println("<td>" + c.getIconPath() + "</td>");
             printStream.println("<td>" + c.getHtmlHexColorCode() + "</td>");
-            printStream.println("<td>");
-            printStream.println("</td>");
             printStream.println("</tr>");
 
         }
@@ -134,8 +133,6 @@ public class CourseHtmlPageGenarator {
             printStream.println("<td>" + c.getStudyGuide() + "</td>");
             printStream.println("<td>" + c.getStatus() + "</td>");
             printStream.println("<td>" + c.getOrderVisualization() + "</td>");
-            printStream.println("<td>");
-            printStream.println("</td>");
             printStream.println("</tr>");
 
         }

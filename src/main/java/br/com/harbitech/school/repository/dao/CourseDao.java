@@ -1,10 +1,8 @@
 package br.com.harbitech.school.repository.dao;
 
 import br.com.harbitech.school.course.Course;
-import br.com.harbitech.school.course.CourseDto;
 import br.com.harbitech.school.course.CourseVisibility;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -38,7 +36,7 @@ public class CourseDao {
     }
 
     public List<Course> searchAllWithPublicVisibility() {
-      return em.createNamedQuery("Course.allWithPublicVisibility",Course.class)
+      return em.createNamedQuery("Course.findAllWithVisibility",Course.class)
                 .setParameter("visibility", CourseVisibility.PUBLIC).getResultList();
     }
 

@@ -15,9 +15,8 @@ import java.util.List;
 public class CourseCrud {
 
     public static void main(String[] args) {
-//        EntityManager em = JPAUtil.getEntityManager();
-//        CourseDao courseDao = new CourseDao(em);
-        registerCourse();
+        EntityManager em = JPAUtil.getEntityManager();
+        CourseDao courseDao = new CourseDao(em);
     }
 
     private static void registerCourse() {
@@ -28,7 +27,7 @@ public class CourseCrud {
 
         Category category = new Category("DevOpsa","devopsa");
 
-        Subcategory subCategory = new Subcategory(5L,"Builds e Controle de versão",
+        Subcategory subCategory = new Subcategory("Builds e Controle de versão",
                 "builds-e-controle-de-versao", 3,"O build é a construção da aplicação " +
                 "a partir do código fonte, que pode incluir várias etapas, como baixar dependências, compilar, " +
                 "empacotar, testar e analisar. Como estas são uma tarefas trabalhosas e repetitivas, existem " +
