@@ -29,8 +29,7 @@ public class CategoryService extends HttpServlet {
 
         em.getTransaction().commit();
         em.close();
-        CategoryDto categoryDto = new CategoryDto();
-        categoryDto.convert(categories);
+        List<CategoryDto> categoriesDtos = CategoryDto.convert(categories);
 
         String valueOfHeader = request.getHeader("Accept");
 
@@ -39,14 +38,14 @@ public class CategoryService extends HttpServlet {
         if (valueOfHeader.contains("xml")) {
             XStream xstream = new XStream();
             xstream.alias("categories", Category.class);
-            String xml = xstream.toXML(categoryDto);
+            String xml = xstream.toXML(categoriesDtos);
 
             response.setContentType("application/xml");
             response.getWriter().print(xml);
 
         } else if (valueOfHeader.contains("json")) {
             Gson gson = new Gson();
-            String json = gson.toJson(categoryDto);
+            String json = gson.toJson(categoriesDtos);
 
             response.setContentType("application/json");
             response.getWriter().print(json);

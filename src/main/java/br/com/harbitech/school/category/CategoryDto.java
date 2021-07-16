@@ -28,7 +28,7 @@ public class CategoryDto {
         this.htmlHexColorCode = category.getHtmlHexColorCode();
     }
 
-    public List<CategoryDto> convert(List<Category> categories) {
+    public static List<CategoryDto> convert(List<Category> categories) {
         return categories.stream().map(CategoryDto::new).collect(Collectors.toList());
     }
 }
