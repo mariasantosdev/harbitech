@@ -4,11 +4,11 @@
 	<body>
 	<a href="/harbitech/listaCategorias">Ir para lista de categorias</a><br><br>
 	
-		<c:if test="${not empty category}">
-			Categoria ${ category } cadastrada com sucesso!
+		<c:if test="${not empty categoryName}">
+			Categoria ${ categoryName } cadastrada com sucesso!
 		</c:if>
 		
-		<c:if test="${empty category}">
+		<c:if test="${empty categoryName}">
 			Nenhuma categoria cadastrada!
 		</c:if>
 

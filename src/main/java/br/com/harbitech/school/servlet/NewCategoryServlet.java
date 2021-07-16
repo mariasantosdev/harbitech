@@ -43,7 +43,7 @@ public class NewCategoryServlet extends HttpServlet {
         em.close();
 
         RequestDispatcher rd = request.getRequestDispatcher("/newCategory.jsp");
-        request.setAttribute("category", category.getName());
+        request.setAttribute("categoryName", category.getName());
         rd.forward(request, response);
     }
 

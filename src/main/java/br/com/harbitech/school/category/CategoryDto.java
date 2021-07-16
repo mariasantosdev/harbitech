@@ -13,11 +13,7 @@ public class CategoryDto {
     private String iconPath;
     private String htmlHexColorCode;
 
-    public CategoryDto (){
-
-    }
-
-    public CategoryDto(Category category) {
+        public CategoryDto(Category category) {
         this.name = category.getName();
         this.codeUrl = category.getCodeUrl();
         this.description = category.getDescription();

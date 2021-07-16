@@ -18,7 +18,7 @@ import java.io.IOException;
 import java.util.List;
 
 @WebServlet(urlPatterns="/api/todascategorias")
-public class CategoryService extends HttpServlet {
+public class CategoryServiceServlet extends HttpServlet {
     protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
         EntityManager em = JPAUtil.getEntityManager();
