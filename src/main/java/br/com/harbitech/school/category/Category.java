@@ -19,9 +19,11 @@ public class Category {
     private Long id;
     @NotBlank(message = "Por favor insira o nome da categoria")
     @NotNull(message = "Por favor insira o nome da categoria")
+    @Size(max = 70, message = "Ops! O nome de uma categoria não pode ter mais do que 70 caracteres")
     private String name;
     @NotBlank(message = "Por favor insira o código da categoria")
     @NotNull(message = "Por favor insira o código da categoria")
+    @Size(max = 70, message = "Ops! O código de uma categoria não pode ter mais do que 70 caracteres")
     @Pattern(regexp = "[-a-z]+", message = "O código da url da categoria está incorreto (só aceita letras minúsculas e hífen)")
     private String codeUrl;
     @Column(columnDefinition = "TEXT")
@@ -32,7 +34,9 @@ public class Category {
     @Column(columnDefinition = "ENUM")
     private CategoryStatus status = CategoryStatus.INACTIVE;
     private int orderVisualization;
+    @Size(max = 400, message = "Ops! O caminho do ícone não deve ter mais do que 400 caracteres")
     private String iconPath;
+    @Size(max = 7, message = "Ops! Uma cor em hexa decimal não tem mais que 7 caracteres")
     private String htmlHexColorCode;
     @OneToMany(mappedBy = "category")
     private List<Subcategory> subCategories = new ArrayList<>();

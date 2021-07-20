@@ -78,8 +78,9 @@
             <div class="form-group">
                 <label for="htmlHexColorCode" class="col-sm-2 control-label">Cor</label>
                 <div class="col-sm-7">
-                    <input type="text" class="form-control" id="htmlHexColorCode" name="htmlHexColorCode"
-                           placeholder="por exemplo: #fcc14a" value="${category.htmlHexColorCode }"/>
+                    <form:input type="text" class="form-control" id="htmlHexColorCode" name="htmlHexColorCode"
+                           placeholder="por exemplo: #fcc14a" value="${category.htmlHexColorCode }" path="htmlHexColorCode"/>
+                    <td><form:errors path="htmlHexColorCode" cssClass="error"/>
                 </div>
             </div>
 
