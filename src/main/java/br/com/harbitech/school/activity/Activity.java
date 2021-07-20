@@ -3,8 +3,8 @@ package br.com.harbitech.school.activity;
 import br.com.harbitech.school.section.Section;
 
 import javax.persistence.*;
+import javax.validation.constraints.Pattern;
 
-import static br.com.harbitech.school.validation.ValidationUtil.*;
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
 @DiscriminatorColumn(name = "subtype", columnDefinition = "ENUM('VIDEO','QUESTION','EXPLANATION')")
@@ -14,6 +14,7 @@ public abstract class Activity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String title;
+    @Pattern(regexp = "[-a-z]+", message = "O código da url da atividade está incorreto (só aceita letras minúsculas e hífen)")
     @Column(name = "code_url")
     private String codeUrl;
     @Column(columnDefinition = "TEXT")
@@ -24,40 +25,14 @@ public abstract class Activity {
     @ManyToOne(fetch = FetchType.LAZY)
     private Section section;
 
-    public Activity(String title, String codeUrl, Section section){
-        validateNonBlankText(title, "O nome da atividade não pode estar em branco.");
-        validateNonBlankText(codeUrl, "O código da URL da atividade não pode estar em branco.");
-        validateUrl(codeUrl, "O código da url do curso está incorreto (só aceita letras minúsculas e hífen): " + codeUrl);
-        validateNonNullClass(section, "Não existe uma seção associada a essa atividade.");
+    @Deprecated
+    public Activity() {}
 
+    public Activity(String title, String codeUrl, Section section){
         this.title = title;
         this.codeUrl = codeUrl;
         this.section = section;
         this.status = ActivityStatus.INACTIVITE;
-    }
-
-    Long getId() {
-        return id;
-    }
-
-    String getCodeUrl() {
-        return codeUrl;
-    }
-
-    String getTitle() {
-        return title;
-    }
-
-    String getText() {
-        return text;
-    }
-
-    public ActivityStatus getStatus() {
-        return status;
-    }
-
-    Section getSection() {
-        return section;
     }
 
     @Override

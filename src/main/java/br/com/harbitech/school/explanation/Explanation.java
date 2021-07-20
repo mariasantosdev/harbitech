@@ -7,22 +7,19 @@ import javax.persistence.Column;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 
-import static br.com.harbitech.school.validation.ValidationUtil.validateNonBlankText;
-
 @Entity
 @DiscriminatorValue("EXPLANATION")
 public class Explanation extends Activity {
     @Column(columnDefinition = "TEXT")
     private String text;
 
-    public Explanation(String title, String codeUrl, Section section, String text) {
-        super(title, codeUrl, section);
-        validateNonBlankText(title, "O texto de explicação não pode estar em branco.");
-        this.text = text;
+    @Deprecated
+    public Explanation() {
     }
 
-    String getText() {
-        return text;
+    public Explanation(String title, String codeUrl, Section section, String text) {
+        super(title, codeUrl, section);
+        this.text = text;
     }
 
     @Override

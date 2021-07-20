@@ -3,8 +3,8 @@ package br.com.harbitech.school.section;
 import br.com.harbitech.school.course.Course;
 
 import javax.persistence.*;
+import javax.validation.constraints.Pattern;
 
-import static br.com.harbitech.school.validation.ValidationUtil.*;
 @Entity
 public class Section {
 
@@ -12,6 +12,7 @@ public class Section {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
+    @Pattern(regexp = "[-a-z]+", message = "O código da url da seção está incorreto (só aceita letras minúsculas e hífen)")
     @Column(name = "code_url")
     private String codeUrl;
     @Column(name = "order_visualization")
@@ -26,11 +27,6 @@ public class Section {
     private Course course;
 
     public Section(String name, String codeUrl, Course course){
-        validateNonBlankText(name, "O nome da seção não pode estar em branco.");
-        validateNonBlankText(codeUrl, "O código da URL da seção não pode estar em branco.");
-        validateUrl(codeUrl, "O código da url da seção está incorreto (só aceita letras minúsculas e hífen): " + codeUrl);
-        validateNonNullClass(course,"Não existe um curso associado a essa seção");
-
         this.name = name;
         this.codeUrl = codeUrl;
         this.course = course;
@@ -38,29 +34,8 @@ public class Section {
         this.type = SectionType.LECTURE;
     }
 
-    Long getId() {
-        return id;
-    }
-
-    String getName() {
-        return name;
-    }
-
-    String getCodeUrl() {
-        return codeUrl;
-    }
-
-    int getOrderVisualization() {
-        return orderVisualization;
-    }
-
-    SectionType getType() {
-        return type;
-    }
-
-    Course getCourse() {
-        return course;
-    }
+    @Deprecated
+    public Section(){}
 
     @Override
     public String toString() {

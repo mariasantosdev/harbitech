@@ -7,7 +7,6 @@ import javax.persistence.Column;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 
-import static br.com.harbitech.school.validation.ValidationUtil.validateNonBlankText;
 @Entity
 @DiscriminatorValue("VIDEO")
 public class Video extends Activity {
@@ -20,7 +19,6 @@ public class Video extends Activity {
 
    public Video(String title, String codeUrl, Section section, String url) {
       super(title, codeUrl, section);
-      validateNonBlankText(url, "O código do curso não pode estar em branco.");
       this.url = url;
    }
 

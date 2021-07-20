@@ -3,21 +3,23 @@ package br.com.harbitech.school.category;
 import br.com.harbitech.school.subcategory.Subcategory;
 
 import javax.persistence.*;
-import java.io.Serializable;
-import java.util.*;
-
-import static br.com.harbitech.school.validation.ValidationUtil.validateNonBlankText;
-import static br.com.harbitech.school.validation.ValidationUtil.validateUrl;
+import javax.validation.constraints.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @NamedQuery(name = "Category.allWithStatus", query = "SELECT c FROM Category c WHERE c.status = :status ORDER BY " +
         "c.orderVisualization")
-public class Category implements Serializable {
-
+public class Category {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @NotBlank(message = "Por favor insira o nome da categoria")
+    @NotNull(message = "Por favor insira o nome da categoria")
     private String name;
+    @NotBlank(message = "Por favor insira o código da categoria")
+    @NotNull(message = "Por favor insira o código da categoria")
+    @Pattern(regexp = "[-a-z]+", message = "O código da url da categoria está incorreto (só aceita letras minúsculas e hífen)")
     @Column(name = "code_url")
     private String codeUrl;
     @Column(columnDefinition = "TEXT")
@@ -26,7 +28,7 @@ public class Category implements Serializable {
     private String studyGuide;
     @Enumerated(EnumType.STRING)
     @Column(columnDefinition = "ENUM")
-    private CategoryStatus status;
+    private CategoryStatus status = CategoryStatus.INACTIVE;
     @Column(name = "order_visualization")
     private int orderVisualization;
     @Column(name = "icon_path")
@@ -36,36 +38,13 @@ public class Category implements Serializable {
     @OneToMany(mappedBy = "category")
     private List<Subcategory> subCategories = new ArrayList<>();
 
-    @Deprecated
-    public Category(){
-
-    }
+    public Category(){}
 
     public Category(String name, String codeUrl) {
-        validateNonBlankText(name, "O nome da categoria não pode estar em branco.");
-        validateNonBlankText(codeUrl, "O código da URL da categoria não pode estar em branco.");
-        validateUrl(codeUrl, "O código da url da categoria está incorreto (só aceita letras minúsculas e hífen): " + codeUrl);
-
         this.name = name;
         this.codeUrl = codeUrl;
         this.status = CategoryStatus.INACTIVE;
         this.orderVisualization = -1;
-    }
-
-    public Category(String name, String codeUrl,String description, CategoryStatus status,
-                    int orderVisualization, String iconPath, String htmlHexColorCode) {
-        this(name,codeUrl);
-        this.description = description;
-        this.status = status;
-        this.orderVisualization = orderVisualization;
-        this.iconPath = iconPath;
-        this.htmlHexColorCode = htmlHexColorCode;
-    }
-
-    public Category(String name, String codeUrl, String description, String studyGuide, CategoryStatus status,
-                    int orderVisualization, String iconPath, String htmlHexColorCode) {
-        this(name,codeUrl,description,status,orderVisualization,iconPath,htmlHexColorCode);
-        this.studyGuide = studyGuide;
     }
 
     public Long getId() {
@@ -108,12 +87,12 @@ public class Category implements Serializable {
         return htmlHexColorCode;
     }
 
-    public int totalCourses() {
-        return this.subCategories.stream().mapToInt(Subcategory::totalCourses).sum();
+    public void setId(Long id) {
+        this.id = id;
     }
 
-    public int totalTimeInHoursOfCourse() {
-       return this.subCategories.stream().mapToInt(Subcategory::totalTimeInHoursOfCourse).sum();
+    public void setSubCategories(List<Subcategory> subCategories) {
+        this.subCategories = subCategories;
     }
 
     public void setName(String name) {
@@ -128,12 +107,12 @@ public class Category implements Serializable {
         this.description = description;
     }
 
-    public void setStudyGuide(String studyGuide) {
-        this.studyGuide = studyGuide;
-    }
-
     public void setStatus(CategoryStatus status) {
         this.status = status;
+    }
+
+    public void setStudyGuide(String studyGuide) {
+        this.studyGuide = studyGuide;
     }
 
     public void setOrderVisualization(int orderVisualization) {

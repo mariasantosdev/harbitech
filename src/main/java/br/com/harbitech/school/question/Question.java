@@ -5,8 +5,6 @@ import br.com.harbitech.school.section.Section;
 
 import javax.persistence.*;
 
-import static br.com.harbitech.school.validation.ValidationUtil.validateNonBlankText;
-
 @Entity
 @DiscriminatorValue("QUESTION")
 public class Question extends Activity {
@@ -16,19 +14,13 @@ public class Question extends Activity {
     @Column(columnDefinition = "ENUM", name = "answer_type")
     private AnswerType type;
 
+    @Deprecated
+    public Question(){}
+
     public Question(String title, String codeUrl, Section section, String text) {
         super(title, codeUrl, section);
-        validateNonBlankText(text, "O enunciado da questão é obrigatório.");
         this.text = text;
         this.type = AnswerType.SINGLE_CHOICE;
-    }
-
-    String getText() {
-        return text;
-    }
-
-    AnswerType getType() {
-        return type;
     }
 
     @Override
