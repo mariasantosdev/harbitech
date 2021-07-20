@@ -4,11 +4,13 @@ import br.com.harbitech.school.subcategory.Subcategory;
 
 import javax.persistence.*;
 
+import java.io.Serializable;
+
 import static br.com.harbitech.school.validation.ValidationUtil.*;
 
 @Entity
-@NamedQuery(name = "Course.findAllWithVisibility", query = "SELECT c FROM Course c WHERE c.visibility = :visibility")
-public class Course {
+@NamedQuery(name = "Course.allWithPublicVisibility", query = "SELECT c FROM Course c WHERE c.visibility = :visibility")
+public class Course implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

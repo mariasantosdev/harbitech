@@ -1,6 +1,7 @@
 package br.com.harbitech.school.repository;
 
 import br.com.harbitech.school.category.Category;
+import br.com.harbitech.school.category.CategoryDto;
 import br.com.harbitech.school.course.Course;
 import br.com.harbitech.school.repository.dao.CategoryDao;
 import br.com.harbitech.school.repository.dao.CourseDao;
@@ -10,11 +11,14 @@ import br.com.harbitech.school.subcategory.Subcategory;
 import br.com.harbitech.school.util.JPAUtil;
 
 import javax.persistence.EntityManager;
+import java.util.List;
+import java.util.function.Consumer;
 
 public class CourseCrud {
 
     public static void main(String[] args) {
-        registerCourse();
+        EntityManager em = JPAUtil.getEntityManager();
+        CourseDao courseDao = new CourseDao(em);
     }
 
     private static void registerCourse() {
@@ -22,7 +26,7 @@ public class CourseCrud {
         EntityManager em = JPAUtil.getEntityManager();
         CourseDao courseDao = new CourseDao(em);
 
-        Category category = new Category("DevOps","devops");
+        Category category = new Category("DevOpsa","devopsa");
 
         Subcategory subCategory = new Subcategory("Builds e Controle de versão",
                 "builds-e-controle-de-versao", 3,"O build é a construção da aplicação " +
@@ -34,13 +38,13 @@ public class CourseCrud {
         Course course = new Course("Maven Gerenciamento de dependências e build de aplicações Java","maven",8,
                 "Rodrigo Ferreira",subCategory);
 
-        em.getTransaction().begin();
-
-        courseDao.save(course);
+//        em.getTransaction().begin();
+//
+//        courseDao.save(course);
 //        courseDao.delete("maven");
 //        courseDao.upgradeAllToPublicVisibility();
 //        List<Course> allCourses = courseDao.findAll();
-
+//        List<Category> devops = categoryDao.findByCode("devops");
 
         em.getTransaction().commit();
         em.close();

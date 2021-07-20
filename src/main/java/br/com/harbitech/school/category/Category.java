@@ -3,6 +3,7 @@ package br.com.harbitech.school.category;
 import br.com.harbitech.school.subcategory.Subcategory;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.*;
 
 import static br.com.harbitech.school.validation.ValidationUtil.validateNonBlankText;
@@ -11,7 +12,7 @@ import static br.com.harbitech.school.validation.ValidationUtil.validateUrl;
 @Entity
 @NamedQuery(name = "Category.allWithStatus", query = "SELECT c FROM Category c WHERE c.status = :status ORDER BY " +
         "c.orderVisualization")
-public class Category {
+public class Category implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -59,6 +60,12 @@ public class Category {
         this.orderVisualization = orderVisualization;
         this.iconPath = iconPath;
         this.htmlHexColorCode = htmlHexColorCode;
+    }
+
+    public Category(String name, String codeUrl, String description, String studyGuide, CategoryStatus status,
+                    int orderVisualization, String iconPath, String htmlHexColorCode) {
+        this(name,codeUrl,description,status,orderVisualization,iconPath,htmlHexColorCode);
+        this.studyGuide = studyGuide;
     }
 
     public Long getId() {
@@ -109,6 +116,38 @@ public class Category {
        return this.subCategories.stream().mapToInt(Subcategory::totalTimeInHoursOfCourse).sum();
     }
 
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setCodeUrl(String codeUrl) {
+        this.codeUrl = codeUrl;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public void setStudyGuide(String studyGuide) {
+        this.studyGuide = studyGuide;
+    }
+
+    public void setStatus(CategoryStatus status) {
+        this.status = status;
+    }
+
+    public void setOrderVisualization(int orderVisualization) {
+        this.orderVisualization = orderVisualization;
+    }
+
+    public void setIconPath(String iconPath) {
+        this.iconPath = iconPath;
+    }
+
+    public void setHtmlHexColorCode(String htmlHexColorCode) {
+        this.htmlHexColorCode = htmlHexColorCode;
+    }
+
     @Override
     public String toString() {
         return "Category{" +
@@ -127,6 +166,5 @@ public class Category {
     public void addSubcategory(Subcategory subCategory) {
         this.subCategories.add(subCategory);
     }
-
 }
 
