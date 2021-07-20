@@ -44,6 +44,9 @@
 
         </tr>
             </c:forEach>
+     <c:if test="${empty categories}">
+         <td><center>Ops! Não há nenhum registro nessa lista!</center></td>
+     </c:if>
     </tbody>
 </table>
 </body>

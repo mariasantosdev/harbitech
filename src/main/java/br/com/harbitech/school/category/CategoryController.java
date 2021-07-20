@@ -35,7 +35,6 @@ public class CategoryController {
             return mv;
     }
         categoryRepository.save(category);
-        mv.addObject("mensagem", "Título salvo com sucesso");
         return mv;
     }
 

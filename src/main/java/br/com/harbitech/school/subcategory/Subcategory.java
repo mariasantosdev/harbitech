@@ -2,6 +2,8 @@ package br.com.harbitech.school.subcategory;
 
 import br.com.harbitech.school.category.Category;
 import br.com.harbitech.school.course.Course;
+import com.fasterxml.jackson.databind.PropertyNamingStrategy;
+import com.fasterxml.jackson.databind.annotation.JsonNaming;
 
 import javax.persistence.*;
 import javax.validation.constraints.Pattern;
@@ -10,6 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
+@JsonNaming(PropertyNamingStrategy.SnakeCaseStrategy.class)
 @NamedQuery(name = "Subcategory.allActive", query = "SELECT s FROM Subcategory s WHERE s.status = :status ORDER BY " +
         "s.orderVisualization")
 @NamedQuery(name = "Subcategory.AllWithoutDescription", query = "SELECT s.name FROM Subcategory s WHERE s.description = '' " +
@@ -20,17 +23,15 @@ public class Subcategory implements Comparable<Subcategory>, Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
-    @Column(name = "code_url")
     @Pattern(regexp = "[-a-z]+", message = "O código da url do curso está incorreto (só aceita letras minúsculas e hífen)")
     private String codeUrl;
     @Column(columnDefinition = "TEXT")
     private String description;
-    @Column(name = "study_guide", columnDefinition = "TEXT")
+    @Column(columnDefinition = "TEXT")
     private String studyGuide;
     @Enumerated(EnumType.STRING)
     @Column(columnDefinition = "ENUM")
     private SubCategoryStatus status;
-    @Column(name = "order_visualization")
     private int orderVisualization;
     @ManyToOne(fetch = FetchType.LAZY)
     private Category category;

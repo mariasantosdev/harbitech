@@ -1,11 +1,14 @@
 package br.com.harbitech.school.course;
 
 import br.com.harbitech.school.subcategory.Subcategory;
+import com.fasterxml.jackson.databind.PropertyNamingStrategy;
+import com.fasterxml.jackson.databind.annotation.JsonNaming;
 
 import javax.persistence.*;
 import javax.validation.constraints.Pattern;
 
 @Entity
+@JsonNaming(PropertyNamingStrategy.SnakeCaseStrategy.class)
 @NamedQuery(name = "Course.allWithPublicVisibility", query = "SELECT c FROM Course c WHERE c.visibility = :visibility")
 public class Course {
 
@@ -14,19 +17,16 @@ public class Course {
     private Long id;
     private String name;
     @Pattern(regexp = "[-a-z]+", message = "O código da url do curso está incorreto (só aceita letras minúsculas e hífen)")
-    @Column(name = "code_url")
     private String codeUrl;
-    @Column(name = "completion_time_in_hours")
     private int completionTimeInHours;
     @Enumerated(EnumType.STRING)
     @Column(columnDefinition = "ENUM")
     private CourseVisibility visibility;
-    @Column(name = "target_audience")
     private String targetAudience;
     private String instructor;
     @Column(columnDefinition = "TEXT")
     private String description;
-    @Column(name = "developed_skills", columnDefinition = "TEXT")
+    @Column(columnDefinition = "TEXT")
     private String developedSkills;
     @ManyToOne(fetch = FetchType.LAZY)
     private Subcategory subcategory;

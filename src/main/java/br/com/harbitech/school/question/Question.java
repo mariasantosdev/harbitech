@@ -2,11 +2,14 @@ package br.com.harbitech.school.question;
 
 import br.com.harbitech.school.activity.Activity;
 import br.com.harbitech.school.section.Section;
+import com.fasterxml.jackson.databind.PropertyNamingStrategy;
+import com.fasterxml.jackson.databind.annotation.JsonNaming;
 
 import javax.persistence.*;
 
 @Entity
 @DiscriminatorValue("QUESTION")
+@JsonNaming(PropertyNamingStrategy.SnakeCaseStrategy.class)
 public class Question extends Activity {
     @Column(columnDefinition = "TEXT")
     private String text;

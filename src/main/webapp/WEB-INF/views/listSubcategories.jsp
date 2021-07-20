@@ -30,6 +30,10 @@
                 <td class = "text-center">${subcategorie.name} </td>
             </tr>
         </c:forEach>
+
+        <c:if test="${empty subcategories}">
+        <td><center>Ops! Não há nenhuma subcategorias vinculadas a essa categoria!</center></td>
+        </c:if>
         </tbody>
     </table>
 </body>

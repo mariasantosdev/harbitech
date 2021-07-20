@@ -1,11 +1,14 @@
 package br.com.harbitech.school.activity;
 
 import br.com.harbitech.school.section.Section;
+import com.fasterxml.jackson.databind.PropertyNamingStrategy;
+import com.fasterxml.jackson.databind.annotation.JsonNaming;
 
 import javax.persistence.*;
 import javax.validation.constraints.Pattern;
 
 @Entity
+@JsonNaming(PropertyNamingStrategy.SnakeCaseStrategy.class)
 @Inheritance(strategy = InheritanceType.JOINED)
 @DiscriminatorColumn(name = "subtype", columnDefinition = "ENUM('VIDEO','QUESTION','EXPLANATION')")
 public abstract class Activity {
@@ -15,7 +18,6 @@ public abstract class Activity {
     private Long id;
     private String title;
     @Pattern(regexp = "[-a-z]+", message = "O código da url da atividade está incorreto (só aceita letras minúsculas e hífen)")
-    @Column(name = "code_url")
     private String codeUrl;
     @Column(columnDefinition = "TEXT")
     private String text;

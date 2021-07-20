@@ -1,6 +1,8 @@
 package br.com.harbitech.school.category;
 
 import br.com.harbitech.school.subcategory.Subcategory;
+import com.fasterxml.jackson.databind.PropertyNamingStrategy;
+import com.fasterxml.jackson.databind.annotation.JsonNaming;
 
 import javax.persistence.*;
 import javax.validation.constraints.*;
@@ -8,6 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
+@JsonNaming(PropertyNamingStrategy.SnakeCaseStrategy.class)
 @NamedQuery(name = "Category.allWithStatus", query = "SELECT c FROM Category c WHERE c.status = :status ORDER BY " +
         "c.orderVisualization")
 public class Category {
@@ -20,20 +23,16 @@ public class Category {
     @NotBlank(message = "Por favor insira o código da categoria")
     @NotNull(message = "Por favor insira o código da categoria")
     @Pattern(regexp = "[-a-z]+", message = "O código da url da categoria está incorreto (só aceita letras minúsculas e hífen)")
-    @Column(name = "code_url")
     private String codeUrl;
     @Column(columnDefinition = "TEXT")
     private String description;
-    @Column(name = "study_guide", columnDefinition = "TEXT")
+    @Column(columnDefinition = "TEXT")
     private String studyGuide;
     @Enumerated(EnumType.STRING)
     @Column(columnDefinition = "ENUM")
     private CategoryStatus status = CategoryStatus.INACTIVE;
-    @Column(name = "order_visualization")
     private int orderVisualization;
-    @Column(name = "icon_path")
     private String iconPath;
-    @Column(name = "html_hex_color_code")
     private String htmlHexColorCode;
     @OneToMany(mappedBy = "category")
     private List<Subcategory> subCategories = new ArrayList<>();
