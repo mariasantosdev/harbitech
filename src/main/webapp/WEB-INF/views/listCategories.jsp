@@ -36,16 +36,15 @@
 
      <c:forEach items="${categories}" var="category">
         <tr>
-        <td class = "text-center">${category.name} </td>
-        <td class = "text-center">${category.codeUrl}</td>
-        <td class = "text-center">${category.status.description}</td>
-            <td class = "text-center"><a class="btn btn-link aw-link-panel" href="/admin/categories/${category.codeUrl }/subcategories">Subcategorias</a></td>
-            <td class = "text-center"><a class="btn btn-link aw-link-panel" href="/admin/categories/${category.codeUrl }">Editar</a></td>
-
+        <td class="text-center">${category.name} </td>
+        <td class="text-center">${category.codeUrl}</td>
+        <td class="text-center">${category.status.description}</td>
+            <td class="text-center"><a class="btn btn-link aw-link-panel" href="/admin/categories/${category.codeUrl }/subcategories">Subcategorias</a></td>
+            <td class="text-center"><a class="btn btn-link aw-link-panel" href="/admin/categories/${category.codeUrl }">Editar</a></td>
         </tr>
-            </c:forEach>
+     </c:forEach>
      <c:if test="${empty categories}">
-         <td><center>Ops! Não há nenhum registro nessa lista!</center></td>
+         <td class = "text-center">Ops! Não há nenhum registro nessa lista!</td>
      </c:if>
     </tbody>
 </table>

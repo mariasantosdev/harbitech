@@ -43,7 +43,8 @@
 
             <div class="col-sm-offset-2 col-sm-10">
                 <div class="form-check">
-                    <input class="status" type="checkbox" id="status" name="status" value="${category.status }"/>
+                    <input class="status" type="checkbox" id="status" name="status" value="${category.status}"
+                           <c:if test="${category.status=='ACTIVE'}">checked=checked</c:if> class="switch-input"/>
                     <label class="form-check-label" for="status">
                         Categoria ativa?
                     </label>
@@ -53,16 +54,20 @@
             <div class="form-group">
                 <label for="orderVisualization" class="col-sm-2 control-label">Ordem da categoria</label>
                 <div class="col-sm-7">
-                    <input type="number" class="form-control" id="orderVisualization" name="orderVisualization"
-                           placeholder="por exemplo: categorias de ordem 1 aparece antes da categoria ordem 2" value="${category.orderVisualization }"/>
+                    <form:input type="number" class="form-control" id="orderVisualization" name="orderVisualization"
+                           placeholder="por exemplo: categorias de ordem 1 aparece antes da categoria ordem 2"
+                                value="${category.orderVisualization }" path="orderVisualization"/>
+                    <td><form:errors path="orderVisualization" cssClass="error"/>
                 </div>
             </div>
 
             <div class="form-group">
                 <label class="col-sm-2 control-label" for="studyGuide">Guias de estudo</label>
                 <div class="col-sm-7">
-                <textarea class="form-control" id="studyGuide" name="studyGuide" rows="9"
-                          placeholder="Um texto apontando para formações para ajudar pessoas perdidas" value="${category.studyGuide }"></textarea>
+                <form:textarea class="form-control" id="studyGuide" name="studyGuide" rows="9"
+                          placeholder="Um texto apontando para formações para ajudar pessoas perdidas"
+                               value="${category.studyGuide }" path="studyGuide"></form:textarea>
+                    <td><form:errors path="studyGuide" cssClass="error"/>
                 </div>
             </div>
 
@@ -87,14 +92,13 @@
             <div class="form-group">
                 <label for="description" class="col-sm-2 control-label">Descrição</label>
                 <div class="col-sm-7">
-                    <input type="text" class="form-control" id="description" name="description"
+                    <form:input type="text" class="form-control" id="description" name="description"
                            placeholder="por exemplo: IOS, Android, PhoneGap e mais..."
-                           value="${category.description }"/>
+                           value="${category.description }" path="description"/>
+                    <td><form:errors path="htmlHexColorCode" cssClass="error"/>
                 </div>
             </div>
-
-            <input type="hidden" name="id" value="${category.id }">
-
+            <form:input type="hidden" name="id" value="${category.id }" path="id"/>
             <div class="form-group">
                 <div class="col-sm-offset-2 col-sm-10">
                     <button type="submit" class="btn btn-success">Enviar</button>

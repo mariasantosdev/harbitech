@@ -8,7 +8,6 @@ import javax.persistence.*;
 import javax.validation.constraints.Pattern;
 
 @Entity
-@JsonNaming(PropertyNamingStrategy.SnakeCaseStrategy.class)
 public class Section {
 
     @Id

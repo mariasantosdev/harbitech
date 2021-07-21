@@ -7,7 +7,6 @@ import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import javax.persistence.*;
 
 @Entity
-@JsonNaming(PropertyNamingStrategy.SnakeCaseStrategy.class)
 public class Alternative {
    @Id
    @GeneratedValue(strategy = GenerationType.IDENTITY)

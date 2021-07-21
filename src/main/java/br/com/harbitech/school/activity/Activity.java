@@ -8,7 +8,6 @@ import javax.persistence.*;
 import javax.validation.constraints.Pattern;
 
 @Entity
-@JsonNaming(PropertyNamingStrategy.SnakeCaseStrategy.class)
 @Inheritance(strategy = InheritanceType.JOINED)
 @DiscriminatorColumn(name = "subtype", columnDefinition = "ENUM('VIDEO','QUESTION','EXPLANATION')")
 public abstract class Activity {

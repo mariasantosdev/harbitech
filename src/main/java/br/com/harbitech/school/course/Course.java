@@ -8,7 +8,6 @@ import javax.persistence.*;
 import javax.validation.constraints.Pattern;
 
 @Entity
-@JsonNaming(PropertyNamingStrategy.SnakeCaseStrategy.class)
 @NamedQuery(name = "Course.allWithPublicVisibility", query = "SELECT c FROM Course c WHERE c.visibility = :visibility")
 public class Course {
 

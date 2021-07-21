@@ -1,8 +1,6 @@
 package br.com.harbitech.school.category;
 
 import br.com.harbitech.school.subcategory.Subcategory;
-import com.fasterxml.jackson.databind.PropertyNamingStrategy;
-import com.fasterxml.jackson.databind.annotation.JsonNaming;
 
 import javax.persistence.*;
 import javax.validation.constraints.*;
@@ -10,7 +8,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@JsonNaming(PropertyNamingStrategy.SnakeCaseStrategy.class)
 @NamedQuery(name = "Category.allWithStatus", query = "SELECT c FROM Category c WHERE c.status = :status ORDER BY " +
         "c.orderVisualization")
 public class Category {
@@ -18,11 +15,9 @@ public class Category {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @NotBlank(message = "Por favor insira o nome da categoria")
-    @NotNull(message = "Por favor insira o nome da categoria")
     @Size(max = 70, message = "Ops! O nome de uma categoria não pode ter mais do que 70 caracteres")
     private String name;
     @NotBlank(message = "Por favor insira o código da categoria")
-    @NotNull(message = "Por favor insira o código da categoria")
     @Size(max = 70, message = "Ops! O código de uma categoria não pode ter mais do que 70 caracteres")
     @Pattern(regexp = "[-a-z]+", message = "O código da url da categoria está incorreto (só aceita letras minúsculas e hífen)")
     private String codeUrl;

@@ -32,7 +32,7 @@
         </c:forEach>
 
         <c:if test="${empty subcategories}">
-        <td><center>Ops! Não há nenhuma subcategorias vinculadas a essa categoria!</center></td>
+        <td class = "text-center">Ops! Não há nenhuma subcategorias vinculadas a essa categoria!</td>
         </c:if>
         </tbody>
     </table>

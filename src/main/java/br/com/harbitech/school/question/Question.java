@@ -9,7 +9,6 @@ import javax.persistence.*;
 
 @Entity
 @DiscriminatorValue("QUESTION")
-@JsonNaming(PropertyNamingStrategy.SnakeCaseStrategy.class)
 public class Question extends Activity {
     @Column(columnDefinition = "TEXT")
     private String text;
