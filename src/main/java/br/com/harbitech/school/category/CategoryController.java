@@ -34,16 +34,22 @@ public class CategoryController {
         ModelAndView mv = new ModelAndView("formNewCategory");
         if (result.hasErrors()){
             return mv;
-    }
+        }
         categoryRepository.save(category);
         return mv;
     }
 
     @GetMapping(value = "{codeUrl}")
     public ModelAndView formUpdate(@PathVariable String codeUrl){
-        Category category = categoryRepository.findByCodeUrl(codeUrl);
+        Optional<Category> category = categoryRepository.findByCodeUrl(codeUrl);
+        if(!category.isPresent()){
+            ModelAndView mv = new ModelAndView("notFound");
+            mv.setStatus(HttpStatus.NOT_FOUND);
+            return mv;
+        }
         ModelAndView mv = new ModelAndView("formNewCategory");
-        mv.addObject(category);
+        mv.addObject(category.get());
+        mv.setStatus(HttpStatus.OK);
         return mv;
     }
 
@@ -68,10 +74,16 @@ public class CategoryController {
 
     @GetMapping("{codeUrl}/subcategories")
     public ModelAndView findSubcategories(@PathVariable String codeUrl){
-        Category category = categoryRepository.findByCodeUrl(codeUrl);
-        List<Subcategory> subCategories = category.getSubCategories();
+        Optional<Category> category = categoryRepository.findByCodeUrl(codeUrl);
+        if(!category.isPresent()){
+            ModelAndView mv = new ModelAndView("notFound");
+            mv.setStatus(HttpStatus.NOT_FOUND);
+            return mv;
+        }
+        List<Subcategory> subCategories = category.get().getSubCategories();
         ModelAndView mv = new ModelAndView("listSubcategories");
         mv.addObject("subcategories", subCategories);
+        mv.setStatus(HttpStatus.OK);
         return mv;
     }
 }

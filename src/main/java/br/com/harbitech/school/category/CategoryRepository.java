@@ -8,6 +8,6 @@ import java.util.Optional;
 
 @Repository
 public interface CategoryRepository extends JpaRepository<Category,Long> {
-    Category findByCodeUrl(String codeUrl);
+     Optional <Category> findByCodeUrl(String codeUrl);
     List<Category> findByStatus(CategoryStatus status);
 }
