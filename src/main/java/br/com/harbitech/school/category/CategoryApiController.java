@@ -8,7 +8,6 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
-@RequestMapping(value = "api/categories")
 public class CategoryApiController {
 
     private final CategoryRepository categoryRepository;
@@ -17,7 +16,7 @@ public class CategoryApiController {
         this.categoryRepository =  categoryRepository;
     }
 
-    @GetMapping(produces= {MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_JSON_VALUE})
+    @GetMapping(value = "api/categories",produces= {MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_JSON_VALUE})
     List<CategoryResponse> allCategories() {
         List<Category> activeCategories = categoryRepository.findByStatus(CategoryStatus.ACTIVE);
         return CategoryResponse.convert(activeCategories);

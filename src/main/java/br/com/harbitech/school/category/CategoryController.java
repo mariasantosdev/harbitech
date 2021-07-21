@@ -21,22 +21,19 @@ public class CategoryController {
     }
 
     @GetMapping(value = "/admin/categories/new")
-    public ModelAndView form(){
+    public ModelAndView formNew(){
         ModelAndView mv = new ModelAndView("formNewCategory");
         mv.addObject("category", new Category());
         return mv;
     }
 
-    //TODO PADRÃO PARA NOME DOS MÉTODOS OS FORMS PODERIAM SER NEW
-
     @PostMapping(value = "/admin/categories/new")
-    public ModelAndView save(@Valid Category category, BindingResult result) {
-        ModelAndView mv = new ModelAndView("formNewCategory");
+    public String save(@Valid Category category, BindingResult result) {
         if (result.hasErrors()){
-            return mv;
+            return "/formNewCategory";
         }
         categoryRepository.save(category);
-        return mv;
+        return "redirect:/admin/categories";
     }
 
     @GetMapping(value = "/admin/categories/{codeUrl}")
@@ -53,15 +50,12 @@ public class CategoryController {
     }
 
     @PostMapping("/admin/categories/{codeUrl}")
-    public ModelAndView update(@Valid Category category, BindingResult result) {
+    public String update(@Valid Category category, BindingResult result) {
         if (result.hasErrors()){
-            ModelAndView mv = new ModelAndView("formNewCategory");
-            return mv;
+            return "/formNewCategory";
         }
         categoryRepository.save(category);
-        ModelAndView mv = new ModelAndView("listCategories");
-        mv.addObject("category",category);
-        return mv;
+        return "redirect:/admin/categories";
     }
 
     @GetMapping("/admin/categories")
