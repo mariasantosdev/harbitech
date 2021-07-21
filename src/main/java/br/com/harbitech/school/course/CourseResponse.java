@@ -34,7 +34,10 @@ public class CourseResponse {
     }
     
     public static List<CourseResponse> convert(List<Course> courses){
-        return courses.stream().map(CourseResponse::convert).collect(Collectors.toList());
+        return courses.stream()
+                .filter(c -> c.getVisibility().equals(CourseVisibility.PUBLIC))
+                .map(CourseResponse::convert)
+                .collect(Collectors.toList());
     }
     
     public static CourseResponse convert(Course course){

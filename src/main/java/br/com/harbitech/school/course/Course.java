@@ -70,6 +70,10 @@ public class Course {
         return developedSkills;
     }
 
+    public CourseVisibility getVisibility() {
+        return visibility;
+    }
+
     @Override
     public String toString() {
         return "Course{" +

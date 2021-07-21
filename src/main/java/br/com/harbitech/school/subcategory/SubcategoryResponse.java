@@ -39,7 +39,10 @@ public class SubcategoryResponse {
     }
 
     public static List<SubcategoryResponse> convert(List<Subcategory> subcategories) {
-        return subcategories.stream().map(SubcategoryResponse::convert).collect(Collectors.toList());
+        return subcategories.stream()
+                .filter(s -> s.getStatus().equals(SubCategoryStatus.ACTIVE))
+                .map(SubcategoryResponse::convert)
+                .collect(Collectors.toList());
     }
 
     public static SubcategoryResponse convert(Subcategory subcategory) {
