@@ -20,6 +20,14 @@ public class CategoryController {
         this.categoryRepository =  categoryRepository;
     }
 
+    @GetMapping("/admin/categories")
+    public ModelAndView list() {
+        List <Category> allCategories =  categoryRepository.findAll();
+        ModelAndView mv = new ModelAndView("listCategories");
+        mv.addObject("categories", allCategories);
+        return mv;
+    }
+
     @GetMapping(value = "/admin/categories/new")
     public ModelAndView formNew(){
         ModelAndView mv = new ModelAndView("formNewCategory");
@@ -56,14 +64,6 @@ public class CategoryController {
         }
         categoryRepository.save(category);
         return "redirect:/admin/categories";
-    }
-
-    @GetMapping("/admin/categories")
-    public ModelAndView list() {
-        List <Category> allCategories =  categoryRepository.findAll();
-        ModelAndView mv = new ModelAndView("listCategories");
-        mv.addObject("categories", allCategories);
-        return mv;
     }
 
     @GetMapping("/admin/categories/{codeUrl}/subcategories")

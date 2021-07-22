@@ -41,15 +41,25 @@
                 </div>
             </div>
 
-            <div class="col-sm-offset-2 col-sm-10">
-                <div class="form-check">
-                    <input class="status" type="checkbox" id="status" name="status" <c:if test="${category.status=='ACTIVE'}">checked=checked</c:if> class="switch-input"/>
-                    <label class="form-check-label" for="status">
-                        Categoria ativa?
-                    </label>
-                    <h6>Mostra ou deixa de mostrar a categoria na listagem dos alunos, de formações etc</h6>
-                </div>
+            <div class="form-check">
+                <label for="name" class="col-sm-2 control-label">Status</label>
+                <div class="col-sm-2">
+                <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1"
+                       value="${category.status }"<c:if test="${category.status=='ACTIVE'}">checked=checked</c:if>/>
+                <label class="form-check-label" for="flexRadioDefault1">
+                    ATIVA
+                </label>
             </div>
+            </div>
+            <div class="form-check">
+                <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2" value="${category.status }"
+                       <c:if test="${category.status== 'INACTIVE'}">checked=checked</c:if>/>
+                <label class="form-check-label" for="flexRadioDefault2">
+                    INATIVA
+                </label>
+            </div>
+            <br>
+
             <div class="form-group">
                 <label for="orderVisualization" class="col-sm-2 control-label">Ordem da categoria</label>
                 <div class="col-sm-7">
