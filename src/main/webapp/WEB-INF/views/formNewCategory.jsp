@@ -28,7 +28,7 @@
                 <div class="col-sm-7">
                     <form:input type="text" class="form-control" id="name" name="name"
                                 placeholder="Digite o nome da categoria" path="name"/>
-                    <td><form:errors path="name" cssClass="error"/>
+                    <form:errors path="name" cssClass="error"/>
                 </div>
             </div>
             <div class="form-group">
@@ -37,35 +37,31 @@
                     <form:input type="text" class="form-control" id="codeUrl" name="codeUrl"
                                 placeholder="por exemplo: desenvolvimento, mobile (não use letras maiúsculas, acentos ou caracteres especiais)"
                                 path="codeUrl"/>
-                    <td><form:errors path="codeUrl" cssClass="error"/>
+                    <form:errors path="codeUrl" cssClass="error"/>
                 </div>
             </div>
 
             <div class="form-check">
-                <label for="name" class="col-sm-2 control-label">Status</label>
+                <label for="flexRadioDefault1" class="col-sm-2 control-label">Status</label>
                 <div class="col-sm-2">
-                <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1"
-                       value="${category.status }"<c:if test="${category.status=='ACTIVE'}">checked=checked</c:if>/>
-                <label class="form-check-label" for="flexRadioDefault1">
+                <input class="form-check-input" type="radio" name="status" id="flexRadioDefault1"
+                       value="ACTIVE" <c:if test="${category.status== 'ACTIVE'}">checked=checked</c:if>/>
                     ATIVA
-                </label>
             </div>
-            </div>
+                <div>
+                <input class="form-check-input" type="radio" name="status" id="flexRadioDefault2"
+                       value="INACTIVE" <c:if test="${category.status== 'INACTIVE'}">checked=checked</c:if>/>
+                INATIVA
+                </div>
             <div class="form-check">
-                <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2" value="${category.status }"
-                       <c:if test="${category.status== 'INACTIVE'}">checked=checked</c:if>/>
-                <label class="form-check-label" for="flexRadioDefault2">
-                    INATIVA
-                </label>
             </div>
             <br>
-
             <div class="form-group">
                 <label for="orderVisualization" class="col-sm-2 control-label">Ordem da categoria</label>
                 <div class="col-sm-7">
                     <form:input type="number" class="form-control" id="orderVisualization" name="orderVisualization"
                            placeholder="por exemplo: categorias de ordem 1 aparece antes da categoria ordem 2" path="orderVisualization"/>
-                    <td><form:errors path="orderVisualization" cssClass="error"/>
+                    <form:errors path="orderVisualization" cssClass="error"/>
                 </div>
             </div>
 
@@ -74,7 +70,7 @@
                 <div class="col-sm-7">
                 <form:textarea class="form-control" id="studyGuide" name="studyGuide" rows="9"
                           placeholder="Um texto apontando para formações para ajudar pessoas perdidas" path="studyGuide"></form:textarea>
-                    <td><form:errors path="studyGuide" cssClass="error"/>
+                    <form:errors path="studyGuide" cssClass="error"/>
                 </div>
             </div>
 
@@ -83,7 +79,7 @@
                 <div class="col-sm-7">
                     <form:input type="text" class="form-control" id="iconPath" name="iconPath"
                                 placeholder="por exemplo: /images/categorias/programacao.svg" path="iconPath"/>
-                    <td><form:errors path="iconPath" cssClass="error"/>
+                    <form:errors path="iconPath" cssClass="error"/>
                 </div>
             </div>
 
@@ -92,7 +88,7 @@
                 <div class="col-sm-7">
                     <form:input type="text" class="form-control" id="htmlHexColorCode" name="htmlHexColorCode"
                            placeholder="por exemplo: #fcc14a" path="htmlHexColorCode"/>
-                    <td><form:errors path="htmlHexColorCode" cssClass="error"/>
+                   <form:errors path="htmlHexColorCode" cssClass="error"/>
                 </div>
             </div>
 
@@ -101,7 +97,7 @@
                 <div class="col-sm-7">
                     <form:input type="text" class="form-control" id="description" name="description"
                            placeholder="por exemplo: IOS, Android, PhoneGap e mais..." path="description"/>
-                    <td><form:errors path="htmlHexColorCode" cssClass="error"/>
+                    <form:errors path="htmlHexColorCode" cssClass="error"/>
                 </div>
             </div>
             <form:input type="hidden" name="id" path="id"/>

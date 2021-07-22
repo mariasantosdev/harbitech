@@ -39,8 +39,8 @@
         <td class="text-center">${category.name} </td>
         <td class="text-center">${category.codeUrl}</td>
         <td class="text-center">${category.status.description}</td>
-            <td class="text-center"><a class="btn btn-link aw-link-panel" href="/admin/categories/${category.codeUrl }/subcategories">Subcategorias</a></td>
-            <td class="text-center"><a class="btn btn-link aw-link-panel" href="/admin/categories/${category.codeUrl }">Editar</a></td>
+            <td class="text-center"><a class="btn btn-link aw-link-panel" href="/admin/categories/${category.codeUrl}/subcategories">Subcategorias</a></td>
+            <td class="text-center"><a class="btn btn-link aw-link-panel" href="/admin/categories/${category.codeUrl}">Editar</a></td>
         </tr>
      </c:forEach>
      <c:if test="${empty categories}">
