@@ -11,6 +11,7 @@ import javax.validation.Valid;
 import java.util.List;
 import java.util.Optional;
 
+
 @Controller
 public class CategoryController {
 
@@ -23,14 +24,14 @@ public class CategoryController {
     @GetMapping("/admin/categories")
     public ModelAndView list() {
         List <Category> allCategories =  categoryRepository.findAll();
-        ModelAndView mv = new ModelAndView("listCategories");
+        ModelAndView mv = new ModelAndView("category/listCategories");
         mv.addObject("categories", allCategories);
         return mv;
     }
 
     @GetMapping(value = "/admin/categories/new")
     public ModelAndView formNew(){
-        ModelAndView mv = new ModelAndView("formNewCategory");
+        ModelAndView mv = new ModelAndView("category/formNewCategory");
         mv.addObject("category", new Category());
         return mv;
     }
@@ -38,7 +39,7 @@ public class CategoryController {
     @PostMapping(value = "/admin/categories/new")
     public String save(@Valid Category category, BindingResult result) {
         if (result.hasErrors()){
-            return "/formNewCategory";
+            return "category/formNewCategory";
         }
         categoryRepository.save(category);
         return "redirect:/admin/categories";
@@ -52,7 +53,7 @@ public class CategoryController {
             mv.setStatus(HttpStatus.NOT_FOUND);
             return mv;
         }
-        ModelAndView mv = new ModelAndView("formNewCategory");
+        ModelAndView mv = new ModelAndView("category/formNewCategory");
         mv.addObject(category.get());
         return mv;
     }
@@ -60,22 +61,22 @@ public class CategoryController {
     @PostMapping("/admin/categories/{codeUrl}")
     public String update(@Valid Category category, BindingResult result) {
         if (result.hasErrors()){
-            return "/formNewCategory";
+            return "category/formNewCategory";
         }
         categoryRepository.save(category);
         return "redirect:/admin/categories";
     }
 
     @GetMapping("/admin/categories/{codeUrl}/subcategories")
-    public ModelAndView listSubcategories(@PathVariable String codeUrl){
+    public ModelAndView listSubcategories(@PathVariable String codeUrl) {
         Optional<Category> category = categoryRepository.findByCodeUrl(codeUrl);
-        if(category.isEmpty()){
+        if (category.isEmpty()) {
             ModelAndView mv = new ModelAndView("notFound");
             mv.setStatus(HttpStatus.NOT_FOUND);
             return mv;
         }
         List<Subcategory> subCategories = category.get().getSubCategories();
-        ModelAndView mv = new ModelAndView("listSubcategories");
+        ModelAndView mv = new ModelAndView("category/listSubcategories");
         mv.addObject("subcategories", subCategories);
         return mv;
     }
