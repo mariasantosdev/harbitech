@@ -5,6 +5,9 @@ import com.fasterxml.jackson.databind.PropertyNamingStrategy;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
 
 import javax.persistence.*;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 
 @Entity
@@ -14,20 +17,25 @@ public class Course {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @NotBlank(message = "O nome é do curso não pode estar em branco")
     private String name;
     @Pattern(regexp = "[-a-z]+", message = "O código da url do curso está incorreto (só aceita letras minúsculas e hífen)")
     private String codeUrl;
+    @Min(value = 1L, message = "O tempo estimado não pode ser menor do que 1 hora")
+    @Min(value = 20L, message = "O tempo estimado não pode ultrapassar 20 horas")
     private int completionTimeInHours;
     @Enumerated(EnumType.STRING)
     @Column(columnDefinition = "ENUM")
     private CourseVisibility visibility;
     private String targetAudience;
+    @NotBlank(message = "O nome do instrutor do curso não pode estar em branco")
     private String instructor;
     @Column(columnDefinition = "TEXT")
     private String description;
     @Column(columnDefinition = "TEXT")
     private String developedSkills;
     @ManyToOne(fetch = FetchType.LAZY)
+    @NotNull(message = "O curso precisa ter uma subcategoria associada")
     private Subcategory subcategory;
 
     @Deprecated

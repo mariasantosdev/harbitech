@@ -1,10 +1,9 @@
 package br.com.harbitech.school.alternative;
 
 import br.com.harbitech.school.question.Question;
-import com.fasterxml.jackson.databind.PropertyNamingStrategy;
-import com.fasterxml.jackson.databind.annotation.JsonNaming;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
 
 @Entity
 public class Alternative {
@@ -12,6 +11,7 @@ public class Alternative {
    @GeneratedValue(strategy = GenerationType.IDENTITY)
    private Long id;
    @Column(columnDefinition = "TEXT")
+   @NotBlank(message = "O texto da alternativa não pode estar em branco.")
    private String text;
    private int orderVisualization;
    private boolean correct;

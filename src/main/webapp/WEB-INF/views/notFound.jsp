@@ -3,10 +3,10 @@
 <html>
 <head>
     <meta charset="ISO-8859-1"/>
-    <title>Harbitech</title>
-    <h1><center> 404!</center></h1>
-    <h1><center>Não foram encontrados traços de civilização!
-    Faça uma busca ou entre em contato caso acredite que algo deva existir aqui.</center></h1>
+    <title>Erro 404</title>
+    <h1 class = "text-center"> 404!</h1>
+    <h1 class = "text-center">Não foram encontrados traços de civilização!
+    Faça uma busca ou entre em contato caso acredite que algo deva existir aqui.</h1>
 </head>
 <body>
 </body>

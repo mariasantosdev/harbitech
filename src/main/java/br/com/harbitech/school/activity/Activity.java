@@ -1,10 +1,10 @@
 package br.com.harbitech.school.activity;
 
 import br.com.harbitech.school.section.Section;
-import com.fasterxml.jackson.databind.PropertyNamingStrategy;
-import com.fasterxml.jackson.databind.annotation.JsonNaming;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 
 @Entity
@@ -15,6 +15,7 @@ public abstract class Activity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @NotBlank
     private String title;
     @Pattern(regexp = "[-a-z]+", message = "O código da url da atividade está incorreto (só aceita letras minúsculas e hífen)")
     private String codeUrl;
@@ -24,6 +25,7 @@ public abstract class Activity {
     @Column(columnDefinition = "ENUM")
     private ActivityStatus status;
     @ManyToOne(fetch = FetchType.LAZY)
+    @NotNull(message = "A atividade precisa ter uma seção vinculada.")
     private Section section;
 
     @Deprecated

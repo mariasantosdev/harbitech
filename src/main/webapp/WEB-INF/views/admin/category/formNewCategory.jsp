@@ -27,7 +27,7 @@
                 <label for="name" class="col-sm-2 control-label">Nome</label>
                 <div class="col-sm-7">
                     <form:input type="text" class="form-control" id="name" name="name"
-                                placeholder="Digite o nome da categoria" path="name"/>
+                                placeholder="Digite aqui o nome da categoria" path="name"/>
                     <form:errors path="name" cssClass="error"/>
                 </div>
             </div>
@@ -53,14 +53,12 @@
                        value="INACTIVE" <c:if test="${category.status== 'INACTIVE'}">checked=checked</c:if>/>
                 INATIVA
                 </div>
-            <div class="form-check">
-            </div>
             <br>
             <div class="form-group">
                 <label for="orderVisualization" class="col-sm-2 control-label">Ordem da categoria</label>
                 <div class="col-sm-7">
                     <form:input type="number" class="form-control" id="orderVisualization" name="orderVisualization"
-                           placeholder="por exemplo: categorias de ordem 1 aparece antes da categoria ordem 2" path="orderVisualization"/>
+                           placeholder="por exemplo: categorias de ordem 1 aparece antes da categoria de ordem 2" path="orderVisualization"/>
                     <form:errors path="orderVisualization" cssClass="error"/>
                 </div>
             </div>
@@ -97,7 +95,7 @@
                 <div class="col-sm-7">
                     <form:input type="text" class="form-control" id="description" name="description"
                            placeholder="por exemplo: IOS, Android, PhoneGap e mais..." path="description"/>
-                    <form:errors path="htmlHexColorCode" cssClass="error"/>
+                    <form:errors path="description" cssClass="error"/>
                 </div>
             </div>
             <form:input type="hidden" name="id" path="id"/>

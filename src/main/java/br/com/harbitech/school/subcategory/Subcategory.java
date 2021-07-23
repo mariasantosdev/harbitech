@@ -37,7 +37,6 @@ public class Subcategory implements Comparable<Subcategory>, Serializable {
     @OneToMany(mappedBy = "subcategory")
     private List<Course> courses = new ArrayList<>();
 
-    @Deprecated
     public Subcategory(){
     }
 
