@@ -5,10 +5,7 @@ import com.fasterxml.jackson.databind.PropertyNamingStrategy;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
 
 import javax.persistence.*;
-import javax.validation.constraints.Min;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Pattern;
+import javax.validation.constraints.*;
 
 @Entity
 @NamedQuery(name = "Course.allWithPublicVisibility", query = "SELECT c FROM Course c WHERE c.visibility = :visibility")
@@ -17,18 +14,24 @@ public class Course {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @NotBlank(message = "O nome é do curso não pode estar em branco")
+    @NotBlank(message = "Por favor insira o nome do curso")
+    @Size(max = 70, message = "Ops! O nome do curso não pode ter mais do que 70 caracteres")
     private String name;
+    @Size(max = 70, message = "Ops! O código do curso não pode ter mais do que 70 caracteres")
+    @NotBlank(message = "Por favor insira o código do curso")
     @Pattern(regexp = "[-a-z]+", message = "O código da url do curso está incorreto (só aceita letras minúsculas e hífen)")
     private String codeUrl;
     @Min(value = 1L, message = "O tempo estimado não pode ser menor do que 1 hora")
     @Min(value = 20L, message = "O tempo estimado não pode ultrapassar 20 horas")
+    @NotBlank(message = "Por favor insira o tempo estimado do curso")
     private int completionTimeInHours;
     @Enumerated(EnumType.STRING)
     @Column(columnDefinition = "ENUM")
     private CourseVisibility visibility;
+    @Size(max = 250, message = "Ops! O público alvo do curso não pode ter mais do que 250 caracteres")
     private String targetAudience;
-    @NotBlank(message = "O nome do instrutor do curso não pode estar em branco")
+    @NotBlank(message = "Por favor insira o nome do instrutor do curso")
+    @Size(max = 70, message = "Ops! O nome do intrutor do curso não pode ter mais do que 70 caracteres")
     private String instructor;
     @Column(columnDefinition = "TEXT")
     private String description;

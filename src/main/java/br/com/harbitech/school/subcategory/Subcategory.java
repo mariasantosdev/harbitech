@@ -6,7 +6,10 @@ import com.fasterxml.jackson.databind.PropertyNamingStrategy;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -21,7 +24,11 @@ public class Subcategory implements Comparable<Subcategory>, Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @NotBlank(message = "O nome da subcategoria não pode estar em branco.")
+    @Size(max = 70, message = "Ops! O nome de uma subcategoria não pode ter mais do que 70 caracteres")
     private String name;
+    @NotBlank(message = "O código da subcategoria não pode estar em branco.")
+    @Size(max = 70, message = "Ops! O código de uma subcategoria não pode ter mais do que 70 caracteres")
     @Pattern(regexp = "[-a-z]+", message = "O código da url do curso está incorreto (só aceita letras minúsculas e hífen)")
     private String codeUrl;
     @Column(columnDefinition = "TEXT")
@@ -35,6 +42,7 @@ public class Subcategory implements Comparable<Subcategory>, Serializable {
     @ManyToOne(fetch = FetchType.LAZY)
     private Category category;
     @OneToMany(mappedBy = "subcategory")
+    @NotNull(message = "A subcategoria precisa ter um curso associado.")
     private List<Course> courses = new ArrayList<>();
 
     public Subcategory(){

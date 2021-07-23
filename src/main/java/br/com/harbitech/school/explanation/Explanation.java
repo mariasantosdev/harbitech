@@ -6,11 +6,13 @@ import br.com.harbitech.school.section.Section;
 import javax.persistence.Column;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
+import javax.validation.constraints.NotBlank;
 
 @Entity
 @DiscriminatorValue("EXPLANATION")
 public class Explanation extends Activity {
     @Column(columnDefinition = "TEXT")
+    @NotBlank(message = "O texto da explicação não pode estar em branco")
     private String text;
 
     @Deprecated

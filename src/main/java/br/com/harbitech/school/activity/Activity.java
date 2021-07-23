@@ -6,6 +6,7 @@ import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
 
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
@@ -15,8 +16,11 @@ public abstract class Activity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @NotBlank
+    @NotBlank(message = "Por favor insira o título da atividade")
+    @Size(max = 150, message = "Ops! O título da atividade não pode ter mais do que 150 caracteres")
     private String title;
+    @NotBlank(message = "Por favor insira o código da atividade")
+    @Size(max = 70, message = "Ops! O código de uma categoria não pode ter mais do que 70 caracteres")
     @Pattern(regexp = "[-a-z]+", message = "O código da url da atividade está incorreto (só aceita letras minúsculas e hífen)")
     private String codeUrl;
     @Column(columnDefinition = "TEXT")
@@ -25,7 +29,7 @@ public abstract class Activity {
     @Column(columnDefinition = "ENUM")
     private ActivityStatus status;
     @ManyToOne(fetch = FetchType.LAZY)
-    @NotNull(message = "A atividade precisa ter uma seção vinculada.")
+    @NotNull(message = "A atividade precisa ter uma seção associada.")
     private Section section;
 
     @Deprecated
