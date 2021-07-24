@@ -19,7 +19,7 @@ import java.util.List;
         "s.orderVisualization")
 @NamedQuery(name = "Subcategory.AllWithoutDescription", query = "SELECT s.name FROM Subcategory s WHERE s.description = '' " +
         "OR s.description IS NULL")
-public class Subcategory implements Comparable<Subcategory>, Serializable {
+public class Subcategory implements Comparable<Subcategory> {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -114,4 +114,5 @@ public class Subcategory implements Comparable<Subcategory>, Serializable {
     public void addCourse(Course course) {
         this.courses.add(course);
     }
+
 }

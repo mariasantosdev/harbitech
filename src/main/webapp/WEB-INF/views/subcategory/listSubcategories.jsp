@@ -43,7 +43,7 @@
             <td class="text-center"><a class="btn btn-link aw-link-panel" href="/admin/categories/${subcategories.codeUrl}">Editar</a></td>
         </tr>
      </c:forEach>
-     <c:if test="${empty categories}">
+     <c:if test="${empty subcategories}">
          <td class = "text-center">Ops! Não há nenhum registro nessa lista!</td>
      </c:if>
     </tbody>
