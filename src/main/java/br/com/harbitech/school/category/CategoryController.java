@@ -2,6 +2,7 @@ package br.com.harbitech.school.category;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
@@ -21,18 +22,16 @@ public class CategoryController {
     }
 
     @GetMapping("/admin/categories")
-    public ModelAndView list() {
+    public String list(Model model) {
         List <Category> allCategories =  categoryRepository.findAll();
-        ModelAndView mv = new ModelAndView("admin/category/listCategories");
-        mv.addObject("categories", allCategories);
-        return mv;
+        model.addAttribute("categories", allCategories);
+        return "admin/category/listCategories";
     }
 
     @GetMapping(value = "/admin/categories/new")
-    public ModelAndView formNew(){
-        ModelAndView mv = new ModelAndView("admin/category/formNewCategory");
-        mv.addObject("category", new Category());
-        return mv;
+    public String formNew(Model model){
+        model.addAttribute("category", new Category());
+        return "admin/category/formNewCategory";
     }
 
     @PostMapping(value = "/admin/categories/new")

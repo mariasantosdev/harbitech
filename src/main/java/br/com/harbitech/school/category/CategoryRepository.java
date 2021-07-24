@@ -10,5 +10,5 @@ import java.util.Optional;
 public interface CategoryRepository extends JpaRepository<Category,Long> {
     Optional<Category> findByCodeUrl(String codeUrl);
 
-    List<Category> findByStatus(CategoryStatus status);
+    List<Category> findAllByStatus(CategoryStatus status);
 }

@@ -28,6 +28,7 @@ public class Category {
     @Enumerated(EnumType.STRING)
     @Column(columnDefinition = "ENUM")
     private CategoryStatus status = CategoryStatus.INACTIVE;
+    @Min(-1)
     private int orderVisualization;
     @Size(max = 400, message = "Ops! O caminho do ícone não deve ter mais do que 400 caracteres")
     private String iconPath;
@@ -89,10 +90,6 @@ public class Category {
         this.id = id;
     }
 
-    public void setSubCategories(List<Subcategory> subCategories) {
-        this.subCategories = subCategories;
-    }
-
     public void setName(String name) {
         this.name = name;
     }
@@ -105,12 +102,12 @@ public class Category {
         this.description = description;
     }
 
-    public void setStatus(CategoryStatus status) {
-        this.status = status;
-    }
-
     public void setStudyGuide(String studyGuide) {
         this.studyGuide = studyGuide;
+    }
+
+    public void setStatus(CategoryStatus status) {
+        this.status = status;
     }
 
     public void setOrderVisualization(int orderVisualization) {
@@ -123,6 +120,10 @@ public class Category {
 
     public void setHtmlHexColorCode(String htmlHexColorCode) {
         this.htmlHexColorCode = htmlHexColorCode;
+    }
+
+    public void setSubCategories(List<Subcategory> subCategories) {
+        this.subCategories = subCategories;
     }
 
     @Override

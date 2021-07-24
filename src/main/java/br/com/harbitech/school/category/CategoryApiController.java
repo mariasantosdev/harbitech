@@ -18,7 +18,7 @@ public class CategoryApiController {
 
     @GetMapping(value = "api/categories",produces= {MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_JSON_VALUE})
     List<CategoryResponse> allCategories() {
-        List<Category> activeCategories = categoryRepository.findByStatus(CategoryStatus.ACTIVE);
+        List<Category> activeCategories = categoryRepository.findAllByStatus(CategoryStatus.ACTIVE);
         return CategoryResponse.convert(activeCategories);
     }
 }

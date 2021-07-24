@@ -84,7 +84,7 @@
             <div class="form-group">
                 <label for="htmlHexColorCode" class="col-sm-2 control-label">Cor</label>
                 <div class="col-sm-7">
-                    <form:input type="text" class="form-control" id="htmlHexColorCode" name="htmlHexColorCode"
+                    <form:input type="color" value="#FFEDED" class="form-control" id="htmlHexColorCode" name="htmlHexColorCode"
                            placeholder="por exemplo: #fcc14a" path="htmlHexColorCode"/>
                    <form:errors path="htmlHexColorCode" cssClass="error"/>
                 </div>
