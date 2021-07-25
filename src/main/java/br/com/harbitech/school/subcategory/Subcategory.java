@@ -45,6 +45,17 @@ public class Subcategory implements Comparable<Subcategory> {
     @NotNull(message = "A subcategoria precisa ter um curso associado.")
     private List<Course> courses = new ArrayList<>();
 
+    public Subcategory(String name, String codeUrl, int orderVisualization, String description, String studyGuide,
+                       SubCategoryStatus status, Category category) {
+        this.name = name;
+        this.codeUrl = codeUrl;
+        this.description = description;
+        this.studyGuide = studyGuide;
+        this.status = status;
+        this.orderVisualization = orderVisualization;
+        this.category = category;
+    }
+
     public Subcategory(){
     }
 

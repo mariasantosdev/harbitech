@@ -19,7 +19,6 @@
 
 <div class="col-sm-offset--1 col-sm-10">
 <h1>Subcategorias</h1> <br/>
-    <a class="btn btn-primary" href="/admin/subcategories/new">Nova Subcategoria</a><br/><br/><br/>
 </div>
 <div class="panel-body">
 <table class="table table-bordered table-striped">

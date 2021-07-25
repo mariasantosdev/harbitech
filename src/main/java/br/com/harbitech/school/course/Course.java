@@ -41,6 +41,19 @@ public class Course {
     @NotNull(message = "O curso precisa ter uma subcategoria associada")
     private Subcategory subcategory;
 
+    public Course(String name, String codeUrl, int completionTimeInHours, CourseVisibility visibility,
+                  String targetAudience, String instructor, String description, String developedSkills, Subcategory subcategory) {
+        this.name = name;
+        this.codeUrl = codeUrl;
+        this.completionTimeInHours = completionTimeInHours;
+        this.visibility = visibility;
+        this.targetAudience = targetAudience;
+        this.instructor = instructor;
+        this.description = description;
+        this.developedSkills = developedSkills;
+        this.subcategory = subcategory;
+    }
+
     @Deprecated
     public Course(){}
 
@@ -83,6 +96,10 @@ public class Course {
 
     public CourseVisibility getVisibility() {
         return visibility;
+    }
+
+    public String getInstructor() {
+        return instructor;
     }
 
     @Override

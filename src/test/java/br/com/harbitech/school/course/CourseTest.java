@@ -16,16 +16,16 @@ public class CourseTest {
         this.subCategory = new Subcategory("Java", "java", category);
     }
 
-//    @Test
-//    public void shouldAddNewCourse() {
-//        Course course = assertDoesNotThrow(() -> new Course("Git e Github para Sobrevivência",
-//                        "git-e-github-para-sobrevivencia", 3, "Nico", subCategory),
-//                "Erro de validação ao criar um curso");
-//        assertEquals("Git e Github para Sobrevivência",course.getName());
-//        assertEquals("git-e-github-para-sobrevivencia",course.getCodeUrl());
-//        assertEquals(3,course.getCompletionTimeInHours());
-//        assertEquals("Nico",course.getInstructor());
-//    }
+    @Test
+    public void shouldAddNewCourse() {
+        Course course = assertDoesNotThrow(() -> new Course("Git e Github para Sobrevivência",
+                        "git-e-github-para-sobrevivencia", 3, "Nico", subCategory),
+                "Erro de validação ao criar um curso");
+        assertEquals("Git e Github para Sobrevivência",course.getName());
+        assertEquals("git-e-github-para-sobrevivencia",course.getCodeUrl());
+        assertEquals(3,course.getCompletionTimeInHours());
+        assertEquals("Nico",course.getInstructor());
+    }
 
     @Test
     public void shouldValidadeIncorrectCodeUrlBecauseHaveAccent() {
@@ -94,28 +94,28 @@ public class CourseTest {
                 "Paulo Silveira", null));
     }
 
-//    @Test
-//    public void shouldValidateIncorrectDescriptionEnum() {
-//        assertThrows(IllegalArgumentException.class, () -> new Course("Git e Github para Sobrevivência",
-//                "git-e-github-para-sobrevivencia", 3, CourseVisibility.from("UMA_VISIBILIDADE_INVALIDA"),
-//                "Desenvolvedores em qualquer linguagem ou plataforma que desejam mais segurança para " +
-//                        "seus projetos " + "com as ferramentas de controle de versão Git e GitHub.",
-//                "Nico", "Desenvolvedores em qualquer linguagem ou plataforma devem aprender " +
-//                "git e github pois são ferramentas muito cobradas no mercado", "Entenda como funciona o git e conheça " +
-//                "comandos essenciais para se trabalhar em equipe.", subCategory));
-//    }
-//
-//    @Test
-//    public void shouldValidateCorrectDescriptionEnum() {
-//        assertDoesNotThrow (()-> (new Course("Git e Github para Sobrevivência",
-//                "git-e-github-para-sobrevivencia", 3, CourseVisibility.from("PÚBLICA"),
-//                "Desenvolvedores em qualquer linguagem ou plataforma que desejam mais segurança para " +
-//                        "seus projetos " + "com as ferramentas de controle de versão Git e GitHub.",
-//                "Nico", "Desenvolvedores em qualquer linguagem ou plataforma devem aprender " +
-//                "git e github pois são ferramentas muito cobradas no mercado", "Entenda como funciona o" +
-//                " git e conheça comandos essenciais para se trabalhar em equipe.", subCategory)),
-//                "Erro de validação ao criar um curso");
-//    }
+    @Test
+    public void shouldValidateIncorrectDescriptionEnum() {
+        assertThrows(IllegalArgumentException.class, () -> new Course("Git e Github para Sobrevivência",
+                "git-e-github-para-sobrevivencia", 3, CourseVisibility.from("UMA_VISIBILIDADE_INVALIDA"),
+                "Desenvolvedores em qualquer linguagem ou plataforma que desejam mais segurança para " +
+                        "seus projetos " + "com as ferramentas de controle de versão Git e GitHub.",
+                "Nico", "Desenvolvedores em qualquer linguagem ou plataforma devem aprender " +
+                "git e github pois são ferramentas muito cobradas no mercado", "Entenda como funciona o git e conheça " +
+                "comandos essenciais para se trabalhar em equipe.", subCategory));
+    }
+
+    @Test
+    public void shouldValidateCorrectDescriptionEnum() {
+        assertDoesNotThrow (()-> (new Course("Git e Github para Sobrevivência",
+                "git-e-github-para-sobrevivencia", 3, CourseVisibility.from("PÚBLICA"),
+                "Desenvolvedores em qualquer linguagem ou plataforma que desejam mais segurança para " +
+                        "seus projetos " + "com as ferramentas de controle de versão Git e GitHub.",
+                "Nico", "Desenvolvedores em qualquer linguagem ou plataforma devem aprender " +
+                "git e github pois são ferramentas muito cobradas no mercado", "Entenda como funciona o" +
+                " git e conheça comandos essenciais para se trabalhar em equipe.", subCategory)),
+                "Erro de validação ao criar um curso");
+    }
 
     @Test
     public void shouldValidateCorrectCompletionTimeInHoursBecauseIsBetweenValuesValid(){

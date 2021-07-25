@@ -46,6 +46,17 @@ public class Category {
         this.orderVisualization = -1;
     }
 
+    public Category(String name, String codeUrl, String description, CategoryStatus status, int orderVisualization,
+                    String iconPath, String htmlHexColorCode) {
+        this.name = name;
+        this.codeUrl = codeUrl;
+        this.description = description;
+        this.status = status;
+        this.orderVisualization = orderVisualization;
+        this.iconPath = iconPath;
+        this.htmlHexColorCode = htmlHexColorCode;
+    }
+
     public Long getId() {
         return id;
     }
