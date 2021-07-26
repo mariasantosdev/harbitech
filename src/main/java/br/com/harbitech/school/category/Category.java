@@ -26,6 +26,7 @@ public class Category {
     @Column(columnDefinition = "TEXT")
     private String studyGuide;
     @Enumerated(EnumType.STRING)
+    @NotNull
     @Column(columnDefinition = "ENUM")
     private CategoryStatus status = CategoryStatus.INACTIVE;
     @Min(-1)

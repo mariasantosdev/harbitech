@@ -37,7 +37,8 @@ public class Subcategory implements Comparable<Subcategory> {
     private String studyGuide;
     @Enumerated(EnumType.STRING)
     @Column(columnDefinition = "ENUM")
-    private SubCategoryStatus status;
+    @NotNull
+    private SubCategoryStatus status = SubCategoryStatus.INACTIVE;
     private int orderVisualization;
     @ManyToOne(fetch = FetchType.LAZY)
     private Category category;
@@ -99,6 +100,29 @@ public class Subcategory implements Comparable<Subcategory> {
         return courses;
     }
 
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public Category getCategory() {
+        return category;
+    }
+
+    public void setCodeUrl(String codeUrl) {
+        this.codeUrl = codeUrl;
+    }
+
+    public void setStatus(SubCategoryStatus status) {
+        this.status = status;
+    }
+
+    public void setCategory(Category category) {
+        this.category = category;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 
     @Override
     public String toString() {

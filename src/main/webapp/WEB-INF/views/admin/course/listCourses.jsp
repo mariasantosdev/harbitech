@@ -5,7 +5,7 @@
 <html>
 <head>
     <meta charset="ISO-8859-1"/>
-    <title>Subcategorias</title>
+    <title>Categorias</title>
     <link rel="stylesheet" type="text/css" href="/css/bootstrap.min.css" />
     <link rel="stylesheet" type="text/css" href="/css/style.css" />
 </head>
@@ -18,7 +18,7 @@
 </nav>
 
 <div class="col-sm-offset--1 col-sm-10">
-<h1>Subcategorias</h1> <br/>
+<h1>Cursos</h1> <br/>
 </div>
 <div class="panel-body">
 <table class="table table-bordered table-striped">
@@ -33,16 +33,16 @@
     </thead>
     <tbody>
 
-     <c:forEach items="${subcategories}" var="category">
+     <c:forEach items="${courses}" var="course">
         <tr>
-        <td class="text-center">${subcategories.name} </td>
-        <td class="text-center">${subcategories.codeUrl}</td>
-        <td class="text-center">${subcategories.status.description}</td>
-            <td class="text-center"><a class="btn btn-link aw-link-panel" href="/admin/categories/${subcategories.codeUrl}/subcategories">Subcategorias</a></td>
-            <td class="text-center"><a class="btn btn-link aw-link-panel" href="/admin/categories/${subcategories.codeUrl}">Editar</a></td>
+        <td class="text-center">${course.name} </td>
+        <td class="text-center">${course.codeUrl}</td>
+        <td class="text-center">${course.visibility.description}</td>
+<%--            <td class="text-center"><a class="btn btn-link aw-link-panel" href="/admin/categories/${category.codeUrl}/subcategories">Subcategorias</a></td>--%>
+<%--            <td class="text-center"><a class="btn btn-link aw-link-panel" href="/admin/categories/${category.codeUrl}">Editar</a></td>--%>
         </tr>
      </c:forEach>
-     <c:if test="${empty subcategories}">
+     <c:if test="${empty courses}">
          <td class = "text-center">Ops! Não há nenhum registro nessa lista!</td>
      </c:if>
     </tbody>

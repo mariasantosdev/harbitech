@@ -16,7 +16,7 @@
         </div>
     </div>
 </nav>
-<form:form class="form-horizontal" modelAttribute="subcategory" method="post">
+<form:form class="form-horizontal" modelAttribute="subcategory" method="post" action="${formAction}">
     <div class="panel panel-default">
         <div class="panel-heading">
             <h1 class="panel-title">Nova Subcategoria</h1>
@@ -82,10 +82,16 @@
                     <form:errors path="description" cssClass="error"/>
                 </div>
             </div>
+                <div class="form-group">
+                    <label for="category" class="col-sm-2 control-label">Categoria</label>
+                    <div class="col-sm-7">
+                        <form:select path="category" class="form-control" id = "category">
+                            <form:options items="${categories}" itemValue="id" itemLabel="name"/>
+                        </form:select>
+                    </div>
+                </div>
 
-
-
-            <form:input type="hidden" name="id" path="id"/>
+            <form:input type="hidden" path="id"/>
             <div class="form-group">
                 <div class="col-sm-offset-2 col-sm-10">
                     <button type="submit" class="btn btn-success">Enviar</button>

@@ -27,7 +27,8 @@ public class Course {
     private int completionTimeInHours;
     @Enumerated(EnumType.STRING)
     @Column(columnDefinition = "ENUM")
-    private CourseVisibility visibility;
+    @NotNull
+    private CourseVisibility visibility = CourseVisibility.PRIVATE;
     @Size(max = 250, message = "Ops! O público alvo do curso não pode ter mais do que 250 caracteres")
     private String targetAudience;
     @NotBlank(message = "Por favor insira o nome do instrutor do curso")
