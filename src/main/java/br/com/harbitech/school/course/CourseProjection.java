@@ -1,6 +1,6 @@
 package br.com.harbitech.school.course;
 
 public interface CourseProjection {
-    Long getId();
+    Long getQuantidade();
     String getName();
 }
