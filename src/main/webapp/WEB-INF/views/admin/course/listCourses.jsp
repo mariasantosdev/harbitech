@@ -38,10 +38,20 @@
         <td class="text-center">${course.name} </td>
         <td class="text-center">${course.codeUrl}</td>
         <td class="text-center">${course.visibility.description}</td>
-<%--            <td class="text-center"><a class="btn btn-link aw-link-panel" href="/admin/categories/${category.codeUrl}/subcategories">Subcategorias</a></td>--%>
-<%--            <td class="text-center"><a class="btn btn-link aw-link-panel" href="/admin/categories/${category.codeUrl}">Editar</a></td>--%>
         </tr>
      </c:forEach>
+         <ul class="pagination">
+             <li class="disabled">
+                 <c:if test="${courses.size() > 0}">
+                     <c:forEach begin="0" end="${totalPages-1}" var="page">
+                        <li class="page-item">
+                            <a href="/admin/courses/${category}/${subcategories.codeUrl}?page=${page}"
+                               class="page-link">${page+1}</a>
+                         </li>
+                     </c:forEach>
+                </c:if>
+             </li>
+         </ul>
      <c:if test="${empty courses}">
          <td class = "text-center">Ops! Não há nenhum registro nessa lista!</td>
      </c:if>
