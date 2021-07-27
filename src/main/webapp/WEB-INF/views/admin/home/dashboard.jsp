@@ -10,9 +10,8 @@
     <link rel="stylesheet" type="text/css" href="/css/style.css" />
     <h1>APENAS TESTE</h1>
     <c:forEach items="${instructorsProjection}" var="instructor">
-        <tr>
-            <td class="text-center">${instructor.getName()} </td>
-        </tr>
+            <p>${instructor.getQuantidade()}</p>
+        <p>${instructor.getInstructor()}</p>
     </c:forEach>
 </head>
 <body>

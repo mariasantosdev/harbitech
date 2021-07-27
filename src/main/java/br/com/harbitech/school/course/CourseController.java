@@ -3,6 +3,9 @@ package br.com.harbitech.school.course;
 import br.com.harbitech.school.category.CategoryRepository;
 import br.com.harbitech.school.subcategory.Subcategory;
 import br.com.harbitech.school.subcategory.SubcategoryRepository;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -36,6 +39,8 @@ public class CourseController {
 
         Subcategory subcategories = subcategoryRepository.findByCodeUrl(subcategory).orElseThrow(() ->
                 new ResponseStatusException(NOT_FOUND, subcategory));
+
+        Pageable pageable = PageRequest.of(1,5, Sort.unsorted());
 
         List<Course> courses = subcategories.getCourses();
         model.addAttribute("courses", courses);

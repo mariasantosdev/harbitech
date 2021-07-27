@@ -26,6 +26,8 @@ public class HomeController {
         this.courseRepository = courseRepository;
     }
 
+
+
     @GetMapping(path = {"/admin", "/admin/dashboard"})
     String admin(Model model) {
         List<CourseProjection> instructorWithGreaterNumberOfCourses = courseRepository
