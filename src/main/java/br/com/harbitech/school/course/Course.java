@@ -1,78 +1,56 @@
 package br.com.harbitech.school.course;
 
 import br.com.harbitech.school.subcategory.Subcategory;
+import com.fasterxml.jackson.databind.PropertyNamingStrategy;
+import com.fasterxml.jackson.databind.annotation.JsonNaming;
 
 import javax.persistence.*;
-
-import java.io.Serializable;
-
-import static br.com.harbitech.school.validation.ValidationUtil.*;
+import javax.validation.constraints.*;
 
 @Entity
 @NamedQuery(name = "Course.allWithPublicVisibility", query = "SELECT c FROM Course c WHERE c.visibility = :visibility")
-public class Course implements Serializable {
+public class Course {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @NotBlank(message = "Por favor insira o nome do curso")
+    @Size(max = 70, message = "Ops! O nome do curso não pode ter mais do que 70 caracteres")
     private String name;
-    @Column(name = "code_url")
+    @Size(max = 70, message = "Ops! O código do curso não pode ter mais do que 70 caracteres")
+    @NotBlank(message = "Por favor insira o código do curso")
+    @Pattern(regexp = "[-a-z]+", message = "O código da url do curso está incorreto (só aceita letras minúsculas e hífen)")
     private String codeUrl;
-    @Column(name = "completion_time_in_hours")
+    @Min(value = 1L, message = "O tempo estimado não pode ser menor do que 1 hora")
+    @Min(value = 20L, message = "O tempo estimado não pode ultrapassar 20 horas")
+    @NotBlank(message = "Por favor insira o tempo estimado do curso")
     private int completionTimeInHours;
     @Enumerated(EnumType.STRING)
     @Column(columnDefinition = "ENUM")
     private CourseVisibility visibility;
-    @Column(name = "target_audience")
+    @Size(max = 250, message = "Ops! O público alvo do curso não pode ter mais do que 250 caracteres")
     private String targetAudience;
+    @NotBlank(message = "Por favor insira o nome do instrutor do curso")
+    @Size(max = 70, message = "Ops! O nome do intrutor do curso não pode ter mais do que 70 caracteres")
     private String instructor;
     @Column(columnDefinition = "TEXT")
     private String description;
-    @Column(name = "developed_skills", columnDefinition = "TEXT")
+    @Column(columnDefinition = "TEXT")
     private String developedSkills;
     @ManyToOne(fetch = FetchType.LAZY)
-    private Subcategory subCategory;
+    @NotNull(message = "O curso precisa ter uma subcategoria associada")
+    private Subcategory subcategory;
 
     @Deprecated
-    public Course(){
+    public Course(){}
 
-    }
-
-    public Course(String name, String codeUrl, int completionTimeInHours, String instructor, Subcategory subCategory){
-        validateNonBlankText(name, "O nome do curso não pode estar em branco.");
-        validateNonBlankText(codeUrl, "O código do curso não pode estar em branco.");
-        validateNonBlankText(instructor, "O nome do instrutor não pode estar em branco");
-        validateUrl(codeUrl, "O código da url do curso está incorreto (só aceita letras minúsculas e hífen): " + codeUrl);
-        validateInterval(completionTimeInHours,1,20,"O tempo estimado deve estar " +
-                "entre 1 hora até 20 horas.");
-        validateNonNullClass(subCategory, "A curso deve ter uma sub-categoria associada.");
-
+    public Course(String name, String codeUrl, int completionTimeInHours, String instructor, Subcategory subcategory){
         this.name = name;
         this.codeUrl = codeUrl;
         this.completionTimeInHours = completionTimeInHours;
         this.instructor = instructor;
         this.visibility = CourseVisibility.PRIVATE;
-        this.subCategory = subCategory;
-    }
-
-    public Course(String name, String codeUrl, int completionTimeInHours, CourseVisibility visibility,
-                  String targetAudience, String instructor, String description, String developedSkills,
-                  Subcategory subCategory) {
-        this(name, codeUrl, completionTimeInHours, instructor,subCategory);
-        this.visibility = visibility;
-        this.targetAudience = targetAudience;
-        this.instructor = instructor;
-        this.description = description;
-        this.developedSkills = developedSkills;
-        this.subCategory.addCourse(this);
-    }
-
-    public Course(Long id,String name, String codeUrl, int completionTimeInHours, CourseVisibility visibility,
-                  String targetAudience, String instructor, String description, String developedSkills,
-                  Subcategory subCategory) {
-        this(name, codeUrl, completionTimeInHours, visibility, targetAudience, instructor, description, developedSkills,
-                subCategory);
-        this.id = id;
+        this.subcategory = subcategory;
     }
 
     public Long getId() {
@@ -83,24 +61,8 @@ public class Course implements Serializable {
         return codeUrl;
     }
 
-    public CourseVisibility getVisibility() {
-        return visibility;
-    }
-
-    public String getTargetAudience() {
-        return targetAudience;
-    }
-
-    public String getInstructor() {
-        return instructor;
-    }
-
     public String getDescription() {
         return description;
-    }
-
-    public String getDevelopedSkills() {
-        return developedSkills;
     }
 
     public String getName() {
@@ -111,12 +73,16 @@ public class Course implements Serializable {
         return completionTimeInHours;
     }
 
-    public Subcategory getSubCategory() {
-        return subCategory;
-    }
-
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public String getDevelopedSkills() {
+        return developedSkills;
+    }
+
+    public CourseVisibility getVisibility() {
+        return visibility;
     }
 
     @Override
@@ -131,11 +97,7 @@ public class Course implements Serializable {
                 ", instructor='" + instructor + '\'' +
                 ", description='" + description + '\'' +
                 ", developedSkills='" + developedSkills + '\'' +
-                ", subCategory=" + subCategory +
+                ", subCategory=" + subcategory +
                 '}';
-    }
-
-    public void publish() {
-        this.visibility = CourseVisibility.PUBLIC;
     }
 }

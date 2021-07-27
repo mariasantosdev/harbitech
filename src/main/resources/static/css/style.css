@@ -1,0 +1,6 @@
+textarea {
+    resize: none;
+}
+.error {
+    color: red; font-weight: bold;
+}

@@ -54,25 +54,25 @@ public class CategoryTest {
         assertThrows(IllegalArgumentException.class,() -> new Category(null, "dev-ops"));
     }
 
-    @Test
-    public void shouldValidadeIncorrectCodeUrlBecauseIsNull(){
-        assertThrows(IllegalArgumentException.class,() -> new Category("Dev Ops", null));
-    }
-    @Test
-    public void shouldValidateIncorrectDescriptionEnum(){
-        assertThrows(IllegalArgumentException.class,() -> new Category("Programação", "programacao",
-                "Programe nas principais linguagens de programação",
-                CategoryStatus.from("UMA_CATEGORIA_INVALIDA"), 1,
-                "https://www.alura.com.br/assets/api/formacoes/categorias/512/programacao-transparent.png",
-                "#00c86f"));
-    }
-
-    @Test
-    public void shouldValidateCorrectDescriptionEnum() {
-       assertDoesNotThrow(()-> (new Category("Programação", "programacao",
-                "Programe nas principais linguagens de programação",
-                CategoryStatus.from("INATIVA"), 1,
-                "https://www.alura.com.br/assets/api/formacoes/categorias/512/programacao-transparent.png",
-                "#00c86f")),"Erro de validação ao criar categoria.");
-    }
+//    @Test
+//    public void shouldValidadeIncorrectCodeUrlBecauseIsNull(){
+//        assertThrows(IllegalArgumentException.class,() -> new Category("Dev Ops", null));
+//    }
+//    @Test
+//    public void shouldValidateIncorrectDescriptionEnum(){
+//        assertThrows(IllegalArgumentException.class,() -> new Category("Programação", "programacao",
+//                "Programe nas principais linguagens de programação",
+//                CategoryStatus.from("UMA_CATEGORIA_INVALIDA"), 1,
+//                "https://www.alura.com.br/assets/api/formacoes/categorias/512/programacao-transparent.png",
+//                "#00c86f"));
+//    }
+//
+//    @Test
+//    public void shouldValidateCorrectDescriptionEnum() {
+//       assertDoesNotThrow(()-> (new Category("Programação", "programacao",
+//                "Programe nas principais linguagens de programação",
+//                CategoryStatus.from("INATIVA"), 1,
+//                "https://www.alura.com.br/assets/api/formacoes/categorias/512/programacao-transparent.png",
+//                "#00c86f")),"Erro de validação ao criar categoria.");
+//    }
 }
