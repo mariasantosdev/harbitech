@@ -8,16 +8,51 @@
     <title>home</title>
     <link rel="stylesheet" type="text/css" href="/css/bootstrap.min.css" />
     <link rel="stylesheet" type="text/css" href="/css/style.css" />
-    <h1>APENAS TESTE</h1>
-    <c:forEach items="${instructorsProjection}" var="instructor">
-            <p>${instructor.getAmount()}</p>
-        <p>${instructor.getInstructor()}</p>
-    </c:forEach>
 
-    <c:forEach items="${categoriesFromCourseProjection}" var="categories">
-        <p>${categories.getName()}</p>
-        <p>${categories.getAmount()}</p>
-    </c:forEach>
+    <nav class="navbar navbar-inverse navbar-static-top">
+        <div class="container-fluid">
+            <div class="navbar-header">
+            </div>
+        </div>
+    </nav>
+
+
+    <div class="col-sm-4">
+    <div class="panel panel-default">
+        <div class="panel-heading">Cursos por categoria</div>
+        <table class="table">
+            <thead>
+            <tr>
+                <th class="col-md-2">Nome da categoria</th>
+                <th class="col-md-2 text-left">Quantidade de cursos</th>
+            </tr>
+            </thead>
+            <tbody>
+
+            <c:forEach items="${categoriesFromCourseProjection}" var="categories">
+            <tr>
+                <td>${categories.getName()}</td>
+                <td class="col-md-2 text-left">${categories.getAmount()}</td>
+            </tr>
+            </c:forEach>
+
+        </table>
+    </div>
+    </div>
+
+    <div class="col-sm-6">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title">Instrutor com mais cursos</h3>
+            </div>
+            <div class="panel-body">
+                <c:forEach items="${instructorsProjection}" var="instructor">
+                    <p>${instructor.getInstructor()}</p>
+                    <p>Total de cursos: ${instructor.getAmount()}</p>
+                </c:forEach>
+            </div>
+        </div>
+    </div>
 </head>
 <body>
 </body>
