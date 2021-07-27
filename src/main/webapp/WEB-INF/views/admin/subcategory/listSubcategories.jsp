@@ -45,7 +45,7 @@
         </tr>
      </c:forEach>
      <c:if test="${empty subcategories}">
-         <td class = "text-center">Ops! Não há nenhum registro nessa lista!</td>
+         <td class="text-center col-md-2">Ops! Não há nenhum registro nessa lista!</td>
      </c:if>
     </tbody>
 </table>

@@ -1,6 +1,5 @@
 package br.com.harbitech.school.course;
 
-import br.com.harbitech.school.category.Category;
 import br.com.harbitech.school.category.CategoryRepository;
 import br.com.harbitech.school.subcategory.Subcategory;
 import br.com.harbitech.school.subcategory.SubcategoryRepository;

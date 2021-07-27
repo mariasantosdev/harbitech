@@ -40,8 +40,8 @@ public class CategoryController {
         }
         categoryRepository.save(category);
         return "redirect:/admin/categories";
-
     }
+
     @GetMapping(value = "/admin/categories/{codeUrl}")
     String formUpdate(@PathVariable String codeUrl, Model model){
         Category category = categoryRepository.findByCodeUrl(codeUrl)

@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.server.ResponseStatusException;
 
 import javax.validation.Valid;
+import java.util.Collections;
 import java.util.List;
 
 import static org.springframework.http.HttpStatus.NOT_FOUND;
@@ -27,12 +28,18 @@ public class SubcategoryController {
         this.categoryRepository = categoryRepository;
     }
 
+    @GetMapping("/admin/categories/{category}/subcategories")
+    String list(@PathVariable("category") String categoryCodeUrl) {
+        return "redirect:/admin/subcategories/" + categoryCodeUrl;
+    }
+
     @GetMapping("/admin/subcategories/{category}")
     String list(@PathVariable("category") String categoryCodeUrl, Model model) {
         Category category = categoryRepository.findByCodeUrl(categoryCodeUrl)
                 .orElseThrow(() -> new ResponseStatusException(NOT_FOUND, categoryCodeUrl));
 
         List<Subcategory> subcategories = category.getSubCategories();
+        Collections.sort(subcategories);
         model.addAttribute("category", category);
         model.addAttribute("subcategories", subcategories);
         return "admin/subcategory/listSubcategories";
@@ -52,11 +59,11 @@ public class SubcategoryController {
 
     @PostMapping(value = "/admin/subcategories")
     String save(@Valid Subcategory subcategory, BindingResult result) {
-        if (result.hasErrors()){
+        if (result.hasErrors()) {
             return "admin/subcategory/formNewSubcategory";
         }
         subcategoryRepository.save(subcategory);
-        return "redirect:/admin/subcategories/"+ subcategory.getCategory().getCodeUrl();
+        return "redirect:/admin/subcategories/" + subcategory.getCategory().getCodeUrl();
     }
 
     @GetMapping(value = "/admin/subcategories/{category}/{subcategory}")
@@ -81,10 +88,10 @@ public class SubcategoryController {
 
     @PostMapping("/admin/subcategories/{category}/{subcategoryCodeUrl}")
     String update(@Valid Subcategory subcategory, BindingResult result) {
-        if (result.hasErrors()){
+        if (result.hasErrors()) {
             return "admin/subcategory/formNewSubcategory";
         }
-       subcategoryRepository.save(subcategory);
-        return "redirect:/admin/subcategories/"+ subcategory.getCategory().getCodeUrl();
+        subcategoryRepository.save(subcategory);
+        return "redirect:/admin/subcategories/" + subcategory.getCategory().getCodeUrl();
     }
 }
