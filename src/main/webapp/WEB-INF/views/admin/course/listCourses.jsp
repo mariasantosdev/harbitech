@@ -45,7 +45,7 @@
                  <c:if test="${courses.size() > 0}">
                      <c:forEach begin="0" end="${totalPages-1}" var="page">
                         <li class="page-item">
-                            <a href="/admin/courses/${category}/${subcategories.codeUrl}?page=${page}"
+                            <a href="/admin/courses/${category}/${subcategory.codeUrl}?page=${page}"
                                class="page-link">${page+1}</a>
                          </li>
                      </c:forEach>

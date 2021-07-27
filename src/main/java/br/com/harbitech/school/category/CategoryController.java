@@ -30,13 +30,13 @@ public class CategoryController {
     @GetMapping(value = "/admin/categories/new")
     String formNew(Model model){
         model.addAttribute("category", new Category());
-        return "admin/category/formNewCategory";
+        return "admin/category/formCategory";
     }
 
     @PostMapping(value = "/admin/categories/new")
     String save(@Valid Category category, BindingResult result) {
         if (result.hasErrors()){
-            return "admin/category/formNewCategory";
+            return "admin/category/formCategory";
         }
         categoryRepository.save(category);
         return "redirect:/admin/categories";
@@ -48,13 +48,13 @@ public class CategoryController {
                 .orElseThrow(() -> new ResponseStatusException(NOT_FOUND, codeUrl));
 
         model.addAttribute(category);
-        return "admin/category/formNewCategory";
+        return "admin/category/formCategory";
     }
 
     @PostMapping("/admin/categories/{codeUrl}")
     String update(@Valid Category category, BindingResult result) {
         if (result.hasErrors()){
-            return "admin/category/formNewCategory";
+            return "admin/category/formCategory";
         }
         categoryRepository.save(category);
         return "redirect:/admin/categories";

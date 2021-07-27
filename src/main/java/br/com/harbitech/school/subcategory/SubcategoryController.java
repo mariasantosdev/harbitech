@@ -53,13 +53,13 @@ public class SubcategoryController {
         model.addAttribute("subcategory", new Subcategory());
         model.addAttribute("categories", categories);
         model.addAttribute("formAction", formAction);
-        return "admin/subcategory/formNewSubcategory";
+        return "admin/subcategory/formSubcategory";
     }
 
     @PostMapping(value = "/admin/subcategories")
     String save(@Valid Subcategory subcategory, BindingResult result) {
         if (result.hasErrors()) {
-            return "admin/subcategory/formNewSubcategory";
+            return "admin/subcategory/formSubcategory";
         }
         subcategoryRepository.save(subcategory);
         return "redirect:/admin/subcategories/" + subcategory.getCategory().getCodeUrl();
@@ -82,13 +82,13 @@ public class SubcategoryController {
         model.addAttribute("categories", categories);
         model.addAttribute("formAction", formAction);
 
-        return "admin/subcategory/formNewSubcategory";
+        return "admin/subcategory/formSubcategory";
     }
 
     @PostMapping("/admin/subcategories/{category}/{subcategoryCodeUrl}")
     String update(@Valid Subcategory subcategory, BindingResult result) {
         if (result.hasErrors()) {
-            return "admin/subcategory/formNewSubcategory";
+            return "admin/subcategory/formSubcategory";
         }
         subcategoryRepository.save(subcategory);
         return "redirect:/admin/subcategories/" + subcategory.getCategory().getCodeUrl();

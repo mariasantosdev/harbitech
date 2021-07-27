@@ -34,7 +34,7 @@ public class CourseController {
         Page<Course> coursesPages = courseRepository.findAllBySubcategory(subcategory, pageable);
 
         model.addAttribute("category", category);
-        model.addAttribute("subcategories", subcategory);
+        model.addAttribute("subcategory", subcategory);
 
         model.addAttribute("courses", coursesPages.getContent());
         model.addAttribute("totalPages", coursesPages.getTotalPages());
