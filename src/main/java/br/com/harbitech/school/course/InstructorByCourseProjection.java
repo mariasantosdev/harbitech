@@ -1,6 +1,6 @@
 package br.com.harbitech.school.course;
 
-public interface CourseProjection {
+public interface InstructorByCourseProjection {
     String getInstructor();
-    Long getQuantidade();
+    Long getAmount();
 }

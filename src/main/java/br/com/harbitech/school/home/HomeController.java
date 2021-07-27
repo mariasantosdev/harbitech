@@ -1,7 +1,8 @@
 package br.com.harbitech.school.home;
 
 import br.com.harbitech.school.category.CategoryRepository;
-import br.com.harbitech.school.course.CourseProjection;
+import br.com.harbitech.school.course.CategoriesByCourseProjection;
+import br.com.harbitech.school.course.InstructorByCourseProjection;
 import br.com.harbitech.school.course.CourseRepository;
 import br.com.harbitech.school.subcategory.SubcategoryRepository;
 import org.springframework.stereotype.Controller;
@@ -26,14 +27,21 @@ public class HomeController {
         this.courseRepository = courseRepository;
     }
 
+    @GetMapping("/admin")
+    String admin() {
+        return "redirect:/admin/dashboard";
+    }
 
-
-    @GetMapping(path = {"/admin", "/admin/dashboard"})
-    String admin(Model model) {
-        List<CourseProjection> instructorWithGreaterNumberOfCourses = courseRepository
+    @GetMapping(path = {"/", "/admin/dashboard"})
+    String dashboard(Model model) {
+        List<InstructorByCourseProjection> instructorWithGreaterNumberOfCourses = courseRepository
                 .findInstructorWithGreaterNumberOfCourses();
 
+        List<CategoriesByCourseProjection> allCategoriesFromCourse = courseRepository.findAllCategories();
+
         model.addAttribute("instructorsProjection", instructorWithGreaterNumberOfCourses);
+        model.addAttribute("categoriesFromCourseProjection", allCategoriesFromCourse);
         return "admin/home/dashboard";
+
     }
 }

@@ -37,8 +37,8 @@ public class CourseController {
         categoryRepository.findByCodeUrl(category)
                 .orElseThrow(() -> new ResponseStatusException(NOT_FOUND, category));
 
-        Subcategory subcategories = subcategoryRepository.findByCodeUrl(subcategory).orElseThrow(() ->
-                new ResponseStatusException(NOT_FOUND, subcategory));
+        Subcategory subcategories = subcategoryRepository.findByCodeUrl(subcategory)
+                .orElseThrow(() -> new ResponseStatusException(NOT_FOUND, subcategory));
 
         Pageable pageable = PageRequest.of(1,5, Sort.unsorted());
 
