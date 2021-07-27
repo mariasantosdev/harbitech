@@ -1,5 +1,8 @@
 package br.com.harbitech.school.course;
 
+import br.com.harbitech.school.category.Category;
+import br.com.harbitech.school.subcategory.Subcategory;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.PagingAndSortingRepository;
@@ -18,4 +21,6 @@ public interface CourseRepository extends JpaRepository<Course,Long>, PagingAndS
             "category.id = subcategory.category_id LEFT JOIN course course ON course.subcategory_id = subcategory.id GROUP BY category.id",
             nativeQuery = true)
     List<CategoriesByCourseProjection> findAllCategories();
+
+    List<Course> findAllBySubcategory(Subcategory subcategory, Pageable pageable);
 }

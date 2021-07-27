@@ -38,8 +38,8 @@ public class SubcategoryController {
         Category category = categoryRepository.findByCodeUrl(categoryCodeUrl)
                 .orElseThrow(() -> new ResponseStatusException(NOT_FOUND, categoryCodeUrl));
 
-        List<Subcategory> subcategories = category.getSubCategories();
-        Collections.sort(subcategories);
+        List<Subcategory> subcategories = subcategoryRepository.findAllByCategoryOrderByOrderVisualization(category);
+
         model.addAttribute("category", category);
         model.addAttribute("subcategories", subcategories);
         return "admin/subcategory/listSubcategories";
