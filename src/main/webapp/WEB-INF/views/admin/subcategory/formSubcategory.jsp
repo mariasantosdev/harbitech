@@ -19,17 +19,24 @@
 
 <form:form class="form-horizontal" modelAttribute="subcategory" method="post" action="${formAction}">
     <div class="panel panel-default">
+        <c:if test="${formAction == '/admin/subcategories'}">
         <div class="panel-heading">
             <h1 class="panel-title">Nova Subcategoria</h1>
-        <div class="panel-body">
-            <div class="form-group">
+            </c:if>
+
+                <c:if test="${formAction != '/admin/subcategories'}">
+                    <div class="panel-heading">
+                    <h1 class="panel-title">Edita Subcategoria</h1>
+                </c:if>
+                <div class="panel-body">
+                    <div class="form-group">
                 <label for="name" class="col-sm-2 control-label">Nome</label>
                 <div class="col-sm-7">
                     <form:input type="text" class="form-control" id="name" name="name"
                                 placeholder="Digite aqui o nome da subcategoria" path="name"/>
                     <form:errors path="name" cssClass="error"/>
                 </div>
-            </div>
+                     </div>
             <div class="form-group">
                 <label for="codeUrl" class="col-sm-2 control-label">Código</label>
                 <div class="col-sm-7">
@@ -44,7 +51,7 @@
                 <label for="flexRadioDefault1" class="col-sm-2 control-label">Status</label>
                 <div class="col-sm-2">
                 <input class="form-check-input" type="radio" name="status" id="flexRadioDefault1"
-                       value="ACTIVE" <c:if test="${subcategory.status== 'ACTIVE'}">checked=checked</c:if>/>
+                       value="ACTIVE"<c:if test="${subcategory.status== 'ACTIVE'}">checked=checked</c:if>/>
                     ATIVA
             </div>
                 <div>
