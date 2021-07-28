@@ -16,12 +16,11 @@
         </div>
     </div>
 </nav>
+
 <form:form class="form-horizontal" modelAttribute="subcategory" method="post" action="${formAction}">
     <div class="panel panel-default">
         <div class="panel-heading">
             <h1 class="panel-title">Nova Subcategoria</h1>
-        </div>
-
         <div class="panel-body">
             <div class="form-group">
                 <label for="name" class="col-sm-2 control-label">Nome</label>

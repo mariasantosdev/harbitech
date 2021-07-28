@@ -18,7 +18,9 @@
 </nav>
 
 <div class="col-sm-offset--1 col-sm-10">
+    <h4>${subcategory.name}</h4>
 <h1>Cursos</h1> <br/>
+    <a class="btn btn-primary" href="/admin/courses/new">Novo curso</a><br/><br/><br/>
 </div>
 <div class="panel-body">
 <table class="table table-bordered table-striped">
@@ -27,7 +29,6 @@
         <th class="text-center col-md-2">Nome</th>
         <th class="text-center col-md-2">Código da url</th>
         <th class="text-center col-md-2">Status</th>
-        <th class="text-center col-md-2"></th>
         <th class="text-center col-md-2"></th>
     </tr>
     </thead>
@@ -38,6 +39,7 @@
         <td class="text-center">${course.name} </td>
         <td class="text-center">${course.codeUrl}</td>
         <td class="text-center">${course.visibility.description}</td>
+            <td class="text-center"><a class="btn btn-link aw-link-panel" href="/admin/subcategories/${course.codeUrl}">Editar</a></td>
         </tr>
      </c:forEach>
          <ul class="pagination">
