@@ -11,6 +11,8 @@ import javax.validation.constraints.Size;
 import java.util.ArrayList;
 import java.util.List;
 
+import static br.com.harbitech.school.Validation.ValidationUtil.*;
+
 @Entity
 @NamedQuery(name = "Subcategory.allActive", query = "SELECT s FROM Subcategory s WHERE s.status = :status ORDER BY " +
         "s.orderVisualization")
@@ -54,15 +56,20 @@ public class Subcategory implements Comparable<Subcategory> {
         this.category = category;
     }
 
-    public Subcategory(){
-    }
-
     public Subcategory(String name, String codeUrl, Category category){
+        validateNonBlankText(name, "O nome da sub-categoria não pode estar em branco.");
+        validateNonBlankText(codeUrl, "O código da URL da sub-categoria não pode estar em branco.");
+        validateNonNullClass(category, "A sub-categoria deve ter uma categoria associada.");
+        validateUrl(codeUrl, "O código da url da sub-categoria está incorreto (só aceita letras minúsculas e hífen): " + codeUrl) ;
+
         this.name = name;
         this.codeUrl = codeUrl;
         this.category = category;
         this.status = SubCategoryStatus.INACTIVE;
         this.orderVisualization = -1;
+    }
+
+    public Subcategory(){
     }
 
     public int getOrderVisualization() {
@@ -95,6 +102,18 @@ public class Subcategory implements Comparable<Subcategory> {
 
     public List<Course> getCourses() {
         return courses;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public void setStudyGuide(String studyGuide) {
+        this.studyGuide = studyGuide;
+    }
+
+    public void setOrderVisualization(int orderVisualization) {
+        this.orderVisualization = orderVisualization;
     }
 
     public void setName(String name) {
@@ -146,5 +165,4 @@ public class Subcategory implements Comparable<Subcategory> {
     public void addCourse(Course course) {
         this.courses.add(course);
     }
-
 }

@@ -7,6 +7,9 @@ import javax.validation.constraints.*;
 import java.util.ArrayList;
 import java.util.List;
 
+import static br.com.harbitech.school.Validation.ValidationUtil.validateNonBlankText;
+import static br.com.harbitech.school.Validation.ValidationUtil.validateUrl;
+
 @Entity
 @NamedQuery(name = "Category.allWithStatus", query = "SELECT c FROM Category c WHERE c.status = :status ORDER BY " +
         "c.orderVisualization")
@@ -40,13 +43,6 @@ public class Category {
 
     public Category(){}
 
-    public Category(String name, String codeUrl) {
-        this.name = name;
-        this.codeUrl = codeUrl;
-        this.status = CategoryStatus.INACTIVE;
-        this.orderVisualization = -1;
-    }
-
     public Category(String name, String codeUrl, String description, CategoryStatus status, int orderVisualization,
                     String iconPath, String htmlHexColorCode) {
         this.name = name;
@@ -56,6 +52,17 @@ public class Category {
         this.orderVisualization = orderVisualization;
         this.iconPath = iconPath;
         this.htmlHexColorCode = htmlHexColorCode;
+    }
+
+    public Category(String name, String codeUrl) {
+        validateNonBlankText(name, "O nome da categoria não pode estar em branco.");
+        validateNonBlankText(codeUrl, "O código da URL da categoria não pode estar em branco.");
+        validateUrl(codeUrl, "O código da url da categoria está incorreto (só aceita letras minúsculas e hífen): " + codeUrl);
+
+        this.name = name;
+        this.codeUrl = codeUrl;
+        this.status = CategoryStatus.INACTIVE;
+        this.orderVisualization = -1;
     }
 
     public Long getId() {

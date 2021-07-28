@@ -7,6 +7,8 @@ import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import javax.persistence.*;
 import javax.validation.constraints.*;
 
+import static br.com.harbitech.school.Validation.ValidationUtil.*;
+
 @Entity
 @NamedQuery(name = "Course.allWithPublicVisibility", query = "SELECT c FROM Course c WHERE c.visibility = :visibility")
 public class Course {
@@ -55,10 +57,15 @@ public class Course {
         this.subcategory = subcategory;
     }
 
-    @Deprecated
-    public Course(){}
+    public Course(String name, String codeUrl, int completionTimeInHours, String instructor, Subcategory subCategory){
+        validateNonBlankText(name, "O nome do curso não pode estar em branco.");
+        validateNonBlankText(codeUrl, "O código do curso não pode estar em branco.");
+        validateNonBlankText(instructor, "O nome do instrutor não pode estar em branco");
+        validateUrl(codeUrl, "O código da url do curso está incorreto (só aceita letras minúsculas e hífen): " + codeUrl);
+        validateInterval(completionTimeInHours,1,20,"O tempo estimado deve estar " +
+                "entre 1 hora até 20 horas.");
+        validateNonNullClass(subCategory, "A curso deve ter uma sub-categoria associada.");
 
-    public Course(String name, String codeUrl, int completionTimeInHours, String instructor, Subcategory subcategory){
         this.name = name;
         this.codeUrl = codeUrl;
         this.completionTimeInHours = completionTimeInHours;
@@ -66,6 +73,9 @@ public class Course {
         this.visibility = CourseVisibility.PRIVATE;
         this.subcategory = subcategory;
     }
+
+    @Deprecated
+    public Course(){}
 
     public Long getId() {
         return id;

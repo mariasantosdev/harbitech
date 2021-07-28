@@ -78,6 +78,7 @@ public class SubcategoryController {
         String formAction = "/admin/subcategories/" + categoryCodeUrl + "/" + subcategoryCodeUrl;
 
         model.addAttribute("subcategory", subcategory);
+        model.addAttribute("categoryCodeUrl", categoryCodeUrl);
         model.addAttribute("categories", categories);
         model.addAttribute("formAction", formAction);
 
