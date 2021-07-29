@@ -8,7 +8,7 @@
     <title>Cursos</title>
     <link rel="stylesheet" type="text/css" href="/css/bootstrap.min.css" />
     <link rel="stylesheet" type="text/css" href="/css/style.css" />
-</head>
+</head>KKK
 <body>
 <nav class="navbar navbar-inverse navbar-static-top">
     <div class="container-fluid">
@@ -42,6 +42,7 @@
             <td class="text-center"><a class="btn btn-link aw-link-panel" href="/admin/subcategories/${course.codeUrl}">Editar</a></td>
         </tr>
      </c:forEach>
+    </tbody>
          <ul class="pagination">
              <li class="disabled">
                  <c:if test="${courses.size() > 0}">
@@ -58,7 +59,7 @@
      <c:if test="${empty courses}">
          <td class = "text-center">Ops! Não há nenhum registro nessa lista!</td>
      </c:if>
-    </tbody>
+
 </table>
 </body>
 </html>

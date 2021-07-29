@@ -1,6 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<c:set var="formTitle" value="${subcategory.id == null ? 'Nova subcategoria' : 'Atualizando Categoria'}"/>
 <!DOCTYPE html>
 <html>
 <head>
@@ -20,7 +21,7 @@
 <form:form class="form-horizontal" modelAttribute="subcategory" method="post" action="${formAction}">
 <div class="panel panel-default">
     <div class="panel-heading">
-        <h1 class="panel-title">Nova categoria</h1>
+        <h1 class="panel-title">${formTitle}</h1>
     </div>
                 <div class="panel-body">
                     <div class="form-group">
