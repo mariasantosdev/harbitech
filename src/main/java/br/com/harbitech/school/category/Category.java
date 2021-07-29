@@ -17,12 +17,12 @@ public class Category {
         @Id
         @GeneratedValue(strategy = GenerationType.IDENTITY)
         private Long id;
-        @NotBlank(message = "Por favor insira o nome da categoria")
-        @Size(max = 70, message = "Ops! O nome de uma categoria não pode ter mais do que 70 caracteres")
+        @NotBlank(message = "{category.name.required}")
+        @Size(max = 70, message = "{category.name.size.max}")
         private String name;
-        @NotBlank(message = "Por favor insira o código da categoria")
-        @Size(max = 70, message = "Ops! O código de uma categoria não pode ter mais do que 70 caracteres")
-        @Pattern(regexp = "[-a-z]+", message = "O código da url da categoria está incorreto (só aceita letras minúsculas e hífen)")
+        @NotBlank(message = "{category.codeUrl.required}")
+        @Size(max = 70, message = "{category.codeUrl.size.max}")
+        @Pattern(regexp = "[-a-z]+", message = "{category.codeUrl.pattern}")
         private String codeUrl;
         @Column(columnDefinition = "TEXT")
         private String description;
@@ -33,9 +33,9 @@ public class Category {
         private CategoryStatus status = CategoryStatus.INACTIVE;
         @Min(-1)
         private int orderVisualization;
-        @Size(max = 400, message = "Ops! O caminho do ícone não deve ter mais do que 400 caracteres")
+        @Size(max = 400, message = "{category.iconPath.size.max}")
         private String iconPath;
-        @Size(max = 7, message = "Ops! Uma cor em hexa decimal não tem mais que 7 caracteres")
+        @Size(max = 7, message = "{category.htmlHexColorCode.size.max}")
         private String htmlHexColorCode;
         @OneToMany(mappedBy = "category")
         private List<Subcategory> subCategories = new ArrayList<>();
