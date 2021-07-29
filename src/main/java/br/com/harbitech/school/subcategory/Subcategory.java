@@ -2,6 +2,7 @@ package br.com.harbitech.school.subcategory;
 
 import br.com.harbitech.school.category.Category;
 import br.com.harbitech.school.course.Course;
+import org.springframework.util.Assert;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
@@ -45,21 +46,15 @@ public class Subcategory implements Comparable<Subcategory> {
     @NotNull(message = "A subcategoria precisa ter um curso associado.")
     private List<Course> courses = new ArrayList<>();
 
-    public Subcategory(String name, String codeUrl, int orderVisualization, String description, String studyGuide,
-                       SubCategoryStatus status, Category category) {
-        this.name = name;
-        this.codeUrl = codeUrl;
-        this.description = description;
-        this.studyGuide = studyGuide;
-        this.status = status;
-        this.orderVisualization = orderVisualization;
-        this.category = category;
-    }
+    @Deprecated
+    public Subcategory(){}
 
     public Subcategory(String name, String codeUrl, Category category){
-        validateNonBlankText(name, "O nome da sub-categoria não pode estar em branco.");
-        validateNonBlankText(codeUrl, "O código da URL da sub-categoria não pode estar em branco.");
-        validateNonNullClass(category, "A sub-categoria deve ter uma categoria associada.");
+        Assert.hasText(name, "O nome da sub-categoria não pode estar em branco.");
+        Assert.hasText(codeUrl, "O código da URL da sub-categoria não pode estar em branco.");
+        Assert.notNull(category, "A sub-categoria deve ter uma categoria associada.");
+//        Assert.isTrue(CodeUrlValidator.isValid(codeUrl), "O código da url da categoria está incorreto (só aceita letras minúsculas e hífen): " + codeUrl);
+//        Assert.isTrue(val.isValid(codeUrl), "O código da url da categoria está incorreto (só aceita letras minúsculas e hífen): " + codeUrl);
         validateUrl(codeUrl, "O código da url da sub-categoria está incorreto (só aceita letras minúsculas e hífen): " + codeUrl) ;
 
         this.name = name;
@@ -69,7 +64,13 @@ public class Subcategory implements Comparable<Subcategory> {
         this.orderVisualization = -1;
     }
 
-    public Subcategory(){
+    public Subcategory(String name, String codeUrl, int orderVisualization, String description, String studyGuide,
+                       SubCategoryStatus status, Category category) {
+        this(name, codeUrl, category);
+        this.description = description;
+        this.studyGuide = studyGuide;
+        this.status = status;
+        this.orderVisualization = orderVisualization;
     }
 
     public int getOrderVisualization() {

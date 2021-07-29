@@ -20,7 +20,7 @@
 <form:form class="form-horizontal" modelAttribute="category" method="post">
     <div class="panel panel-default">
         <div class="panel-heading">
-            <h1 class="panel-title">Nova categoria</h1>
+            <h1 class="panel-title">${formTitle}</h1>
         </div>
 
         <div class="panel-body">

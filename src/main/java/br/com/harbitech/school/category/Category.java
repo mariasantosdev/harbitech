@@ -1,6 +1,7 @@
 package br.com.harbitech.school.category;
 
 import br.com.harbitech.school.subcategory.Subcategory;
+import org.springframework.util.Assert;
 
 import javax.persistence.*;
 import javax.validation.constraints.*;
@@ -40,28 +41,28 @@ public class Category {
         @OneToMany(mappedBy = "category")
         private List<Subcategory> subCategories = new ArrayList<>();
 
+    @Deprecated
     public Category(){}
 
-    public Category(String name, String codeUrl, String description, CategoryStatus status, int orderVisualization,
-                    String iconPath, String htmlHexColorCode) {
-        this.name = name;
-        this.codeUrl = codeUrl;
-        this.description = description;
-        this.status = status;
-        this.orderVisualization = orderVisualization;
-        this.iconPath = iconPath;
-        this.htmlHexColorCode = htmlHexColorCode;
-    }
-
     public Category(String name, String codeUrl) {
-        validateNonBlankText(name, "O nome da categoria não pode estar em branco.");
-        validateNonBlankText(codeUrl, "O código da URL da categoria não pode estar em branco.");
-        validateUrl(codeUrl, "O código da url da categoria está incorreto (só aceita letras minúsculas e hífen): " + codeUrl);
+        Assert.hasText(name, "O nome da categoria não pode estar em branco.");
+        Assert.hasText(codeUrl, "O código da URL da categoria não pode estar em branco.");
+//        validateUrl(codeUrl, "O código da url da categoria está incorreto (só aceita letras minúsculas e hífen): " + codeUrl);
 
         this.name = name;
         this.codeUrl = codeUrl;
         this.status = CategoryStatus.INACTIVE;
         this.orderVisualization = -1;
+    }
+
+    public Category(String name, String codeUrl, String description, CategoryStatus status, int orderVisualization,
+                    String iconPath, String htmlHexColorCode) {
+        this(name, codeUrl);
+        this.description = description;
+        this.status = status;
+        this.orderVisualization = orderVisualization;
+        this.iconPath = iconPath;
+        this.htmlHexColorCode = htmlHexColorCode;
     }
 
     public Long getId() {

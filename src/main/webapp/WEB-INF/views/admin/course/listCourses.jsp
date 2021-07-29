@@ -8,7 +8,7 @@
     <title>Cursos</title>
     <link rel="stylesheet" type="text/css" href="/css/bootstrap.min.css" />
     <link rel="stylesheet" type="text/css" href="/css/style.css" />
-</head>KKK
+</head>
 <body>
 <nav class="navbar navbar-inverse navbar-static-top">
     <div class="container-fluid">

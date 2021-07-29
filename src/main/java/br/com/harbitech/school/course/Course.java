@@ -1,8 +1,7 @@
 package br.com.harbitech.school.course;
 
 import br.com.harbitech.school.subcategory.Subcategory;
-import com.fasterxml.jackson.databind.PropertyNamingStrategy;
-import com.fasterxml.jackson.databind.annotation.JsonNaming;
+import org.springframework.util.Assert;
 
 import javax.persistence.*;
 import javax.validation.constraints.*;
@@ -44,23 +43,15 @@ public class Course {
     @NotNull(message = "O curso precisa ter uma subcategoria associada")
     private Subcategory subcategory;
 
-    public Course(String name, String codeUrl, int completionTimeInHours, CourseVisibility visibility,
-                  String targetAudience, String instructor, String description, String developedSkills, Subcategory subcategory) {
-        this.name = name;
-        this.codeUrl = codeUrl;
-        this.completionTimeInHours = completionTimeInHours;
-        this.visibility = visibility;
-        this.targetAudience = targetAudience;
-        this.instructor = instructor;
-        this.description = description;
-        this.developedSkills = developedSkills;
-        this.subcategory = subcategory;
-    }
+    @Deprecated
+    public Course(){}
 
     public Course(String name, String codeUrl, int completionTimeInHours, String instructor, Subcategory subCategory){
-        validateNonBlankText(name, "O nome do curso não pode estar em branco.");
-        validateNonBlankText(codeUrl, "O código do curso não pode estar em branco.");
-        validateNonBlankText(instructor, "O nome do instrutor não pode estar em branco");
+        Assert.hasText(name, "O nome da categoria não pode estar em branco.");
+        Assert.hasText(codeUrl, "O código do curso não pode estar em branco.");
+        Assert.hasText(instructor, "O nome do instrutor não pode estar em branco");
+
+//        Assert.isTrue(CodeUrlValidator.isValid(codeUrl), "O código da url da categoria está incorreto (só aceita letras minúsculas e hífen): " + codeUrl);
         validateUrl(codeUrl, "O código da url do curso está incorreto (só aceita letras minúsculas e hífen): " + codeUrl);
         validateInterval(completionTimeInHours,1,20,"O tempo estimado deve estar " +
                 "entre 1 hora até 20 horas.");
@@ -74,8 +65,15 @@ public class Course {
         this.subcategory = subcategory;
     }
 
-    @Deprecated
-    public Course(){}
+    public Course(String name, String codeUrl, int completionTimeInHours, CourseVisibility visibility,
+                  String targetAudience, String instructor, String description, String developedSkills,
+                  Subcategory subcategory) {
+        this(name, codeUrl, completionTimeInHours, instructor,subcategory);
+        this.visibility = visibility;
+        this.targetAudience = targetAudience;
+        this.description = description;
+        this.developedSkills = developedSkills;
+    }
 
     public Long getId() {
         return id;
