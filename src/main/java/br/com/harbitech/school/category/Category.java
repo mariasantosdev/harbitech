@@ -44,9 +44,9 @@ public class Category {
     public Category(){}
 
     public Category(String name, String codeUrl) {
-        Assert.hasText(name, "O nome da categoria não pode estar em branco.");
-        Assert.hasText(codeUrl, "O código da URL da categoria não pode estar em branco.");
-        validateUrl(codeUrl, "O código da url da categoria está incorreto (só aceita letras minúsculas e hífen): " + codeUrl);
+        Assert.hasText(name, "{category.name.required}");
+        Assert.hasText(codeUrl, "{category.codeUrl.required}");
+        validateUrl(codeUrl, "{category.codeUrl.pattern}" + codeUrl);
 
         this.name = name;
         this.codeUrl = codeUrl;

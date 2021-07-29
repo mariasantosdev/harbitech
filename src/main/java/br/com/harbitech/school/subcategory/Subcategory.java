@@ -24,12 +24,12 @@ public class Subcategory implements Comparable<Subcategory> {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @NotBlank(message = "O nome da subcategoria não pode estar em branco.")
-    @Size(max = 70, message = "Ops! O nome de uma subcategoria não pode ter mais do que 70 caracteres")
+    @NotBlank(message = "{subcategory.name.required}")
+    @Size(max = 70, message = "{subcategory.name.size.max}")
     private String name;
-    @NotBlank(message = "O código da subcategoria não pode estar em branco.")
-    @Size(max = 70, message = "Ops! O código de uma subcategoria não pode ter mais do que 70 caracteres")
-    @Pattern(regexp = "[-a-z]+", message = "O código da url do curso está incorreto (só aceita letras minúsculas e hífen)")
+    @NotBlank(message = "{subcategory.codeUrl.required}")
+    @Size(max = 70, message = "{subcategory.codeUrl.size.max}")
+    @Pattern(regexp = "[-a-z]+", message = "{subcategory.codeUrl.pattern}")
     private String codeUrl;
     @Column(columnDefinition = "TEXT")
     private String description;
@@ -41,19 +41,20 @@ public class Subcategory implements Comparable<Subcategory> {
     private SubCategoryStatus status = SubCategoryStatus.INACTIVE;
     private int orderVisualization;
     @ManyToOne(fetch = FetchType.LAZY)
+    @NotNull(message = "{subcategory.category.required}")
     private Category category;
     @OneToMany(mappedBy = "subcategory")
-    @NotNull(message = "A subcategoria precisa ter um curso associado.")
+    @NotNull(message = "{subcategory.course.required}")
     private List<Course> courses = new ArrayList<>();
 
     @Deprecated
     public Subcategory(){}
 
     public Subcategory(String name, String codeUrl, Category category){
-        Assert.hasText(name, "O nome da sub-categoria não pode estar em branco.");
-        Assert.hasText(codeUrl, "O código da URL da sub-categoria não pode estar em branco.");
-        Assert.notNull(category, "A sub-categoria deve ter uma categoria associada.");
-        validateUrl(codeUrl, "O código da url da sub-categoria está incorreto (só aceita letras minúsculas e hífen): " + codeUrl) ;
+        Assert.hasText(name, "{subcategory.name.required}");
+        Assert.hasText(codeUrl, "{subcategory.codeUrl.required}");
+        Assert.notNull(category, "{subcategory.category.required}");
+        validateUrl(codeUrl, "{subcategory.codeUrl.pattern}" + codeUrl);
 
         this.name = name;
         this.codeUrl = codeUrl;
