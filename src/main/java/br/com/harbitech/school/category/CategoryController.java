@@ -22,7 +22,7 @@ public class CategoryController {
 
     @GetMapping("/admin/categories")
     String list(Model model) {
-        List <Category> categories =  categoryRepository.findAll();
+        List<Category> categories =  categoryRepository.findAll();
         model.addAttribute("categories", categories);
         return "admin/category/listCategories";
     }

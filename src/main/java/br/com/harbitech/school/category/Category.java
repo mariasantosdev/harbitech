@@ -14,32 +14,31 @@ import static br.com.harbitech.school.Validation.ValidationUtil.validateUrl;
 @NamedQuery(name = "Category.allWithStatus", query = "SELECT c FROM Category c WHERE c.status = :status ORDER BY " +
         "c.orderVisualization")
 public class Category {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-    @NotBlank(message = "Por favor insira o nome da categoria")
-    @Size(max = 70, message = "Ops! O nome de uma categoria não pode ter mais do que 70 caracteres")
-    private String name;
-    @NotBlank(message = "Por favor insira o código da categoria")
-    @Size(max = 70, message = "Ops! O código de uma categoria não pode ter mais do que 70 caracteres")
-    @Pattern(regexp = "[-a-z]+", message = "O código da url da categoria está incorreto (só aceita letras minúsculas e hífen)")
-    private String codeUrl;
-    @Column(columnDefinition = "TEXT")
-    private String description;
-    @Column(columnDefinition = "TEXT")
-    private String studyGuide;
-    @Enumerated(EnumType.STRING)
-    @NotNull
-    @Column(columnDefinition = "ENUM")
-    private CategoryStatus status = CategoryStatus.INACTIVE;
-    @Min(-1)
-    private int orderVisualization;
-    @Size(max = 400, message = "Ops! O caminho do ícone não deve ter mais do que 400 caracteres")
-    private String iconPath;
-    @Size(max = 7, message = "Ops! Uma cor em hexa decimal não tem mais que 7 caracteres")
-    private String htmlHexColorCode;
-    @OneToMany(mappedBy = "category")
-    private List<Subcategory> subCategories = new ArrayList<>();
+        @Id
+        @GeneratedValue(strategy = GenerationType.IDENTITY)
+        private Long id;
+        @NotBlank(message = "Por favor insira o nome da categoria")
+        @Size(max = 70, message = "Ops! O nome de uma categoria não pode ter mais do que 70 caracteres")
+        private String name;
+        @NotBlank(message = "Por favor insira o código da categoria")
+        @Size(max = 70, message = "Ops! O código de uma categoria não pode ter mais do que 70 caracteres")
+        @Pattern(regexp = "[-a-z]+", message = "O código da url da categoria está incorreto (só aceita letras minúsculas e hífen)")
+        private String codeUrl;
+        @Column(columnDefinition = "TEXT")
+        private String description;
+        @Column(columnDefinition = "TEXT")
+        private String studyGuide;
+        @Enumerated(EnumType.STRING)
+        @Column(columnDefinition = "ENUM")
+        private CategoryStatus status = CategoryStatus.INACTIVE;
+        @Min(-1)
+        private int orderVisualization;
+        @Size(max = 400, message = "Ops! O caminho do ícone não deve ter mais do que 400 caracteres")
+        private String iconPath;
+        @Size(max = 7, message = "Ops! Uma cor em hexa decimal não tem mais que 7 caracteres")
+        private String htmlHexColorCode;
+        @OneToMany(mappedBy = "category")
+        private List<Subcategory> subCategories = new ArrayList<>();
 
     public Category(){}
 
