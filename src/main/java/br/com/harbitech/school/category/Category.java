@@ -8,8 +8,7 @@ import javax.validation.constraints.*;
 import java.util.ArrayList;
 import java.util.List;
 
-import static br.com.harbitech.school.Validation.ValidationUtil.validateNonBlankText;
-import static br.com.harbitech.school.Validation.ValidationUtil.validateUrl;
+import static br.com.harbitech.school.validation.ValidationUtil.validateUrl;
 
 @Entity
 @NamedQuery(name = "Category.allWithStatus", query = "SELECT c FROM Category c WHERE c.status = :status ORDER BY " +
@@ -47,7 +46,7 @@ public class Category {
     public Category(String name, String codeUrl) {
         Assert.hasText(name, "O nome da categoria não pode estar em branco.");
         Assert.hasText(codeUrl, "O código da URL da categoria não pode estar em branco.");
-//        validateUrl(codeUrl, "O código da url da categoria está incorreto (só aceita letras minúsculas e hífen): " + codeUrl);
+        validateUrl(codeUrl, "O código da url da categoria está incorreto (só aceita letras minúsculas e hífen): " + codeUrl);
 
         this.name = name;
         this.codeUrl = codeUrl;

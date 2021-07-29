@@ -6,7 +6,7 @@ import org.springframework.util.Assert;
 import javax.persistence.*;
 import javax.validation.constraints.*;
 
-import static br.com.harbitech.school.Validation.ValidationUtil.*;
+import static br.com.harbitech.school.validation.ValidationUtil.validateUrl;
 
 @Entity
 @NamedQuery(name = "Course.allWithPublicVisibility", query = "SELECT c FROM Course c WHERE c.visibility = :visibility")
@@ -51,11 +51,9 @@ public class Course {
         Assert.hasText(codeUrl, "O código do curso não pode estar em branco.");
         Assert.hasText(instructor, "O nome do instrutor não pode estar em branco");
 
-//        Assert.isTrue(CodeUrlValidator.isValid(codeUrl), "O código da url da categoria está incorreto (só aceita letras minúsculas e hífen): " + codeUrl);
+        Assert.isTrue(completionTimeInHours >= 1 && completionTimeInHours <= 20, "O tempo estimado deve estar entre 1 hora até 20 horas.");
+        Assert.notNull(subCategory, "A curso deve ter uma sub-categoria associada.");
         validateUrl(codeUrl, "O código da url do curso está incorreto (só aceita letras minúsculas e hífen): " + codeUrl);
-        validateInterval(completionTimeInHours,1,20,"O tempo estimado deve estar " +
-                "entre 1 hora até 20 horas.");
-        validateNonNullClass(subCategory, "A curso deve ter uma sub-categoria associada.");
 
         this.name = name;
         this.codeUrl = codeUrl;

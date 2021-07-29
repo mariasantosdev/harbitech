@@ -12,7 +12,7 @@ import javax.validation.constraints.Size;
 import java.util.ArrayList;
 import java.util.List;
 
-import static br.com.harbitech.school.Validation.ValidationUtil.*;
+import static br.com.harbitech.school.validation.ValidationUtil.validateUrl;
 
 @Entity
 @NamedQuery(name = "Subcategory.allActive", query = "SELECT s FROM Subcategory s WHERE s.status = :status ORDER BY " +
@@ -53,8 +53,6 @@ public class Subcategory implements Comparable<Subcategory> {
         Assert.hasText(name, "O nome da sub-categoria não pode estar em branco.");
         Assert.hasText(codeUrl, "O código da URL da sub-categoria não pode estar em branco.");
         Assert.notNull(category, "A sub-categoria deve ter uma categoria associada.");
-//        Assert.isTrue(CodeUrlValidator.isValid(codeUrl), "O código da url da categoria está incorreto (só aceita letras minúsculas e hífen): " + codeUrl);
-//        Assert.isTrue(val.isValid(codeUrl), "O código da url da categoria está incorreto (só aceita letras minúsculas e hífen): " + codeUrl);
         validateUrl(codeUrl, "O código da url da sub-categoria está incorreto (só aceita letras minúsculas e hífen): " + codeUrl) ;
 
         this.name = name;
