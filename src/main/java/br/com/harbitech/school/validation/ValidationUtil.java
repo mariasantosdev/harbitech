@@ -7,6 +7,5 @@ public class ValidationUtil {
         if (!validacao) {
             throw new IllegalArgumentException(errorMessage);
         }
-        System.out.println("Validado");
     }
 }

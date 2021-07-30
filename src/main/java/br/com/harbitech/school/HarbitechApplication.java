@@ -9,5 +9,4 @@ public class HarbitechApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(HarbitechApplication.class, args);
 	}
-
 }

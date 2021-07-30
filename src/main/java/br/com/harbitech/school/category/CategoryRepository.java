@@ -13,6 +13,4 @@ public interface CategoryRepository extends JpaRepository<Category,Long> {
     List<Category> findAllByStatus(CategoryStatus status);
 
     List<Category> findAllByOrderByName();
-
-
 }

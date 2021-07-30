@@ -28,10 +28,10 @@
             </thead>
             <tbody>
 
-            <c:forEach items="${categoriesFromCourseProjection}" var="categories">
+            <c:forEach items="${categoriesFromCourseProjection}" var="category">
             <tr>
-                <td>${categories.getName()}</td>
-                <td class="col-md-2 text-left">${categories.getAmount()}</td>
+                <td>${category.getName()}</td>
+                <td class="col-md-2 text-left">${category.getAmount()}</td>
             </tr>
             </c:forEach>
 
