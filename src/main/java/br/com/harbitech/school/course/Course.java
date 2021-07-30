@@ -109,6 +109,10 @@ public class Course {
         return instructor;
     }
 
+    public String getVisibilityDescription(){
+        return this.visibility.getDescription();
+    }
+
     @Override
     public String toString() {
         return "Course{" +

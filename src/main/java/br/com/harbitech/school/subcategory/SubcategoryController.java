@@ -94,7 +94,7 @@ public class SubcategoryController {
             return "admin/subcategory/formSubcategory";
         }
         subcategoryRepository.save(subcategory);
-        return "redirect:/admin/subcategories/" + subcategory.getCategory().getCodeUrl();
+        return "redirect:/admin/subcategories/" + categoryCodeUrl;
         }
 
     private Map<String,Object> setupForm(String formAction, Subcategory subcategory) {

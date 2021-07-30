@@ -39,9 +39,9 @@
         <tr>
         <td class="text-center">${subcategory.name} </td>
         <td class="text-center">${subcategory.codeUrl}</td>
-        <td class="text-center">${subcategory.status.description}</td>
-            <td class="text-center"><a class="btn btn-link aw-link-panel" href="/admin/courses/${subcategory.category.codeUrl}/${subcategory.codeUrl}">Cursos</a></td>
-            <td class="text-center"><a class="btn btn-link aw-link-panel" href="/admin/subcategories/${subcategory.category.codeUrl}/${subcategory.codeUrl}">Editar</a></td>
+        <td class="text-center">${subcategory.statusDescription}</td>
+            <td class="text-center"><a class="btn btn-link aw-link-panel" href="/admin/courses/${subcategory.categoryCodeUrl}/${subcategory.codeUrl}">Cursos</a></td>
+            <td class="text-center"><a class="btn btn-link aw-link-panel" href="/admin/subcategories/${subcategory.categoryCodeUrl}/${subcategory.codeUrl}">Editar</a></td>
         </tr>
      </c:forEach>
      <c:if test="${empty subcategories}">

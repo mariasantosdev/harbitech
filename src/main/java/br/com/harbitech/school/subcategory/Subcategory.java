@@ -124,6 +124,14 @@ public class Subcategory implements Comparable<Subcategory> {
         return category;
     }
 
+    public String getStatusDescription(){
+        return this.status.getDescription();
+    }
+
+    public String getCategoryCodeUrl(){
+        return this.category.getCodeUrl();
+    }
+
     public void setCodeUrl(String codeUrl) {
         this.codeUrl = codeUrl;
     }
