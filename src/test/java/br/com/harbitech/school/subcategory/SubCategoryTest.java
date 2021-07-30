@@ -69,22 +69,22 @@ public class SubCategoryTest {
     public void shouldValidadeIncorrectSubCategoryBecauseIsNull() {
         assertThrows(IllegalArgumentException.class, () -> new Subcategory("Java","java",null));
     }
-//
-//    @Test
-//    public void shouldValidateIncorrectDescriptionEnum() {
-//        assertThrows(IllegalArgumentException.class, () -> new Subcategory("Java", "java",
-//                1, "Java é " + "uma grande plataforma presente em todo lugar: de " +
-//                "corporações à bancos e governo.  Desenvolva aplicações robustas com um back-end e construa APIs.",
-//                "Desde seu primeiro hello world até conceitos mais avançados de POO",
-//                SubCategoryStatus.from("UM_STATUS_INVALIDO"),category));
-//    }
-//
-//    @Test
-//    public void shouldValidateCorrectDescriptionEnum() {
-//        assertDoesNotThrow(() -> new Subcategory("Java", "java",
-//                1, "Java é " + "uma grande plataforma presente em todo lugar: de " +
-//                "corporações à bancos e governo.  Desenvolva aplicações robustas com um back-end e construa APIs.",
-//                "Desde seu primeiro hello world até conceitos mais avançados de POO",
-//                SubCategoryStatus.from("ATIVA"), category), "Erro de validação ao criar um curso");
-//    }
+
+    @Test
+    public void shouldValidateIncorrectDescriptionEnum() {
+        assertThrows(IllegalArgumentException.class, () -> new Subcategory("Java", "java",
+                1, "Java é " + "uma grande plataforma presente em todo lugar: de " +
+                "corporações à bancos e governo.  Desenvolva aplicações robustas com um back-end e construa APIs.",
+                "Desde seu primeiro hello world até conceitos mais avançados de POO",
+                SubCategoryStatus.from("UM_STATUS_INVALIDO"),category));
+    }
+
+    @Test
+    public void shouldValidateCorrectDescriptionEnum() {
+        assertDoesNotThrow(() -> new Subcategory("Java", "java",
+                1, "Java é " + "uma grande plataforma presente em todo lugar: de " +
+                "corporações à bancos e governo.  Desenvolva aplicações robustas com um back-end e construa APIs.",
+                "Desde seu primeiro hello world até conceitos mais avançados de POO",
+                SubCategoryStatus.from("ATIVA"), category), "Erro de validação ao criar um curso");
+    }
 }

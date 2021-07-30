@@ -18,6 +18,7 @@
 </nav>
 
 <div class="col-sm-offset--1 col-sm-10">
+    <h4>${category.name}</h4>
 <h1>Subcategorias</h1> <br/>
     <a class="btn btn-primary" href="/admin/subcategories/new">Nova Subcategoria</a><br/><br/><br/>
 </div>
@@ -34,17 +35,17 @@
     </thead>
     <tbody>
 
-     <c:forEach items="${subcategories}" var="category">
+     <c:forEach items="${subcategories}" var="subcategory">
         <tr>
-        <td class="text-center">${subcategories.name} </td>
-        <td class="text-center">${subcategories.codeUrl}</td>
-        <td class="text-center">${subcategories.status.description}</td>
-            <td class="text-center"><a class="btn btn-link aw-link-panel" href="/admin/categories/${subcategories.codeUrl}/subcategories">Subcategorias</a></td>
-            <td class="text-center"><a class="btn btn-link aw-link-panel" href="/admin/categories/${subcategories.codeUrl}">Editar</a></td>
+        <td class="text-center">${subcategory.name} </td>
+        <td class="text-center">${subcategory.codeUrl}</td>
+        <td class="text-center">${subcategory.statusDescription}</td>
+            <td class="text-center"><a class="btn btn-link aw-link-panel" href="/admin/courses/${subcategory.categoryCodeUrl}/${subcategory.codeUrl}">Cursos</a></td>
+            <td class="text-center"><a class="btn btn-link aw-link-panel" href="/admin/subcategories/${subcategory.categoryCodeUrl}/${subcategory.codeUrl}">Editar</a></td>
         </tr>
      </c:forEach>
      <c:if test="${empty subcategories}">
-         <td class = "text-center">Ops! Não há nenhum registro nessa lista!</td>
+         <td class="text-center">Ops! Não há nenhum registro nessa lista!</td>
      </c:if>
     </tbody>
 </table>

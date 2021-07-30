@@ -1,16 +1,15 @@
 package br.com.harbitech.school.category;
 
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.server.ResponseStatusException;
 
 import javax.validation.Valid;
 import java.util.List;
-import java.util.Optional;
 
+import static org.springframework.http.HttpStatus.NOT_FOUND;
 
 @Controller
 public class CategoryController {
@@ -22,44 +21,40 @@ public class CategoryController {
     }
 
     @GetMapping("/admin/categories")
-    public String list(Model model) {
-        List <Category> allCategories =  categoryRepository.findAll();
-        model.addAttribute("categories", allCategories);
+    String list(Model model) {
+        List<Category> categories =  categoryRepository.findAll();
+        model.addAttribute("categories", categories);
         return "admin/category/listCategories";
     }
 
     @GetMapping(value = "/admin/categories/new")
-    public String formNew(Model model){
+    String formNew(Model model){
         model.addAttribute("category", new Category());
-        return "admin/category/formNewCategory";
+        return "admin/category/formCategory";
     }
 
     @PostMapping(value = "/admin/categories/new")
-    public String save(@Valid Category category, BindingResult result) {
+    String save(@Valid Category category, BindingResult result) {
         if (result.hasErrors()){
-            return "admin/category/formNewCategory";
+            return "admin/category/formCategory";
         }
         categoryRepository.save(category);
         return "redirect:/admin/categories";
     }
 
     @GetMapping(value = "/admin/categories/{codeUrl}")
-    public ModelAndView formUpdate(@PathVariable String codeUrl){
-        Optional<Category> category = categoryRepository.findByCodeUrl(codeUrl);
-        if(category.isEmpty()){
-            ModelAndView mv = new ModelAndView("notFound");
-            mv.setStatus(HttpStatus.NOT_FOUND);
-            return mv;
-        }
-        ModelAndView mv = new ModelAndView("admin/category/formNewCategory");
-        mv.addObject(category.get());
-        return mv;
+    String formUpdate(@PathVariable String codeUrl, Model model){
+        Category category = categoryRepository.findByCodeUrl(codeUrl)
+                .orElseThrow(() -> new ResponseStatusException(NOT_FOUND, codeUrl));
+
+        model.addAttribute(category);
+        return "admin/category/formCategory";
     }
 
     @PostMapping("/admin/categories/{codeUrl}")
-    public String update(@Valid Category category, BindingResult result) {
+    String update(@Valid Category category, BindingResult result) {
         if (result.hasErrors()){
-            return "admin/category/formNewCategory";
+            return "admin/category/formCategory";
         }
         categoryRepository.save(category);
         return "redirect:/admin/categories";

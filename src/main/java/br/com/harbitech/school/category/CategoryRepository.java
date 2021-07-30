@@ -11,4 +11,6 @@ public interface CategoryRepository extends JpaRepository<Category,Long> {
     Optional<Category> findByCodeUrl(String codeUrl);
 
     List<Category> findAllByStatus(CategoryStatus status);
+
+    List<Category> findAllByOrderByName();
 }

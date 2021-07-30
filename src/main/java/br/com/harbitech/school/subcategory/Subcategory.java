@@ -2,17 +2,17 @@ package br.com.harbitech.school.subcategory;
 
 import br.com.harbitech.school.category.Category;
 import br.com.harbitech.school.course.Course;
-import com.fasterxml.jackson.databind.PropertyNamingStrategy;
-import com.fasterxml.jackson.databind.annotation.JsonNaming;
+import org.springframework.util.Assert;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+
+import static br.com.harbitech.school.validation.ValidationUtil.validateUrl;
 
 @Entity
 @NamedQuery(name = "Subcategory.allActive", query = "SELECT s FROM Subcategory s WHERE s.status = :status ORDER BY " +
@@ -24,12 +24,12 @@ public class Subcategory implements Comparable<Subcategory> {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @NotBlank(message = "O nome da subcategoria não pode estar em branco.")
-    @Size(max = 70, message = "Ops! O nome de uma subcategoria não pode ter mais do que 70 caracteres")
+    @NotBlank(message = "{subcategory.name.required}")
+    @Size(max = 70, message = "{subcategory.name.size.max}")
     private String name;
-    @NotBlank(message = "O código da subcategoria não pode estar em branco.")
-    @Size(max = 70, message = "Ops! O código de uma subcategoria não pode ter mais do que 70 caracteres")
-    @Pattern(regexp = "[-a-z]+", message = "O código da url do curso está incorreto (só aceita letras minúsculas e hífen)")
+    @NotBlank(message = "{subcategory.codeUrl.required}")
+    @Size(max = 70, message = "{subcategory.codeUrl.size.max}")
+    @Pattern(regexp = "[-a-z]+", message = "{subcategory.codeUrl.pattern}")
     private String codeUrl;
     @Column(columnDefinition = "TEXT")
     private String description;
@@ -37,23 +37,39 @@ public class Subcategory implements Comparable<Subcategory> {
     private String studyGuide;
     @Enumerated(EnumType.STRING)
     @Column(columnDefinition = "ENUM")
-    private SubCategoryStatus status;
+    @NotNull
+    private SubCategoryStatus status = SubCategoryStatus.INACTIVE;
     private int orderVisualization;
     @ManyToOne(fetch = FetchType.LAZY)
+    @NotNull(message = "{subcategory.category.required}")
     private Category category;
     @OneToMany(mappedBy = "subcategory")
-    @NotNull(message = "A subcategoria precisa ter um curso associado.")
+    @NotNull(message = "{subcategory.course.required}")
     private List<Course> courses = new ArrayList<>();
 
-    public Subcategory(){
-    }
+    @Deprecated
+    public Subcategory(){}
 
     public Subcategory(String name, String codeUrl, Category category){
+        Assert.hasText(name, "{subcategory.name.required}");
+        Assert.hasText(codeUrl, "{subcategory.codeUrl.required}");
+        Assert.notNull(category, "{subcategory.category.required}");
+        validateUrl(codeUrl, "{subcategory.codeUrl.pattern}" + codeUrl);
+
         this.name = name;
         this.codeUrl = codeUrl;
         this.category = category;
         this.status = SubCategoryStatus.INACTIVE;
         this.orderVisualization = -1;
+    }
+
+    public Subcategory(String name, String codeUrl, int orderVisualization, String description, String studyGuide,
+                       SubCategoryStatus status, Category category) {
+        this(name, codeUrl, category);
+        this.description = description;
+        this.studyGuide = studyGuide;
+        this.status = status;
+        this.orderVisualization = orderVisualization;
     }
 
     public int getOrderVisualization() {
@@ -88,6 +104,49 @@ public class Subcategory implements Comparable<Subcategory> {
         return courses;
     }
 
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public void setStudyGuide(String studyGuide) {
+        this.studyGuide = studyGuide;
+    }
+
+    public void setOrderVisualization(int orderVisualization) {
+        this.orderVisualization = orderVisualization;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public Category getCategory() {
+        return category;
+    }
+
+    public String getStatusDescription(){
+        return this.status.getDescription();
+    }
+
+    public String getCategoryCodeUrl(){
+        return this.category.getCodeUrl();
+    }
+
+    public void setCodeUrl(String codeUrl) {
+        this.codeUrl = codeUrl;
+    }
+
+    public void setStatus(SubCategoryStatus status) {
+        this.status = status;
+    }
+
+    public void setCategory(Category category) {
+        this.category = category;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 
     @Override
     public String toString() {
@@ -114,5 +173,4 @@ public class Subcategory implements Comparable<Subcategory> {
     public void addCourse(Course course) {
         this.courses.add(course);
     }
-
 }
