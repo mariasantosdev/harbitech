@@ -77,36 +77,80 @@ public class Course {
         return id;
     }
 
-    public String getCodeUrl() {
-        return codeUrl;
-    }
-
-    public String getDescription() {
-        return description;
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getName() {
         return name;
     }
 
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getCodeUrl() {
+        return codeUrl;
+    }
+
+    public void setCodeUrl(String codeUrl) {
+        this.codeUrl = codeUrl;
+    }
+
     public int getCompletionTimeInHours() {
         return completionTimeInHours;
     }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getDevelopedSkills() {
-        return developedSkills;
+    public void setCompletionTimeInHours(int completionTimeInHours) {
+        this.completionTimeInHours = completionTimeInHours;
     }
 
     public CourseVisibility getVisibility() {
         return visibility;
     }
 
+    public void setVisibility(CourseVisibility visibility) {
+        this.visibility = visibility;
+    }
+
+    public String getTargetAudience() {
+        return targetAudience;
+    }
+
+    public void setTargetAudience(String targetAudience) {
+        this.targetAudience = targetAudience;
+    }
+
     public String getInstructor() {
         return instructor;
+    }
+
+    public void setInstructor(String instructor) {
+        this.instructor = instructor;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public String getDevelopedSkills() {
+        return developedSkills;
+    }
+
+    public void setDevelopedSkills(String developedSkills) {
+        this.developedSkills = developedSkills;
+    }
+
+    public Subcategory getSubcategory() {
+        return subcategory;
+    }
+
+    public void setSubcategory(Subcategory subcategory) {
+        this.subcategory = subcategory;
     }
 
     public String getVisibilityDescription(){

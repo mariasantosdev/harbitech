@@ -48,7 +48,7 @@ public class SubcategoryController {
 
     @GetMapping(value = "/admin/subcategories/new")
     String formNew(Subcategory subcategory, Model model){
-        List<Category> categories = categoryRepository.findAllByOrderByName();
+        categoryRepository.findAllByOrderByName();
 
         String formAction = "/admin/subcategories";
 
