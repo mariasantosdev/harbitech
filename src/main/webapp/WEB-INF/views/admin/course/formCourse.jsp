@@ -92,27 +92,27 @@
                 <label for="developedSkills" class="col-sm-2 control-label">Habilidades desenvolvidas</label>
                 <div class="col-sm-7">
                     <form:input type="text" class="form-control" id="developedSkills" name="developedSkills"
-                                placeholder="Um texto sobre quais capacidades a pessoa que faz o curso terá exercitado" path="developedSkills"/>
+                                placeholder="Um texto sobre quais capacidades a pessoa que faz o curso terá exercitado"
+                                path="developedSkills"/>
                     <form:errors path="developedSkills" cssClass="error"/>
                 </div>
             </div>
             <div class="form-group">
                 <label for="subcategory" class="col-sm-2 control-label">Subcategoria</label>
                 <div class="col-sm-7">
-                    <form:select path="subcategory" class="form-control" id = "subcategory">
+                    <form:select path="subcategory" class="form-control" id="subcategory">
                         <form:options items="${subcategories}" itemValue="id" itemLabel="name"/>
                     </form:select>
                 </div>
             </div>
-
-<%--            <form:input type="hidden" path="id"/>--%>
-<%--            <div class="form-group">--%>
-<%--                <div class="col-sm-offset-2 col-sm-10">--%>
-<%--                    <button type="submit" class="btn btn-success">Enviar</button>--%>
-<%--                </div>--%>
-<%--            </div>--%>
-<%--        </div>--%>
-<%--    </div>--%>
+            <form:input type="hidden" path="id"/>
+            <div class="form-group">
+                <div class="col-sm-offset-2 col-sm-10">
+                    <button type="submit" class="btn btn-success">Enviar</button>
+                </div>
+            </div>
+        </div>
+    </div>
     </form:form>
 </body>
 </html>

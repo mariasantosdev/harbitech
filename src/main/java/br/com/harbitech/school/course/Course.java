@@ -23,9 +23,8 @@ public class Course {
     @Pattern(regexp = "[-a-z]+", message = "{course.codeUrl.pattern}")
     private String codeUrl;
     @Min(value = 1L, message = "{course.completionTimeInHours.min}")
-    @Min(value = 20L, message = "{course.completionTimeInHours.max}")
-    @NotBlank(message = "{course.completionTimeInHours.required}")
-    private int completionTimeInHours;
+    @Max(value = 20L, message = "{course.completionTimeInHours.max}")
+    private int completionTimeInHours = 0;
     @Enumerated(EnumType.STRING)
     @Column(columnDefinition = "ENUM")
     @NotNull
@@ -155,6 +154,14 @@ public class Course {
 
     public String getVisibilityDescription(){
         return this.visibility.getDescription();
+    }
+
+    public String getSubcategoryCodeUrl(){
+        return this.subcategory.getCodeUrl();
+    }
+
+    public String getCategoryCodeUrl(){
+        return this.subcategory.getCategoryCodeUrl();
     }
 
     @Override

@@ -39,7 +39,7 @@
         <td class="text-center">${course.name} </td>
         <td class="text-center">${course.codeUrl}</td>
         <td class="text-center">${course.visibilityDescription}</td>
-            <td class="text-center"><a class="btn btn-link aw-link-panel" href="/admin/subcategories/${course.codeUrl}">Editar</a></td>
+            <td class="text-center"><a class="btn btn-link aw-link-panel" href="/admin/courses/${course.categoryCodeUrl}/${course.subcategoryCodeUrl}/${course.codeUrl}">Editar</a></td>
         </tr>
      </c:forEach>
     </tbody>
