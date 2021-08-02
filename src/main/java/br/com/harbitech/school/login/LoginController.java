@@ -18,10 +18,10 @@ public class LoginController {
     }
 
     @GetMapping("/login")
-    String dashboard(Model model) {
+    String login(Model model) {
         List<ActiveCategoriesProjection> activeCategories = categoryRepository.findAllActiveCategories();
 
-        model.addAttribute("instructorsProjection", activeCategories);
-        return "/login";
+        model.addAttribute("activeCategories", activeCategories);
+        return "login/login";
     }
 }
