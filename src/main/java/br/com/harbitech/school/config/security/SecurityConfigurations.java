@@ -21,7 +21,9 @@ public class SecurityConfigurations extends WebSecurityConfigurerAdapter {
             http.authorizeRequests()
                     .antMatchers("api/categories").permitAll()
                     .antMatchers("/admin/**").authenticated()
-                    .and().formLogin();
+                    .and().formLogin()
+                    .loginPage("/login")
+                    .permitAll();
     }
 
     @Override
