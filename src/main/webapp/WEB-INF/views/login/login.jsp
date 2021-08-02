@@ -181,72 +181,75 @@
             <h2 class="signup__title">Ainda não estuda com a gente?</h2>
             <p class="signup__text">São mais de mil cursos nas seguintes áreas</p>
             <ul class="categories">
+
+                <c:forEach items="${activeCategories}" var="category">
                 <li class="category-card">
                     <a href="" class="category-card__link" href="/programacao">
                             <span class="category-card__icon">
-                                <img src="https://www.alura.com.br/assets/api/formacoes/categorias/128/programacao.png">
+                                <img src="${category.getIcon()}">
                             </span>
-                        <h3 class="category-card__title">Programação</h3>
+                        <h3 class="category-card__title">"${category.getName()}"</h3>
                         <p class="category-card__details">
-                            Lógica de programação, Python, Dart, e mais...
+<%--                        OUTRA QUERY--%>
                         </p>
                     </a>
                 </li>
-                <li class="category-card">
-                    <a href="" class="category-card__link" href="/front-end">
-                            <span class="category-card__icon">
-                                <img src="https://www.alura.com.br/assets/api/formacoes/categorias/128/front-end.png">
-                            </span>
-                        <h3 class="category-card__title">Front-end</h3>
-                        <p class="category-card__details">
-                            HTML e CSS, React, Angular, e mais...
-                        </p>
-                    </a>
-                </li>
-                <li class="category-card">
-                    <a href="" class="category-card__link" href="/data-science">
-                            <span class="category-card__icon">
-                                <img src="https://www.alura.com.br/assets/api/formacoes/categorias/128/data-science.png">
-                            </span>
-                        <h3 class="category-card__title">Data Science</h3>
-                        <p class="category-card__details">
-                            SQL e Banco de Dados, Engenharia de Dados, Data Visualization, e mais...
-                        </p>
-                    </a>
-                </li>
-                <li class="category-card">
-                    <a href="" class="category-card__link" href="/devops">
-                            <span class="category-card__icon">
-                                <img src="https://www.alura.com.br/assets/api/formacoes/categorias/128/devops.png">
-                            </span>
-                        <h3 class="category-card__title">DevOps</h3>
-                        <p class="category-card__details">
-                            Linux, Google Cloud Platform, Azure, e mais...
-                        </p>
-                    </a>
-                </li>
-                <li class="category-card">
-                    <a href="" class="category-card__link" href="/design-ux">
-                            <span class="category-card__icon">
-                                <img src="https://www.alura.com.br/assets/api/formacoes/categorias/128/design-ux.png">
-                            </span>
-                        <h3 class="category-card__title">Design & UX</h3>
-                        <p class="category-card__details">
-                            User Interface, User Experience, Design Gráfico, e mais...
-                        </p>
-                    </a>
-                </li>
-                <li class="category-card">
-                    <a href="" class="category-card__link" href="/mobile">
-                            <span class="category-card__icon">
-                                <img src="https://www.alura.com.br/assets/api/formacoes/categorias/128/mobile.png">
-                            </span>
-                        <h3 class="category-card__title">Mobile</h3>
-                        <p class="category-card__details">
-                            Multiplataforma, Flutter, Android, e mais...
-                        </p>
-                    </a>
-                </li>
+                </c:forEach>
+<%--                <li class="category-card">--%>
+<%--                    <a href="" class="category-card__link" href="/front-end">--%>
+<%--                            <span class="category-card__icon">--%>
+<%--                                <img src="https://www.alura.com.br/assets/api/formacoes/categorias/128/front-end.png">--%>
+<%--                            </span>--%>
+<%--                        <h3 class="category-card__title">Front-end</h3>--%>
+<%--                        <p class="category-card__details">--%>
+<%--                            HTML e CSS, React, Angular, e mais...--%>
+<%--                        </p>--%>
+<%--                    </a>--%>
+<%--                </li>--%>
+<%--                <li class="category-card">--%>
+<%--                    <a href="" class="category-card__link" href="/data-science">--%>
+<%--                            <span class="category-card__icon">--%>
+<%--                                <img src="https://www.alura.com.br/assets/api/formacoes/categorias/128/data-science.png">--%>
+<%--                            </span>--%>
+<%--                        <h3 class="category-card__title">Data Science</h3>--%>
+<%--                        <p class="category-card__details">--%>
+<%--                            SQL e Banco de Dados, Engenharia de Dados, Data Visualization, e mais...--%>
+<%--                        </p>--%>
+<%--                    </a>--%>
+<%--                </li>--%>
+<%--                <li class="category-card">--%>
+<%--                    <a href="" class="category-card__link" href="/devops">--%>
+<%--                            <span class="category-card__icon">--%>
+<%--                                <img src="https://www.alura.com.br/assets/api/formacoes/categorias/128/devops.png">--%>
+<%--                            </span>--%>
+<%--                        <h3 class="category-card__title">DevOps</h3>--%>
+<%--                        <p class="category-card__details">--%>
+<%--                            Linux, Google Cloud Platform, Azure, e mais...--%>
+<%--                        </p>--%>
+<%--                    </a>--%>
+<%--                </li>--%>
+<%--                <li class="category-card">--%>
+<%--                    <a href="" class="category-card__link" href="/design-ux">--%>
+<%--                            <span class="category-card__icon">--%>
+<%--                                <img src="https://www.alura.com.br/assets/api/formacoes/categorias/128/design-ux.png">--%>
+<%--                            </span>--%>
+<%--                        <h3 class="category-card__title">Design & UX</h3>--%>
+<%--                        <p class="category-card__details">--%>
+<%--                            User Interface, User Experience, Design Gráfico, e mais...--%>
+<%--                        </p>--%>
+<%--                    </a>--%>
+<%--                </li>--%>
+<%--                <li class="category-card">--%>
+<%--                    <a href="" class="category-card__link" href="/mobile">--%>
+<%--                            <span class="category-card__icon">--%>
+<%--                                <img src="https://www.alura.com.br/assets/api/formacoes/categorias/128/mobile.png">--%>
+<%--                            </span>--%>
+<%--                        <h3 class="category-card__title">Mobile</h3>--%>
+<%--                        <p class="category-card__details">--%>
+<%--                            Multiplataforma, Flutter, Android, e mais...--%>
+<%--                        </p>--%>
+<%--                    </a>--%>
+<%--                </li>--%>
             </ul>
         </section>
     </section>

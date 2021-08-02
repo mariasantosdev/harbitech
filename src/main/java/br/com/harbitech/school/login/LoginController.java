@@ -21,6 +21,7 @@ public class LoginController {
     String login(Model model) {
         List<ActiveCategoriesProjection> activeCategories = categoryRepository.findAllActiveCategories();
 
+        System.out.println(activeCategories);
         model.addAttribute("activeCategories", activeCategories);
         return "login/login";
     }

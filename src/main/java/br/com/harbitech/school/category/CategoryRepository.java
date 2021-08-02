@@ -14,6 +14,7 @@ public interface CategoryRepository extends JpaRepository<Category,Long> {
     List<Category> findAllByStatus(CategoryStatus status);
 
     List<Category> findAllByOrderByName();
+
     @Query(value = "SELECT DISTINCT category.name AS name, category.icon_path AS icon FROM category JOIN " +
             "subcategory ON category.id = subcategory.category_id JOIN course ON course.subcategory_id = subcategory.id " +
             "WHERE category.status = 'ACTIVE'  AND course.visibility ='PUBLIC' ORDER BY category.order_visualization DESC",
