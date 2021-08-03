@@ -23,7 +23,7 @@ public class LoginController {
 
     @GetMapping("/login")
     String login(Model model) {
-        List<Category> categories = categoryRepository.findAllCategoryBySubcategory();
+        List<Category> categories = categoryRepository.findAllActiveCategoriesWithPublicCourses();
 //        categories.forEach(c -> c.getSubCategories().sort(Comparator.comparing(Subcategory::getOrderVisualization)));
 
         model.addAttribute("categories", categories);

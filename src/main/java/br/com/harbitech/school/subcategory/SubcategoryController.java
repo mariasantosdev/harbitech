@@ -97,6 +97,15 @@ public class SubcategoryController {
         return "redirect:/admin/subcategories/" + categoryCodeUrl;
         }
 
+    @GetMapping("/{categoryCode}")
+    String subcategoryByCategoryCodeUrl(@PathVariable("categoryCode") String categoryCodeUrl){
+        Category category = categoryRepository.findByCodeUrl(categoryCodeUrl)
+                .orElseThrow(() -> new ResponseStatusException(NOT_FOUND, categoryCodeUrl));
+
+        List<Subcategory> allActiveSubcategories = subcategoryRepository.findAllActiveSubcategories(category);
+        return "category/category";
+    }
+
     private Map<String,Object> setupForm(String formAction, Subcategory subcategory) {
         Map<String,Object> attributes = new HashMap<>();
         List<Category> categories = categoryRepository.findAllByOrderByName();

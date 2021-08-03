@@ -171,9 +171,9 @@
             <p class="login__subtitle">Faça seu login e boas aulas!</p>
             <form class="login__form" action="/login" method="POST">
                 <label for="login__email">E-mail</label>
-                <input type="email" name="username"  id="login-email" autofocus>
+                <input type="username" name="username"  id="email" autofocus>
                 <label for="login__password">Senha</label>
-                <input type="password" name="password" id="login-password" autocomplete="off">
+                <input type="password" name="password" id="password" autocomplete="off">
                 <button class="login__button" type="submit">Entrar</button>
             </form>
         </section>
@@ -183,78 +183,23 @@
             <ul class="categories">
 
                 <c:forEach items="${categories}" var="category">
-                    <c:forEach items="${category.getSubCategories()}" var="subcategories">
                 <li class="category-card">
                     <a href="" class="category-card__link" href="/programacao">
                             <span class="category-card__icon">
                                 <img src="${category.getIconPath()}">
                             </span>
                         <h3 class="category-card__title">"${category.getName()}"</h3>
+                    <c:forEach begin="0" end="2" items="${category.getSubCategories()}" var="subcategory">
                         <p class="category-card__details">
-                            "${subcategories.getCodeUrl()}"
+                            "${subcategory.getCodeUrl()}"
                         </p>
+                    </c:forEach>
                     </a>
+                    <c:if test="${category.getSubCategories().size() > 3}">
+                        e mais....
+                    </c:if>
                 </li>
-                        <c:if test="${category.getSubCategories().size() > 3}">
-                            e mais....
-                        </c:if>
                 </c:forEach>
-                </c:forEach>
-<%--                <li class="category-card">--%>
-<%--                    <a href="" class="category-card__link" href="/front-end">--%>
-<%--                            <span class="category-card__icon">--%>
-<%--                                <img src="https://www.alura.com.br/assets/api/formacoes/categorias/128/front-end.png">--%>
-<%--                            </span>--%>
-<%--                        <h3 class="category-card__title">Front-end</h3>--%>
-<%--                        <p class="category-card__details">--%>
-<%--                            HTML e CSS, React, Angular, e mais...--%>
-<%--                        </p>--%>
-<%--                    </a>--%>
-<%--                </li>--%>
-<%--                <li class="category-card">--%>
-<%--                    <a href="" class="category-card__link" href="/data-science">--%>
-<%--                            <span class="category-card__icon">--%>
-<%--                                <img src="https://www.alura.com.br/assets/api/formacoes/categorias/128/data-science.png">--%>
-<%--                            </span>--%>
-<%--                        <h3 class="category-card__title">Data Science</h3>--%>
-<%--                        <p class="category-card__details">--%>
-<%--                            SQL e Banco de Dados, Engenharia de Dados, Data Visualization, e mais...--%>
-<%--                        </p>--%>
-<%--                    </a>--%>
-<%--                </li>--%>
-<%--                <li class="category-card">--%>
-<%--                    <a href="" class="category-card__link" href="/devops">--%>
-<%--                            <span class="category-card__icon">--%>
-<%--                                <img src="https://www.alura.com.br/assets/api/formacoes/categorias/128/devops.png">--%>
-<%--                            </span>--%>
-<%--                        <h3 class="category-card__title">DevOps</h3>--%>
-<%--                        <p class="category-card__details">--%>
-<%--                            Linux, Google Cloud Platform, Azure, e mais...--%>
-<%--                        </p>--%>
-<%--                    </a>--%>
-<%--                </li>--%>
-<%--                <li class="category-card">--%>
-<%--                    <a href="" class="category-card__link" href="/design-ux">--%>
-<%--                            <span class="category-card__icon">--%>
-<%--                                <img src="https://www.alura.com.br/assets/api/formacoes/categorias/128/design-ux.png">--%>
-<%--                            </span>--%>
-<%--                        <h3 class="category-card__title">Design & UX</h3>--%>
-<%--                        <p class="category-card__details">--%>
-<%--                            User Interface, User Experience, Design Gráfico, e mais...--%>
-<%--                        </p>--%>
-<%--                    </a>--%>
-<%--                </li>--%>
-<%--                <li class="category-card">--%>
-<%--                    <a href="" class="category-card__link" href="/mobile">--%>
-<%--                            <span class="category-card__icon">--%>
-<%--                                <img src="https://www.alura.com.br/assets/api/formacoes/categorias/128/mobile.png">--%>
-<%--                            </span>--%>
-<%--                        <h3 class="category-card__title">Mobile</h3>--%>
-<%--                        <p class="category-card__details">--%>
-<%--                            Multiplataforma, Flutter, Android, e mais...--%>
-<%--                        </p>--%>
-<%--                    </a>--%>
-<%--                </li>--%>
             </ul>
         </section>
     </section>
