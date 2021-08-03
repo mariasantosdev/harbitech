@@ -59,4 +59,9 @@ public class CategoryController {
         categoryRepository.save(category);
         return "redirect:/admin/categories";
     }
+
+    @GetMapping("/{categoryCode}")
+    String categoryByCodeUrl(@PathVariable("categoryCode") String codeUrl){
+        return "category/category";
+    }
 }

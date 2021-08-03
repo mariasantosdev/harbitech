@@ -182,18 +182,23 @@
             <p class="signup__text">São mais de mil cursos nas seguintes áreas</p>
             <ul class="categories">
 
-                <c:forEach items="${activeCategories}" var="category">
+                <c:forEach items="${categories}" var="category">
+                    <c:forEach items="${category.getSubCategories()}" var="subcategories">
                 <li class="category-card">
                     <a href="" class="category-card__link" href="/programacao">
                             <span class="category-card__icon">
-                                <img src="${category.getIcon()}">
+                                <img src="${category.getIconPath()}">
                             </span>
                         <h3 class="category-card__title">"${category.getName()}"</h3>
                         <p class="category-card__details">
-<%--                        OUTRA QUERY--%>
+                            "${subcategories.getCodeUrl()}"
                         </p>
                     </a>
                 </li>
+                        <c:if test="${category.getSubCategories().size() > 3}">
+                            e mais....
+                        </c:if>
+                </c:forEach>
                 </c:forEach>
 <%--                <li class="category-card">--%>
 <%--                    <a href="" class="category-card__link" href="/front-end">--%>
