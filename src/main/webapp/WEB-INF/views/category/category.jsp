@@ -175,104 +175,28 @@
     <div class="subcategories">
         <p class="subcategories__label">O que você quer aprender?</p>
         <ul class="subcategories__list">
+            <c:forEach items="${allActiveSubcategories}" var="subcategory">
             <li class="subcategories__item">
                 <a href="#logica-de-programacao" class="subcategories__link">
-                    <span class="subcategories__name">Lógica de programação</span>
+                    <span class="subcategories__name">${subcategory.name}</span>
                 </a>
             </li>
-<%--            <li class="subcategories__item">--%>
-<%--                <a href="#python" class="subcategories__link">--%>
-<%--                    <span class="subcategories__name">Python</span>--%>
-<%--                </a>--%>
-<%--            </li>--%>
-<%--            <li class="subcategories__item">--%>
-<%--                <a href="#dart" class="subcategories__link">--%>
-<%--                    <span class="subcategories__name">Dart</span>--%>
-<%--                </a>--%>
-<%--            </li>--%>
-<%--            <li class="subcategories__item">--%>
-<%--                <a href="#java" class="subcategories__link">--%>
-<%--                    <span class="subcategories__name">Java</span>--%>
-<%--                </a>--%>
-<%--            </li>--%>
+            </c:forEach>
         </ul>
     </div>
+    <c:forEach items="${allActiveSubcategories}" var="subcategory">
     <div class="subcategory">
-        <h2 id="logica-de-programacao" class="subcategory__name">Lógica de programação</h2>
+        <h2 id="logica-de-programacao" class="subcategory__name">${subcategory.name}</h2>
         <ul class="courses__list">
+            <c:forEach items="${subcategory.getCourses()}" var="course">
             <li class="course-card">
-                <h3 class="course-card__name">Lógica de programação I: Os primeiros programas com Javascript e HTML</h3>
-                <p class="course-card__hours">16h</p>
+                <h3 class="course-card__name">${course.name}</h3>
+                <p class="course-card__hours">${course.completionTimeInHours}h</p>
             </li>
-            <li class="course-card">
-                <h3 class="course-card__name">Lógica de programação II: pratique com desenhos, animações e um jogo</h3>
-                <p class="course-card__hours">10h</p>
-            </li>
-            <li class="course-card">
-                <h3 class="course-card__name">Jogos Clássicos parte 1: Iniciando no JavaScript com Pong</h3>
-                <p class="course-card__hours">06h</p>
-            </li>
-            <li class="course-card">
-                <h3 class="course-card__name">Jogos Clássicos parte 2: laços e listas com JavaScript</h3>
-                <p class="course-card__hours">04h</p>
-            </li>
+            </c:forEach>
         </ul>
     </div>
-    <div class="subcategory">
-        <h2 id="python" class="subcategory__name">Python</h2>
-        <ul class="courses__list">
-            <li class="course-card">
-                <h3 class="course-card__name">Python 3 parte 1: Introdução à nova versão da linguagem</h3>
-                <p class="course-card__hours">12h</p>
-            </li>
-            <li class="course-card">
-                <h3 class="course-card__name">Python 3 parte 2: Avançando na linguagem</h3>
-                <p class="course-card__hours">12h</p>
-            </li>
-            <li class="course-card">
-                <h3 class="course-card__name">Python 3: Introdução a Orientação a Objetos</h3>
-                <p class="course-card__hours">12h</p>
-            </li>
-        </ul>
-    </div>
-    <div class="subcategory">
-        <h2 id="dart" class="subcategory__name">Dart</h2>
-        <ul class="courses__list">
-            <li class="course-card">
-                <h3 class="course-card__name">Dart: primeiros passos com a linguagem</h3>
-                <p class="course-card__hours">08h</p>
-            </li>
-            <li class="course-card">
-                <h3 class="course-card__name">Dart: dominando a Orientação a Objetos</h3>
-                <p class="course-card__hours">10h</p>
-            </li>
-        </ul>
-    </div>
-    <div class="subcategory">
-        <h2 id="java" class="subcategory__name">Java</h2>
-        <ul class="courses__list">
-            <li class="course-card">
-                <h3 class="course-card__name">Java JRE e JDK: Escreve o seu primeiro código com Eclipse</h3>
-                <p class="course-card__hours">08h</p>
-            </li>
-            <li class="course-card">
-                <h3 class="course-card__name">Java OO: introdução à Orientação a Objetos</h3>
-                <p class="course-card__hours">08h</p>
-            </li>
-            <li class="course-card">
-                <h3 class="course-card__name">Java Polimorfismo: entenda Henrança e Interfaces</h3>
-                <p class="course-card__hours">16h</p>
-            </li>
-            <li class="course-card">
-                <h3 class="course-card__name">Java Exceções: aprenda a criar, lançar e controlar exceções</h3>
-                <p class="course-card__hours">12h</p>
-            </li>
-            <li class="course-card">
-                <h3 class="course-card__name">Java e java.lang: programe com as classes Object e String</h3>
-                <p class="course-card__hours">12h</p>
-            </li>
-        </ul>
-    </div>
+    </c:forEach>
 </main>
 </body>
 </html>
