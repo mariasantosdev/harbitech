@@ -177,7 +177,7 @@
         <ul class="subcategories__list">
             <c:forEach items="${allActiveSubcategories}" var="subcategory">
             <li class="subcategories__item">
-                <a href="#logica-de-programacao" class="subcategories__link">
+                <a href="#${subcategory.codeUrl}" class="subcategories__link">
                     <span class="subcategories__name">${subcategory.name}</span>
                 </a>
             </li>
@@ -186,7 +186,7 @@
     </div>
     <c:forEach items="${allActiveSubcategories}" var="subcategory">
     <div class="subcategory">
-        <h2 id="logica-de-programacao" class="subcategory__name">${subcategory.name}</h2>
+        <h2 id="${subcategory.codeUrl}" class="subcategory__name">${subcategory.name}</h2>
         <ul class="courses__list">
             <c:forEach items="${subcategory.getCourses()}" var="course">
             <li class="course-card">

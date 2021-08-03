@@ -1,6 +1,5 @@
 package br.com.harbitech.school.category;
 
-import br.com.harbitech.school.subcategory.Subcategory;
 import br.com.harbitech.school.subcategory.SubcategoryResponse;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
