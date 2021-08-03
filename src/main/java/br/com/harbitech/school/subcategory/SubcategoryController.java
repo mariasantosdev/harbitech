@@ -98,11 +98,15 @@ public class SubcategoryController {
         }
 
     @GetMapping("/{categoryCode}")
-    String subcategoryByCategoryCodeUrl(@PathVariable("categoryCode") String categoryCodeUrl){
+    String subcategoryByCategoryCodeUrl(@PathVariable("categoryCode") String categoryCodeUrl, Model model){
         Category category = categoryRepository.findByCodeUrl(categoryCodeUrl)
                 .orElseThrow(() -> new ResponseStatusException(NOT_FOUND, categoryCodeUrl));
 
         List<Subcategory> allActiveSubcategories = subcategoryRepository.findAllActiveSubcategories(category);
+
+        model.addAttribute("allActiveSubcategories", allActiveSubcategories);
+        model.addAttribute("category",category);
+
         return "category/category";
     }
 

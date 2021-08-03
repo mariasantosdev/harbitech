@@ -6,7 +6,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Programação | Cursos online de tecnologia</title>
+    <title>${category.name} | Cursos online de tecnologia</title>
     <style>
         *, :after, :before {
             margin: 0;
@@ -166,9 +166,9 @@
 <section class="category-banner__wrapper">
     <div class="container category-banner">
             <span class="category-banner__icon">
-                <img src="https://www.alura.com.br/assets/api/formacoes/categorias/128/programacao.png">
+                <img src="${category.iconPath}">
             </span>
-        <h1 class="category-banner__title">Programação</h1>
+        <h1 class="category-banner__title">${category.name}</h1>
     </div>
 </section>
 <main class="container">
@@ -180,21 +180,21 @@
                     <span class="subcategories__name">Lógica de programação</span>
                 </a>
             </li>
-            <li class="subcategories__item">
-                <a href="#python" class="subcategories__link">
-                    <span class="subcategories__name">Python</span>
-                </a>
-            </li>
-            <li class="subcategories__item">
-                <a href="#dart" class="subcategories__link">
-                    <span class="subcategories__name">Dart</span>
-                </a>
-            </li>
-            <li class="subcategories__item">
-                <a href="#java" class="subcategories__link">
-                    <span class="subcategories__name">Java</span>
-                </a>
-            </li>
+<%--            <li class="subcategories__item">--%>
+<%--                <a href="#python" class="subcategories__link">--%>
+<%--                    <span class="subcategories__name">Python</span>--%>
+<%--                </a>--%>
+<%--            </li>--%>
+<%--            <li class="subcategories__item">--%>
+<%--                <a href="#dart" class="subcategories__link">--%>
+<%--                    <span class="subcategories__name">Dart</span>--%>
+<%--                </a>--%>
+<%--            </li>--%>
+<%--            <li class="subcategories__item">--%>
+<%--                <a href="#java" class="subcategories__link">--%>
+<%--                    <span class="subcategories__name">Java</span>--%>
+<%--                </a>--%>
+<%--            </li>--%>
         </ul>
     </div>
     <div class="subcategory">

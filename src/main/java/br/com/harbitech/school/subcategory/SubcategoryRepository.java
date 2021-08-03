@@ -19,7 +19,7 @@ public interface SubcategoryRepository extends JpaRepository<Subcategory,Long> {
 
     List<Subcategory> findAllByOrderByName();
 
-    @Query(value = "SELECT sc FROM Subcategory sc JOIN FETCH sc.courses c WHERE c.visibility = 'PUBLIC' " +
-            "AND sc.category = :category")
+    @Query(value = "SELECT sc FROM Subcategory sc JOIN FETCH sc.courses c " +
+            "WHERE c.visibility = 'PUBLIC' AND sc.status = 'ACTIVE' AND sc.category = :category")
     List<Subcategory> findAllActiveSubcategories(@Param("category") Category category);
 }
