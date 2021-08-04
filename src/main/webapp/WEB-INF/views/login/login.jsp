@@ -1,5 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -169,13 +170,13 @@
         <section class="login">
             <h1 class="login__title">Já estuda com a gente?</h1>
             <p class="login__subtitle">Faça seu login e boas aulas!</p>
-            <form class="login__form" action="/login" method="POST">
-                <label for="login__email">E-mail</label>
-                <input type="username" name="username"  id="email" autofocus>
-                <label for="login__password">Senha</label>
+            <form:form class="login__form" action="/login" method="POST">
+                <label for="email">E-mail</label>
+                <input type="text" name="username"  id="email" autofocus>
+                <label for="password">Senha</label>
                 <input type="password" name="password" id="password" autocomplete="off">
                 <button class="login__button" type="submit">Entrar</button>
-            </form>
+            </form:form>
         </section>
         <section class="signup">
             <h2 class="signup__title">Ainda não estuda com a gente?</h2>

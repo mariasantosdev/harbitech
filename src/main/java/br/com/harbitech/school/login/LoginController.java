@@ -2,7 +2,7 @@ package br.com.harbitech.school.login;
 
 import br.com.harbitech.school.category.Category;
 import br.com.harbitech.school.category.CategoryRepository;
-import br.com.harbitech.school.subcategory.SubcategoryRepository;
+import br.com.harbitech.school.user.UserRepository;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,11 +14,8 @@ public class LoginController {
 
     private final CategoryRepository categoryRepository;
 
-    private final SubcategoryRepository subcategoryRepository;
-
-    LoginController(CategoryRepository categoryRepository, SubcategoryRepository subcategoryRepository){
+    LoginController(CategoryRepository categoryRepository){
         this.categoryRepository = categoryRepository;
-        this.subcategoryRepository = subcategoryRepository;
     }
 
     @GetMapping("/login")
@@ -30,3 +27,4 @@ public class LoginController {
         return "login/login";
     }
 }
+

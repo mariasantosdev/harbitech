@@ -22,7 +22,7 @@ public class AdminController {
         this.courseRepository = courseRepository;
     }
 
-    @GetMapping("/admin")
+    @GetMapping(value = {"/admin", "/"})
     String admin() {
         return "redirect:/admin/dashboard";
     }

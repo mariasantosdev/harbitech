@@ -7,7 +7,6 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 @SpringBootApplication
 @EnableCaching
-@EnableSwagger2
 public class HarbitechApplication {
 
 	public static void main(String[] args) {

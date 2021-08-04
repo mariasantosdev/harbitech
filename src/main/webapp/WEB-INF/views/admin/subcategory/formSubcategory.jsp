@@ -65,7 +65,6 @@
                     <form:errors path="orderVisualization" cssClass="error"/>
                 </div>
             </div>
-
             <div class="form-group">
                 <label class="col-sm-2 control-label" for="studyGuide">Guias de estudo</label>
                 <div class="col-sm-7">

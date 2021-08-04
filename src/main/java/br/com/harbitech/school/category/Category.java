@@ -4,7 +4,6 @@ import br.com.harbitech.school.subcategory.Subcategory;
 import org.springframework.util.Assert;
 
 import javax.persistence.*;
-import javax.validation.constraints.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,12 +16,7 @@ public class Category {
         @Id
         @GeneratedValue(strategy = GenerationType.IDENTITY)
         private Long id;
-        @NotBlank(message = "{category.name.required}")
-        @Size(max = 70, message = "{category.name.size.max}")
         private String name;
-        @NotBlank(message = "{category.codeUrl.required}")
-        @Size(max = 70, message = "{category.codeUrl.size.max}")
-        @Pattern(regexp = "[-a-z]+", message = "{category.codeUrl.pattern}")
         private String codeUrl;
         @Column(columnDefinition = "TEXT")
         private String description;
@@ -31,11 +25,8 @@ public class Category {
         @Enumerated(EnumType.STRING)
         @Column(columnDefinition = "ENUM")
         private CategoryStatus status = CategoryStatus.INACTIVE;
-        @Min(-1)
         private int orderVisualization;
-        @Size(max = 400, message = "{category.iconPath.size.max}")
         private String iconPath;
-        @Size(max = 7, message = "{category.htmlHexColorCode.size.max}")
         private String htmlHexColorCode;
         @OneToMany(mappedBy = "category")
         private List<Subcategory> subCategories = new ArrayList<>();

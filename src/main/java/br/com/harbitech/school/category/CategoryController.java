@@ -29,16 +29,16 @@ public class CategoryController {
 
     @GetMapping(value = "/admin/categories/new")
     String formNew(Model model){
-        model.addAttribute("category", new Category());
+        model.addAttribute("categoryForm", new CategoryForm());
         return "admin/category/formCategory";
     }
 
     @PostMapping(value = "/admin/categories/new")
-    String save(@Valid Category category, BindingResult result) {
+    String save(@Valid CategoryForm categoryForm, BindingResult result) {
         if (result.hasErrors()){
             return "admin/category/formCategory";
         }
-        categoryRepository.save(category);
+        categoryRepository.save(CategoryForm.convert(categoryForm));
         return "redirect:/admin/categories";
     }
 
@@ -47,16 +47,16 @@ public class CategoryController {
         Category category = categoryRepository.findByCodeUrl(codeUrl)
                 .orElseThrow(() -> new ResponseStatusException(NOT_FOUND, codeUrl));
 
-        model.addAttribute(category);
+        model.addAttribute("category",  CategoryForm.from(category));
         return "admin/category/formCategory";
     }
 
     @PostMapping("/admin/categories/{codeUrl}")
-    String update(@Valid Category category, BindingResult result) {
+    String update(@Valid CategoryForm category, BindingResult result) {
         if (result.hasErrors()){
             return "admin/category/formCategory";
         }
-        categoryRepository.save(category);
+        categoryRepository.save(CategoryForm.convert(category));
         return "redirect:/admin/categories";
     }
 }
