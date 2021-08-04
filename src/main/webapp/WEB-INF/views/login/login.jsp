@@ -185,7 +185,7 @@
 
                 <c:forEach items="${categories}" var="category">
                 <li class="category-card">
-                    <a href="" class="category-card__link" href="/${category.codeUrl}">
+                    <a href="/${category.codeUrl}" class="category-card__link">
                             <span class="category-card__icon">
                                 <img src="${category.getIconPath()}">
                             </span>
