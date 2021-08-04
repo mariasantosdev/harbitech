@@ -48,7 +48,7 @@ public class CategoryController {
         Category category = categoryRepository.findByCodeUrl(codeUrl)
                 .orElseThrow(() -> new ResponseStatusException(NOT_FOUND, codeUrl));
 
-        model.addAttribute("category", new CategoryDto(category));
+        model.addAttribute("categoryForm", CategoryForm.from(category));
         return "admin/category/formCategory";
     }
 
@@ -57,7 +57,7 @@ public class CategoryController {
         if (result.hasErrors()){
             return "admin/category/formCategory";
         }
-        categoryRepository.save(CategoryForm.toEntity(categoryForm));
+        categoryRepository.save(CategoryForm.toEntityforUpdate(categoryForm));
         return "redirect:/admin/categories";
     }
 }

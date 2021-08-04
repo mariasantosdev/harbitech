@@ -43,19 +43,6 @@ public class CategoryForm {
         this.htmlHexColorCode = htmlHexColorCode;
     }
 
-//    public static Category toEntity(CategoryForm categoryForm){
-//        Category category = new Category();
-//        category.setName(categoryForm.getName());
-//        category.setCodeUrl(categoryForm.getCodeUrl());
-//        category.setDescription(categoryForm.getDescription());
-//        category.setStudyGuide(categoryForm.getStudyGuide());
-//        category.setStatus(categoryForm.getStatus());
-//        category.setOrderVisualization(categoryForm.getOrderVisualization());
-//        category.setIconPath(categoryForm.getIconPath());
-//        category.setHtmlHexColorCode(categoryForm.getHtmlHexColorCode());
-//        return category;
-//    }
-
     public Long getId() {
         return id;
     }
@@ -133,10 +120,16 @@ public class CategoryForm {
                 categoryform.getDescription(),categoryform.status,categoryform.getOrderVisualization(),
                 categoryform.iconPath, categoryform.getIconPath());
     }
-//
-//    public static CategoryForm from(Category category){
-//        return new CategoryForm(category.getId(),category.getName(),category.getCodeUrl(),
-//                category.getStatus().getDescription(), category.getStudyGuide(), category.getStatus(),
-//                category.getOrderVisualization(), category.getIconPath(), category.getHtmlHexColorCode());
-//    }
+
+    public static Category toEntityforUpdate(CategoryForm categoryform) {
+        return new Category(categoryform.getId(),categoryform.getName(), categoryform.getCodeUrl(),
+                categoryform.getDescription(), categoryform.getStudyGuide(), categoryform.status,
+                categoryform.getOrderVisualization(), categoryform.iconPath, categoryform.getIconPath());
+    }
+
+    public static CategoryForm from(Category category){
+        return new CategoryForm(category.getId(),category.getName(),category.getCodeUrl(),
+                category.getStatus().getDescription(), category.getStudyGuide(), category.getStatus(),
+                category.getOrderVisualization(), category.getIconPath(), category.getHtmlHexColorCode());
+    }
 }

@@ -55,20 +55,15 @@ public class Category {
         this.htmlHexColorCode = htmlHexColorCode;
     }
 
+    public Category(Long id, String name, String codeUrl, String description, String studyGuide, CategoryStatus status,
+                    int orderVisualization, String iconPath, String htmlHexColorCode) {
+        this(name,codeUrl,description,status,orderVisualization,iconPath,htmlHexColorCode);
+        this.id = id;
+        this.studyGuide = studyGuide;
+    }
+
     public Long getId() {
         return id;
-    }
-
-    public String getStudyGuide() {
-        return studyGuide;
-    }
-
-    public int getOrderVisualization() {
-        return orderVisualization;
-    }
-
-    public List<Subcategory> getSubCategories() {
-        return subCategories;
     }
 
     public String getName() {
@@ -83,8 +78,16 @@ public class Category {
         return description;
     }
 
+    public String getStudyGuide() {
+        return studyGuide;
+    }
+
     public CategoryStatus getStatus() {
         return status;
+    }
+
+    public int getOrderVisualization() {
+        return orderVisualization;
     }
 
     public String getIconPath() {
@@ -95,44 +98,8 @@ public class Category {
         return htmlHexColorCode;
     }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public void setCodeUrl(String codeUrl) {
-        this.codeUrl = codeUrl;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public void setStudyGuide(String studyGuide) {
-        this.studyGuide = studyGuide;
-    }
-
-    public void setStatus(CategoryStatus status) {
-        this.status = status;
-    }
-
-    public void setOrderVisualization(int orderVisualization) {
-        this.orderVisualization = orderVisualization;
-    }
-
-    public void setIconPath(String iconPath) {
-        this.iconPath = iconPath;
-    }
-
-    public void setHtmlHexColorCode(String htmlHexColorCode) {
-        this.htmlHexColorCode = htmlHexColorCode;
-    }
-
-    public void setSubCategories(List<Subcategory> subCategories) {
-        this.subCategories = subCategories;
+    public List<Subcategory> getSubCategories() {
+        return subCategories;
     }
 
     @Override
