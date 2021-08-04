@@ -67,7 +67,5 @@ public class CategoryDto {
         return htmlHexColorCode;
     }
 
-    public String getStatusDescription(){
-        return this.status.getDescription();
-    }
+
 }

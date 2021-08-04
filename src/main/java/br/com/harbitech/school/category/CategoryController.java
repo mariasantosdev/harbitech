@@ -9,6 +9,7 @@ import org.springframework.web.server.ResponseStatusException;
 import javax.validation.Valid;
 import java.util.List;
 
+import static br.com.harbitech.school.category.CategoryForm.*;
 import static org.springframework.http.HttpStatus.NOT_FOUND;
 
 @Controller
@@ -23,8 +24,7 @@ public class CategoryController {
     @GetMapping("/admin/categories")
     String list(Model model) {
         List<Category> categories =  categoryRepository.findAll();
-        List<CategoryDto> categoryDtos = CategoryDto.convert(categories);
-        model.addAttribute("categories", categoryDtos);
+        model.addAttribute("categories", convert(categories));
         return "admin/category/listCategories";
     }
 
@@ -39,7 +39,7 @@ public class CategoryController {
         if (result.hasErrors()){
             return "admin/category/formCategory";
         }
-        categoryRepository.save(CategoryForm.toEntity(categoryForm));
+        categoryRepository.save(convert(categoryForm));
         return "redirect:/admin/categories";
     }
 
@@ -48,7 +48,7 @@ public class CategoryController {
         Category category = categoryRepository.findByCodeUrl(codeUrl)
                 .orElseThrow(() -> new ResponseStatusException(NOT_FOUND, codeUrl));
 
-        model.addAttribute("categoryForm", CategoryForm.from(category));
+        model.addAttribute("categoryForm", from(category));
         return "admin/category/formCategory";
     }
 
@@ -57,7 +57,7 @@ public class CategoryController {
         if (result.hasErrors()){
             return "admin/category/formCategory";
         }
-        categoryRepository.save(CategoryForm.toEntityforUpdate(categoryForm));
+        categoryRepository.save(convertUpdate(categoryForm));
         return "redirect:/admin/categories";
     }
 }

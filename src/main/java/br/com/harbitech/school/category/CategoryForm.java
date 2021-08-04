@@ -1,7 +1,8 @@
 package br.com.harbitech.school.category;
 
-import javax.persistence.*;
 import javax.validation.constraints.*;
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class CategoryForm {
 
@@ -13,12 +14,8 @@ public class CategoryForm {
     @Size(max = 70, message = "{category.codeUrl.size.max}")
     @Pattern(regexp = "[-a-z]+", message = "{category.codeUrl.pattern}")
     private String codeUrl;
-    @Column(columnDefinition = "TEXT")
     private String description;
-    @Column(columnDefinition = "TEXT")
     private String studyGuide;
-    @Enumerated(EnumType.STRING)
-    @Column(columnDefinition = "ENUM")
     private CategoryStatus status = CategoryStatus.INACTIVE;
     @Min(-1)
     private int orderVisualization;
@@ -41,6 +38,18 @@ public class CategoryForm {
         this.orderVisualization = orderVisualization;
         this.iconPath = iconPath;
         this.htmlHexColorCode = htmlHexColorCode;
+    }
+
+    public CategoryForm(Category category) {
+        this.id = category.getId();
+        this.name = category.getName();
+        this.codeUrl = category.getCodeUrl();
+        this.description = category.getDescription();
+        this.studyGuide = category.getStudyGuide();
+        this.status = category.getStatus();
+        this.orderVisualization = category.getOrderVisualization();
+        this.iconPath = category.getIconPath();
+        this.htmlHexColorCode = category.getHtmlHexColorCode();
     }
 
     public Long getId() {
@@ -79,6 +88,10 @@ public class CategoryForm {
         return htmlHexColorCode;
     }
 
+    public String getStatusDescription(){
+        return this.status.getDescription();
+    }
+
     public void setId(Long id) {
         this.id = id;
     }
@@ -115,13 +128,17 @@ public class CategoryForm {
         this.htmlHexColorCode = htmlHexColorCode;
     }
 
-    public static Category toEntity(CategoryForm categoryform) {
+    public static Category convert(CategoryForm categoryform) {
         return new Category(categoryform.getName(), categoryform.getCodeUrl(),
                 categoryform.getDescription(),categoryform.status,categoryform.getOrderVisualization(),
                 categoryform.iconPath, categoryform.getIconPath());
     }
 
-    public static Category toEntityforUpdate(CategoryForm categoryform) {
+    public static List<CategoryForm> convert(List<Category> categories){
+        return categories.stream().map(CategoryForm::new).collect(Collectors.toList());
+    }
+
+    public static Category convertUpdate(CategoryForm categoryform) {
         return new Category(categoryform.getId(),categoryform.getName(), categoryform.getCodeUrl(),
                 categoryform.getDescription(), categoryform.getStudyGuide(), categoryform.status,
                 categoryform.getOrderVisualization(), categoryform.iconPath, categoryform.getIconPath());
