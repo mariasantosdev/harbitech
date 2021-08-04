@@ -23,7 +23,8 @@ public class CategoryController {
     @GetMapping("/admin/categories")
     String list(Model model) {
         List<Category> categories =  categoryRepository.findAll();
-        model.addAttribute("categories", categories);
+        List<CategoryDto> categoryDtos = CategoryDto.convert(categories);
+        model.addAttribute("categories", categoryDtos);
         return "admin/category/listCategories";
     }
 
@@ -38,7 +39,7 @@ public class CategoryController {
         if (result.hasErrors()){
             return "admin/category/formCategory";
         }
-        categoryRepository.save(CategoryForm.convert(categoryForm));
+        categoryRepository.save(CategoryForm.toEntity(categoryForm));
         return "redirect:/admin/categories";
     }
 
@@ -47,16 +48,16 @@ public class CategoryController {
         Category category = categoryRepository.findByCodeUrl(codeUrl)
                 .orElseThrow(() -> new ResponseStatusException(NOT_FOUND, codeUrl));
 
-        model.addAttribute("category",  CategoryForm.from(category));
+        model.addAttribute("category", new CategoryDto(category));
         return "admin/category/formCategory";
     }
 
     @PostMapping("/admin/categories/{codeUrl}")
-    String update(@Valid CategoryForm category, BindingResult result) {
+    String update(@Valid CategoryForm categoryForm, BindingResult result) {
         if (result.hasErrors()){
             return "admin/category/formCategory";
         }
-        categoryRepository.save(CategoryForm.convert(category));
+        categoryRepository.save(CategoryForm.toEntity(categoryForm));
         return "redirect:/admin/categories";
     }
 }

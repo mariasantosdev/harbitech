@@ -135,10 +135,6 @@ public class Category {
         this.subCategories = subCategories;
     }
 
-    public String getStatusDescription(){
-        return this.status.getDescription();
-    }
-
     @Override
     public String toString() {
         return "Category{" +
