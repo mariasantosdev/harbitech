@@ -1,6 +1,7 @@
 package br.com.harbitech.school.subcategory;
 
 import br.com.harbitech.school.category.Category;
+import br.com.harbitech.school.category.CategoryForm;
 
 import javax.validation.constraints.*;
 
@@ -70,6 +71,12 @@ public class SubcategoryForm {
         return new Subcategory(subcategoryForm.getName(), subcategoryForm.getCodeUrl(),
                 subcategoryForm.getOrderVisualization(), subcategoryForm.getDescription(), subcategoryForm.getStudyGuide(),
                 subcategoryForm.status, subcategoryForm.getCategory());
+    }
+
+    public static Subcategory convertUpdate(SubcategoryForm subcategoryform) {
+        return new Subcategory(subcategoryform.getId(),subcategoryform.getName(), subcategoryform.getCodeUrl(),
+                subcategoryform.getOrderVisualization(),subcategoryform.getDescription(), subcategoryform.getStudyGuide(),
+                subcategoryform.status, subcategoryform.getCategory());
     }
 
     public static SubcategoryForm from(Subcategory subcategory){

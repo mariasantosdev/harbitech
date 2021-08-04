@@ -72,6 +72,12 @@ public class Subcategory implements Comparable<Subcategory> {
         this.orderVisualization = orderVisualization;
     }
 
+    public Subcategory(Long id,String name, String codeUrl, int orderVisualization, String description, String studyGuide,
+                       SubCategoryStatus status, Category category){
+        this(name,codeUrl,orderVisualization,description,studyGuide,status,category);
+        this.id = id;
+    }
+
     public int getOrderVisualization() {
         return orderVisualization;
     }

@@ -39,19 +39,6 @@ public class CategoryForm {
         this.iconPath = iconPath;
         this.htmlHexColorCode = htmlHexColorCode;
     }
-
-    public CategoryForm(Category category) {
-        this.id = category.getId();
-        this.name = category.getName();
-        this.codeUrl = category.getCodeUrl();
-        this.description = category.getDescription();
-        this.studyGuide = category.getStudyGuide();
-        this.status = category.getStatus();
-        this.orderVisualization = category.getOrderVisualization();
-        this.iconPath = category.getIconPath();
-        this.htmlHexColorCode = category.getHtmlHexColorCode();
-    }
-
     public Long getId() {
         return id;
     }
@@ -86,10 +73,6 @@ public class CategoryForm {
 
     public String getHtmlHexColorCode() {
         return htmlHexColorCode;
-    }
-
-    public String getStatusDescription(){
-        return this.status.getDescription();
     }
 
     public void setId(Long id) {
@@ -132,10 +115,6 @@ public class CategoryForm {
         return new Category(categoryform.getName(), categoryform.getCodeUrl(),
                 categoryform.getDescription(),categoryform.status,categoryform.getOrderVisualization(),
                 categoryform.iconPath, categoryform.getIconPath());
-    }
-
-    public static List<CategoryForm> convert(List<Category> categories){
-        return categories.stream().map(CategoryForm::new).collect(Collectors.toList());
     }
 
     public static Category convertUpdate(CategoryForm categoryform) {

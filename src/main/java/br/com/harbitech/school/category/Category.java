@@ -102,6 +102,10 @@ public class Category {
         return subCategories;
     }
 
+    public String getStatusDescription(){
+        return this.status.getDescription();
+    }
+
     @Override
     public String toString() {
         return "Category{" +

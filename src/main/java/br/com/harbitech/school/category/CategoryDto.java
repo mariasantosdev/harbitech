@@ -31,6 +31,10 @@ public class CategoryDto {
         return categories.stream().map(CategoryDto::new).collect(Collectors.toList());
     }
 
+    public String getStatusDescription(){
+        return this.status.getDescription();
+    }
+
     public Long getId() {
         return id;
     }
@@ -66,6 +70,4 @@ public class CategoryDto {
     public String getHtmlHexColorCode() {
         return htmlHexColorCode;
     }
-
-
 }
