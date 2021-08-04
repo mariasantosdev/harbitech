@@ -23,6 +23,9 @@ public class SubcategoryForm {
     private int orderVisualization;
     private Category category;
 
+    public SubcategoryForm() {
+    }
+
     public SubcategoryForm(Long id, String name, String codeUrl, String description, String studyGuide,
                            SubCategoryStatus status, int orderVisualization, Category category) {
         this.id = id;
@@ -67,6 +70,38 @@ public class SubcategoryForm {
         return category;
     }
 
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setCodeUrl(String codeUrl) {
+        this.codeUrl = codeUrl;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public void setStudyGuide(String studyGuide) {
+        this.studyGuide = studyGuide;
+    }
+
+    public void setStatus(SubCategoryStatus status) {
+        this.status = status;
+    }
+
+    public void setOrderVisualization(int orderVisualization) {
+        this.orderVisualization = orderVisualization;
+    }
+
+    public void setCategory(Category category) {
+        this.category = category;
+    }
+
     public static Subcategory convert(SubcategoryForm subcategoryForm) {
         return new Subcategory(subcategoryForm.getName(), subcategoryForm.getCodeUrl(),
                 subcategoryForm.getOrderVisualization(), subcategoryForm.getDescription(), subcategoryForm.getStudyGuide(),
@@ -81,7 +116,7 @@ public class SubcategoryForm {
 
     public static SubcategoryForm from(Subcategory subcategory){
         return new SubcategoryForm(subcategory.getId(),subcategory.getName(),subcategory.getCodeUrl(),
-                subcategory.getStatus().getDescription(), subcategory.getStudyGuide(), subcategory.getStatus(),
+                subcategory.getDescription(), subcategory.getStudyGuide(), subcategory.getStatus(),
                 subcategory.getOrderVisualization(), subcategory.getCategory());
     }
 }

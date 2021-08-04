@@ -37,7 +37,6 @@ public class Subcategory implements Comparable<Subcategory> {
     private String studyGuide;
     @Enumerated(EnumType.STRING)
     @Column(columnDefinition = "ENUM")
-    @NotNull
     private SubCategoryStatus status = SubCategoryStatus.INACTIVE;
     private int orderVisualization;
     @ManyToOne(fetch = FetchType.LAZY)

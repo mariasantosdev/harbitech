@@ -1,8 +1,6 @@
 package br.com.harbitech.school.category;
 
 import javax.validation.constraints.*;
-import java.util.List;
-import java.util.stream.Collectors;
 
 public class CategoryForm {
 
@@ -27,9 +25,8 @@ public class CategoryForm {
     public CategoryForm() {
     }
 
-    public CategoryForm(Long id, String name, String codeUrl, String description, String studyGuide,
-                        CategoryStatus status, int orderVisualization, String iconPath, String htmlHexColorCode) {
-        this.id = id;
+    public CategoryForm(String name, String codeUrl, CategoryStatus status, int orderVisualization,
+                        String studyGuide, String iconPath, String htmlHexColorCode, String description) {
         this.name = name;
         this.codeUrl = codeUrl;
         this.description = description;
@@ -38,6 +35,12 @@ public class CategoryForm {
         this.orderVisualization = orderVisualization;
         this.iconPath = iconPath;
         this.htmlHexColorCode = htmlHexColorCode;
+    }
+
+    public CategoryForm(Long id, String name, String codeUrl, CategoryStatus status, int orderVisualization,
+                        String studyGuide, String iconPath, String htmlHexColorCode, String description) {
+        this(name, codeUrl, status, orderVisualization, studyGuide, iconPath, htmlHexColorCode, description);
+        this.id = id;
     }
     public Long getId() {
         return id;
@@ -112,20 +115,19 @@ public class CategoryForm {
     }
 
     public static Category convert(CategoryForm categoryform) {
-        return new Category(categoryform.getName(), categoryform.getCodeUrl(),
-                categoryform.getDescription(),categoryform.status,categoryform.getOrderVisualization(),
-                categoryform.iconPath, categoryform.getIconPath());
+        return new Category(categoryform.getName(), categoryform.getCodeUrl(),categoryform.status,categoryform.getOrderVisualization(),
+                categoryform.studyGuide, categoryform.getIconPath(), categoryform.getHtmlHexColorCode(), categoryform.getDescription());
     }
 
     public static Category convertUpdate(CategoryForm categoryform) {
-        return new Category(categoryform.getId(),categoryform.getName(), categoryform.getCodeUrl(),
-                categoryform.getDescription(), categoryform.getStudyGuide(), categoryform.status,
-                categoryform.getOrderVisualization(), categoryform.iconPath, categoryform.getIconPath());
+        return new Category(categoryform.getId(),categoryform.getName(), categoryform.getCodeUrl(),categoryform.status,
+                categoryform.getOrderVisualization(), categoryform.getStudyGuide(), categoryform.iconPath,
+                categoryform.getHtmlHexColorCode(), categoryform.getDescription());
     }
 
     public static CategoryForm from(Category category){
-        return new CategoryForm(category.getId(),category.getName(),category.getCodeUrl(),
-                category.getStatus().getDescription(), category.getStudyGuide(), category.getStatus(),
-                category.getOrderVisualization(), category.getIconPath(), category.getHtmlHexColorCode());
+        return new CategoryForm(category.getId(), category.getName(),category.getCodeUrl(),
+                category.getStatus(), category.getOrderVisualization(), category.getStudyGuide(), category.getIconPath(),
+                category.getHtmlHexColorCode(), category.getDescription());
     }
 }

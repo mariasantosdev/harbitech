@@ -45,21 +45,21 @@ public class Category {
         this.orderVisualization = -1;
     }
 
-    public Category(String name, String codeUrl, String description, CategoryStatus status, int orderVisualization,
-                    String iconPath, String htmlHexColorCode) {
+    public Category(String name, String codeUrl, CategoryStatus status, int orderVisualization,
+                    String iconPath, String htmlHexColorCode,String description, String studyGuide) {
         this(name, codeUrl);
         this.description = description;
         this.status = status;
         this.orderVisualization = orderVisualization;
         this.iconPath = iconPath;
         this.htmlHexColorCode = htmlHexColorCode;
+        this.studyGuide = studyGuide;
     }
 
-    public Category(Long id, String name, String codeUrl, String description, String studyGuide, CategoryStatus status,
-                    int orderVisualization, String iconPath, String htmlHexColorCode) {
-        this(name,codeUrl,description,status,orderVisualization,iconPath,htmlHexColorCode);
+    public Category(Long id, String name, String codeUrl, CategoryStatus status, int orderVisualization,
+                        String studyGuide, String iconPath,String htmlHexColorCode,String description) {
+        this(name,codeUrl,status,orderVisualization,iconPath,htmlHexColorCode, description, studyGuide);
         this.id = id;
-        this.studyGuide = studyGuide;
     }
 
     public Long getId() {
