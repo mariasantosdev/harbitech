@@ -22,8 +22,7 @@ public class CategoryForm {
     @Size(max = 7, message = "{category.htmlHexColorCode.size.max}")
     private String htmlHexColorCode;
 
-    public CategoryForm() {
-    }
+    public CategoryForm() {}
 
     public CategoryForm(String name, String codeUrl, CategoryStatus status, int orderVisualization,
                         String studyGuide, String iconPath, String htmlHexColorCode, String description) {
@@ -119,7 +118,9 @@ public class CategoryForm {
                 categoryform.studyGuide, categoryform.getIconPath(), categoryform.getHtmlHexColorCode(), categoryform.getDescription());
     }
 
-    public static Category convertUpdate(CategoryForm categoryform) {
+    public static Category convertUpdate(CategoryForm categoryform, CategoryRepository categoryRepository) {
+        Category category = categoryRepository.findById(categoryform.getId()).get();
+        //TODO USAR CATEGORY PARA ATUALIZAR OS CAMPOS QUE EU TENHO.
         return new Category(categoryform.getId(),categoryform.getName(), categoryform.getCodeUrl(),categoryform.status,
                 categoryform.getOrderVisualization(), categoryform.getStudyGuide(), categoryform.iconPath,
                 categoryform.getHtmlHexColorCode(), categoryform.getDescription());

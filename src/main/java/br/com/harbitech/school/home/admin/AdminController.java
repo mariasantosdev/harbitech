@@ -6,12 +6,8 @@ import br.com.harbitech.school.course.CourseRepository;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
-import java.util.Optional;
-
-import static org.springframework.http.HttpStatus.NOT_FOUND;
 
 @Controller
 public class AdminController {
