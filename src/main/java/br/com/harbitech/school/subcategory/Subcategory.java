@@ -104,6 +104,38 @@ public class Subcategory implements Comparable<Subcategory> {
         return category;
     }
 
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setCodeUrl(String codeUrl) {
+        this.codeUrl = codeUrl;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public void setStudyGuide(String studyGuide) {
+        this.studyGuide = studyGuide;
+    }
+
+    public void setStatus(SubCategoryStatus status) {
+        this.status = status;
+    }
+
+    public void setOrderVisualization(int orderVisualization) {
+        this.orderVisualization = orderVisualization;
+    }
+
+    public void setCategory(Category category) {
+        this.category = category;
+    }
+
     public String getStatusDescription(){
         return this.status.getDescription();
     }

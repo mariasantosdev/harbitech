@@ -1,6 +1,8 @@
 package br.com.harbitech.school.subcategory;
 
 import br.com.harbitech.school.category.Category;
+import br.com.harbitech.school.category.CategoryForm;
+import br.com.harbitech.school.category.CategoryRepository;
 
 import javax.validation.constraints.*;
 
@@ -108,10 +110,17 @@ public class SubcategoryForm {
                 subcategoryForm.status, subcategoryForm.getCategory());
     }
 
-    public static Subcategory convertUpdate(SubcategoryForm subcategoryform) {
-        return new Subcategory(subcategoryform.getId(),subcategoryform.getName(), subcategoryform.getCodeUrl(),
-                subcategoryform.getOrderVisualization(),subcategoryform.getDescription(), subcategoryform.getStudyGuide(),
-                subcategoryform.status, subcategoryform.getCategory());
+    public static Subcategory convertUpdate(SubcategoryForm subcategoryForm, SubcategoryRepository subcategoryRepository) {
+        Subcategory subcategory = subcategoryRepository.findById(subcategoryForm.getId()).get();
+        subcategory.setId(subcategoryForm.getId());
+        subcategory.setCodeUrl(subcategoryForm.getCodeUrl());
+        subcategory.setName(subcategoryForm.getName());
+        subcategory.setDescription(subcategoryForm.getDescription());
+        subcategory.setStudyGuide(subcategoryForm.getStudyGuide());
+        subcategory.setStatus(subcategoryForm.getStatus());
+        subcategory.setOrderVisualization(subcategoryForm.getOrderVisualization());
+        subcategory.setCategory(subcategoryForm.getCategory());
+        return subcategory;
     }
 
     public static SubcategoryForm from(Subcategory subcategory){
