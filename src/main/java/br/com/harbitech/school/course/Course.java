@@ -161,6 +161,7 @@ public class Course {
         return this.subcategory.getCategoryCodeUrl();
     }
 
+
     @Override
     public String toString() {
         return "Course{" +

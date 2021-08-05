@@ -1,6 +1,8 @@
 package br.com.harbitech.school.course;
 
 import br.com.harbitech.school.subcategory.Subcategory;
+import br.com.harbitech.school.subcategory.SubcategoryForm;
+import br.com.harbitech.school.subcategory.SubcategoryRepository;
 
 import javax.validation.constraints.*;
 
@@ -131,10 +133,19 @@ public class CourseForm {
                 courseForm.getDescription(), courseForm.getDevelopedSkills(), courseForm.getSubcategory());
     }
 
-    public static Course convertUpdate(CourseForm courseForm) {
-        return new Course(courseForm.getId(),courseForm.getName(), courseForm.getCodeUrl(), courseForm.getCompletionTimeInHours(),
-                courseForm.getVisibility(), courseForm.getTargetAudience(), courseForm.getInstructor(),
-                courseForm.getDescription(), courseForm.getDevelopedSkills(), courseForm.getSubcategory());
+    public static Course convertUpdate(CourseForm courseForm, CourseRepository courseRepository) {
+        Course course = courseRepository.findById(courseForm.getId()).get();
+        course.setId(courseForm.getId());
+        course.setCodeUrl(courseForm.getCodeUrl());
+        course.setName(courseForm.getName());
+        course.setCompletionTimeInHours(courseForm.getCompletionTimeInHours());
+        course.setVisibility(courseForm.getVisibility());
+        course.setTargetAudience(courseForm.getTargetAudience());
+        course.setInstructor(courseForm.getInstructor());
+        course.setDescription(courseForm.getDescription());
+        course.setDevelopedSkills(courseForm.getDevelopedSkills());
+        course.setSubcategory(courseForm.getSubcategory());
+        return course;
     }
 
     public static CourseForm from(Course course){
