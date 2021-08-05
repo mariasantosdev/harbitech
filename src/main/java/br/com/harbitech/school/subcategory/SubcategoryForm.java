@@ -110,7 +110,7 @@ public class SubcategoryForm {
                 subcategoryForm.status, subcategoryForm.getCategory());
     }
 
-    public static Subcategory convertUpdate(SubcategoryForm subcategoryForm, SubcategoryRepository subcategoryRepository) {
+    public static Subcategory convert(SubcategoryForm subcategoryForm, SubcategoryRepository subcategoryRepository) {
         Subcategory subcategory = subcategoryRepository.findById(subcategoryForm.getId()).get();
         subcategory.setId(subcategoryForm.getId());
         subcategory.setCodeUrl(subcategoryForm.getCodeUrl());

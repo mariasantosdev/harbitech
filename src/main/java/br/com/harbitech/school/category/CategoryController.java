@@ -57,7 +57,7 @@ public class CategoryController {
         if (result.hasErrors()){
             return "admin/category/formCategory";
         }
-        categoryRepository.save(convertUpdate(categoryForm, categoryRepository));
+        categoryRepository.save(CategoryForm.convert(categoryForm, categoryRepository));
         return "redirect:/admin/categories";
     }
 }

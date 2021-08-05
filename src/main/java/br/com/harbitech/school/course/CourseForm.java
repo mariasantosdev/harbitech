@@ -139,7 +139,7 @@ public class CourseForm {
                 courseForm.getDescription(), courseForm.getDevelopedSkills(), courseForm.getSubcategory());
     }
 
-    public static Course convertUpdate(CourseForm courseForm, CourseRepository courseRepository) {
+    public static Course convert(CourseForm courseForm, CourseRepository courseRepository) {
         Course course = courseRepository.findById(courseForm.getId()).get();
         course.setId(courseForm.getId());
         course.setCodeUrl(courseForm.getCodeUrl());

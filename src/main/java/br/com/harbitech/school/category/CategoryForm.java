@@ -118,7 +118,7 @@ public class CategoryForm {
                 categoryform.studyGuide, categoryform.getIconPath(), categoryform.getHtmlHexColorCode(), categoryform.getDescription());
     }
 
-    public static Category convertUpdate(CategoryForm categoryform, CategoryRepository categoryRepository) {
+    public static Category convert(CategoryForm categoryform, CategoryRepository categoryRepository) {
         Category category = categoryRepository.findById(categoryform.getId()).get();
         category.setId(categoryform.getId());
         category.setCodeUrl(categoryform.getCodeUrl());

@@ -109,7 +109,7 @@ public class CourseController {
             model.addAllAttributes(this.setupForm(formAction, courseForm));
             return "admin/course/formCourse";
         }
-        courseRepository.save(convertUpdate(courseForm, courseRepository));
+        courseRepository.save(CourseForm.convert(courseForm, courseRepository));
         return "redirect:/admin/courses/" + categoryCodeUrl + "/" +subcategoryCodeUrl;
     }
 
