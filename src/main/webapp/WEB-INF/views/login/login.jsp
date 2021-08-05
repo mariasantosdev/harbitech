@@ -189,7 +189,7 @@
                             <span class="category-card__icon">
                                 <img src="${category.getIconPath()}">
                             </span>
-                        <h3 class="category-card__title">"${category.getName()}"</h3>
+                        <h3 class="category-card__title">${category.getName()}</h3>
                     <c:forEach begin="0" end="2" items="${category.getSubCategories()}" var="subcategory">
                         <p class="category-card__details">
                             ${subcategory.getCodeUrl()}

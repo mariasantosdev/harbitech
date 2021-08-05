@@ -106,6 +106,46 @@ public class Category {
         return this.status.getDescription();
     }
 
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setCodeUrl(String codeUrl) {
+        this.codeUrl = codeUrl;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public void setStudyGuide(String studyGuide) {
+        this.studyGuide = studyGuide;
+    }
+
+    public void setStatus(CategoryStatus status) {
+        this.status = status;
+    }
+
+    public void setOrderVisualization(int orderVisualization) {
+        this.orderVisualization = orderVisualization;
+    }
+
+    public void setIconPath(String iconPath) {
+        this.iconPath = iconPath;
+    }
+
+    public void setHtmlHexColorCode(String htmlHexColorCode) {
+        this.htmlHexColorCode = htmlHexColorCode;
+    }
+
+    public void setSubCategories(List<Subcategory> subCategories) {
+        this.subCategories = subCategories;
+    }
+
     @Override
     public String toString() {
         return "Category{" +

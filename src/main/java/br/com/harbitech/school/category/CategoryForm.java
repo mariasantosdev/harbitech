@@ -120,10 +120,16 @@ public class CategoryForm {
 
     public static Category convertUpdate(CategoryForm categoryform, CategoryRepository categoryRepository) {
         Category category = categoryRepository.findById(categoryform.getId()).get();
-        //TODO USAR CATEGORY PARA ATUALIZAR OS CAMPOS QUE EU TENHO.
-        return new Category(categoryform.getId(),categoryform.getName(), categoryform.getCodeUrl(),categoryform.status,
-                categoryform.getOrderVisualization(), categoryform.getStudyGuide(), categoryform.iconPath,
-                categoryform.getHtmlHexColorCode(), categoryform.getDescription());
+        category.setId(categoryform.getId());
+        category.setCodeUrl(categoryform.getCodeUrl());
+        category.setName(categoryform.getName());
+        category.setDescription(categoryform.getDescription());
+        category.setStudyGuide(categoryform.getStudyGuide());
+        category.setStatus(categoryform.getStatus());
+        category.setOrderVisualization(categoryform.getOrderVisualization());
+        category.setIconPath(categoryform.getIconPath());
+        category.setHtmlHexColorCode(categoryform.getHtmlHexColorCode());
+        return category;
     }
 
     public static CategoryForm from(Category category){
