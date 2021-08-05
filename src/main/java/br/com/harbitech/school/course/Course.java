@@ -15,43 +15,33 @@ public class Course {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @NotBlank(message = "{course.name.required}")
-    @Size(max = 70, message = "{course.name.size.max}")
     private String name;
-    @NotBlank(message = "{course.codeUrl.required}")
-    @Size(max = 70, message = "{course.codeUrl.size.max}")
-    @Pattern(regexp = "[-a-z]+", message = "{course.codeUrl.pattern}")
     private String codeUrl;
-    @Min(value = 1L, message = "{course.completionTimeInHours.min}")
-    @Max(value = 20L, message = "{course.completionTimeInHours.max}")
     private int completionTimeInHours = 0;
     @Enumerated(EnumType.STRING)
     @Column(columnDefinition = "ENUM")
     @NotNull
     private CourseVisibility visibility = CourseVisibility.PRIVATE;
-    @Size(max = 250, message = "Ops! O público alvo do curso não pode ter mais do que 250 caracteres")
     private String targetAudience;
-    @NotBlank(message = "{course.instructor.required}")
-    @Size(max = 70, message = "{course.instructor.size.max}")
     private String instructor;
     @Column(columnDefinition = "TEXT")
     private String description;
     @Column(columnDefinition = "TEXT")
     private String developedSkills;
     @ManyToOne(fetch = FetchType.LAZY)
-    @NotNull(message = "{course.subcategory.required}")
+    @NotNull(message = "{subcategory.course.required}")
     private Subcategory subcategory;
 
     @Deprecated
     public Course(){}
 
-    public Course(String name, String codeUrl, int completionTimeInHours, String instructor, Subcategory subCategory){
+    public Course(String name, String codeUrl, int completionTimeInHours, String instructor, Subcategory subcategory){
         Assert.hasText(name, "{course.name.required}");
         Assert.hasText(codeUrl, "{course.codeUrl.required}");
         Assert.hasText(instructor, "{course.instructor.required}");
 
         Assert.isTrue(completionTimeInHours >= 1 && completionTimeInHours <= 20, "O tempo estimado deve estar entre 1 hora até 20 horas.");
-        Assert.notNull(subCategory, "{course.subcategory.required}");
+        Assert.notNull(subcategory, "{course.subcategory.required}");
         validateUrl(codeUrl, "{course.codeUrl.pattern}" + codeUrl);
 
         this.name = name;
@@ -70,6 +60,13 @@ public class Course {
         this.targetAudience = targetAudience;
         this.description = description;
         this.developedSkills = developedSkills;
+    }
+
+    public Course(Long id,String name, String codeUrl, int completionTimeInHours, CourseVisibility visibility,
+                  String targetAudience, String instructor, String description, String developedSkills,
+                  Subcategory subcategory){
+        this(name, codeUrl, completionTimeInHours,visibility,targetAudience,instructor,description,developedSkills,subcategory);
+        this.id = id;
     }
 
     public Long getId() {

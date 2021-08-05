@@ -19,6 +19,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import static br.com.harbitech.school.course.CourseForm.*;
 import static org.springframework.http.HttpStatus.NOT_FOUND;
 
 @Controller
@@ -56,26 +57,26 @@ public class CourseController {
     }
 
     @GetMapping(value = "/admin/courses/new")
-    String formNew(Course course, Model model){
+    String formNew(CourseForm courseForm, Model model){
         subcategoryRepository.findAllByOrderByName();
 
         String formAction = "/admin/courses";
 
-        model.addAllAttributes(this.setupForm(formAction, course));
+        model.addAllAttributes(this.setupForm(formAction, courseForm));
 
         return "admin/course/formCourse";
     }
 
     @PostMapping(value = "/admin/courses")
-    String save(@Valid Course course, BindingResult result, Model model) {
+    String save(@Valid CourseForm courseForm, BindingResult result, Model model) {
         if (result.hasErrors()) {
             String formAction = "/admin/courses";
-            model.addAllAttributes(this.setupForm(formAction, course));
+            model.addAllAttributes(this.setupForm(formAction, courseForm));
             return "admin/course/formCourse";
         }
-        courseRepository.save(course);
-        return "redirect:/admin/courses/" + course.getSubcategory().getCategory().getCodeUrl() +
-                "/" + course.getSubcategory().getCodeUrl();
+        courseRepository.save(convert(courseForm));
+        return "redirect:/admin/courses/" + courseForm.getSubcategory().getCategory().getCodeUrl() +
+                "/" + courseForm.getSubcategory().getCodeUrl();
     }
 
     @GetMapping(value = "/admin/courses/{category}/{subcategory}/{course}")
@@ -93,30 +94,30 @@ public class CourseController {
 
         String formAction = "/admin/courses/" + categoryCodeUrl + "/" + subcategoryCodeUrl + "/" + courseCodeUrl;
 
-        model.addAllAttributes(this.setupForm(formAction, course));
+        model.addAllAttributes(this.setupForm(formAction, from(course)));
 
         return "admin/course/formCourse";
     }
 
     @PostMapping("/admin/courses/{category}/{subcategory}/{courseCodeUrl}")
-    String update(@Valid Course course, BindingResult result, Model model,
+    String update(@Valid CourseForm courseForm, BindingResult result, Model model,
                   @PathVariable("category") String categoryCodeUrl,
                   @PathVariable("subcategory") String subcategoryCodeUrl,
                   @PathVariable("courseCodeUrl") String courseCodeUrl) {
         if (result.hasErrors()) {
             String formAction = "/admin/courses/" + categoryCodeUrl + "/" + subcategoryCodeUrl + "/" + courseCodeUrl;
-            model.addAllAttributes(this.setupForm(formAction, course));
+            model.addAllAttributes(this.setupForm(formAction, courseForm));
             return "admin/course/formCourse";
         }
-        courseRepository.save(course);
+        courseRepository.save(convertUpdate(courseForm));
         return "redirect:/admin/courses/" + categoryCodeUrl + "/" +subcategoryCodeUrl;
     }
 
-    private Map<String,Object> setupForm(String formAction, Course course) {
+    private Map<String,Object> setupForm(String formAction, CourseForm courseForm) {
         Map<String,Object> attributes = new HashMap<>();
         List<Subcategory> subcategories = subcategoryRepository.findAllByOrderByName();
 
-        attributes.put("course", course);
+        attributes.put("courseForm", courseForm);
         attributes.put("subcategories", subcategories);
         attributes.put("formAction", formAction);
 

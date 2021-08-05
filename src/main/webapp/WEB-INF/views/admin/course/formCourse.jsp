@@ -1,7 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
-<c:set var="formTitle" value="${course.id == null ? 'Novo Curso' : 'Atualizando Curso'}"/>
+<c:set var="formTitle" value="${courseForm.id == null ? 'Novo Curso' : 'Atualizando Curso'}"/>
 <!DOCTYPE html>
 <html>
 <head>
@@ -18,7 +18,7 @@
     </div>
 </nav>
 
-<form:form class="form-horizontal" modelAttribute="course" method="post" action="${formAction}">
+<form:form class="form-horizontal" modelAttribute="courseForm" method="post" action="${formAction}">
 <div class="panel panel-default">
     <div class="panel-heading">
         <h1 class="panel-title">${formTitle}</h1>
@@ -45,12 +45,12 @@
             <label for="flexRadioDefault1" class="col-sm-2 control-label">Visibilidade</label>
             <div class="col-sm-2">
                 <input class="form-check-input" type="radio" name="visibility" id="flexRadioDefault1"
-                       value="PUBLIC"<c:if test="${course.visibility== 'PUBLIC'}">checked=checked</c:if>/>
+                       value="PUBLIC"<c:if test="${courseForm.visibility== 'PUBLIC'}">checked=checked</c:if>/>
                 PÚBLICO
             </div>
             <div>
                 <input class="form-check-input" type="radio" name="visibility" id="flexRadioDefault2"
-                       value="PRIVATE" <c:if test="${course.visibility== 'PRIVATE'}">checked=checked</c:if>/>
+                       value="PRIVATE" <c:if test="${courseForm.visibility== 'PRIVATE'}">checked=checked</c:if>/>
                 PRIVADO
             </div>
             <div class="form-check">

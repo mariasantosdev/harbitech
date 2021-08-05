@@ -1,7 +1,6 @@
 package br.com.harbitech.school.subcategory;
 
 import br.com.harbitech.school.category.Category;
-import br.com.harbitech.school.category.CategoryForm;
 
 import javax.validation.constraints.*;
 
@@ -19,8 +18,9 @@ public class SubcategoryForm {
     private String studyGuide;
     @NotNull
     private SubCategoryStatus status = SubCategoryStatus.INACTIVE;
-    @Min(-1)
+    @Min(value = -1, message = "{subcategory.orderVisualization.min}")
     private int orderVisualization;
+    @NotNull(message = "{subcategory.category.required}")
     private Category category;
 
     public SubcategoryForm() {
