@@ -1,8 +1,6 @@
 package br.com.harbitech.school.course;
 
 import br.com.harbitech.school.subcategory.Subcategory;
-import br.com.harbitech.school.subcategory.SubcategoryForm;
-import br.com.harbitech.school.subcategory.SubcategoryRepository;
 
 import javax.validation.constraints.*;
 
@@ -125,6 +123,14 @@ public class CourseForm {
 
     public void setSubcategory(Subcategory subcategory) {
         this.subcategory = subcategory;
+    }
+
+    public String getSubcategoryCodeUrl(){
+        return this.subcategory.getCodeUrl();
+    }
+
+    public String getCategoryCodeUrl(){
+        return this.subcategory.getCategory().getCodeUrl();
     }
 
     public static Course convert(CourseForm courseForm) {

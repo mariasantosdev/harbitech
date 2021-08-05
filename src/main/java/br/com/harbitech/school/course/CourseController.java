@@ -75,8 +75,8 @@ public class CourseController {
             return "admin/course/formCourse";
         }
         courseRepository.save(convert(courseForm));
-        return "redirect:/admin/courses/" + courseForm.getSubcategory().getCategory().getCodeUrl() +
-                "/" + courseForm.getSubcategory().getCodeUrl();
+        return "redirect:/admin/courses/" + courseForm.getCategoryCodeUrl() +
+                "/" + courseForm.getSubcategoryCodeUrl();
     }
 
     @GetMapping(value = "/admin/courses/{category}/{subcategory}/{course}")
