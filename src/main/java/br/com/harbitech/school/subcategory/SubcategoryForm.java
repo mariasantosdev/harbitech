@@ -1,8 +1,10 @@
 package br.com.harbitech.school.subcategory;
 
 import br.com.harbitech.school.category.Category;
-import br.com.harbitech.school.category.CategoryForm;
-import br.com.harbitech.school.category.CategoryRepository;
+
+import static java.lang.String.format;
+import static org.springframework.http.HttpStatus.NOT_FOUND;
+import org.springframework.web.server.ResponseStatusException;
 
 import javax.validation.constraints.*;
 
@@ -111,7 +113,10 @@ public class SubcategoryForm {
     }
 
     public static Subcategory convert(SubcategoryForm subcategoryForm, SubcategoryRepository subcategoryRepository) {
-        Subcategory subcategory = subcategoryRepository.findById(subcategoryForm.getId()).get();
+        Subcategory subcategory = subcategoryRepository.findById(subcategoryForm.getId())
+                .orElseThrow(() -> new ResponseStatusException(NOT_FOUND,
+                        format("Subcategory with code %s not found", subcategoryForm.getId())));
+
         subcategory.setId(subcategoryForm.getId());
         subcategory.setCodeUrl(subcategoryForm.getCodeUrl());
         subcategory.setName(subcategoryForm.getName());

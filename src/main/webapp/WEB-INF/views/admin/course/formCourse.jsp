@@ -45,12 +45,12 @@
             <label for="flexRadioDefault1" class="col-sm-2 control-label">Visibilidade</label>
             <div class="col-sm-2">
                 <input class="form-check-input" type="radio" name="visibility" id="flexRadioDefault1"
-                       value="PUBLIC"<c:if test="${courseForm.visibility== 'PUBLIC'}">checked=checked</c:if>/>
+                       value="PUBLIC" ${courseForm.visibility== 'PUBLIC' ? "checked" : ""} />
                 PÚBLICO
             </div>
             <div>
                 <input class="form-check-input" type="radio" name="visibility" id="flexRadioDefault2"
-                       value="PRIVATE" <c:if test="${courseForm.visibility== 'PRIVATE'}">checked=checked</c:if>/>
+                       value="PRIVATE" ${courseForm.visibility== 'PRIVATE' ? "checked" : ""} />
                 PRIVADO
             </div>
             <div class="form-check">

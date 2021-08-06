@@ -1,8 +1,12 @@
 package br.com.harbitech.school.course;
 
 import br.com.harbitech.school.subcategory.Subcategory;
+import org.springframework.web.server.ResponseStatusException;
 
 import javax.validation.constraints.*;
+
+import static java.lang.String.format;
+import static org.springframework.http.HttpStatus.NOT_FOUND;
 
 public class CourseForm {
 
@@ -140,7 +144,10 @@ public class CourseForm {
     }
 
     public static Course convert(CourseForm courseForm, CourseRepository courseRepository) {
-        Course course = courseRepository.findById(courseForm.getId()).get();
+        Course course = courseRepository.findById(courseForm.getId())
+                .orElseThrow(() -> new ResponseStatusException(NOT_FOUND,
+                        format("Course with code %s not found", courseForm.getId())));
+
         course.setId(courseForm.getId());
         course.setCodeUrl(courseForm.getCodeUrl());
         course.setName(courseForm.getName());

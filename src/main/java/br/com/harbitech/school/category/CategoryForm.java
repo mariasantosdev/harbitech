@@ -1,6 +1,11 @@
 package br.com.harbitech.school.category;
 
+import static org.springframework.http.HttpStatus.NOT_FOUND;
+import org.springframework.web.server.ResponseStatusException;
+
 import javax.validation.constraints.*;
+
+import static java.lang.String.format;
 
 public class CategoryForm {
 
@@ -119,7 +124,10 @@ public class CategoryForm {
     }
 
     public static Category convert(CategoryForm categoryform, CategoryRepository categoryRepository) {
-        Category category = categoryRepository.findById(categoryform.getId()).get();
+        Category category = categoryRepository.findById(categoryform.getId())
+                .orElseThrow(() -> new ResponseStatusException(NOT_FOUND,
+                        format("Category with code %s not found", categoryform.getId())));
+
         category.setId(categoryform.getId());
         category.setCodeUrl(categoryform.getCodeUrl());
         category.setName(categoryform.getName());

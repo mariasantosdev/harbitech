@@ -17,7 +17,7 @@ public class Course {
     private Long id;
     private String name;
     private String codeUrl;
-    private int completionTimeInHours = 0;
+    private int completionTimeInHours;
     @Enumerated(EnumType.STRING)
     @Column(columnDefinition = "ENUM")
     @NotNull

@@ -46,12 +46,12 @@
                 <label for="flexRadioDefault1" class="col-sm-2 control-label">Status</label>
                 <div class="col-sm-2">
                 <input class="form-check-input" type="radio" name="status" id="flexRadioDefault1"
-                       value="ACTIVE"<c:if test="${subcategoryForm.status== 'ACTIVE'}">checked=checked</c:if>/>
+                       value="ACTIVE" ${subcategoryForm.status == 'ACTIVE' ? "checked" : ""} />
                     ATIVA
             </div>
                 <div>
                 <input class="form-check-input" type="radio" name="status" id="flexRadioDefault2"
-                       value="INACTIVE" <c:if test="${subcategoryForm.status== 'INACTIVE'}">checked=checked</c:if>/>
+                       value="INACTIVE" ${subcategoryForm.status == 'INACTIVE' ? "checked" : ""} />
                 INATIVA
                 </div>
             <div class="form-check">
