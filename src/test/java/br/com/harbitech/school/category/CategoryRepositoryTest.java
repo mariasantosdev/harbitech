@@ -1,6 +1,12 @@
 package br.com.harbitech.school.category;
 
+import br.com.harbitech.school.course.Course;
+import br.com.harbitech.school.course.CourseVisibility;
+import br.com.harbitech.school.subcategory.SubCategoryStatus;
+import br.com.harbitech.school.subcategory.Subcategory;
 import br.com.harbitech.school.util.builder.CategoryBuilder;
+import br.com.harbitech.school.util.builder.CourseBuilder;
+import br.com.harbitech.school.util.builder.SubcategoryBuilder;
 import org.junit.Assert;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +22,7 @@ import java.util.List;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.*;
 
 @RunWith(SpringRunner.class)
 @DataJpaTest
@@ -29,31 +36,69 @@ public class CategoryRepositoryTest {
     @Autowired
     private TestEntityManager em;
 
+    private Subcategory subcategory;
+
+    private Course course;
+
     @Test
-    public void shouldLoadOneCategorySearchingByCodeUrl(){
-        Category expectedCategory = mobileCategory();
-        Optional<Category> category = categoryRepository.findByCodeUrl("mobile");
+    public void shouldLoadOneCategorySearchingByCodeUrl() {
+        Category expectedCategory = mobileCategory(CategoryStatus.ACTIVE);
 
-        //TODO colocar o expect e o passado em uma variavel.
+        Optional<Category> actualCategory = categoryRepository.findByCodeUrl("mobile");
 
-        Assert.assertNotNull(category);
-        Assert.assertEquals(expectedCategory.getName(), category.get().getName());
+        Assert.assertNotNull(actualCategory);
+        Assert.assertEquals(expectedCategory.getCodeUrl(), actualCategory.get().getCodeUrl());
     }
 
     @Test
-    public void shouldReturnAllCategoriesOrderlyByName(){
-        mobileCategory();
-        dataScienceCategory();
-        List<Category> category = categoryRepository.findAllByOrderByName();
+    public void shouldntLoadOneCategoryBecauseDoesntHaveOneCategoryWithTheCodeUrlPassed() {
+        Optional<Category> possibleCategory = categoryRepository.findByCodeUrl("programacao");
 
-        Assert.assertNotNull(category);
-//        Assert.assertEquals(mobileCategory().getName(), category.get().getName());
-
+        assertTrue(possibleCategory.isEmpty());
     }
 
-    private Category dataScienceCategory() {
+    @Test
+    public void shouldLoadAllCategoriesOrderlyByName() {
+        mobileCategory(CategoryStatus.ACTIVE);
+        dataScienceCategory(CategoryStatus.INACTIVE);
+
+        List<Category> categories = categoryRepository.findAllByOrderByName();
+
+        String codeUrlFromFirstCategory = categories.get(0).getCodeUrl();
+
+        assertThat(categories)
+                .hasSize(2)
+                .allMatch(course -> codeUrlFromFirstCategory.equals("data-science"));
+    }
+
+    @Test
+    public void shouldLoadAllCategoriesSearchingByStatus() {
+        mobileCategory(CategoryStatus.ACTIVE);
+        dataScienceCategory(CategoryStatus.INACTIVE);
+
+        List<Category> categories = categoryRepository.findAllByStatus(CategoryStatus.ACTIVE);
+
+        assertThat(categories)
+                .hasSize(1)
+                .extracting(Category::getCodeUrl)
+                .containsExactly("mobile");
+    }
+
+    @Test
+    public void shouldLoadALlCategoriesWithPublicCourses() {
+        androidCourse(CourseVisibility.PUBLIC);
+
+        List<Category> categories = categoryRepository.findAllActiveCategoriesWithPublicCourses();
+
+        assertThat(categories)
+                .hasSize(1)
+                .extracting(Category::getCodeUrl)
+                .containsExactly("mobile");
+    }
+
+    private Category dataScienceCategory(CategoryStatus status) {
         Category dataScience = new CategoryBuilder("Data Science", "data-science")
-                .withStatus(CategoryStatus.INACTIVE)
+                .withStatus(status)
                 .withDescription("Com o avanço da tecnologia, está cada vez maior a quantidade de dados disponíveis" +
                         " para análises avançadas. Desta forma, a área de Ciência de Dados emergiu auxiliando empresas" +
                         " e profissionais em suas tomadas de decisões: por isso, cresce a demanda por especialistas na " +
@@ -68,13 +113,13 @@ public class CategoryRepositoryTest {
         return dataScience;
     }
 
-    private Category mobileCategory() {
+    private Category mobileCategory(CategoryStatus status) {
         Category mobile = new CategoryBuilder("Mobile", "mobile")
                 .withDescription("Crie aplicativos móveis para as principais plataformas, smartphones e tablets. " +
                         "Aprenda frameworks multiplataforma como Flutter e React Native e saiba como criar apps" +
                         " nativas para Android e iOS. Desenvolva também jogos mobile com Unity. Saiba como ")
                 .withStudyGuide("Android, Testes automatizados, arquitetura android e flutter")
-                .withStatus(CategoryStatus.INACTIVE)
+                .withStatus(status)
                 .withOrderVisualization(3)
                 .withIconPath("https://www.google.com/search?q=forma%C3%A7%C3%A3o+mobile+alura+icon&client=ubuntu&hs=" +
                         "PUH&channel=fs&sxsrf=ALeKk01O4vjVbL33VupNCbN27rcLhDfgmQ:1625529442736&source=lnms&tbm=i" +
@@ -86,4 +131,38 @@ public class CategoryRepositoryTest {
 
         return mobile;
     }
+
+    private Subcategory androidSubcategory () {
+        this.subcategory = new SubcategoryBuilder("Android", "android", mobileCategory (CategoryStatus.ACTIVE))
+                .withDescription("Crie aplicativos móveis para as principais plataformas, smartphones e tablets. " +
+                        "Aprenda frameworks multiplataforma como Flutter e React Native e saiba como criar apps" +
+                        " nativas para Android e iOS. Desenvolva também jogos mobile com Unity. Saiba como ")
+                .withStudyGuide("Android, Testes automatizados e arquitetura android")
+                .withStatus(SubCategoryStatus.ACTIVE)
+                .withOrderVisualization(1)
+                .create();
+        em.persist(subcategory);
+
+        return subcategory;
+    }
+
+    private Course androidCourse(CourseVisibility visibility) {
+        this.course = new CourseBuilder("Android parte 3: Refinando o projeto",
+                "android-refinando-projeto", "Alex Felipe", androidSubcategory ())
+                .withCompletionTimeInHours(10)
+                .withVisibility(visibility)
+                .withTargetAudience("Pessoas com foco em java/kotlin/desenvolvimento mobile")
+                .withDescription("""
+                            Implementar um layout personalizado para um AdapterView
+                            Entender e utilizar a entidade Application do Android Framework
+                            Interagir com o usuário por meio de dialogs
+                            Analisar possíveis melhorias no projeto por meio do inspetor de código
+                            Compreender e resolver tópicos apresentado no resultado da inspeção de código
+                        """)
+                .withDevelopedSkills("Aprenda a refatorar, usando os principios de SOLID nesse curso")
+                .create();
+        em.persist(course);
+
+    return course;
+}
 }
