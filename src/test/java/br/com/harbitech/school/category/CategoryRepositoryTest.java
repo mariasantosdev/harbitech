@@ -72,6 +72,13 @@ public class CategoryRepositoryTest {
     }
 
     @Test
+    public void shouldntLoadAnyCategoriesBecauseDontHave() {
+        List<Category> categories = categoryRepository.findAllByOrderByName();
+
+        assertTrue(categories.isEmpty());
+    }
+
+    @Test
     public void shouldLoadAllCategoriesSearchingByStatus() {
         mobileCategory(CategoryStatus.ACTIVE);
         dataScienceCategory(CategoryStatus.INACTIVE);
@@ -85,7 +92,14 @@ public class CategoryRepositoryTest {
     }
 
     @Test
-    public void shouldLoadALlCategoriesWithPublicCourses() {
+    public void shouldntLoadCategoriesBecauseDontHaveWithTheStatusPassed() {
+        List<Category> categories = categoryRepository.findAllByStatus(CategoryStatus.ACTIVE);
+
+        assertTrue(categories.isEmpty());
+    }
+
+    @Test
+    public void shouldLoadALlPublicCategoriesWithPublicCourses() {
         androidCourse(CourseVisibility.PUBLIC);
 
         List<Category> categories = categoryRepository.findAllActiveCategoriesWithPublicCourses();
@@ -94,6 +108,15 @@ public class CategoryRepositoryTest {
                 .hasSize(1)
                 .extracting(Category::getCodeUrl)
                 .containsExactly("mobile");
+    }
+
+    @Test
+    public void shouldntLoadAnyCategoriesBecauseTheOnlyCategoryIsPrivate() {
+        androidCourse(CourseVisibility.PRIVATE);
+
+        List<Category> categories = categoryRepository.findAllActiveCategoriesWithPublicCourses();
+
+        assertTrue(categories.isEmpty());
     }
 
     private Category dataScienceCategory(CategoryStatus status) {
