@@ -8,7 +8,7 @@ import br.com.harbitech.school.util.builder.CategoryBuilder;
 import br.com.harbitech.school.util.builder.CourseBuilder;
 import br.com.harbitech.school.util.builder.SubcategoryBuilder;
 import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
@@ -40,9 +40,9 @@ public class CategoryRepositoryTest {
     public void shouldLoadOneCategorySearchingByCodeUrl() {
         Category expectedCategory = mobileCategory(CategoryStatus.ACTIVE);
 
-        Optional<Category> actualCategory = categoryRepository.findByCodeUrl("mobile");
+        Optional<Category> possibleCategory = categoryRepository.findByCodeUrl("mobile");
 
-        Assert.assertEquals(expectedCategory.getCodeUrl(), actualCategory.get().getCodeUrl());
+        Assert.assertEquals(expectedCategory.getCodeUrl(), possibleCategory.get().getCodeUrl());
     }
 
     @Test
@@ -94,7 +94,7 @@ public class CategoryRepositoryTest {
     }
 
     @Test
-    public void shouldLoadALlPublicCategoriesWithPublicCourses() {
+    public void shouldLoadALlActiveCategoriesWithPublicCourses() {
 
         androidCourse(CourseVisibility.PUBLIC, SubCategoryStatus.ACTIVE, CategoryStatus.ACTIVE);
 
@@ -125,12 +125,26 @@ public class CategoryRepositoryTest {
     }
 
     @Test
-    public void shouldntLoadAnyCategoriesBecauseTheCategoryHasNotCourse() {
+    public void shouldntLoadAnyCategoriesBecauseTheCategoryHasNotSubcategory() {
        dataScienceCategory(CategoryStatus.ACTIVE);
 
         List<Category> categories = categoryRepository.findAllActiveCategoriesWithPublicCourses();
 
         assertTrue(categories.isEmpty());
+    }
+
+    @Test
+    public void shouldLoadALlActiveCategoriesWithPublicCoursesInOrderOfSubcategory() {
+        androidCourse(CourseVisibility.PUBLIC, SubCategoryStatus.ACTIVE, CategoryStatus.ACTIVE);
+        htmlAndCss(CourseVisibility.PUBLIC, SubCategoryStatus.ACTIVE, CategoryStatus.ACTIVE);
+
+        List<Category> categories = categoryRepository.findAllActiveCategoriesWithPublicCourses();
+
+        String codeUrlFromFirstCategory = categories.get(0).getCodeUrl();
+
+        assertThat(categories)
+                .hasSize(2)
+                .allMatch(course -> codeUrlFromFirstCategory.equals("mobile"));
     }
 
     private Category dataScienceCategory(CategoryStatus status) {
@@ -145,9 +159,54 @@ public class CategoryRepositoryTest {
                 .withHtmlHexColorCode("#008000")
                 .withIconPath("https://www.alura.com.br/cursos-online-data-science/data-science")
                 .create();
-                em.persist(dataScience);
+        em.persist(dataScience);
 
         return dataScience;
+    }
+
+    private Category frontEnd(CategoryStatus status){
+        Category frontEnd  = new CategoryBuilder("Front end", "data-end")
+                .withStatus(status)
+                .withDescription("Desenvolva sites e webapps com HTML, CSS e JavaScript. Aprenda as boas práticas e as " +
+                        "últimas versões do JavaScript. Estude ferramentas e frameworks do mercado como React, Angular," +
+                        " Webpack, jQuery e mais. Saiba como começar com Front-end.")
+                .withOrderVisualization(4)
+                .withHtmlHexColorCode("#fh2893")
+                .withIconPath("https://www.alura.com.br/cursos-online-front-end")
+                .create();
+        em.persist(frontEnd);
+
+        return frontEnd;
+    }
+
+    private Subcategory html (SubCategoryStatus status, CategoryStatus categoryStatus) {
+        this.subcategory = new SubcategoryBuilder("Html", "html", frontEnd(categoryStatus))
+                .withDescription("Entenda html e css na prática, utilize navegador para inspecionar elementos")
+                .withStudyGuide("Html e css básico")
+                .withStatus(status)
+                .withOrderVisualization(2)
+                .create();
+        em.persist(subcategory);
+
+        return subcategory;
+    }
+
+    private Course htmlAndCss(CourseVisibility visibility, SubCategoryStatus subCategoryStatus,
+                                 CategoryStatus categoryStatus) {
+        this.course = new CourseBuilder("HTML5 e CSS3 parte 1: A primeira página da Web",
+                "html-css", "Pedro Marins", html(subCategoryStatus, categoryStatus))
+                .withCompletionTimeInHours(13)
+                .withVisibility(visibility)
+                .withTargetAudience("Pessoas que tem interesse em front end e quer aprender como construir uma página")
+                .withDescription("""
+                         Aprenda o que é o HTML e o CSS
+                        Entenda a estrutura básica de um arquivo HTML
+                        """)
+                .withDevelopedSkills("Primeiros passos com html e css e conceitos fundamentais")
+                .create();
+        em.persist(course);
+
+        return course;
     }
 
     private Category mobileCategory(CategoryStatus status) {
@@ -168,7 +227,6 @@ public class CategoryRepositoryTest {
 
         return mobile;
     }
-
     private Subcategory androidSubcategory (SubCategoryStatus status, CategoryStatus categoryStatus) {
         this.subcategory = new SubcategoryBuilder("Android", "android", mobileCategory (categoryStatus))
                 .withDescription("Crie aplicativos móveis para as principais plataformas, smartphones e tablets. " +
@@ -182,8 +240,8 @@ public class CategoryRepositoryTest {
 
         return subcategory;
     }
-
-    private Course androidCourse(CourseVisibility visibility, SubCategoryStatus subCategoryStatus, CategoryStatus categoryStatus) {
+    private Course androidCourse(CourseVisibility visibility, SubCategoryStatus subCategoryStatus,
+                                 CategoryStatus categoryStatus) {
         this.course = new CourseBuilder("Android parte 3: Refinando o projeto",
                 "android-refinando-projeto", "Alex Felipe", androidSubcategory (subCategoryStatus, categoryStatus))
                 .withCompletionTimeInHours(10)
@@ -200,6 +258,6 @@ public class CategoryRepositoryTest {
                 .create();
         em.persist(course);
 
-    return course;
-}
+        return course;
+    }
 }

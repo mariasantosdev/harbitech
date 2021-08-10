@@ -6,16 +6,23 @@ import br.com.harbitech.school.subcategory.SubCategoryStatus;
 import br.com.harbitech.school.subcategory.Subcategory;
 import br.com.harbitech.school.util.builder.CategoryBuilder;
 import br.com.harbitech.school.util.builder.CourseBuilder;
+import br.com.harbitech.school.util.builder.SubcategoryBuilder;
 import org.junit.Assert;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
+import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
-
-import br.com.harbitech.school.util.builder.SubcategoryBuilder;
+import org.springframework.test.context.ActiveProfiles;
 
 import java.util.Optional;
 
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
+@DataJpaTest
+@AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
+@ActiveProfiles("test")
 public class CourseRepositoryTest {
 
     @Autowired
@@ -66,12 +73,19 @@ public class CourseRepositoryTest {
     }
 
     @Test
-    public void shouldLoadOneSubcategorySearchingByCodeUrl() {
+    public void shouldLoadOneCourseSearchingByCodeUrl() {
         Course expectedCourse = androidCourse(CourseVisibility.PUBLIC, subcategory);
 
         Optional<Course> actualCourse = courseRepository.findByCodeUrl("android-refinando-projeto");
 
         Assert.assertEquals(expectedCourse.getCodeUrl(), actualCourse.get().getCodeUrl());
+    }
+
+    @Test
+    public void shouldntLoadOneCourseBecauseDoesntHaveOneCourseWithTheCodeUrlPassed() {
+        Optional<Course> possibleCourse = courseRepository.findByCodeUrl("java-poo");
+
+        assertTrue(possibleCourse.isEmpty());
     }
 
     private Course androidCourse(CourseVisibility visibility, Subcategory subcategory) {
@@ -92,5 +106,4 @@ public class CourseRepositoryTest {
         em.persist(androidCourse);
         return androidCourse;
     }
-
 }
