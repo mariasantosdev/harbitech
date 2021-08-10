@@ -137,13 +137,13 @@ public class CourseForm {
         return this.subcategory.getCategory().getCodeUrl();
     }
 
-    public static Course convert(CourseForm courseForm) {
+    public static Course toModel(CourseForm courseForm) {
         return new Course(courseForm.getName(), courseForm.getCodeUrl(), courseForm.getCompletionTimeInHours(),
                 courseForm.getVisibility(), courseForm.getTargetAudience(), courseForm.getInstructor(),
                 courseForm.getDescription(), courseForm.getDevelopedSkills(), courseForm.getSubcategory());
     }
 
-    public static Course convert(CourseForm courseForm, CourseRepository courseRepository) {
+    public static Course toModel(CourseForm courseForm, CourseRepository courseRepository) {
         Course course = courseRepository.findById(courseForm.getId())
                 .orElseThrow(() -> new ResponseStatusException(NOT_FOUND,
                         format("Course with code %s not found", courseForm.getId())));

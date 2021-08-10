@@ -118,12 +118,12 @@ public class CategoryForm {
         this.htmlHexColorCode = htmlHexColorCode;
     }
 
-    public static Category convert(CategoryForm categoryform) {
+    public static Category toModel(CategoryForm categoryform) {
         return new Category(categoryform.getName(), categoryform.getCodeUrl(),categoryform.status,categoryform.getOrderVisualization(),
                 categoryform.studyGuide, categoryform.getIconPath(), categoryform.getHtmlHexColorCode(), categoryform.getDescription());
     }
 
-    public static Category convert(CategoryForm categoryform, CategoryRepository categoryRepository) {
+    public static Category toModel(CategoryForm categoryform, CategoryRepository categoryRepository) {
         Category category = categoryRepository.findById(categoryform.getId())
                 .orElseThrow(() -> new ResponseStatusException(NOT_FOUND,
                         format("Category with code %s not found", categoryform.getId())));

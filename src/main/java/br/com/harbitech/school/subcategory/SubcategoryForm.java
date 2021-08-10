@@ -106,13 +106,13 @@ public class SubcategoryForm {
         this.category = category;
     }
 
-    public static Subcategory convert(SubcategoryForm subcategoryForm) {
+    public static Subcategory toModel(SubcategoryForm subcategoryForm) {
         return new Subcategory(subcategoryForm.getName(), subcategoryForm.getCodeUrl(),
                 subcategoryForm.getOrderVisualization(), subcategoryForm.getDescription(), subcategoryForm.getStudyGuide(),
                 subcategoryForm.status, subcategoryForm.getCategory());
     }
 
-    public static Subcategory convert(SubcategoryForm subcategoryForm, SubcategoryRepository subcategoryRepository) {
+    public static Subcategory toModel(SubcategoryForm subcategoryForm, SubcategoryRepository subcategoryRepository) {
         Subcategory subcategory = subcategoryRepository.findById(subcategoryForm.getId())
                 .orElseThrow(() -> new ResponseStatusException(NOT_FOUND,
                         format("Subcategory with code %s not found", subcategoryForm.getId())));

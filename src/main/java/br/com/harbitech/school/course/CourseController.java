@@ -74,7 +74,7 @@ public class CourseController {
             model.addAllAttributes(this.setupForm(formAction, courseForm));
             return "admin/course/formCourse";
         }
-        courseRepository.save(convert(courseForm));
+        courseRepository.save(toModel(courseForm));
         return "redirect:/admin/courses/" + courseForm.getCategoryCodeUrl() +
                 "/" + courseForm.getSubcategoryCodeUrl();
     }
@@ -109,7 +109,7 @@ public class CourseController {
             model.addAllAttributes(this.setupForm(formAction, courseForm));
             return "admin/course/formCourse";
         }
-        courseRepository.save(CourseForm.convert(courseForm, courseRepository));
+        courseRepository.save(CourseForm.toModel(courseForm, courseRepository));
         return "redirect:/admin/courses/" + categoryCodeUrl + "/" +subcategoryCodeUrl;
     }
 

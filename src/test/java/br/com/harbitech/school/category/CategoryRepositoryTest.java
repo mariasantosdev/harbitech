@@ -18,6 +18,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import org.junit.runner.RunWith;
 
+import javax.validation.constraints.AssertFalse;
 import java.util.List;
 import java.util.Optional;
 
@@ -46,7 +47,6 @@ public class CategoryRepositoryTest {
 
         Optional<Category> actualCategory = categoryRepository.findByCodeUrl("mobile");
 
-        Assert.assertNotNull(actualCategory);
         Assert.assertEquals(expectedCategory.getCodeUrl(), actualCategory.get().getCodeUrl());
     }
 

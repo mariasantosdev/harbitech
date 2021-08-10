@@ -39,7 +39,7 @@ public class CategoryController {
         if (result.hasErrors()){
             return "admin/category/formCategory";
         }
-        categoryRepository.save(convert(categoryForm));
+        categoryRepository.save(toModel(categoryForm));
         return "redirect:/admin/categories";
     }
 
@@ -57,7 +57,7 @@ public class CategoryController {
         if (result.hasErrors()){
             return "admin/category/formCategory";
         }
-        categoryRepository.save(CategoryForm.convert(categoryForm, categoryRepository));
+        categoryRepository.save(CategoryForm.toModel(categoryForm, categoryRepository));
         return "redirect:/admin/categories";
     }
 }
