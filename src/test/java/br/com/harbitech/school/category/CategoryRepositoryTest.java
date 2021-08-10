@@ -14,18 +14,13 @@ import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabas
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 import org.springframework.test.context.ActiveProfiles;
-import org.springframework.test.context.junit4.SpringRunner;
 
-import org.junit.runner.RunWith;
-
-import javax.validation.constraints.AssertFalse;
 import java.util.List;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 
-@RunWith(SpringRunner.class)
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 @ActiveProfiles("test")
@@ -100,7 +95,8 @@ public class CategoryRepositoryTest {
 
     @Test
     public void shouldLoadALlPublicCategoriesWithPublicCourses() {
-        androidCourse(CourseVisibility.PUBLIC);
+
+        androidCourse(CourseVisibility.PUBLIC, SubCategoryStatus.ACTIVE, CategoryStatus.ACTIVE);
 
         List<Category> categories = categoryRepository.findAllActiveCategoriesWithPublicCourses();
 
@@ -111,8 +107,26 @@ public class CategoryRepositoryTest {
     }
 
     @Test
-    public void shouldntLoadAnyCategoriesBecauseTheOnlyCategoryIsPrivate() {
-        androidCourse(CourseVisibility.PRIVATE);
+    public void shouldntLoadAnyCategoriesBecauseTheCourseIsPrivate() {
+        androidCourse(CourseVisibility.PRIVATE,SubCategoryStatus.ACTIVE, CategoryStatus.ACTIVE);
+
+        List<Category> categories = categoryRepository.findAllActiveCategoriesWithPublicCourses();
+
+        assertTrue(categories.isEmpty());
+    }
+
+    @Test
+    public void shouldntLoadAnyCategoriesBecauseTheCategoryIsInactive() {
+        androidCourse(CourseVisibility.PUBLIC,SubCategoryStatus.ACTIVE, CategoryStatus.INACTIVE);
+
+        List<Category> categories = categoryRepository.findAllActiveCategoriesWithPublicCourses();
+
+        assertTrue(categories.isEmpty());
+    }
+
+    @Test
+    public void shouldntLoadAnyCategoriesBecauseTheCategoryHasNotCourse() {
+       dataScienceCategory(CategoryStatus.ACTIVE);
 
         List<Category> categories = categoryRepository.findAllActiveCategoriesWithPublicCourses();
 
@@ -155,13 +169,13 @@ public class CategoryRepositoryTest {
         return mobile;
     }
 
-    private Subcategory androidSubcategory () {
-        this.subcategory = new SubcategoryBuilder("Android", "android", mobileCategory (CategoryStatus.ACTIVE))
+    private Subcategory androidSubcategory (SubCategoryStatus status, CategoryStatus categoryStatus) {
+        this.subcategory = new SubcategoryBuilder("Android", "android", mobileCategory (categoryStatus))
                 .withDescription("Crie aplicativos móveis para as principais plataformas, smartphones e tablets. " +
                         "Aprenda frameworks multiplataforma como Flutter e React Native e saiba como criar apps" +
                         " nativas para Android e iOS. Desenvolva também jogos mobile com Unity. Saiba como ")
                 .withStudyGuide("Android, Testes automatizados e arquitetura android")
-                .withStatus(SubCategoryStatus.ACTIVE)
+                .withStatus(status)
                 .withOrderVisualization(1)
                 .create();
         em.persist(subcategory);
@@ -169,9 +183,9 @@ public class CategoryRepositoryTest {
         return subcategory;
     }
 
-    private Course androidCourse(CourseVisibility visibility) {
+    private Course androidCourse(CourseVisibility visibility, SubCategoryStatus subCategoryStatus, CategoryStatus categoryStatus) {
         this.course = new CourseBuilder("Android parte 3: Refinando o projeto",
-                "android-refinando-projeto", "Alex Felipe", androidSubcategory ())
+                "android-refinando-projeto", "Alex Felipe", androidSubcategory (subCategoryStatus, categoryStatus))
                 .withCompletionTimeInHours(10)
                 .withVisibility(visibility)
                 .withTargetAudience("Pessoas com foco em java/kotlin/desenvolvimento mobile")
