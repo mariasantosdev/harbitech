@@ -118,7 +118,7 @@ public class CategoryForm {
         this.htmlHexColorCode = htmlHexColorCode;
     }
 
-    public static Category convert(CategoryForm categoryform) {
+    public static Category toModel(CategoryForm categoryform) {
         return new Category(categoryform.getName(), categoryform.getCodeUrl(),categoryform.status,categoryform.getOrderVisualization(),
                 categoryform.studyGuide, categoryform.getIconPath(), categoryform.getHtmlHexColorCode(), categoryform.getDescription());
     }

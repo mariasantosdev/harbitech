@@ -65,7 +65,7 @@ public class SubcategoryController {
             model.addAllAttributes(this.setupForm(formAction, subcategoryForm));
             return "admin/subcategory/formSubcategory";
         }
-        subcategoryRepository.save(convert(subcategoryForm));
+        subcategoryRepository.save(toModel(subcategoryForm));
         return "redirect:/admin/subcategories/" + subcategoryForm.getCategory().getCodeUrl();
     }
 
@@ -94,7 +94,7 @@ public class SubcategoryController {
             model.addAllAttributes(this.setupForm(formAction, subcategoryForm));
             return "admin/subcategory/formSubcategory";
         }
-        subcategoryRepository.save(SubcategoryForm.convert(subcategoryForm, subcategoryRepository));
+        subcategoryRepository.save(SubcategoryForm.toModel(subcategoryForm, subcategoryRepository));
         return "redirect:/admin/subcategories/" + categoryCodeUrl;
         }
 
