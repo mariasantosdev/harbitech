@@ -62,6 +62,7 @@ public class CategoryApiControllerTest {
     }
 
     @Test
+    @Transactional
     void shouldReturnAListWithoutCategories() throws Exception {
         mockMvc.perform(get("/api/categories")
                         .accept(MediaType.APPLICATION_JSON))
