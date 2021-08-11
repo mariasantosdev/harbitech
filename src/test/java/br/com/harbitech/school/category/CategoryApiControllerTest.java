@@ -4,8 +4,19 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.http.MediaType;
+import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
+
+import javax.transaction.Transactional;
+
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+
+import static org.hamcrest.Matchers.is;
 
 @SpringBootTest
 @ActiveProfiles("test")
@@ -18,5 +29,43 @@ public class CategoryApiControllerTest {
     @Autowired
     private CategoryRepository categoryRepository;
 
+    @Test
+    @Transactional
+     void shouldRetrieveAllCategoriesByStatus() throws Exception {
+        categoryRepository.save(new Category("DevOps","dev-ops",CategoryStatus.ACTIVE,1,
+                "https://www.alura.com.br/assets/api/formacoes/categorias/128/devops.png","hf#400",
+                "Colaboração, compartilhamento do conhecimento e melhoria contínua. Faça parte do movimento" +
+                        " DevOps!","Dê os primeiros passos com DevOps"));
 
+        categoryRepository.save(new Category("Front-end","front-end",CategoryStatus.ACTIVE,2,
+                "https://www.alura.com.br/cursos-online-front-end","##f890","Desenvolva " +
+                "sites e webapps com HTML, CSS e JavaScript. Aprenda as boas práticas e as últimas versões do JavaScript. " +
+                "Estude ferramentas e frameworks do mercado como React, Angular, Webpack, jQuery e mais. Saiba como começar com Front-end.",
+                "Aprenda os primeiros passos com JS, HTML css e muitos outros frameworks do mercado"));
+
+                mockMvc.perform(get("/api/categories")
+                        .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                        .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                        .andExpect(jsonPath("$.length()", is(2)))
+                        .andExpect(jsonPath("$[0].name", is("DevOps")))
+                        .andExpect(jsonPath("$[0].codeUrl", is("dev-ops")))
+                        .andExpect(jsonPath("$[0].iconPath", is("https://www.alura.com.br/assets/api/formacoes/categorias/128/devops.png")))
+                        .andExpect(jsonPath("$[0].htmlHexColorCode", is("hf#400")))
+                        .andExpect(jsonPath("$[0].description",is(("Colaboração, compartilhamento do conhecimento e " +
+                                "melhoria contínua. Faça parte do movimento DevOps!"))))
+                        .andExpect(jsonPath("$[1].name", is("Front-end")))
+                        .andExpect(jsonPath("$[1].codeUrl", is("front-end")))
+                        .andExpect(jsonPath("$[1].orderVisualization", is(2)));
+    }
+
+    @Test
+    void shouldReturnAListWithoutCategories() throws Exception {
+        mockMvc.perform(get("/api/categories")
+                        .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+         .andExpect(jsonPath("$.length()", is(0)));
+    }
 }

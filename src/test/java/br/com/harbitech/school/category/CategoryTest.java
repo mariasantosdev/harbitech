@@ -8,58 +8,58 @@ import static org.junit.jupiter.api.Assertions.*;
 public class CategoryTest {
 
     @Test
-    public void shouldAddNewCategory(){
+    void shouldAddNewCategory(){
         Category category = assertDoesNotThrow(() -> new Category("DevOps", "dev-ops"),"Erro de validação ao criar categoria.");
         assertEquals("DevOps",category.getName());
         assertEquals("dev-ops",category.getCodeUrl());
     }
 
     @Test
-    public void shouldValidadeIncorrectCodeUrlBecauseHaveNumber(){
+    void shouldValidadeIncorrectCodeUrlBecauseHaveNumber(){
         assertThrows(IllegalArgumentException.class,() -> new Category("Programação", "programacao2"));
     }
 
     @Test
-    public void shouldValidadeIncorrectCodeUrlBecauseHaveAccent(){
+    void shouldValidadeIncorrectCodeUrlBecauseHaveAccent(){
         assertThrows(IllegalArgumentException.class,() -> new Category("Programação", "programação"));
     }
 
     @Test
-    public void shouldValidadeIncorrectCodeUrlBecauseIsUpperCase(){
+    void shouldValidadeIncorrectCodeUrlBecauseIsUpperCase(){
         assertThrows(IllegalArgumentException.class,() -> new Category("Programação", "Programacao"));
     }
 
     @Test
-    public void shouldValidadeIncorrectCodeUrlBecauseHaveSpace(){
+    void shouldValidadeIncorrectCodeUrlBecauseHaveSpace(){
         assertThrows(IllegalArgumentException.class,() -> new Category("DevOps", "dev ops"));
     }
 
     @Test
-    public void shouldValidadeIncorrectCodeUrlBecauseHaveSpecialCharacter(){
+    void shouldValidadeIncorrectCodeUrlBecauseHaveSpecialCharacter(){
         assertThrows(IllegalArgumentException.class,() -> new Category("DevOps", "dev_ops"));
     }
 
     @Test
-    public void shouldValidadeIncorrectCodeUrlBecauseIsBlank(){
+    void shouldValidadeIncorrectCodeUrlBecauseIsBlank(){
         assertThrows(IllegalArgumentException.class,() -> new Category("DevOps", ""));
     }
 
     @Test
-    public void shouldValidadeIncorrectNameBecauseIsBlank(){
+    void shouldValidadeIncorrectNameBecauseIsBlank(){
         assertThrows(IllegalArgumentException.class,() -> new Category("", "dev-ops"));
     }
 
     @Test
-    public void shouldValidadeIncorrectNameBecauseIsNull(){
+    void shouldValidadeIncorrectNameBecauseIsNull(){
         assertThrows(IllegalArgumentException.class,() -> new Category(null, "dev-ops"));
     }
 
     @Test
-    public void shouldValidadeIncorrectCodeUrlBecauseIsNull(){
+    void shouldValidadeIncorrectCodeUrlBecauseIsNull(){
         assertThrows(IllegalArgumentException.class,() -> new Category("Dev Ops", null));
     }
     @Test
-    public void shouldValidateIncorrectDescriptionEnum(){
+    void shouldValidateIncorrectDescriptionEnum(){
         assertThrows(IllegalArgumentException.class,() -> new Category("Programação", "programacao",
                 CategoryStatus.from("UMA_CATEGORIA_INVALIDA"),1,
                 "https://www.alura.com.br/assets/api/formacoes/categorias/512/programacao-transparent.png",
@@ -67,7 +67,7 @@ public class CategoryTest {
     }
 
     @Test
-    public void shouldValidateCorrectDescriptionEnum() {
+    void shouldValidateCorrectDescriptionEnum() {
        assertDoesNotThrow(()-> new Category("Programação", "programacao",
                CategoryStatus.from("INATIVA"),1,
                "https://www.alura.com.br/assets/api/formacoes/categorias/512/programacao-transparent.png",

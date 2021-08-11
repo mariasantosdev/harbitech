@@ -7,7 +7,6 @@ import br.com.harbitech.school.subcategory.Subcategory;
 import br.com.harbitech.school.util.builder.CategoryBuilder;
 import br.com.harbitech.school.util.builder.CourseBuilder;
 import br.com.harbitech.school.util.builder.SubcategoryBuilder;
-import org.junit.Assert;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
@@ -37,23 +36,24 @@ public class CategoryRepositoryTest {
     private Course course;
 
     @Test
-    public void shouldLoadOneCategorySearchingByCodeUrl() {
+    void shouldLoadOneCategorySearchingByCodeUrl() {
         Category expectedCategory = mobileCategory(CategoryStatus.ACTIVE);
 
         Optional<Category> possibleCategory = categoryRepository.findByCodeUrl("mobile");
 
-        Assert.assertEquals(expectedCategory.getCodeUrl(), possibleCategory.get().getCodeUrl());
+        assertTrue(possibleCategory.isPresent());
+        assertEquals(expectedCategory.getCodeUrl(), possibleCategory.get().getCodeUrl());
     }
 
     @Test
-    public void shouldntLoadOneCategoryBecauseDoesntHaveOneCategoryWithTheCodeUrlPassed() {
+    void shouldnLoadOneCategoryBecauseDoesntHaveOneCategoryWithTheCodeUrlPassed() {
         Optional<Category> possibleCategory = categoryRepository.findByCodeUrl("programacao");
 
         assertTrue(possibleCategory.isEmpty());
     }
 
     @Test
-    public void shouldLoadAllCategoriesOrderlyByName() {
+    void shouldLoadAllCategoriesOrderlyByName() {
         mobileCategory(CategoryStatus.ACTIVE);
         dataScienceCategory(CategoryStatus.INACTIVE);
 
@@ -67,14 +67,14 @@ public class CategoryRepositoryTest {
     }
 
     @Test
-    public void shouldntLoadAnyCategoriesBecauseDontHave() {
+    void shouldnLoadAnyCategoriesBecauseDontHave() {
         List<Category> categories = categoryRepository.findAllByOrderByName();
 
         assertTrue(categories.isEmpty());
     }
 
     @Test
-    public void shouldLoadAllCategoriesSearchingByStatus() {
+    void shouldLoadAllCategoriesSearchingByStatus() {
         mobileCategory(CategoryStatus.ACTIVE);
         dataScienceCategory(CategoryStatus.INACTIVE);
 
@@ -87,15 +87,14 @@ public class CategoryRepositoryTest {
     }
 
     @Test
-    public void shouldntLoadCategoriesBecauseDontHaveWithTheStatusPassed() {
+    void shouldnLoadCategoriesBecauseDontHaveWithTheStatusPassed() {
         List<Category> categories = categoryRepository.findAllByStatus(CategoryStatus.ACTIVE);
 
         assertTrue(categories.isEmpty());
     }
 
     @Test
-    public void shouldLoadALlActiveCategoriesWithPublicCourses() {
-
+    void shouldLoadALlActiveCategoriesWithPublicCourses() {
         androidCourse(CourseVisibility.PUBLIC, SubCategoryStatus.ACTIVE, CategoryStatus.ACTIVE);
 
         List<Category> categories = categoryRepository.findAllActiveCategoriesWithPublicCourses();
@@ -107,7 +106,7 @@ public class CategoryRepositoryTest {
     }
 
     @Test
-    public void shouldntLoadAnyCategoriesBecauseTheCourseIsPrivate() {
+    void shouldnLoadAnyCategoriesBecauseTheCourseIsPrivate() {
         androidCourse(CourseVisibility.PRIVATE,SubCategoryStatus.ACTIVE, CategoryStatus.ACTIVE);
 
         List<Category> categories = categoryRepository.findAllActiveCategoriesWithPublicCourses();
@@ -116,7 +115,7 @@ public class CategoryRepositoryTest {
     }
 
     @Test
-    public void shouldntLoadAnyCategoriesBecauseTheCategoryIsInactive() {
+    void shouldntLoadAnyCategoriesBecauseTheCategoryIsInactive() {
         androidCourse(CourseVisibility.PUBLIC,SubCategoryStatus.ACTIVE, CategoryStatus.INACTIVE);
 
         List<Category> categories = categoryRepository.findAllActiveCategoriesWithPublicCourses();
@@ -125,7 +124,7 @@ public class CategoryRepositoryTest {
     }
 
     @Test
-    public void shouldntLoadAnyCategoriesBecauseTheCategoryHasNotSubcategory() {
+    void shouldntLoadAnyCategoriesBecauseTheCategoryHasNotSubcategory() {
        dataScienceCategory(CategoryStatus.ACTIVE);
 
         List<Category> categories = categoryRepository.findAllActiveCategoriesWithPublicCourses();
@@ -134,7 +133,7 @@ public class CategoryRepositoryTest {
     }
 
     @Test
-    public void shouldLoadALlActiveCategoriesWithPublicCoursesInOrderOfSubcategory() {
+    void shouldLoadALlActiveCategoriesWithPublicCoursesInOrderOfSubcategory() {
         androidCourse(CourseVisibility.PUBLIC, SubCategoryStatus.ACTIVE, CategoryStatus.ACTIVE);
         htmlAndCss(CourseVisibility.PUBLIC, SubCategoryStatus.ACTIVE, CategoryStatus.ACTIVE);
 
