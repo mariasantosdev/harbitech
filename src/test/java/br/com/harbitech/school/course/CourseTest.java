@@ -11,13 +11,13 @@ public class CourseTest {
     private Subcategory subCategory;
 
     @BeforeEach
-    public void setUp() {
+    void setUp() {
         Category category = new Category("Programação", "programacao");
         this.subCategory = new Subcategory("Java", "java", category);
     }
 
     @Test
-    public void shouldAddNewCourse() {
+    void shouldAddNewCourse() {
         Course course = assertDoesNotThrow(() -> new Course("Git e Github para Sobrevivência",
                         "git-e-github-para-sobrevivencia", 3, "Nico", subCategory),
                 "Erro de validação ao criar um curso");
@@ -28,74 +28,74 @@ public class CourseTest {
     }
 
     @Test
-    public void shouldValidadeIncorrectCodeUrlBecauseHaveAccent() {
+    void shouldValidadeIncorrectCodeUrlBecauseHaveAccent() {
         assertThrows(IllegalArgumentException.class, () -> new Course("Git e Github para Sobrevivência",
                 "git-e-github-para-sobrevivência", 3, "Nico", subCategory));
     }
 
     @Test
-    public void shouldValidadeIncorrectCodeUrlBecauseIsUpperCase() {
+    void shouldValidadeIncorrectCodeUrlBecauseIsUpperCase() {
         assertThrows(IllegalArgumentException.class, () -> new Course("Git e Github para Sobrevivência",
                 "Git-e-github-para-sobrevivencia", 3, "Nico", subCategory));
     }
 
     @Test
-    public void shouldValidadeIncorrectCodeUrlBecauseHaveSpace() {
+    void shouldValidadeIncorrectCodeUrlBecauseHaveSpace() {
         assertThrows(IllegalArgumentException.class, () -> new Course("Git e Github para Sobrevivência",
                 "git e github para sobrevivencia", 3, "Nico", subCategory));
     }
 
     @Test
-    public void shouldValidadeIncorrectCodeUrlBecauseHaveSpecialCharacters() {
+    void shouldValidadeIncorrectCodeUrlBecauseHaveSpecialCharacters() {
         assertThrows(IllegalArgumentException.class, () -> new Course("Git e Github para Sobrevivência",
                 "git_e_github_para_sobrevivencia", 3, "Nico", subCategory));
     }
 
     @Test
-    public void shouldValidadeIncorrectNameBecauseIsBlank() {
+    void shouldValidadeIncorrectNameBecauseIsBlank() {
         assertThrows(IllegalArgumentException.class, () -> new Course("",
                 "git-e-github-para-sobrevivencia", 3, "Nico", subCategory));
     }
 
     @Test
-    public void shouldValidadeIncorrectCodeUrlBecauseIsBlank() {
+    void shouldValidadeIncorrectCodeUrlBecauseIsBlank() {
         assertThrows(IllegalArgumentException.class, () -> new Course("Git e Github para Sobrevivência",
                 "", 3, "Nico", subCategory));
     }
 
     @Test
-    public void shouldValidadeIncorrectInstructorBecauseIsBlank() {
+    void shouldValidadeIncorrectInstructorBecauseIsBlank() {
         assertThrows(IllegalArgumentException.class, () -> new Course("Git e Github para Sobrevivência",
                 "git-e-github-para-sobrevivencia", 3, "", subCategory));
     }
 
     @Test
-    public void shouldValidadeIncorrectNameBecauseIsNull() {
+    void shouldValidadeIncorrectNameBecauseIsNull() {
         assertThrows(IllegalArgumentException.class, () -> new Course(null,
                 "git-e-github-para-sobrevivencia", 3, "Nico", subCategory));
     }
 
     @Test
-    public void shouldValidadeIncorrectCodeUrlBecauseIsNull() {
+    void shouldValidadeIncorrectCodeUrlBecauseIsNull() {
         assertThrows(IllegalArgumentException.class, () -> new Course("Git e Github para Sobrevivência",
                 null, 3, "Nico", subCategory));
     }
 
     @Test
-    public void shouldValidadeIncorrectInstructorBecauseIsNull() {
+    void shouldValidadeIncorrectInstructorBecauseIsNull() {
         assertThrows(IllegalArgumentException.class, () -> new Course("Git e Github para Sobrevivência",
                 "git-e-github-para-sobrevivencia", 3, null, subCategory));
     }
 
     @Test
-    public void shouldValidadeIncorrectSubCategoryBecauseIsNull() {
+    void shouldValidadeIncorrectSubCategoryBecauseIsNull() {
         assertThrows(IllegalArgumentException.class, () -> new Course("Git e Github para Sobrevivência",
                 "git-e-github-para-sobrevivencia", 3,
                 "Paulo Silveira", null));
     }
 
     @Test
-    public void shouldValidateIncorrectDescriptionEnum() {
+    void shouldValidateIncorrectDescriptionEnum() {
         assertThrows(IllegalArgumentException.class, () -> new Course("Git e Github para Sobrevivência",
                 "git-e-github-para-sobrevivencia", 3, CourseVisibility.from("UMA_VISIBILIDADE_INVALIDA"),
                 "Desenvolvedores em qualquer linguagem ou plataforma que desejam mais segurança para " +
@@ -106,7 +106,7 @@ public class CourseTest {
     }
 
     @Test
-    public void shouldValidateCorrectDescriptionEnum() {
+    void shouldValidateCorrectDescriptionEnum() {
         assertDoesNotThrow (()-> (new Course("Git e Github para Sobrevivência",
                 "git-e-github-para-sobrevivencia", 3, CourseVisibility.from("PÚBLICA"),
                 "Desenvolvedores em qualquer linguagem ou plataforma que desejam mais segurança para " +
@@ -118,35 +118,35 @@ public class CourseTest {
     }
 
     @Test
-    public void shouldValidateCorrectCompletionTimeInHoursBecauseIsBetweenValuesValid(){
+    void shouldValidateCorrectCompletionTimeInHoursBecauseIsBetweenValuesValid(){
         assertDoesNotThrow(() -> new Course("Git e Github para Sobrevivência",
                 "git-e-github-para-sobrevivencia", 5, "Nico", subCategory),
                 "Erro de validação ao criar um curso");
     }
 
     @Test
-    public void shouldValidateIncorrectCompletionTimeInHoursBecauseIsGreater(){
+    void shouldValidateIncorrectCompletionTimeInHoursBecauseIsGreater(){
         assertThrows(IllegalArgumentException.class, () -> new Course("Git e Github para Sobrevivência",
                 "git-e-github-para-sobrevivencia", 21,
                 "Paulo Silveira", subCategory));
     }
 
     @Test
-    public void shouldValidateCorrectCompletionTimeInHoursBecauseIsExactlyValue(){
+    void shouldValidateCorrectCompletionTimeInHoursBecauseIsExactlyValue(){
         assertDoesNotThrow(() -> new Course("Git e Github para Sobrevivência",
                 "git-e-github-para-sobrevivencia", 20,
                 "Paulo Silveira", subCategory),"Erro de validação ao criar um curso");
     }
 
     @Test
-    public void shouldValidateCorrectCompletionTimeInHoursBecauseIsLimitValue(){
+    void shouldValidateCorrectCompletionTimeInHoursBecauseIsLimitValue(){
         assertDoesNotThrow(() -> new Course("Git e Github para Sobrevivência",
                 "git-e-github-para-sobrevivencia", 1,
                 "Paulo Silveira", subCategory),"Erro de validação ao criar um curso");
     }
 
     @Test
-    public void shouldValidateIncorrectCompletionTimeInHoursBecauseIsLess(){
+    void shouldValidateIncorrectCompletionTimeInHoursBecauseIsLess(){
         assertThrows(IllegalArgumentException.class, () ->  new Course("Git e Github para Sobrevivência",
                 "git-e-github-para-sobrevivencia", -1,
                 "Paulo Silveira", subCategory));

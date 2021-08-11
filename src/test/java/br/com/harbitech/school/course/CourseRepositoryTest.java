@@ -7,7 +7,6 @@ import br.com.harbitech.school.subcategory.Subcategory;
 import br.com.harbitech.school.util.builder.CategoryBuilder;
 import br.com.harbitech.school.util.builder.CourseBuilder;
 import br.com.harbitech.school.util.builder.SubcategoryBuilder;
-import org.junit.Assert;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +17,7 @@ import org.springframework.test.context.ActiveProfiles;
 
 import java.util.Optional;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @DataJpaTest
@@ -73,20 +73,23 @@ public class CourseRepositoryTest {
     }
 
     @Test
-    public void shouldLoadOneCourseSearchingByCodeUrl() {
+    void shouldLoadOneCourseSearchingByCodeUrl() {
         Course expectedCourse = androidCourse(CourseVisibility.PUBLIC, subcategory);
 
-        Optional<Course> actualCourse = courseRepository.findByCodeUrl("android-refinando-projeto");
+        Optional<Course> possibleCourse = courseRepository.findByCodeUrl("android-refinando-projeto");
 
-        Assert.assertEquals(expectedCourse.getCodeUrl(), actualCourse.get().getCodeUrl());
+        assertTrue(possibleCourse.isPresent());
+        assertEquals(expectedCourse.getCodeUrl(), possibleCourse.get().getCodeUrl());
     }
 
     @Test
-    public void shouldntLoadOneCourseBecauseDoesntHaveOneCourseWithTheCodeUrlPassed() {
+    void shouldNotLoadOneCourseBecauseDoesntHaveOneCourseWithTheCodeUrlPassed() {
         Optional<Course> possibleCourse = courseRepository.findByCodeUrl("java-poo");
 
         assertTrue(possibleCourse.isEmpty());
     }
+
+
 
     private Course androidCourse(CourseVisibility visibility, Subcategory subcategory) {
         Course androidCourse = new CourseBuilder("Android parte 3: Refinando o projeto",

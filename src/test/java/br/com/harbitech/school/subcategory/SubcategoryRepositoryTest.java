@@ -39,7 +39,7 @@ public class SubcategoryRepositoryTest {
     private Course course;
 
     @BeforeEach
-    public void setUp() {
+    void setUp() {
         this.category = aCategory();
     }
 

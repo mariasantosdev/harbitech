@@ -10,7 +10,7 @@ public class SubCategoryTest {
     private Category category;
 
     @BeforeEach
-    public void setUp(){
+    void setUp(){
         this.category = new Category("Programação", "programacao");
     }
 
