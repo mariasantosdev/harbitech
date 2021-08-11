@@ -66,6 +66,7 @@ public class SubcategoryController {
             return "admin/subcategory/formSubcategory";
         }
         subcategoryRepository.save(subcategoryForm.toModel());
+      
         return "redirect:/admin/subcategories/" + subcategoryForm.getCategory().getCodeUrl();
     }
 

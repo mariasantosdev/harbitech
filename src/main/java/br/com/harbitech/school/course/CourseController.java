@@ -58,7 +58,6 @@ public class CourseController {
 
     @GetMapping(value = "/admin/courses/new")
     String formNew(CourseForm courseForm, Model model){
-        subcategoryRepository.findAllByOrderByName();
 
         String formAction = "/admin/courses";
 
@@ -74,6 +73,7 @@ public class CourseController {
             model.addAllAttributes(this.setupForm(formAction, courseForm));
             return "admin/course/formCourse";
         }
+
         courseRepository.save(courseForm.toModel());
         return "redirect:/admin/courses/" + courseForm.getCategoryCodeUrl() +
                 "/" + courseForm.getSubcategoryCodeUrl();

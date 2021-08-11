@@ -118,6 +118,7 @@ public class CategoryForm {
         this.htmlHexColorCode = htmlHexColorCode;
     }
 
+
     public Category toModel() {
         return new Category(this.name, this.codeUrl,this.status,this.orderVisualization, this.studyGuide,
                 this.iconPath, this.htmlHexColorCode, this.description);

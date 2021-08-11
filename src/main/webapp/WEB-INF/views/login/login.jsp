@@ -126,6 +126,9 @@
             opacity: .6;
             width: 100%;
         }
+        .category-card__icon img {
+            max-width: 128px;
+        }
         .category-card__title {
             font-size: 1em;
             font-weight: 700;
