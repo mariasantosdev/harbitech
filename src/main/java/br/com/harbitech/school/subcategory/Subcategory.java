@@ -5,10 +5,7 @@ import br.com.harbitech.school.course.Course;
 import org.springframework.util.Assert;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Pattern;
-import javax.validation.constraints.Size;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,12 +21,7 @@ public class Subcategory implements Comparable<Subcategory> {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @NotBlank(message = "{subcategory.name.required}")
-    @Size(max = 70, message = "{subcategory.name.size.max}")
     private String name;
-    @NotBlank(message = "{subcategory.codeUrl.required}")
-    @Size(max = 70, message = "{subcategory.codeUrl.size.max}")
-    @Pattern(regexp = "[-a-z]+", message = "{subcategory.codeUrl.pattern}")
     private String codeUrl;
     @Column(columnDefinition = "TEXT")
     private String description;
@@ -37,11 +29,9 @@ public class Subcategory implements Comparable<Subcategory> {
     private String studyGuide;
     @Enumerated(EnumType.STRING)
     @Column(columnDefinition = "ENUM")
-    @NotNull
     private SubCategoryStatus status = SubCategoryStatus.INACTIVE;
-    private int orderVisualization;
+    private int orderVisualization = 0;
     @ManyToOne(fetch = FetchType.LAZY)
-    @NotNull(message = "{subcategory.category.required}")
     private Category category;
     @OneToMany(mappedBy = "subcategory")
     @NotNull(message = "{subcategory.course.required}")
@@ -70,6 +60,12 @@ public class Subcategory implements Comparable<Subcategory> {
         this.studyGuide = studyGuide;
         this.status = status;
         this.orderVisualization = orderVisualization;
+    }
+
+    public Subcategory(Long id,String name, String codeUrl, int orderVisualization, String description, String studyGuide,
+                       SubCategoryStatus status, Category category){
+        this(name,codeUrl,orderVisualization,description,studyGuide,status,category);
+        this.id = id;
     }
 
     public int getOrderVisualization() {
@@ -104,6 +100,22 @@ public class Subcategory implements Comparable<Subcategory> {
         return courses;
     }
 
+    public Category getCategory() {
+        return category;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setCodeUrl(String codeUrl) {
+        this.codeUrl = codeUrl;
+    }
+
     public void setDescription(String description) {
         this.description = description;
     }
@@ -112,16 +124,16 @@ public class Subcategory implements Comparable<Subcategory> {
         this.studyGuide = studyGuide;
     }
 
+    public void setStatus(SubCategoryStatus status) {
+        this.status = status;
+    }
+
     public void setOrderVisualization(int orderVisualization) {
         this.orderVisualization = orderVisualization;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public Category getCategory() {
-        return category;
+    public void setCategory(Category category) {
+        this.category = category;
     }
 
     public String getStatusDescription(){
@@ -132,21 +144,6 @@ public class Subcategory implements Comparable<Subcategory> {
         return this.category.getCodeUrl();
     }
 
-    public void setCodeUrl(String codeUrl) {
-        this.codeUrl = codeUrl;
-    }
-
-    public void setStatus(SubCategoryStatus status) {
-        this.status = status;
-    }
-
-    public void setCategory(Category category) {
-        this.category = category;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
 
     @Override
     public String toString() {

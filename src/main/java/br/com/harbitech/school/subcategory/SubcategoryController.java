@@ -15,6 +15,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import static br.com.harbitech.school.subcategory.SubcategoryForm.*;
 import static org.springframework.http.HttpStatus.NOT_FOUND;
 
 @Controller
@@ -47,25 +48,25 @@ public class SubcategoryController {
     }
 
     @GetMapping(value = "/admin/subcategories/new")
-    String formNew(Subcategory subcategory, Model model){
-        List<Category> categories = categoryRepository.findAllByOrderByName();
+    String formNew(SubcategoryForm subcategoryform, Model model){
+        categoryRepository.findAllByOrderByName();
 
         String formAction = "/admin/subcategories";
 
-        model.addAllAttributes(this.setupForm(formAction, subcategory));
+        model.addAllAttributes(this.setupForm(formAction, subcategoryform));
 
         return "admin/subcategory/formSubcategory";
     }
 
     @PostMapping(value = "/admin/subcategories")
-    String save(@Valid Subcategory subcategory, BindingResult result, Model model) {
+    String save(@Valid SubcategoryForm subcategoryForm, BindingResult result, Model model) {
         if (result.hasErrors()) {
             String formAction = "/admin/subcategories";
-            model.addAllAttributes(this.setupForm(formAction, subcategory));
+            model.addAllAttributes(this.setupForm(formAction, subcategoryForm));
             return "admin/subcategory/formSubcategory";
         }
-        subcategoryRepository.save(subcategory);
-        return "redirect:/admin/subcategories/" + subcategory.getCategory().getCodeUrl();
+        subcategoryRepository.save(toModel(subcategoryForm));
+        return "redirect:/admin/subcategories/" + subcategoryForm.getCategory().getCodeUrl();
     }
 
     @GetMapping(value = "/admin/subcategories/{category}/{subcategory}")
@@ -79,29 +80,42 @@ public class SubcategoryController {
 
         String formAction = "/admin/subcategories/" + categoryCodeUrl + "/" + subcategoryCodeUrl;
 
-        model.addAllAttributes(this.setupForm(formAction, subcategory));
+        model.addAllAttributes(this.setupForm(formAction, SubcategoryForm.from(subcategory)));
 
         return "admin/subcategory/formSubcategory";
     }
 
     @PostMapping("/admin/subcategories/{category}/{subcategoryCodeUrl}")
-    String update(@Valid Subcategory subcategory, BindingResult result, Model model,
+    String update(@Valid SubcategoryForm subcategoryForm, BindingResult result, Model model,
                   @PathVariable("category") String categoryCodeUrl,
                   @PathVariable("subcategoryCodeUrl") String subcategoryCodeUrl) {
         if (result.hasErrors()) {
             String formAction = "/admin/subcategories/" + categoryCodeUrl + "/" + subcategoryCodeUrl;
-            model.addAllAttributes(this.setupForm(formAction, subcategory));
+            model.addAllAttributes(this.setupForm(formAction, subcategoryForm));
             return "admin/subcategory/formSubcategory";
         }
-        subcategoryRepository.save(subcategory);
+        subcategoryRepository.save(SubcategoryForm.toModel(subcategoryForm, subcategoryRepository));
         return "redirect:/admin/subcategories/" + categoryCodeUrl;
         }
 
-    private Map<String,Object> setupForm(String formAction, Subcategory subcategory) {
+    @GetMapping("/{categoryCode}")
+    String subcategoryByCategoryCodeUrl(@PathVariable("categoryCode") String categoryCodeUrl, Model model){
+        Category category = categoryRepository.findByCodeUrl(categoryCodeUrl)
+                .orElseThrow(() -> new ResponseStatusException(NOT_FOUND, categoryCodeUrl));
+
+        List<Subcategory> allActiveSubcategories = subcategoryRepository.findAllActiveSubcategories(category);
+
+        model.addAttribute("allActiveSubcategories", allActiveSubcategories);
+        model.addAttribute("category",category);
+
+        return "category/category";
+    }
+
+    private Map<String,Object> setupForm(String formAction, SubcategoryForm subcategoryForm) {
         Map<String,Object> attributes = new HashMap<>();
         List<Category> categories = categoryRepository.findAllByOrderByName();
 
-        attributes.put("subcategory", subcategory);
+        attributes.put("subcategoryForm", subcategoryForm);
         attributes.put("categories", categories);
         attributes.put("formAction", formAction);
 

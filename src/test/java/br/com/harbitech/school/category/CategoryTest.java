@@ -61,18 +61,16 @@ public class CategoryTest {
     @Test
     public void shouldValidateIncorrectDescriptionEnum(){
         assertThrows(IllegalArgumentException.class,() -> new Category("Programação", "programacao",
-                "Programe nas principais linguagens de programação",
-                CategoryStatus.from("UMA_CATEGORIA_INVALIDA"), 1,
+                CategoryStatus.from("UMA_CATEGORIA_INVALIDA"),1,
                 "https://www.alura.com.br/assets/api/formacoes/categorias/512/programacao-transparent.png",
-                "#00c86f"));
+                "#00c86f","Aprenda as principais linguagens", "Programe nas principais linguagens de programação"));
     }
 
     @Test
     public void shouldValidateCorrectDescriptionEnum() {
-       assertDoesNotThrow(()-> (new Category("Programação", "programacao",
-                "Programe nas principais linguagens de programação",
-                CategoryStatus.from("INATIVA"), 1,
-                "https://www.alura.com.br/assets/api/formacoes/categorias/512/programacao-transparent.png",
-                "#00c86f")),"Erro de validação ao criar categoria.");
+       assertDoesNotThrow(()-> new Category("Programação", "programacao",
+               CategoryStatus.from("INATIVA"),1,
+               "https://www.alura.com.br/assets/api/formacoes/categorias/512/programacao-transparent.png",
+               "#00c86f","Aprenda as principais linguagens", "Programe nas principais linguagens de programação"));
     }
 }

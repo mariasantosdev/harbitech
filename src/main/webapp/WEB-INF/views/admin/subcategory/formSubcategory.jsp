@@ -1,7 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
-<c:set var="formTitle" value="${subcategory.id == null ? 'Nova Subcategoria' : 'Atualizando Subcategoria'}"/>
+<c:set var="formTitle" value="${subcategoryForm.id == null ? 'Nova Subcategoria' : 'Atualizando Subcategoria'}"/>
 <!DOCTYPE html>
 <html>
 <head>
@@ -18,7 +18,7 @@
     </div>
 </nav>
 
-<form:form class="form-horizontal" modelAttribute="subcategory" method="post" action="${formAction}">
+<form:form class="form-horizontal" modelAttribute="subcategoryForm" method="post" action="${formAction}">
 <div class="panel panel-default">
     <div class="panel-heading">
         <h1 class="panel-title">${formTitle}</h1>
@@ -46,12 +46,12 @@
                 <label for="flexRadioDefault1" class="col-sm-2 control-label">Status</label>
                 <div class="col-sm-2">
                 <input class="form-check-input" type="radio" name="status" id="flexRadioDefault1"
-                       value="ACTIVE"<c:if test="${subcategory.status== 'ACTIVE'}">checked=checked</c:if>/>
+                       value="ACTIVE" ${subcategoryForm.status == 'ACTIVE' ? "checked" : ""} />
                     ATIVA
             </div>
                 <div>
                 <input class="form-check-input" type="radio" name="status" id="flexRadioDefault2"
-                       value="INACTIVE" <c:if test="${subcategory.status== 'INACTIVE'}">checked=checked</c:if>/>
+                       value="INACTIVE" ${subcategoryForm.status == 'INACTIVE' ? "checked" : ""} />
                 INATIVA
                 </div>
             <div class="form-check">
@@ -65,7 +65,6 @@
                     <form:errors path="orderVisualization" cssClass="error"/>
                 </div>
             </div>
-
             <div class="form-group">
                 <label class="col-sm-2 control-label" for="studyGuide">Guias de estudo</label>
                 <div class="col-sm-7">

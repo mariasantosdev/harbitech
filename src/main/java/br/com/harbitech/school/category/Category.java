@@ -4,7 +4,6 @@ import br.com.harbitech.school.subcategory.Subcategory;
 import org.springframework.util.Assert;
 
 import javax.persistence.*;
-import javax.validation.constraints.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,12 +16,7 @@ public class Category {
         @Id
         @GeneratedValue(strategy = GenerationType.IDENTITY)
         private Long id;
-        @NotBlank(message = "{category.name.required}")
-        @Size(max = 70, message = "{category.name.size.max}")
         private String name;
-        @NotBlank(message = "{category.codeUrl.required}")
-        @Size(max = 70, message = "{category.codeUrl.size.max}")
-        @Pattern(regexp = "[-a-z]+", message = "{category.codeUrl.pattern}")
         private String codeUrl;
         @Column(columnDefinition = "TEXT")
         private String description;
@@ -31,11 +25,8 @@ public class Category {
         @Enumerated(EnumType.STRING)
         @Column(columnDefinition = "ENUM")
         private CategoryStatus status = CategoryStatus.INACTIVE;
-        @Min(-1)
         private int orderVisualization;
-        @Size(max = 400, message = "{category.iconPath.size.max}")
         private String iconPath;
-        @Size(max = 7, message = "{category.htmlHexColorCode.size.max}")
         private String htmlHexColorCode;
         @OneToMany(mappedBy = "category")
         private List<Subcategory> subCategories = new ArrayList<>();
@@ -54,30 +45,25 @@ public class Category {
         this.orderVisualization = -1;
     }
 
-    public Category(String name, String codeUrl, String description, CategoryStatus status, int orderVisualization,
-                    String iconPath, String htmlHexColorCode) {
+    public Category(String name, String codeUrl, CategoryStatus status, int orderVisualization,
+                    String iconPath, String htmlHexColorCode,String description, String studyGuide) {
         this(name, codeUrl);
         this.description = description;
         this.status = status;
         this.orderVisualization = orderVisualization;
         this.iconPath = iconPath;
         this.htmlHexColorCode = htmlHexColorCode;
+        this.studyGuide = studyGuide;
+    }
+
+    public Category(Long id, String name, String codeUrl, CategoryStatus status, int orderVisualization,
+                        String studyGuide, String iconPath,String htmlHexColorCode,String description) {
+        this(name,codeUrl,status,orderVisualization,iconPath,htmlHexColorCode, description, studyGuide);
+        this.id = id;
     }
 
     public Long getId() {
         return id;
-    }
-
-    public String getStudyGuide() {
-        return studyGuide;
-    }
-
-    public int getOrderVisualization() {
-        return orderVisualization;
-    }
-
-    public List<Subcategory> getSubCategories() {
-        return subCategories;
     }
 
     public String getName() {
@@ -92,8 +78,16 @@ public class Category {
         return description;
     }
 
+    public String getStudyGuide() {
+        return studyGuide;
+    }
+
     public CategoryStatus getStatus() {
         return status;
+    }
+
+    public int getOrderVisualization() {
+        return orderVisualization;
     }
 
     public String getIconPath() {
@@ -102,6 +96,14 @@ public class Category {
 
     public String getHtmlHexColorCode() {
         return htmlHexColorCode;
+    }
+
+    public List<Subcategory> getSubCategories() {
+        return subCategories;
+    }
+
+    public String getStatusDescription(){
+        return this.status.getDescription();
     }
 
     public void setId(Long id) {
@@ -142,10 +144,6 @@ public class Category {
 
     public void setSubCategories(List<Subcategory> subCategories) {
         this.subCategories = subCategories;
-    }
-
-    public String getStatusDescription(){
-        return this.status.getDescription();
     }
 
     @Override

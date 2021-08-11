@@ -1,7 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
-<c:set var="formTitle" value="${category.id == null ? 'Nova Categoria' : 'Atualizando Categoria'}"/>
+<c:set var="formTitle" value="${categoryForm.id == null ? 'Nova Categoria' : 'Atualizando Categoria'}"/>
 <!DOCTYPE html>
 <html>
 <head>
@@ -17,7 +17,7 @@
         </div>
     </div>
 </nav>
-<form:form class="form-horizontal" modelAttribute="category" method="post">
+<form:form class="form-horizontal" modelAttribute="categoryForm" method="post">
     <div class="panel panel-default">
         <div class="panel-heading">
             <h1 class="panel-title">${formTitle}</h1>
@@ -46,12 +46,12 @@
                 <label for="flexRadioDefault1" class="col-sm-2 control-label">Status</label>
                 <div class="col-sm-2">
                 <input class="form-check-input" type="radio" name="status" id="flexRadioDefault1"
-                       value="ACTIVE" <c:if test="${category.status== 'ACTIVE'}">checked=checked</c:if>/>
+                    value="ACTIVE" ${categoryForm.status == 'ACTIVE' ? "checked" : ""} />
                     ATIVA
             </div>
                 <div>
                 <input class="form-check-input" type="radio" name="status" id="flexRadioDefault2"
-                       value="INACTIVE" <c:if test="${category.status== 'INACTIVE'}">checked=checked</c:if>/>
+                       value="INACTIVE" ${categoryForm.status == 'INACTIVE' ? "checked" : ""} />
                 INATIVA
                 </div>
             <br>
