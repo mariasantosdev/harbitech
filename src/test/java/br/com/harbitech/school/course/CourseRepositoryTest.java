@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
+import org.springframework.data.domain.*;
 import org.springframework.test.context.ActiveProfiles;
 
 import java.util.List;
@@ -125,6 +126,42 @@ public class CourseRepositoryTest {
         assertThat(categories)
                 .hasSize(3)
                 .allMatch(category -> codeUrlFromFirstCategory.equals("Mobile"));
+    }
+
+    @Test
+    void shouldLoadCoursesBySubcategory() {
+        androidCourse(CourseVisibility.PUBLIC, subcategory);
+        androidTestsCourse(CourseVisibility.PUBLIC, subcategory);
+
+        Pageable pageable = PageRequest.of(0, 2);
+
+        Page<Course> courses = courseRepository.findAllBySubcategory(subcategory, pageable);
+
+        assertThat(courses)
+                .hasSize(2);
+    }
+
+    @Test
+    void shouldLoadOnlyOneCourseBySubcategoryAccordingToPagination() {
+        androidCourse(CourseVisibility.PUBLIC, subcategory);
+        androidTestsCourse(CourseVisibility.PUBLIC, subcategory);
+
+        Pageable pageable = PageRequest.of(0, 1);
+
+        Page<Course> courses = courseRepository.findAllBySubcategory(subcategory, pageable);
+
+        assertThat(courses)
+                .hasSize(1);
+    }
+
+    @Test
+    void shouldNotLoadCourseBySubcategory() {
+
+        Pageable pageable = PageRequest.of(0, 1);
+
+        Page<Course> courses = courseRepository.findAllBySubcategory(subcategory, pageable);
+
+        assertTrue(courses.isEmpty());
     }
 
     private Category dataScienceCategory(CategoryStatus status) {
