@@ -137,10 +137,10 @@ public class CourseForm {
         return this.subcategory.getCategory().getCodeUrl();
     }
 
-    public static Course toModel(CourseForm courseForm) {
-        return new Course(courseForm.getName(), courseForm.getCodeUrl(), courseForm.getCompletionTimeInHours(),
-                courseForm.getVisibility(), courseForm.getTargetAudience(), courseForm.getInstructor(),
-                courseForm.getDescription(), courseForm.getDevelopedSkills(), courseForm.getSubcategory());
+    public Course toModel() {
+        return new Course(this.name, this.codeUrl, this.completionTimeInHours,
+                this.visibility, this.targetAudience, this.instructor,
+                this.description, this.developedSkills, this.subcategory);
     }
 
     public static Course toModel(CourseForm courseForm, CourseRepository courseRepository) {

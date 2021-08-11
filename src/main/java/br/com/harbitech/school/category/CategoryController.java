@@ -18,7 +18,7 @@ public class CategoryController {
     private final CategoryRepository categoryRepository;
 
     CategoryController(CategoryRepository categoryRepository){
-        this.categoryRepository =  categoryRepository;
+        this.categoryRepository = categoryRepository;
     }
 
     @GetMapping("/admin/categories")
@@ -39,7 +39,7 @@ public class CategoryController {
         if (result.hasErrors()){
             return "admin/category/formCategory";
         }
-        categoryRepository.save(toModel(categoryForm));
+        categoryRepository.save(categoryForm.toModel());
         return "redirect:/admin/categories";
     }
 

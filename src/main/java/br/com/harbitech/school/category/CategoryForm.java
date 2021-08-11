@@ -118,9 +118,9 @@ public class CategoryForm {
         this.htmlHexColorCode = htmlHexColorCode;
     }
 
-    public static Category toModel(CategoryForm categoryform) {
-        return new Category(categoryform.getName(), categoryform.getCodeUrl(),categoryform.status,categoryform.getOrderVisualization(),
-                categoryform.studyGuide, categoryform.getIconPath(), categoryform.getHtmlHexColorCode(), categoryform.getDescription());
+    public Category toModel() {
+        return new Category(this.name, this.codeUrl,this.status,this.orderVisualization, this.studyGuide,
+                this.iconPath, this.htmlHexColorCode, this.description);
     }
 
     public static Category toModel(CategoryForm categoryform, CategoryRepository categoryRepository) {

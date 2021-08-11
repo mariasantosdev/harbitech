@@ -74,7 +74,7 @@ public class CourseController {
             model.addAllAttributes(this.setupForm(formAction, courseForm));
             return "admin/course/formCourse";
         }
-        courseRepository.save(toModel(courseForm));
+        courseRepository.save(courseForm.toModel());
         return "redirect:/admin/courses/" + courseForm.getCategoryCodeUrl() +
                 "/" + courseForm.getSubcategoryCodeUrl();
     }

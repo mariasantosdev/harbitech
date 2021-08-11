@@ -106,10 +106,9 @@ public class SubcategoryForm {
         this.category = category;
     }
 
-    public static Subcategory toModel(SubcategoryForm subcategoryForm) {
-        return new Subcategory(subcategoryForm.getName(), subcategoryForm.getCodeUrl(),
-                subcategoryForm.getOrderVisualization(), subcategoryForm.getDescription(), subcategoryForm.getStudyGuide(),
-                subcategoryForm.status, subcategoryForm.getCategory());
+    public Subcategory toModel() {
+        return new Subcategory(this.name, this.codeUrl, this.orderVisualization, this.description, this.studyGuide,
+                this.status, this.category);
     }
 
     public static Subcategory toModel(SubcategoryForm subcategoryForm, SubcategoryRepository subcategoryRepository) {

@@ -65,7 +65,7 @@ public class SubcategoryController {
             model.addAllAttributes(this.setupForm(formAction, subcategoryForm));
             return "admin/subcategory/formSubcategory";
         }
-        subcategoryRepository.save(toModel(subcategoryForm));
+        subcategoryRepository.save(subcategoryForm.toModel());
         return "redirect:/admin/subcategories/" + subcategoryForm.getCategory().getCodeUrl();
     }
 
