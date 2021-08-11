@@ -46,7 +46,7 @@ public class CategoryRepositoryTest {
     }
 
     @Test
-    void shouldnLoadOneCategoryBecauseDoesntHaveOneCategoryWithTheCodeUrlPassed() {
+    void shouldNotLoadOneCategoryBecauseDoesntHaveOneCategoryWithTheCodeUrlPassed() {
         Optional<Category> possibleCategory = categoryRepository.findByCodeUrl("programacao");
 
         assertTrue(possibleCategory.isEmpty());
@@ -67,7 +67,7 @@ public class CategoryRepositoryTest {
     }
 
     @Test
-    void shouldnLoadAnyCategoriesBecauseDontHave() {
+    void shouldNotLoadAnyCategoriesBecauseDontHave() {
         List<Category> categories = categoryRepository.findAllByOrderByName();
 
         assertTrue(categories.isEmpty());
@@ -87,7 +87,7 @@ public class CategoryRepositoryTest {
     }
 
     @Test
-    void shouldnLoadCategoriesBecauseDontHaveWithTheStatusPassed() {
+    void shouldNotLoadCategoriesBecauseDontHaveWithTheStatusPassed() {
         List<Category> categories = categoryRepository.findAllByStatus(CategoryStatus.ACTIVE);
 
         assertTrue(categories.isEmpty());
@@ -106,7 +106,7 @@ public class CategoryRepositoryTest {
     }
 
     @Test
-    void shouldnLoadAnyCategoriesBecauseTheCourseIsPrivate() {
+    void shouldNotLoadAnyCategoriesBecauseTheCourseIsPrivate() {
         androidCourse(CourseVisibility.PRIVATE,SubCategoryStatus.ACTIVE, CategoryStatus.ACTIVE);
 
         List<Category> categories = categoryRepository.findAllActiveCategoriesWithPublicCourses();
@@ -115,7 +115,7 @@ public class CategoryRepositoryTest {
     }
 
     @Test
-    void shouldntLoadAnyCategoriesBecauseTheCategoryIsInactive() {
+    void shouldNotLoadAnyCategoriesBecauseTheCategoryIsInactive() {
         androidCourse(CourseVisibility.PUBLIC,SubCategoryStatus.ACTIVE, CategoryStatus.INACTIVE);
 
         List<Category> categories = categoryRepository.findAllActiveCategoriesWithPublicCourses();
@@ -124,7 +124,7 @@ public class CategoryRepositoryTest {
     }
 
     @Test
-    void shouldntLoadAnyCategoriesBecauseTheSubCategoryIsInactive() {
+    void shouldNotLoadAnyCategoriesBecauseTheSubCategoryIsInactive() {
         androidCourse(CourseVisibility.PUBLIC,SubCategoryStatus.INACTIVE, CategoryStatus.ACTIVE);
 
         List<Category> categories = categoryRepository.findAllActiveCategoriesWithPublicCourses();
@@ -133,7 +133,7 @@ public class CategoryRepositoryTest {
     }
 
     @Test
-    void shouldntLoadAnyCategoriesBecauseTheCategoryHasNotSubcategory() {
+    void shouldNotLoadAnyCategoriesBecauseTheCategoryHasNotSubcategory() {
        dataScienceCategory(CategoryStatus.ACTIVE);
 
         List<Category> categories = categoryRepository.findAllActiveCategoriesWithPublicCourses();
@@ -142,7 +142,7 @@ public class CategoryRepositoryTest {
     }
 
     @Test
-    void shouldntLoadAnyCategoriesBecauseTheCategoryHasNotCourse() {
+    void shouldNotLoadAnyCategoriesBecauseTheCategoryHasNotCourse() {
         sql(SubCategoryStatus.ACTIVE, CategoryStatus.ACTIVE);
 
         List<Category> categories = categoryRepository.findAllActiveCategoriesWithPublicCourses();
@@ -151,7 +151,7 @@ public class CategoryRepositoryTest {
     }
 
     @Test
-    void shouldLoadALlActiveCategoriesWithPublicCoursesInOrderOfCategory() {
+    void shouldNotLoadALlActiveCategoriesWithPublicCoursesInOrderOfCategory() {
         androidCourse(CourseVisibility.PUBLIC, SubCategoryStatus.ACTIVE, CategoryStatus.ACTIVE);
         htmlAndCss(CourseVisibility.PUBLIC, SubCategoryStatus.ACTIVE, CategoryStatus.ACTIVE);
 

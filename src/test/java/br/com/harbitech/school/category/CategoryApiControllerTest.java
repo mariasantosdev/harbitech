@@ -57,6 +57,7 @@ public class CategoryApiControllerTest {
                         .andExpect(jsonPath("$[1].codeUrl", is("front-end")))
                         .andExpect(jsonPath("$[1].orderVisualization", is(2)))
                         .andExpect(jsonPath("$[1].iconPath", is("https://www.alura.com.br/cursos-online-front-end")))
+                        .andExpect(jsonPath("$[1].htmlHexColorCode", is("##f890")))
                         .andExpect(jsonPath("$[1].studyGuide", is("Aprenda os primeiros passos com JS, HTML css e muitos outros frameworks do mercado")));
     }
 

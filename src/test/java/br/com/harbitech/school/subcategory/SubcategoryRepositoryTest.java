@@ -2,8 +2,10 @@ package br.com.harbitech.school.subcategory;
 
 import br.com.harbitech.school.category.Category;
 import br.com.harbitech.school.category.CategoryStatus;
+import br.com.harbitech.school.course.Course;
 import br.com.harbitech.school.course.CourseVisibility;
 import br.com.harbitech.school.util.builder.CategoryBuilder;
+import br.com.harbitech.school.util.builder.CourseBuilder;
 import br.com.harbitech.school.util.builder.SubcategoryBuilder;
 import org.junit.Assert;
 import org.junit.jupiter.api.BeforeEach;
@@ -33,6 +35,8 @@ public class SubcategoryRepositoryTest {
     private TestEntityManager em;
 
     private Category category;
+
+    private Course course;
 
     @BeforeEach
     public void setUp() {
@@ -68,7 +72,7 @@ public class SubcategoryRepositoryTest {
     }
 
     @Test
-    void shouldnLoadOneSubcategoryBecauseDoesntHaveOneSubcategoryWithTheCodeUrlPassed() {
+    void shouldNotLoadOneSubcategoryBecauseDoesntHaveOneSubcategoryWithTheCodeUrlPassed() {
         Optional<Subcategory> possibleSubcategory = subcategoryRepository.findByCodeUrl("java");
 
         assertTrue(possibleSubcategory.isEmpty());
@@ -89,7 +93,7 @@ public class SubcategoryRepositoryTest {
 }
 
     @Test
-    void shouldnLoadAnySubcategoryBecauseDoesntHaveOneCategoryBound() {
+    void shouldNotLoadAnySubcategoryBecauseDoesntHaveOneCategoryBound() {
 
         List<Subcategory> subcategories = subcategoryRepository
                 .findAllByCategoryOrderByOrderVisualization(category);
@@ -111,14 +115,44 @@ public class SubcategoryRepositoryTest {
                 .allMatch(course -> codeUrlFromFirstSubcategory.equals("android"));
     }
 
-//    @Test
-//    void shouldnLoadAnyCategoriesBecauseTheCourseIsPrivate() {
-//        androidCourse(CourseVisibility.PRIVATE,SubCategoryStatus.ACTIVE, CategoryStatus.ACTIVE);
-//
-//        List<Category> categories = categoryRepository.findAllActiveCategoriesWithPublicCourses();
-//
-//        assertTrue(categories.isEmpty());
-//    }
+    @Test
+    void shouldLoadAllActiveSubcategoriesWithPublicCourses() {
+        androidCourse(CourseVisibility.PUBLIC, SubCategoryStatus.ACTIVE);
+
+        List<Subcategory> subcategories = subcategoryRepository.findAllActiveSubcategories(category);
+
+        assertThat(subcategories)
+                .hasSize(1)
+                .extracting(Subcategory::getCodeUrl)
+                .containsExactly("android");
+    }
+
+    @Test
+    void shouldNotLoadAnySubcategoriesBecauseTheCourseIsPrivate() {
+        androidCourse(CourseVisibility.PRIVATE, SubCategoryStatus.ACTIVE);
+
+        List<Subcategory> subcategories = subcategoryRepository.findAllActiveSubcategories(category);
+
+        assertTrue(subcategories.isEmpty());
+    }
+
+    @Test
+    void shouldNotLoadAnySubcategoriesBecauseTheSubcategoryHasNotCourse() {
+        flutterSubcategory(SubCategoryStatus.ACTIVE, category);
+
+        List<Subcategory> subcategories = subcategoryRepository.findAllActiveSubcategories(category);
+
+        assertTrue(subcategories.isEmpty());
+    }
+
+    @Test
+    void shouldNotLoadAnySubcategoriesBecauseTheSubcategoryIsInactive() {
+        androidCourse(CourseVisibility.PUBLIC, SubCategoryStatus.INACTIVE);
+
+        List<Subcategory> subcategories = subcategoryRepository.findAllActiveSubcategories(category);
+
+        assertTrue(subcategories.isEmpty());
+    }
 
     private Subcategory androidSubcategory(SubCategoryStatus status, Category category) {
         Subcategory android = new SubcategoryBuilder("Android","android",category)
@@ -131,6 +165,26 @@ public class SubcategoryRepositoryTest {
                 .create();
         em.persist(android);
         return android;
+    }
+
+    private Course androidCourse(CourseVisibility visibility, SubCategoryStatus subCategoryStatus) {
+        this.course = new CourseBuilder("Android parte 3: Refinando o projeto",
+                "android-refinando-projeto", "Alex Felipe", androidSubcategory(subCategoryStatus, category))
+                .withCompletionTimeInHours(10)
+                .withVisibility(visibility)
+                .withTargetAudience("Pessoas com foco em java/kotlin/desenvolvimento mobile")
+                .withDescription("""
+                            Implementar um layout personalizado para um AdapterView
+                            Entender e utilizar a entidade Application do Android Framework
+                            Interagir com o usuário por meio de dialogs
+                            Analisar possíveis melhorias no projeto por meio do inspetor de código
+                            Compreender e resolver tópicos apresentado no resultado da inspeção de código
+                        """)
+                .withDevelopedSkills("Aprenda a refatorar, usando os principios de SOLID nesse curso")
+                .create();
+        em.persist(course);
+
+        return course;
     }
 
     private Subcategory flutterSubcategory(SubCategoryStatus status, Category category) {
