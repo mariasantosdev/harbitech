@@ -5,7 +5,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
-import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
 
@@ -34,8 +33,7 @@ public class CategoryApiControllerTest {
      void shouldRetrieveAllCategoriesByStatus() throws Exception {
         categoryRepository.save(new Category("DevOps","dev-ops",CategoryStatus.ACTIVE,1,
                 "https://www.alura.com.br/assets/api/formacoes/categorias/128/devops.png","hf#400",
-                "Colaboração, compartilhamento do conhecimento e melhoria contínua. Faça parte do movimento" +
-                        " DevOps!","Dê os primeiros passos com DevOps"));
+                "oi","Dê os primeiros passos com DevOps"));
 
         categoryRepository.save(new Category("Front-end","front-end",CategoryStatus.ACTIVE,2,
                 "https://www.alura.com.br/cursos-online-front-end","##f890","Desenvolva " +
@@ -51,13 +49,15 @@ public class CategoryApiControllerTest {
                         .andExpect(jsonPath("$.length()", is(2)))
                         .andExpect(jsonPath("$[0].name", is("DevOps")))
                         .andExpect(jsonPath("$[0].codeUrl", is("dev-ops")))
+                        .andExpect(jsonPath("$[0].orderVisualization", is(1)))
                         .andExpect(jsonPath("$[0].iconPath", is("https://www.alura.com.br/assets/api/formacoes/categorias/128/devops.png")))
                         .andExpect(jsonPath("$[0].htmlHexColorCode", is("hf#400")))
-                        .andExpect(jsonPath("$[0].description",is(("Colaboração, compartilhamento do conhecimento e " +
-                                "melhoria contínua. Faça parte do movimento DevOps!"))))
+                        .andExpect(jsonPath("$[0].studyGuide", is("Dê os primeiros passos com DevOps")))
                         .andExpect(jsonPath("$[1].name", is("Front-end")))
                         .andExpect(jsonPath("$[1].codeUrl", is("front-end")))
-                        .andExpect(jsonPath("$[1].orderVisualization", is(2)));
+                        .andExpect(jsonPath("$[1].orderVisualization", is(2)))
+                        .andExpect(jsonPath("$[1].iconPath", is("https://www.alura.com.br/cursos-online-front-end")))
+                        .andExpect(jsonPath("$[1].studyGuide", is("Aprenda os primeiros passos com JS, HTML css e muitos outros frameworks do mercado")));
     }
 
     @Test

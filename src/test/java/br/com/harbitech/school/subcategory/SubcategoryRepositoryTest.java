@@ -2,6 +2,7 @@ package br.com.harbitech.school.subcategory;
 
 import br.com.harbitech.school.category.Category;
 import br.com.harbitech.school.category.CategoryStatus;
+import br.com.harbitech.school.course.CourseVisibility;
 import br.com.harbitech.school.util.builder.CategoryBuilder;
 import br.com.harbitech.school.util.builder.SubcategoryBuilder;
 import org.junit.Assert;
@@ -17,6 +18,7 @@ import java.util.List;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @DataJpaTest
@@ -56,23 +58,24 @@ public class SubcategoryRepositoryTest {
     }
 
     @Test
-    public void shouldLoadOneSubcategorySearchingByCodeUrl() {
+    void shouldLoadOneSubcategorySearchingByCodeUrl() {
         Subcategory expectedSubcategory = flutterSubcategory(SubCategoryStatus.ACTIVE, category);
 
-        Optional<Subcategory> actualSubcategory = subcategoryRepository.findByCodeUrl("flutter");
+        Optional<Subcategory> possibleSubcategory = subcategoryRepository.findByCodeUrl("flutter");
 
-        Assert.assertEquals(expectedSubcategory.getCodeUrl(), actualSubcategory.get().getCodeUrl());
+        assertTrue(possibleSubcategory.isPresent());
+        assertEquals(expectedSubcategory.getCodeUrl(), possibleSubcategory.get().getCodeUrl());
     }
 
     @Test
-    public void shouldntLoadOneSubcategoryBecauseDoesntHaveOneSubcategoryWithTheCodeUrlPassed() {
+    void shouldnLoadOneSubcategoryBecauseDoesntHaveOneSubcategoryWithTheCodeUrlPassed() {
         Optional<Subcategory> possibleSubcategory = subcategoryRepository.findByCodeUrl("java");
 
         assertTrue(possibleSubcategory.isEmpty());
     }
 
     @Test
-    public void shouldLoadAllCategoriesOrderlyByName() {
+    void shouldLoadAllCategoriesOrderlyByName() {
         androidSubcategory(SubCategoryStatus.ACTIVE, category);
         flutterSubcategory(SubCategoryStatus.ACTIVE, category);
 
@@ -86,7 +89,7 @@ public class SubcategoryRepositoryTest {
 }
 
     @Test
-    public void shouldntLoadAnySubcategoryBecauseDoesntHaveOneCategoryBound() {
+    void shouldnLoadAnySubcategoryBecauseDoesntHaveOneCategoryBound() {
 
         List<Subcategory> subcategories = subcategoryRepository
                 .findAllByCategoryOrderByOrderVisualization(category);
@@ -95,7 +98,7 @@ public class SubcategoryRepositoryTest {
     }
 
     @Test
-    public void shouldLoadAllCategoriesOrderlyByOrderVisualization() {
+    void shouldLoadAllCategoriesOrderlyByOrderVisualization() {
         androidSubcategory(SubCategoryStatus.ACTIVE, category);
         flutterSubcategory(SubCategoryStatus.ACTIVE, category);
 
@@ -107,6 +110,15 @@ public class SubcategoryRepositoryTest {
                 .hasSize(2)
                 .allMatch(course -> codeUrlFromFirstSubcategory.equals("android"));
     }
+
+//    @Test
+//    void shouldnLoadAnyCategoriesBecauseTheCourseIsPrivate() {
+//        androidCourse(CourseVisibility.PRIVATE,SubCategoryStatus.ACTIVE, CategoryStatus.ACTIVE);
+//
+//        List<Category> categories = categoryRepository.findAllActiveCategoriesWithPublicCourses();
+//
+//        assertTrue(categories.isEmpty());
+//    }
 
     private Subcategory androidSubcategory(SubCategoryStatus status, Category category) {
         Subcategory android = new SubcategoryBuilder("Android","android",category)
