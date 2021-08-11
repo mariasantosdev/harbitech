@@ -63,7 +63,7 @@ public class CategoryRepositoryTest {
 
         assertThat(categories)
                 .hasSize(2)
-                .allMatch(course -> codeUrlFromFirstCategory.equals("data-science"));
+                .allMatch(category -> codeUrlFromFirstCategory.equals("data-science"));
     }
 
     @Test
@@ -124,6 +124,15 @@ public class CategoryRepositoryTest {
     }
 
     @Test
+    void shouldntLoadAnyCategoriesBecauseTheSubCategoryIsInactive() {
+        androidCourse(CourseVisibility.PUBLIC,SubCategoryStatus.INACTIVE, CategoryStatus.ACTIVE);
+
+        List<Category> categories = categoryRepository.findAllActiveCategoriesWithPublicCourses();
+
+        assertTrue(categories.isEmpty());
+    }
+
+    @Test
     void shouldntLoadAnyCategoriesBecauseTheCategoryHasNotSubcategory() {
        dataScienceCategory(CategoryStatus.ACTIVE);
 
@@ -133,7 +142,16 @@ public class CategoryRepositoryTest {
     }
 
     @Test
-    void shouldLoadALlActiveCategoriesWithPublicCoursesInOrderOfSubcategory() {
+    void shouldntLoadAnyCategoriesBecauseTheCategoryHasNotCourse() {
+        sql(SubCategoryStatus.ACTIVE, CategoryStatus.ACTIVE);
+
+        List<Category> categories = categoryRepository.findAllActiveCategoriesWithPublicCourses();
+
+        assertTrue(categories.isEmpty());
+    }
+
+    @Test
+    void shouldLoadALlActiveCategoriesWithPublicCoursesInOrderOfCategory() {
         androidCourse(CourseVisibility.PUBLIC, SubCategoryStatus.ACTIVE, CategoryStatus.ACTIVE);
         htmlAndCss(CourseVisibility.PUBLIC, SubCategoryStatus.ACTIVE, CategoryStatus.ACTIVE);
 
@@ -143,7 +161,7 @@ public class CategoryRepositoryTest {
 
         assertThat(categories)
                 .hasSize(2)
-                .allMatch(course -> codeUrlFromFirstCategory.equals("mobile"));
+                .allMatch(category -> codeUrlFromFirstCategory.equals("mobile"));
     }
 
     private Category dataScienceCategory(CategoryStatus status) {
@@ -161,6 +179,18 @@ public class CategoryRepositoryTest {
         em.persist(dataScience);
 
         return dataScience;
+    }
+
+    private Subcategory sql(SubCategoryStatus status, CategoryStatus categoryStatus){
+        this.subcategory = new SubcategoryBuilder("SQL", "sql", dataScienceCategory(categoryStatus))
+                .withDescription("Saiba instalar e acessar o banco de dados MySQL e realizar consultas importantes")
+                .withStudyGuide("Aprendas comandos SQL como: Insert, Select, Update e Delete")
+                .withStatus(status)
+                .withOrderVisualization(6)
+                .create();
+        em.persist(subcategory);
+
+        return subcategory;
     }
 
     private Category frontEnd(CategoryStatus status){
