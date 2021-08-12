@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
-@Profile(value = {"prod", "test"})
 public class CategoryApiController {
 
     private final CategoryRepository categoryRepository;

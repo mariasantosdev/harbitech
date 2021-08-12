@@ -2,6 +2,7 @@ package br.com.harbitech.school.category;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
@@ -33,7 +34,9 @@ public class CategoryApiControllerTest {
      void shouldRetrieveAllCategoriesByStatus() throws Exception {
         categoryRepository.save(new Category("DevOps","dev-ops",CategoryStatus.ACTIVE,1,
                 "https://www.alura.com.br/assets/api/formacoes/categorias/128/devops.png","hf#400",
-                "oi","Dê os primeiros passos com DevOps"));
+                " Aprenda Git, Docker e Kubernetes e entenda a entrega contínua. Estude administração de" +
+                        " redes, Linux e gerencie servidores na nuvem. Explore o mundo de Internet das coisas e da " +
+                        "robótica. Saiba como começar com DevOps.","Dê os primeiros passos com DevOps"));
 
         categoryRepository.save(new Category("Front-end","front-end",CategoryStatus.ACTIVE,2,
                 "https://www.alura.com.br/cursos-online-front-end","##f890","Desenvolva " +

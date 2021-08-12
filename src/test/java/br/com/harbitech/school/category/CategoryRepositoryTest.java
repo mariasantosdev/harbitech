@@ -94,7 +94,7 @@ public class CategoryRepositoryTest {
     }
 
     @Test
-    void shouldLoadALlActiveCategoriesWithPublicCourses() {
+    void shouldLoadAllActiveCategoriesWithPublicCourses() {
         androidCourse(CourseVisibility.PUBLIC, SubCategoryStatus.ACTIVE, CategoryStatus.ACTIVE);
 
         List<Category> categories = categoryRepository.findAllActiveCategoriesWithPublicCourses();
@@ -162,6 +162,19 @@ public class CategoryRepositoryTest {
         assertThat(categories)
                 .hasSize(2)
                 .allMatch(category -> codeUrlFromFirstCategory.equals("mobile"));
+    }
+
+    @Test
+    void shouldLoadActiveCategoriesWithPublicCoursesInOrderOfSubcategory() {
+        androidCourse(CourseVisibility.PUBLIC, SubCategoryStatus.ACTIVE, CategoryStatus.ACTIVE);
+        htmlAndCss(CourseVisibility.PUBLIC, SubCategoryStatus.ACTIVE, CategoryStatus.ACTIVE);
+
+        List<Category> categories = categoryRepository.findAllActiveCategoriesWithPublicCourses();
+
+        List<Subcategory> subcategories = categories.get(0).getSubCategories();
+
+        assertThat(subcategories)
+                .allMatch(category -> subcategories.contains("android"));
     }
 
     private Category dataScienceCategory(CategoryStatus status) {

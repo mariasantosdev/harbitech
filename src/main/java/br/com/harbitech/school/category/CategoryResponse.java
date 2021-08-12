@@ -26,7 +26,6 @@ public class CategoryResponse {
         this.subcategory = subcategoryResponse;
     }
 
-
     public String getName() {
         return name;
     }
