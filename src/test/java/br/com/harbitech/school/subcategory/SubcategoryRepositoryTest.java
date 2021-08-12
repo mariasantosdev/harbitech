@@ -7,7 +7,6 @@ import br.com.harbitech.school.course.CourseVisibility;
 import br.com.harbitech.school.util.builder.CategoryBuilder;
 import br.com.harbitech.school.util.builder.CourseBuilder;
 import br.com.harbitech.school.util.builder.SubcategoryBuilder;
-import org.junit.Assert;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,7 +33,7 @@ public class SubcategoryRepositoryTest {
     @Autowired
     private TestEntityManager em;
 
-    private Category category;
+    private Category mobile;
 
     private Course course;
 
@@ -42,7 +41,7 @@ public class SubcategoryRepositoryTest {
 
     @BeforeEach
     void setUp() {
-        this.category = aCategory();
+        this.mobile = aCategory();
     }
 
     private Category aCategory() {
@@ -64,8 +63,8 @@ public class SubcategoryRepositoryTest {
     }
 
     @Test
-    void shouldLoadOneSubcategorySearchingByCodeUrl() {
-        Subcategory expectedSubcategory = flutterSubcategory(SubCategoryStatus.ACTIVE, category);
+    void should_load_one_subcategory_searching_by_code_url() {
+        Subcategory expectedSubcategory = flutterSubcategory(SubCategoryStatus.ACTIVE, mobile);
 
         Optional<Subcategory> possibleSubcategory = subcategoryRepository.findByCodeUrl("flutter");
 
@@ -74,16 +73,16 @@ public class SubcategoryRepositoryTest {
     }
 
     @Test
-    void shouldNotLoadOneSubcategoryBecauseDoesntHaveOneSubcategoryWithTheCodeUrlPassed() {
+    void should_not_load_one_subcategory_because_doesnt_have_one_subcategory_with_the_code_url_passed() {
         Optional<Subcategory> possibleSubcategory = subcategoryRepository.findByCodeUrl("java");
 
         assertTrue(possibleSubcategory.isEmpty());
     }
 
     @Test
-    void shouldLoadAllCategoriesOrderlyByName() {
-        androidSubcategory(SubCategoryStatus.ACTIVE, category);
-        flutterSubcategory(SubCategoryStatus.ACTIVE, category);
+    void should_load_all_categories_orderly_by_name() {
+        androidSubcategory(SubCategoryStatus.ACTIVE, mobile);
+        flutterSubcategory(SubCategoryStatus.ACTIVE, mobile);
 
         List<Subcategory> subcategories = subcategoryRepository.findAllByOrderByName();
 
@@ -96,20 +95,20 @@ public class SubcategoryRepositoryTest {
 }
 
     @Test
-    void shouldNotLoadAnySubcategoryBecauseDoesntHaveOneCategoryBound() {
+    void should_not_load_any_subcategory_because_doesnt_have_one_category_bound() {
 
         List<Subcategory> subcategories = subcategoryRepository
-                .findAllByCategoryOrderByOrderVisualization(category);
+                .findAllByCategoryOrderByOrderVisualization(mobile);
 
         assertTrue(subcategories.isEmpty());
     }
 
     @Test
-    void shouldLoadAllCategoriesOrderlyByOrderVisualization() {
-        androidSubcategory(SubCategoryStatus.ACTIVE, category);
-        flutterSubcategory(SubCategoryStatus.ACTIVE, category);
+    void should_load_all_categories_orderly_by_order_visualization() {
+        androidSubcategory(SubCategoryStatus.ACTIVE, mobile);
+        flutterSubcategory(SubCategoryStatus.ACTIVE, mobile);
 
-        List<Subcategory> subcategories = subcategoryRepository.findAllByCategoryOrderByOrderVisualization(category);
+        List<Subcategory> subcategories = subcategoryRepository.findAllByCategoryOrderByOrderVisualization(mobile);
 
         String codeUrlFromFirstSubcategory = subcategories.get(0).getCodeUrl();
 
@@ -120,10 +119,10 @@ public class SubcategoryRepositoryTest {
     }
 
     @Test
-    void shouldLoadAllActiveSubcategoriesWithPublicCourses() {
+    void should_load_all_active_subcategories_with_public_courses() {
         androidCourse(CourseVisibility.PUBLIC, SubCategoryStatus.ACTIVE);
 
-        List<Subcategory> subcategories = subcategoryRepository.findAllActiveSubcategories(category);
+        List<Subcategory> subcategories = subcategoryRepository.findAllActiveSubcategories(mobile);
 
         assertThat(subcategories)
                 .hasSize(1)
@@ -132,28 +131,28 @@ public class SubcategoryRepositoryTest {
     }
 
     @Test
-    void shouldNotLoadAnySubcategoriesBecauseTheCourseIsPrivate() {
+    void should_not_load_any_subcategories_because_the_course_is_private() {
         androidCourse(CourseVisibility.PRIVATE, SubCategoryStatus.ACTIVE);
 
-        List<Subcategory> subcategories = subcategoryRepository.findAllActiveSubcategories(category);
+        List<Subcategory> subcategories = subcategoryRepository.findAllActiveSubcategories(mobile);
 
         assertTrue(subcategories.isEmpty());
     }
 
     @Test
-    void shouldNotLoadAnySubcategoriesBecauseTheSubcategoryHasNotCourse() {
-        flutterSubcategory(SubCategoryStatus.ACTIVE, category);
+    void should_not_load_any_subcategories_because_the_subcategory_has_not_course() {
+        flutterSubcategory(SubCategoryStatus.ACTIVE, mobile);
 
-        List<Subcategory> subcategories = subcategoryRepository.findAllActiveSubcategories(category);
+        List<Subcategory> subcategories = subcategoryRepository.findAllActiveSubcategories(mobile);
 
         assertTrue(subcategories.isEmpty());
     }
 
     @Test
-    void shouldNotLoadAnySubcategoriesBecauseTheSubcategoryIsInactive() {
+    void should_not_load_any_subcategories_because_the_subcategory_is_inactive() {
         androidCourse(CourseVisibility.PUBLIC, SubCategoryStatus.INACTIVE);
 
-        List<Subcategory> subcategories = subcategoryRepository.findAllActiveSubcategories(category);
+        List<Subcategory> subcategories = subcategoryRepository.findAllActiveSubcategories(mobile);
 
         assertTrue(subcategories.isEmpty());
     }
@@ -173,7 +172,7 @@ public class SubcategoryRepositoryTest {
 
     private Course androidCourse(CourseVisibility visibility, SubCategoryStatus subCategoryStatus) {
         this.course = new CourseBuilder("Android parte 3: Refinando o projeto",
-                "android-refinando-projeto", "Alex Felipe", androidSubcategory(subCategoryStatus, category))
+                "android-refinando-projeto", "Alex Felipe", androidSubcategory(subCategoryStatus, mobile))
                 .withCompletionTimeInHours(10)
                 .withVisibility(visibility)
                 .withTargetAudience("Pessoas com foco em java/kotlin/desenvolvimento mobile")

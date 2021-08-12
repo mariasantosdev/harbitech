@@ -76,7 +76,7 @@ public class CourseRepositoryTest {
     }
 
     @Test
-    void shouldLoadOneCourseSearchingByCodeUrl() {
+    void should_load_one_course_searching_by_code_url() {
         Course expectedCourse = androidCourse(CourseVisibility.PUBLIC, subcategory);
 
         Optional<Course> possibleCourse = courseRepository.findByCodeUrl("android-refinando-projeto");
@@ -86,14 +86,14 @@ public class CourseRepositoryTest {
     }
 
     @Test
-    void shouldNotLoadOneCourseBecauseDoesntHaveOneCourseWithTheCodeUrlPassed() {
+    void should_not_load_one_course_because_doesnt_have_one_course_with_the_code_url_passed() {
         Optional<Course> possibleCourse = courseRepository.findByCodeUrl("java-poo");
 
         assertTrue(possibleCourse.isEmpty());
     }
 
     @Test
-    void shouldLoadTheInstructorWithMoreCourse() {
+    void should_load_the_instructor_with_more_course() {
         androidCourse(CourseVisibility.PUBLIC, subcategory);
         androidTestsCourse(CourseVisibility.PUBLIC, subcategory);
         htmlAndCss(CourseVisibility.PUBLIC, subcategory);
@@ -107,7 +107,7 @@ public class CourseRepositoryTest {
     }
 
     @Test
-    void shouldNotLoadTheInstructorWithMoreCourse() {
+    void should_not_load_the_instructor_with_more_course() {
 
         List<InstructorByCourseProjection> instructors = courseRepository.findInstructorWithGreaterNumberOfCourses();
 
@@ -115,7 +115,7 @@ public class CourseRepositoryTest {
     }
 
     @Test
-    void shouldLoadCoursesByCategories() {
+    void should_load_courses_by_categories() {
         dataScienceCategory(CategoryStatus.ACTIVE);
         frontEnd(CategoryStatus.ACTIVE);
 
@@ -131,7 +131,7 @@ public class CourseRepositoryTest {
     }
 
     @Test
-    void shouldLoadCoursesBySubcategory() {
+    void should_load_courses_by_subcategory() {
         androidCourse(CourseVisibility.PUBLIC, subcategory);
         androidTestsCourse(CourseVisibility.PUBLIC, subcategory);
 
@@ -145,7 +145,7 @@ public class CourseRepositoryTest {
     }
 
     @Test
-    void shouldLoadOnlyOneCourseBySubcategoryAccordingToPagination() {
+    void should_load_only_one_course_by_subcategory_according_to_pagination() {
         androidCourse(CourseVisibility.PUBLIC, subcategory);
         androidTestsCourse(CourseVisibility.PUBLIC, subcategory);
 
@@ -159,7 +159,7 @@ public class CourseRepositoryTest {
     }
 
     @Test
-    void shouldNotLoadCourseBySubcategory() {
+    void should_not_load_course_by_subcategory() {
 
         Pageable pageable = PageRequest.of(0, 1);
 

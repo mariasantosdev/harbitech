@@ -15,7 +15,7 @@ public class SubCategoryTest {
     }
 
     @Test
-    void shouldAddNewSubCategory() {
+    void should_add_new_subcategory() {
         Subcategory subCategory = assertDoesNotThrow(() -> new Subcategory("Java", "java", category),
                 "Erro de validação ao criar uma subcategoria");
         assertEquals("Java",subCategory.getName());
@@ -23,55 +23,55 @@ public class SubCategoryTest {
     }
 
     @Test
-    void shouldValidadeIncorrectCodeUrlBecauseHaveAccent() {
+    void should_validate_incorrect_code_url_because_have_accent() {
         assertThrows(IllegalArgumentException.class, () -> new Subcategory("Computação","computação"
                 ,category));
     }
 
     @Test
-    void shouldValidadeIncorrectCodeUrlBecauseIsUpperCase() {
+    void should_validate_incorrect_code_url_because_is_upper_case() {
         assertThrows(IllegalArgumentException.class, () -> new Subcategory("Java","Java",category));
     }
 
     @Test
-    void shouldValidadeIncorrectCodeUrlBecauseHaveSpace() {
+    void should_validate_incorrect_code_url_because_have_space() {
         assertThrows(IllegalArgumentException.class, () -> new Subcategory("Lógica de programação",
                 "logica de programacao",category));
     }
 
     @Test
-    void shouldValidadeIncorrectCodeUrlBecauseHaveSpecialCharacters() {
+    void should_validate_incorrect_code_url_because_have_special_characters() {
         assertThrows(IllegalArgumentException.class, () ->  new Subcategory("C#",
                 "c#",category));
     }
 
     @Test
-    void shouldValidadeIncorrectNameBecauseIsBlank() {
+    void should_validate_incorrect_name_because_is_blank() {
         assertThrows(IllegalArgumentException.class, () -> new Subcategory("","java",category));
     }
 
     @Test
-    void shouldValidadeIncorrectCodeUrlBecauseIsBlank() {
+    void should_validate_incorrect_code_url_because_is_blank() {
         assertThrows(IllegalArgumentException.class, () ->  new Subcategory("Java","",category));
     }
 
     @Test
-    void shouldValidadeIncorrectNameBecauseIsNull() {
+    void should_validate_incorrect_name_because_is_null() {
         assertThrows(IllegalArgumentException.class, () -> new Subcategory(null,"java",category));
     }
 
     @Test
-    void shouldValidadeIncorrectCodeUrlBecauseIsNull() {
+    void should_validate_incorrect_code_url_because_is_null() {
         assertThrows(IllegalArgumentException.class, () -> new Subcategory("Java",null,category));
     }
 
     @Test
-    void shouldValidadeIncorrectSubCategoryBecauseIsNull() {
+    void should_validate_incorrect_subcategory_because_is_null() {
         assertThrows(IllegalArgumentException.class, () -> new Subcategory("Java","java",null));
     }
 
     @Test
-    void shouldValidateIncorrectDescriptionEnum() {
+    void should_validate_incorrect_description_enum() {
         assertThrows(IllegalArgumentException.class, () -> new Subcategory("Java", "java",
                 1, "Java é " + "uma grande plataforma presente em todo lugar: de " +
                 "corporações à bancos e governo.  Desenvolva aplicações robustas com um back-end e construa APIs.",
@@ -80,7 +80,7 @@ public class SubCategoryTest {
     }
 
     @Test
-    void shouldValidateCorrectDescriptionEnum() {
+    void should_validate_correct_description_enum() {
         assertDoesNotThrow(() -> new Subcategory("Java", "java",
                 1, "Java é " + "uma grande plataforma presente em todo lugar: de " +
                 "corporações à bancos e governo.  Desenvolva aplicações robustas com um back-end e construa APIs.",
