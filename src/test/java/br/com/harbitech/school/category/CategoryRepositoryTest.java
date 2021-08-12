@@ -26,7 +26,7 @@ import static org.junit.jupiter.api.Assertions.*;
 public class CategoryRepositoryTest {
 
     @Autowired
-    CategoryRepository categoryRepository;
+    private CategoryRepository categoryRepository;
 
     @Autowired
     private TestEntityManager em;
@@ -47,23 +47,22 @@ public class CategoryRepositoryTest {
 
     @Test
     void shouldNotLoadOneCategoryBecauseDoesntHaveOneCategoryWithTheCodeUrlPassed() {
-        Optional<Category> possibleCategory = categoryRepository.findByCodeUrl("programacao");
+        Optional<Category> possibleCategory = categoryRepository.findByCodeUrl("categoryDoesntExist");
 
         assertTrue(possibleCategory.isEmpty());
     }
 
     @Test
-    void shouldLoadAllCategoriesOrderlyByName() {
+    void shouldLoadAllCategoriesOrderedByName() {
         mobileCategory(CategoryStatus.ACTIVE);
         dataScienceCategory(CategoryStatus.INACTIVE);
 
         List<Category> categories = categoryRepository.findAllByOrderByName();
 
-        String codeUrlFromFirstCategory = categories.get(0).getCodeUrl();
-
         assertThat(categories)
                 .hasSize(2)
-                .allMatch(category -> codeUrlFromFirstCategory.equals("data-science"));
+                .extracting(Category::getCodeUrl)
+                .containsExactly("data-science", "mobile");
     }
 
     @Test
@@ -162,6 +161,7 @@ public class CategoryRepositoryTest {
         assertThat(categories)
                 .hasSize(2)
                 .allMatch(category -> codeUrlFromFirstCategory.equals("mobile"));
+        //TODO FAZER O PADRAO DE PEGAR SOMENTE O CODIGO URL PARA VER SE ESTA VINDO.
     }
 
     @Test
@@ -175,6 +175,7 @@ public class CategoryRepositoryTest {
 
         assertThat(subcategories)
                 .allMatch(category -> subcategories.contains("android"));
+        //TODO FAZER O PADRAO DE PEGAR SOMENTE O CODIGO URL PARA VER SE ESTA VINDO. TUDO NA MESMA CATEGORIA.
     }
 
     private Category dataScienceCategory(CategoryStatus status) {

@@ -28,7 +28,7 @@ public class AdminController {
         List<InstructorByCourseProjection> instructorWithGreaterNumberOfCourses = courseRepository
                 .findInstructorWithGreaterNumberOfCourses();
 
-        List<CategoriesByCourseProjection> allCategoriesFromCourse = courseRepository.findAllCategories();
+        List<CategoriesByCourseProjection> allCategoriesFromCourse = courseRepository.findAllCoursesCategories();
 
         model.addAttribute("instructorsProjection", instructorWithGreaterNumberOfCourses);
         model.addAttribute("categoriesFromCourseProjection", allCategoriesFromCourse);

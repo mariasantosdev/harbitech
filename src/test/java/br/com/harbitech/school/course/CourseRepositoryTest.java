@@ -119,13 +119,15 @@ public class CourseRepositoryTest {
         dataScienceCategory(CategoryStatus.ACTIVE);
         frontEnd(CategoryStatus.ACTIVE);
 
-        List<CategoriesByCourseProjection> categories = courseRepository.findAllCategories();
+        List<CategoriesByCourseProjection> categories = courseRepository.findAllCoursesCategories();
 
         String codeUrlFromFirstCategory = categories.get(0).getName();
 
         assertThat(categories)
                 .hasSize(3)
                 .allMatch(category -> codeUrlFromFirstCategory.equals("Mobile"));
+
+        //TODO UTILIZAR UM ASSERT MELHOR QUE VERIFIQUE TAMBÉM A QUANTIDADE DE CURSOS.
     }
 
     @Test
@@ -139,6 +141,7 @@ public class CourseRepositoryTest {
 
         assertThat(courses)
                 .hasSize(2);
+        //TODO DA PARA MELHORAR O ASSERT PARA VERIFICAR MELHOR A SAIDA.
     }
 
     @Test
@@ -152,6 +155,7 @@ public class CourseRepositoryTest {
 
         assertThat(courses)
                 .hasSize(1);
+        //TODO DA PARA MELHORAR O ASSERT PARA VERIFICAR MELHOR A SAIDA.
     }
 
     @Test

@@ -21,7 +21,7 @@ public interface CourseRepository extends JpaRepository<Course,Long>, PagingAndS
     @Query(value = "SELECT category.name AS name, COUNT(course.id) AS amount FROM category LEFT JOIN subcategory " +
             "ON category.id = subcategory.category_id LEFT JOIN course course ON course.subcategory_id = subcategory.id " +
             "GROUP BY category.id ORDER BY amount DESC", nativeQuery = true)
-    List<CategoriesByCourseProjection> findAllCategories();
+    List<CategoriesByCourseProjection> findAllCoursesCategories();
 
    Page<Course> findAllBySubcategory(Subcategory subcategory, Pageable pageable);
 

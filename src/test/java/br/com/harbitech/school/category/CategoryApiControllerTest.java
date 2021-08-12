@@ -2,7 +2,6 @@ package br.com.harbitech.school.category;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
@@ -48,7 +47,6 @@ public class CategoryApiControllerTest {
                         .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
-                        .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                         .andExpect(jsonPath("$.length()", is(2)))
                         .andExpect(jsonPath("$[0].name", is("DevOps")))
                         .andExpect(jsonPath("$[0].codeUrl", is("dev-ops")))
@@ -62,15 +60,5 @@ public class CategoryApiControllerTest {
                         .andExpect(jsonPath("$[1].iconPath", is("https://www.alura.com.br/cursos-online-front-end")))
                         .andExpect(jsonPath("$[1].htmlHexColorCode", is("##f890")))
                         .andExpect(jsonPath("$[1].studyGuide", is("Aprenda os primeiros passos com JS, HTML css e muitos outros frameworks do mercado")));
-    }
-
-    @Test
-    @Transactional
-    void shouldReturnAListWithoutCategories() throws Exception {
-        mockMvc.perform(get("/api/categories")
-                        .accept(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk())
-                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
-         .andExpect(jsonPath("$.length()", is(0)));
     }
 }

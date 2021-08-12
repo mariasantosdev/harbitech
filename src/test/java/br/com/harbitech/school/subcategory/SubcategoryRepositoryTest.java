@@ -38,6 +38,8 @@ public class SubcategoryRepositoryTest {
 
     private Course course;
 
+    //TODO TENTAR SEMPRE USAR A STRING AO INVES DE GETS
+
     @BeforeEach
     void setUp() {
         this.category = aCategory();
@@ -90,6 +92,7 @@ public class SubcategoryRepositoryTest {
         assertThat(subcategories)
                 .hasSize(2)
                 .allMatch(course -> codeUrlFromFirstSubcategory.equals("android"));
+        //TODO MESMO PADRÃO USADO NA CATEGORY
 }
 
     @Test
@@ -113,6 +116,7 @@ public class SubcategoryRepositoryTest {
         assertThat(subcategories)
                 .hasSize(2)
                 .allMatch(course -> codeUrlFromFirstSubcategory.equals("android"));
+        //TODO MESMO PADRÃO USADO NA CATEGORY
     }
 
     @Test
