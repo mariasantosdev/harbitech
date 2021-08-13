@@ -9,7 +9,6 @@ import org.springframework.web.server.ResponseStatusException;
 import javax.validation.Valid;
 import java.util.List;
 
-import static br.com.harbitech.school.category.CategoryForm.*;
 import static org.springframework.http.HttpStatus.NOT_FOUND;
 
 @Controller
@@ -48,16 +47,16 @@ public class CategoryController {
         Category category = categoryRepository.findByCodeUrl(codeUrl)
                 .orElseThrow(() -> new ResponseStatusException(NOT_FOUND, codeUrl));
 
-        model.addAttribute("categoryForm", from(category));
-        return "admin/category/formCategory";
+        model.addAttribute("categoryFormUpdate", new CategoryFormUpdate(category));
+        return "admin/category/formUpdateCategory";
     }
 
     @PostMapping("/admin/categories/{codeUrl}")
-    String update(@Valid CategoryForm categoryForm, BindingResult result) {
+    String update(@Valid CategoryFormUpdate categoryForm, BindingResult result) {
         if (result.hasErrors()){
-            return "admin/category/formCategory";
+            return "admin/category/formUpdateCategory";
         }
-        categoryRepository.save(CategoryForm.toModel(categoryForm, categoryRepository));
+        categoryRepository.save(categoryForm.toModel(categoryRepository));
         return "redirect:/admin/categories";
     }
 }

@@ -14,8 +14,10 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 import org.springframework.test.context.ActiveProfiles;
 
+import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
+import java.util.Random;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
@@ -145,28 +147,72 @@ public class CategoryRepositoryTest {
         assertTrue(categories.isEmpty());
     }
 
-//    @Test
-//    void should_not_load_all_active_categories_with_public_courses_in_order_of_category() {
-//        androidCourse(CourseVisibility.PUBLIC, SubCategoryStatus.ACTIVE, CategoryStatus.ACTIVE);
-//        htmlAndCss(CourseVisibility.PUBLIC, SubCategoryStatus.ACTIVE, CategoryStatus.ACTIVE);
-//
-//        List<Category> categories = categoryRepository.findAllActiveCategoriesWithPublicCourses();
-//
-//        assertThat(categories)
-//                .hasSize(2)
-//                .extracting(Category::getCodeUrl)
-//                .containsExactly("mobile","front-end");
-//    }
+    @Test
+    void should_not_load_all_active_categories_with_public_courses_in_order_of_category() {
+        androidCourse(CourseVisibility.PUBLIC, SubCategoryStatus.ACTIVE, CategoryStatus.ACTIVE);
+        htmlAndCss(CourseVisibility.PUBLIC, SubCategoryStatus.ACTIVE, CategoryStatus.ACTIVE);
 
-//    @Test
-//    void should_load_active_categories_with_public_courses_in_order_of_subcategory() {
-//        androidCourse(CourseVisibility.PUBLIC, SubCategoryStatus.ACTIVE, CategoryStatus.ACTIVE);
-//        androidWithTddCourse(CourseVisibility.PUBLIC, SubCategoryStatus.ACTIVE, CategoryStatus.ACTIVE);
-//
-//        List<Category> categories = categoryRepository.findAllActiveCategoriesWithPublicCourses();
-//
-//        categories.stream().collect()
-//    }
+        List<Category> categories = categoryRepository.findAllActiveCategoriesWithPublicCourses();
+
+        assertThat(categories)
+                .hasSize(2)
+                .extracting(Category::getCodeUrl)
+                .containsExactly("mobile","front-end");
+    }
+
+    @Test
+    void should_load_active_categories_with_public_courses_in_order_of_subcategory() {
+        em.persist(new CategoryBuilder("Programação Antiga", "programacao-antiga")
+                .withStatus(CategoryStatus.INACTIVE).create());
+
+        Category programacao = em.persist(new CategoryBuilder("Programação", "programacao").withStatus(CategoryStatus.ACTIVE).create());
+
+        Subcategory javaSubcategoria = em.persist(new SubcategoryBuilder("sub java", "sub-java", programacao)
+                .withStatus(SubCategoryStatus.ACTIVE).create());
+
+        Subcategory phpSubcategoria = em.persist(new SubcategoryBuilder("sub php", "sub-php", programacao)
+                .withStatus(SubCategoryStatus.ACTIVE).create());
+
+        programacao.setSubCategories(List.of(javaSubcategoria, phpSubcategoria));
+
+        em.persist(publicCourse("curso-spring", javaSubcategoria));
+        em.persist(publicCourse("cursao-laravel", phpSubcategoria));
+
+
+        List<Category> categories = categoryRepository.findAllActiveCategoriesWithPublicCourses();
+        assertThat(categories.size()).isEqualTo(1);
+
+        List<Subcategory> subcategories = categories.get(0).getSubCategories();
+
+        assertThat(subcategories)
+                .hasSize(2)
+                .extracting(Subcategory::getCodeUrl)
+                .containsExactly(javaSubcategoria.getCodeUrl(), phpSubcategoria.getCodeUrl());
+    }
+
+    private Course publicCourse(String codeUrl, Subcategory subcategory) {
+        return aCourse(codeUrl, CourseVisibility.PUBLIC, subcategory);
+    }
+
+    private Course aCourse(String codeUrl, CourseVisibility courseVisibility, Subcategory subcategory) {
+        Course androidCourse = new CourseBuilder("Android parte 3: Refinando o projeto",
+                codeUrl, "Alex Felipe", subcategory)
+                .withCompletionTimeInHours(10)
+                .withVisibility(courseVisibility)
+                .withTargetAudience("Pessoas com foco em java/kotlin/desenvolvimento mobile")
+                .withDescription("""
+                            Implementar um layout personalizado para um AdapterView
+                            Entender e utilizar a entidade Application do Android Framework
+                            Interagir com o usuário por meio de dialogs
+                            Analisar possíveis melhorias no projeto por meio do inspetor de código
+                            Compreender e resolver tópicos apresentado no resultado da inspeção de código
+                        """)
+                .withDevelopedSkills("Aprenda a refatorar, usando os principios de SOLID nesse curso")
+                .create();
+        em.persist(androidCourse);
+        em.flush();
+        return androidCourse;
+    }
 
     private Category dataScienceCategory(CategoryStatus status) {
         Category dataScience = new CategoryBuilder("Data Science", "data-science")
@@ -212,35 +258,35 @@ public class CategoryRepositoryTest {
         return frontEnd;
     }
 
-//    private Subcategory html (SubCategoryStatus status, CategoryStatus categoryStatus) {
-//        Subcategory html = subcategory = new SubcategoryBuilder("Html", "html", frontEnd(categoryStatus))
-//                .withDescription("Entenda html e css na prática, utilize navegador para inspecionar elementos")
-//                .withStudyGuide("Html e css básico")
-//                .withStatus(status)
-//                .withOrderVisualization(2)
-//                .create();
-//        em.persist(subcategory);
-//
-//        return subcategory;
-//    }
-//
-//    private Course htmlAndCss(CourseVisibility visibility, SubCategoryStatus subCategoryStatus,
-//                                 CategoryStatus categoryStatus) {
-//        this.course = new CourseBuilder("HTML5 e CSS3 parte 1: A primeira página da Web",
-//                "html-css", "Pedro Marins", html(subCategoryStatus, categoryStatus))
-//                .withCompletionTimeInHours(13)
-//                .withVisibility(visibility)
-//                .withTargetAudience("Pessoas que tem interesse em front end e quer aprender como construir uma página")
-//                .withDescription("""
-//                         Aprenda o que é o HTML e o CSS
-//                        Entenda a estrutura básica de um arquivo HTML
-//                        """)
-//                .withDevelopedSkills("Primeiros passos com html e css e conceitos fundamentais")
-//                .create();
-//        em.persist(course);
-//
-//        return course;
-//    }
+    private Subcategory html (SubCategoryStatus status, CategoryStatus categoryStatus) {
+        Subcategory html = new SubcategoryBuilder("Html", "html", frontEnd(categoryStatus))
+                .withDescription("Entenda html e css na prática, utilize navegador para inspecionar elementos")
+                .withStudyGuide("Html e css básico")
+                .withStatus(status)
+                .withOrderVisualization(2)
+                .create();
+        em.persist(html);
+
+        return html;
+    }
+
+    private Course htmlAndCss(CourseVisibility visibility, SubCategoryStatus subCategoryStatus,
+                                 CategoryStatus categoryStatus) {
+        Course htmlAndCss  = new CourseBuilder("HTML5 e CSS3 parte 1: A primeira página da Web",
+                "html-css", "Pedro Marins", html(subCategoryStatus, categoryStatus))
+                .withCompletionTimeInHours(13)
+                .withVisibility(visibility)
+                .withTargetAudience("Pessoas que tem interesse em front end e quer aprender como construir uma página")
+                .withDescription("""
+                         Aprenda o que é o HTML e o CSS
+                        Entenda a estrutura básica de um arquivo HTML
+                        """)
+                .withDevelopedSkills("Primeiros passos com html e css e conceitos fundamentais")
+                .create();
+        em.persist(htmlAndCss);
+
+        return htmlAndCss;
+    }
 
     private Category mobileCategory(CategoryStatus status) {
         Category mobile = new CategoryBuilder("Mobile", "mobile")
@@ -257,12 +303,11 @@ public class CategoryRepositoryTest {
                 .withHtmlHexColorCode("#FFFF00")
                 .create();
         em.persist(mobile);
-
         return mobile;
     }
 
     private Subcategory androidSubcategory (SubCategoryStatus status, CategoryStatus categoryStatus) {
-        Subcategory androidSubcategory = new SubcategoryBuilder("Android", "android", mobileCategory (categoryStatus))
+        Subcategory androidSubcategory = new SubcategoryBuilder("Android", "android", mobileCategory(categoryStatus))
                 .withDescription("Crie aplicativos móveis para as principais plataformas, smartphones e tablets. " +
                         "Aprenda frameworks multiplataforma como Flutter e React Native e saiba como criar apps" +
                         " nativas para Android e iOS. Desenvolva também jogos mobile com Unity. Saiba como ")
@@ -274,10 +319,26 @@ public class CategoryRepositoryTest {
 
         return androidSubcategory;
     }
+
+    private Subcategory androidTestSubcategory (SubCategoryStatus status, CategoryStatus categoryStatus) {
+        Subcategory androidTestSubcategory = new SubcategoryBuilder("Android", "android", mobileCategory
+                (categoryStatus))
+                .withDescription("Crie aplicativos móveis para as principais plataformas, smartphones e tablets. " +
+                        "Aprenda frameworks multiplataforma como Flutter e React Native e saiba como criar apps" +
+                        " nativas para Android e iOS. Desenvolva também jogos mobile com Unity. Saiba como ")
+                .withStudyGuide("Android, Testes automatizados e arquitetura android")
+                .withStatus(status)
+                .withOrderVisualization(2)
+                .create();
+        em.persist(androidTestSubcategory);
+
+        return androidTestSubcategory;
+    }
+
     private Course androidCourse(CourseVisibility visibility, SubCategoryStatus subCategoryStatus,
                                  CategoryStatus categoryStatus) {
         Course androidCourse = new CourseBuilder("Android parte 3: Refinando o projeto",
-                "android-refinando-projeto", "Alex Felipe", androidSubcategory (subCategoryStatus, categoryStatus))
+                "android", "Alex Felipe", androidSubcategory(subCategoryStatus, categoryStatus))
                 .withCompletionTimeInHours(10)
                 .withVisibility(visibility)
                 .withTargetAudience("Pessoas com foco em java/kotlin/desenvolvimento mobile")
@@ -296,9 +357,9 @@ public class CategoryRepositoryTest {
     }
 
     private Course androidWithTddCourse(CourseVisibility visibility, SubCategoryStatus subCategoryStatus,
-                                        CategoryStatus categoryStatus) {
+                                        CategoryStatus categoryStatus, String codeUrl) {
         Course androidWithTddCourse = new CourseBuilder("Android parte 1: Testes automatizados e TDD",
-                "android-tdd", "Alex Felipe", androidSubcategory (subCategoryStatus, categoryStatus))
+                codeUrl, "Alex Felipe", androidTestSubcategory(subCategoryStatus, categoryStatus))
                 .withCompletionTimeInHours(14)
                 .withVisibility(visibility)
                 .withTargetAudience("Pessoas com foco em java/kotlin/desenvolvimento mobile")

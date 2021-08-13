@@ -1,14 +1,16 @@
 package br.com.harbitech.school.category;
 
-import static org.springframework.http.HttpStatus.NOT_FOUND;
 import org.springframework.web.server.ResponseStatusException;
 
-import javax.validation.constraints.*;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
 
 import static java.lang.String.format;
+import static org.springframework.http.HttpStatus.NOT_FOUND;
 
-public class CategoryForm {
-
+public class CategoryFormUpdate {
     private Long id;
     @NotBlank(message = "{category.name.required}")
     @Size(max = 70, message = "{category.name.size.max}")
@@ -27,20 +29,22 @@ public class CategoryForm {
     @Size(max = 7, message = "{category.htmlHexColorCode.size.max}")
     private String htmlHexColorCode;
 
-    public CategoryForm() {}
-
-    public CategoryForm(String name, String codeUrl, CategoryStatus status, int orderVisualization,
-                        String studyGuide, String iconPath, String htmlHexColorCode, String description) {
-        this.name = name;
-        this.codeUrl = codeUrl;
-        this.description = description;
-        this.studyGuide = studyGuide;
-        this.status = status;
-        this.orderVisualization = orderVisualization;
-        this.iconPath = iconPath;
-        this.htmlHexColorCode = htmlHexColorCode;
+    public CategoryFormUpdate(Category category) {
+        this.id = category.getId();
+        this.name = category.getName();
+        this.codeUrl = category.getCodeUrl();
+        this.description = category.getDescription();
+        this.studyGuide = category.getStudyGuide();
+        this.status = category.getStatus();
+        this.orderVisualization = category.getOrderVisualization();
+        this.iconPath = category.getIconPath();
+        this.htmlHexColorCode = category.getHtmlHexColorCode();
     }
-    
+
+    public CategoryFormUpdate(){
+
+    }
+
     public Long getId() {
         return id;
     }
@@ -113,9 +117,12 @@ public class CategoryForm {
         this.htmlHexColorCode = htmlHexColorCode;
     }
 
+    public Category toModel(CategoryRepository categoryRepository) {
+        Category category = categoryRepository.findById(this.getId())
+                .orElseThrow(() -> new ResponseStatusException(NOT_FOUND,
+                        format("Category with code %s not found", this.getId())));
 
-    public Category toModel() {
-        return new Category(this.name, this.codeUrl,this.status,this.orderVisualization, this.studyGuide,
-                this.iconPath, this.htmlHexColorCode, this.description);
+        category.update(this);
+        return category;
     }
 }

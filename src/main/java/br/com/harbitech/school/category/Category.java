@@ -165,5 +165,16 @@ public class Category {
     public void addSubcategory(Subcategory subCategory) {
         this.subCategories.add(subCategory);
     }
+
+    public void  update(CategoryFormUpdate categoryFormUpdate) {
+       this.name = categoryFormUpdate.getName();
+       this.codeUrl = categoryFormUpdate.getCodeUrl();
+       this.description = categoryFormUpdate.getDescription();
+       this.status = categoryFormUpdate.getStatus();
+       this.orderVisualization = categoryFormUpdate.getOrderVisualization();
+       this.iconPath = categoryFormUpdate.getIconPath();
+       this.htmlHexColorCode = categoryFormUpdate.getHtmlHexColorCode();
+       this.studyGuide = categoryFormUpdate.getStudyGuide();
+    }
 }
 
