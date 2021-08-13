@@ -145,28 +145,28 @@ public class CategoryRepositoryTest {
         assertTrue(categories.isEmpty());
     }
 
-    @Test
-    void should_not_load_all_active_categories_with_public_courses_in_order_of_category() {
-        androidCourse(CourseVisibility.PUBLIC, SubCategoryStatus.ACTIVE, CategoryStatus.ACTIVE);
-        htmlAndCss(CourseVisibility.PUBLIC, SubCategoryStatus.ACTIVE, CategoryStatus.ACTIVE);
+//    @Test
+//    void should_not_load_all_active_categories_with_public_courses_in_order_of_category() {
+//        androidCourse(CourseVisibility.PUBLIC, SubCategoryStatus.ACTIVE, CategoryStatus.ACTIVE);
+//        htmlAndCss(CourseVisibility.PUBLIC, SubCategoryStatus.ACTIVE, CategoryStatus.ACTIVE);
+//
+//        List<Category> categories = categoryRepository.findAllActiveCategoriesWithPublicCourses();
+//
+//        assertThat(categories)
+//                .hasSize(2)
+//                .extracting(Category::getCodeUrl)
+//                .containsExactly("mobile","front-end");
+//    }
 
-        List<Category> categories = categoryRepository.findAllActiveCategoriesWithPublicCourses();
-
-        assertThat(categories)
-                .hasSize(2)
-                .extracting(Category::getCodeUrl)
-                .containsExactly("mobile","front-end");
-    }
-
-    @Test
-    void should_load_active_categories_with_public_courses_in_order_of_subcategory() {
-        androidCourse(CourseVisibility.PUBLIC, SubCategoryStatus.ACTIVE, CategoryStatus.ACTIVE);
-        androidWithTddCourse(CourseVisibility.PUBLIC, SubCategoryStatus.ACTIVE, CategoryStatus.ACTIVE);
-
-        List<Category> categories = categoryRepository.findAllActiveCategoriesWithPublicCourses();
-
-        categories.stream().collect()
-    }
+//    @Test
+//    void should_load_active_categories_with_public_courses_in_order_of_subcategory() {
+//        androidCourse(CourseVisibility.PUBLIC, SubCategoryStatus.ACTIVE, CategoryStatus.ACTIVE);
+//        androidWithTddCourse(CourseVisibility.PUBLIC, SubCategoryStatus.ACTIVE, CategoryStatus.ACTIVE);
+//
+//        List<Category> categories = categoryRepository.findAllActiveCategoriesWithPublicCourses();
+//
+//        categories.stream().collect()
+//    }
 
     private Category dataScienceCategory(CategoryStatus status) {
         Category dataScience = new CategoryBuilder("Data Science", "data-science")
@@ -212,35 +212,35 @@ public class CategoryRepositoryTest {
         return frontEnd;
     }
 
-    private Subcategory html (SubCategoryStatus status, CategoryStatus categoryStatus) {
-        Subcategory html = subcategory = new SubcategoryBuilder("Html", "html", frontEnd(categoryStatus))
-                .withDescription("Entenda html e css na prática, utilize navegador para inspecionar elementos")
-                .withStudyGuide("Html e css básico")
-                .withStatus(status)
-                .withOrderVisualization(2)
-                .create();
-        em.persist(subcategory);
-
-        return subcategory;
-    }
-
-    private Course htmlAndCss(CourseVisibility visibility, SubCategoryStatus subCategoryStatus,
-                                 CategoryStatus categoryStatus) {
-        this.course = new CourseBuilder("HTML5 e CSS3 parte 1: A primeira página da Web",
-                "html-css", "Pedro Marins", html(subCategoryStatus, categoryStatus))
-                .withCompletionTimeInHours(13)
-                .withVisibility(visibility)
-                .withTargetAudience("Pessoas que tem interesse em front end e quer aprender como construir uma página")
-                .withDescription("""
-                         Aprenda o que é o HTML e o CSS
-                        Entenda a estrutura básica de um arquivo HTML
-                        """)
-                .withDevelopedSkills("Primeiros passos com html e css e conceitos fundamentais")
-                .create();
-        em.persist(course);
-
-        return course;
-    }
+//    private Subcategory html (SubCategoryStatus status, CategoryStatus categoryStatus) {
+//        Subcategory html = subcategory = new SubcategoryBuilder("Html", "html", frontEnd(categoryStatus))
+//                .withDescription("Entenda html e css na prática, utilize navegador para inspecionar elementos")
+//                .withStudyGuide("Html e css básico")
+//                .withStatus(status)
+//                .withOrderVisualization(2)
+//                .create();
+//        em.persist(subcategory);
+//
+//        return subcategory;
+//    }
+//
+//    private Course htmlAndCss(CourseVisibility visibility, SubCategoryStatus subCategoryStatus,
+//                                 CategoryStatus categoryStatus) {
+//        this.course = new CourseBuilder("HTML5 e CSS3 parte 1: A primeira página da Web",
+//                "html-css", "Pedro Marins", html(subCategoryStatus, categoryStatus))
+//                .withCompletionTimeInHours(13)
+//                .withVisibility(visibility)
+//                .withTargetAudience("Pessoas que tem interesse em front end e quer aprender como construir uma página")
+//                .withDescription("""
+//                         Aprenda o que é o HTML e o CSS
+//                        Entenda a estrutura básica de um arquivo HTML
+//                        """)
+//                .withDevelopedSkills("Primeiros passos com html e css e conceitos fundamentais")
+//                .create();
+//        em.persist(course);
+//
+//        return course;
+//    }
 
     private Category mobileCategory(CategoryStatus status) {
         Category mobile = new CategoryBuilder("Mobile", "mobile")
