@@ -45,10 +45,8 @@
                 <h3 class="panel-title">Instrutor com mais cursos</h3>
             </div>
             <div class="panel-body">
-                <c:forEach items="${instructorsProjection}" var="instructor">
-                    <p>${instructor.getInstructor()}</p>
-                    <p>Total de cursos: ${instructor.getAmount()}</p>
-                </c:forEach>
+                    <p>${instructorsProjection.getInstructor()}</p>
+                    <p>Total de cursos: ${instructorsProjection.getAmount()}</p>
             </div>
         </div>
     </div>

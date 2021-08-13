@@ -125,6 +125,7 @@
         .category-card__icon {
             opacity: .6;
             width: 100%;
+            max-width: 128px;
         }
         .category-card__icon img {
             max-width: 128px;

@@ -8,6 +8,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
 import java.util.List;
+import java.util.Optional;
 
 @Controller
 public class AdminController {
@@ -25,12 +26,12 @@ public class AdminController {
 
     @GetMapping("/admin/dashboard")
     String dashboard(Model model) {
-        List<InstructorByCourseProjection> instructorWithGreaterNumberOfCourses = courseRepository
+        Optional<InstructorByCourseProjection> instructorWithGreaterNumberOfCourses = courseRepository
                 .findInstructorWithGreaterNumberOfCourses();
 
-        List<CategoriesByCourseProjection> allCategoriesFromCourse = courseRepository.findAllCoursesCategories();
+        List<CategoriesByCourseProjection> allCategoriesFromCourse = courseRepository.findAllCoursesCountByCategories();
 
-        model.addAttribute("instructorsProjection", instructorWithGreaterNumberOfCourses);
+        model.addAttribute("instructorsProjection", instructorWithGreaterNumberOfCourses.get());
         model.addAttribute("categoriesFromCourseProjection", allCategoriesFromCourse);
         return "admin/home/dashboard";
     }

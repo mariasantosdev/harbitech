@@ -1,5 +1,7 @@
 package br.com.harbitech.school.category;
 
+import br.com.harbitech.school.subcategory.SubcategoryRepository;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;

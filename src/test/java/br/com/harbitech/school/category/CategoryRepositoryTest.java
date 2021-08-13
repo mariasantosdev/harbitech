@@ -31,10 +31,6 @@ public class CategoryRepositoryTest {
     @Autowired
     private TestEntityManager em;
 
-    private Subcategory subcategory;
-
-    private Course course;
-
     @Test
     void should_load_one_category_searching_by_code_url() {
         Category expectedCategory = mobileCategory(CategoryStatus.ACTIVE);
@@ -42,7 +38,7 @@ public class CategoryRepositoryTest {
         Optional<Category> possibleCategory = categoryRepository.findByCodeUrl("mobile");
 
         assertTrue(possibleCategory.isPresent());
-        assertEquals(expectedCategory.getCodeUrl(), possibleCategory.get().getCodeUrl());
+        assertEquals(expectedCategory.getCodeUrl(), "mobile");
     }
 
     @Test
@@ -156,26 +152,20 @@ public class CategoryRepositoryTest {
 
         List<Category> categories = categoryRepository.findAllActiveCategoriesWithPublicCourses();
 
-        String codeUrlFromFirstCategory = categories.get(0).getCodeUrl();
-
         assertThat(categories)
                 .hasSize(2)
-                .allMatch(category -> codeUrlFromFirstCategory.equals("mobile"));
-        //TODO FAZER O PADRAO DE PEGAR SOMENTE O CODIGO URL PARA VER SE ESTA VINDO.
+                .extracting(Category::getCodeUrl)
+                .containsExactly("mobile","front-end");
     }
 
     @Test
     void should_load_active_categories_with_public_courses_in_order_of_subcategory() {
         androidCourse(CourseVisibility.PUBLIC, SubCategoryStatus.ACTIVE, CategoryStatus.ACTIVE);
-        htmlAndCss(CourseVisibility.PUBLIC, SubCategoryStatus.ACTIVE, CategoryStatus.ACTIVE);
+        androidWithTddCourse(CourseVisibility.PUBLIC, SubCategoryStatus.ACTIVE, CategoryStatus.ACTIVE);
 
         List<Category> categories = categoryRepository.findAllActiveCategoriesWithPublicCourses();
 
-        List<Subcategory> subcategories = categories.get(0).getSubCategories();
-
-        assertThat(subcategories)
-                .allMatch(category -> subcategories.contains("android"));
-        //TODO FAZER O PADRAO DE PEGAR SOMENTE O CODIGO URL PARA VER SE ESTA VINDO. TUDO NA MESMA CATEGORIA.
+        categories.stream().collect()
     }
 
     private Category dataScienceCategory(CategoryStatus status) {
@@ -196,19 +186,19 @@ public class CategoryRepositoryTest {
     }
 
     private Subcategory sql(SubCategoryStatus status, CategoryStatus categoryStatus){
-        this.subcategory = new SubcategoryBuilder("SQL", "sql", dataScienceCategory(categoryStatus))
+        Subcategory sql = new SubcategoryBuilder("SQL", "sql", dataScienceCategory(categoryStatus))
                 .withDescription("Saiba instalar e acessar o banco de dados MySQL e realizar consultas importantes")
                 .withStudyGuide("Aprendas comandos SQL como: Insert, Select, Update e Delete")
                 .withStatus(status)
                 .withOrderVisualization(6)
                 .create();
-        em.persist(subcategory);
+        em.persist(sql);
 
-        return subcategory;
+        return sql;
     }
 
     private Category frontEnd(CategoryStatus status){
-        Category frontEnd  = new CategoryBuilder("Front end", "data-end")
+        Category frontEnd  = new CategoryBuilder("Front end", "front-end")
                 .withStatus(status)
                 .withDescription("Desenvolva sites e webapps com HTML, CSS e JavaScript. Aprenda as boas práticas e as " +
                         "últimas versões do JavaScript. Estude ferramentas e frameworks do mercado como React, Angular," +
@@ -223,7 +213,7 @@ public class CategoryRepositoryTest {
     }
 
     private Subcategory html (SubCategoryStatus status, CategoryStatus categoryStatus) {
-        this.subcategory = new SubcategoryBuilder("Html", "html", frontEnd(categoryStatus))
+        Subcategory html = subcategory = new SubcategoryBuilder("Html", "html", frontEnd(categoryStatus))
                 .withDescription("Entenda html e css na prática, utilize navegador para inspecionar elementos")
                 .withStudyGuide("Html e css básico")
                 .withStatus(status)
@@ -270,8 +260,9 @@ public class CategoryRepositoryTest {
 
         return mobile;
     }
+
     private Subcategory androidSubcategory (SubCategoryStatus status, CategoryStatus categoryStatus) {
-        this.subcategory = new SubcategoryBuilder("Android", "android", mobileCategory (categoryStatus))
+        Subcategory androidSubcategory = new SubcategoryBuilder("Android", "android", mobileCategory (categoryStatus))
                 .withDescription("Crie aplicativos móveis para as principais plataformas, smartphones e tablets. " +
                         "Aprenda frameworks multiplataforma como Flutter e React Native e saiba como criar apps" +
                         " nativas para Android e iOS. Desenvolva também jogos mobile com Unity. Saiba como ")
@@ -279,13 +270,13 @@ public class CategoryRepositoryTest {
                 .withStatus(status)
                 .withOrderVisualization(1)
                 .create();
-        em.persist(subcategory);
+        em.persist(androidSubcategory);
 
-        return subcategory;
+        return androidSubcategory;
     }
     private Course androidCourse(CourseVisibility visibility, SubCategoryStatus subCategoryStatus,
                                  CategoryStatus categoryStatus) {
-        this.course = new CourseBuilder("Android parte 3: Refinando o projeto",
+        Course androidCourse = new CourseBuilder("Android parte 3: Refinando o projeto",
                 "android-refinando-projeto", "Alex Felipe", androidSubcategory (subCategoryStatus, categoryStatus))
                 .withCompletionTimeInHours(10)
                 .withVisibility(visibility)
@@ -299,8 +290,29 @@ public class CategoryRepositoryTest {
                         """)
                 .withDevelopedSkills("Aprenda a refatorar, usando os principios de SOLID nesse curso")
                 .create();
-        em.persist(course);
+        em.persist(androidCourse);
 
-        return course;
+        return androidCourse;
+    }
+
+    private Course androidWithTddCourse(CourseVisibility visibility, SubCategoryStatus subCategoryStatus,
+                                        CategoryStatus categoryStatus) {
+        Course androidWithTddCourse = new CourseBuilder("Android parte 1: Testes automatizados e TDD",
+                "android-tdd", "Alex Felipe", androidSubcategory (subCategoryStatus, categoryStatus))
+                .withCompletionTimeInHours(14)
+                .withVisibility(visibility)
+                .withTargetAudience("Pessoas com foco em java/kotlin/desenvolvimento mobile")
+                .withDescription("""
+                            Implementar um layout personalizado para um AdapterView
+                            Entender e utilizar a entidade Application do Android Framework
+                            Interagir com o usuário por meio de dialogs
+                            Analisar possíveis melhorias no projeto por meio do inspetor de código
+                            Compreender e resolver tópicos apresentado no resultado da inspeção de código
+                        """)
+                .withDevelopedSkills("Aprenda a refatorar, usando os principios de SOLID nesse curso")
+                .create();
+        em.persist(androidWithTddCourse);
+
+        return androidWithTddCourse;
     }
 }

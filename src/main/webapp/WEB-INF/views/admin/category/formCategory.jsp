@@ -36,7 +36,8 @@
                 <label for="codeUrl" class="col-sm-2 control-label">Código</label>
                 <div class="col-sm-7">
                     <form:input type="text" class="form-control" id="codeUrl" name="codeUrl"
-                                placeholder="por exemplo: desenvolvimento, mobile (não use letras maiúsculas, acentos ou caracteres especiais)"
+                                placeholder="por exemplo: desenvolvimento, mobile (não use letras maiúsculas, acentos
+                                 ou caracteres especiais)"
                                 path="codeUrl"/>
                     <form:errors path="codeUrl" cssClass="error"/>
                 </div>
@@ -85,8 +86,8 @@
             <div class="form-group">
                 <label for="htmlHexColorCode" class="col-sm-2 control-label">Cor</label>
                 <div class="col-sm-7">
-                    <form:input type="color" value="#FFEDED" class="form-control" id="htmlHexColorCode" name="htmlHexColorCode"
-                           placeholder="por exemplo: #fcc14a" path="htmlHexColorCode"/>
+                    <form:input type="color" class="form-control" id="htmlHexColorCode" name="htmlHexColorCode"
+                          path="htmlHexColorCode"/>
                    <form:errors path="htmlHexColorCode" cssClass="error"/>
                 </div>
             </div>

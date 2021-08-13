@@ -24,7 +24,7 @@ public class CategoryForm {
     private int orderVisualization;
     @Size(max = 400, message = "{category.iconPath.size.max}")
     private String iconPath;
-    @Size(max = 7, message = "{category.htmlHexColorCode.size.max}")
+    @Size(max = 9, message = "{category.htmlHexColorCode.size.max}")
     private String htmlHexColorCode;
 
     public CategoryForm() {}

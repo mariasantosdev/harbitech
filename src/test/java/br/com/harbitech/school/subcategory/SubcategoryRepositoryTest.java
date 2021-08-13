@@ -35,10 +35,6 @@ public class SubcategoryRepositoryTest {
 
     private Category mobile;
 
-    private Course course;
-
-    //TODO TENTAR SEMPRE USAR A STRING AO INVES DE GETS
-
     @BeforeEach
     void setUp() {
         this.mobile = aCategory();
@@ -69,12 +65,12 @@ public class SubcategoryRepositoryTest {
         Optional<Subcategory> possibleSubcategory = subcategoryRepository.findByCodeUrl("flutter");
 
         assertTrue(possibleSubcategory.isPresent());
-        assertEquals(expectedSubcategory.getCodeUrl(), possibleSubcategory.get().getCodeUrl());
+        assertEquals(expectedSubcategory.getCodeUrl(), "flutter");
     }
 
     @Test
     void should_not_load_one_subcategory_because_doesnt_have_one_subcategory_with_the_code_url_passed() {
-        Optional<Subcategory> possibleSubcategory = subcategoryRepository.findByCodeUrl("java");
+        Optional<Subcategory> possibleSubcategory = subcategoryRepository.findByCodeUrl("subcategoryDoesntExist");
 
         assertTrue(possibleSubcategory.isEmpty());
     }
@@ -91,7 +87,11 @@ public class SubcategoryRepositoryTest {
         assertThat(subcategories)
                 .hasSize(2)
                 .allMatch(course -> codeUrlFromFirstSubcategory.equals("android"));
-        //TODO MESMO PADRÃO USADO NA CATEGORY
+
+        assertThat(subcategories)
+                .hasSize(2)
+                .extracting(Subcategory::getCodeUrl)
+                .containsExactly("android","flutter");
 }
 
     @Test
@@ -110,12 +110,10 @@ public class SubcategoryRepositoryTest {
 
         List<Subcategory> subcategories = subcategoryRepository.findAllByCategoryOrderByOrderVisualization(mobile);
 
-        String codeUrlFromFirstSubcategory = subcategories.get(0).getCodeUrl();
-
         assertThat(subcategories)
                 .hasSize(2)
-                .allMatch(course -> codeUrlFromFirstSubcategory.equals("android"));
-        //TODO MESMO PADRÃO USADO NA CATEGORY
+                .extracting(Subcategory::getCodeUrl)
+                .containsExactly("android","flutter");
     }
 
     @Test
@@ -171,7 +169,7 @@ public class SubcategoryRepositoryTest {
     }
 
     private Course androidCourse(CourseVisibility visibility, SubCategoryStatus subCategoryStatus) {
-        this.course = new CourseBuilder("Android parte 3: Refinando o projeto",
+        Course androidCourse = new CourseBuilder("Android parte 3: Refinando o projeto",
                 "android-refinando-projeto", "Alex Felipe", androidSubcategory(subCategoryStatus, mobile))
                 .withCompletionTimeInHours(10)
                 .withVisibility(visibility)
@@ -185,9 +183,9 @@ public class SubcategoryRepositoryTest {
                         """)
                 .withDevelopedSkills("Aprenda a refatorar, usando os principios de SOLID nesse curso")
                 .create();
-        em.persist(course);
+        em.persist(androidCourse);
 
-        return course;
+        return androidCourse;
     }
 
     private Subcategory flutterSubcategory(SubCategoryStatus status, Category category) {
