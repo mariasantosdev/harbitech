@@ -170,4 +170,14 @@ public class Subcategory implements Comparable<Subcategory> {
     public void addCourse(Course course) {
         this.courses.add(course);
     }
+
+    public void  update(SubcategoryFormUpdate subcategoryFormUpdate) {
+        this.name = subcategoryFormUpdate.getName();
+        this.codeUrl = subcategoryFormUpdate.getCodeUrl();
+        this.description = subcategoryFormUpdate.getDescription();
+        this.status = subcategoryFormUpdate.getStatus();
+        this.orderVisualization = subcategoryFormUpdate.getOrderVisualization();
+        this.studyGuide = subcategoryFormUpdate.getStudyGuide();
+        this.category = subcategoryFormUpdate.getCategory();
+    }
 }

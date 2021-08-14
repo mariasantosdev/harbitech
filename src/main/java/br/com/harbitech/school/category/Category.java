@@ -1,7 +1,6 @@
 package br.com.harbitech.school.category;
 
 import br.com.harbitech.school.subcategory.Subcategory;
-import br.com.harbitech.school.subcategory.SubcategoryResponse;
 import org.springframework.util.Assert;
 
 import javax.persistence.*;

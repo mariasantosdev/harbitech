@@ -1,14 +1,14 @@
 package br.com.harbitech.school.subcategory;
 
 import br.com.harbitech.school.category.Category;
-
-import static java.lang.String.format;
-import static org.springframework.http.HttpStatus.NOT_FOUND;
 import org.springframework.web.server.ResponseStatusException;
 
 import javax.validation.constraints.*;
 
-public class SubcategoryForm {
+import static java.lang.String.format;
+import static org.springframework.http.HttpStatus.NOT_FOUND;
+
+public class SubcategoryFormUpdate {
     private Long id;
     @NotBlank(message = "{subcategory.name.required}")
     @Size(max = 70, message = "{subcategory.name.size.max}")
@@ -26,86 +26,88 @@ public class SubcategoryForm {
     @NotNull(message = "{subcategory.category.required}")
     private Category category;
 
-    public SubcategoryForm() {}
-
-    public SubcategoryForm(Long id, String name, String codeUrl, String description, String studyGuide,
-                           SubCategoryStatus status, int orderVisualization, Category category) {
-        this.id = id;
-        this.name = name;
-        this.codeUrl = codeUrl;
-        this.description = description;
-        this.studyGuide = studyGuide;
-        this.status = status;
-        this.orderVisualization = orderVisualization;
-        this.category = category;
+    public SubcategoryFormUpdate(Subcategory subcategory){
+        this.id = subcategory.getId();
+        this.name = subcategory.getName();
+        this.codeUrl = subcategory.getCodeUrl();
+        this.description = subcategory.getDescription();
+        this.studyGuide = subcategory.getStudyGuide();
+        this.status = subcategory.getStatus();
+        this.orderVisualization = subcategory.getOrderVisualization();
+        this.category = subcategory.getCategory();
     }
+
+    public SubcategoryFormUpdate(){}
 
     public Long getId() {
         return id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public String getCodeUrl() {
-        return codeUrl;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public String getStudyGuide() {
-        return studyGuide;
-    }
-
-    public SubCategoryStatus getStatus() {
-        return status;
-    }
-
-    public int getOrderVisualization() {
-        return orderVisualization;
-    }
-
-    public Category getCategory() {
-        return category;
     }
 
     public void setId(Long id) {
         this.id = id;
     }
 
+    public String getName() {
+        return name;
+    }
+
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getCodeUrl() {
+        return codeUrl;
     }
 
     public void setCodeUrl(String codeUrl) {
         this.codeUrl = codeUrl;
     }
 
+    public String getDescription() {
+        return description;
+    }
+
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public String getStudyGuide() {
+        return studyGuide;
     }
 
     public void setStudyGuide(String studyGuide) {
         this.studyGuide = studyGuide;
     }
 
+    public SubCategoryStatus getStatus() {
+        return status;
+    }
+
     public void setStatus(SubCategoryStatus status) {
         this.status = status;
+    }
+
+    public int getOrderVisualization() {
+        return orderVisualization;
     }
 
     public void setOrderVisualization(int orderVisualization) {
         this.orderVisualization = orderVisualization;
     }
 
+    public Category getCategory() {
+        return category;
+    }
+
     public void setCategory(Category category) {
         this.category = category;
     }
+    public Subcategory toModel(SubcategoryRepository subcategoryRepository) {
+        Subcategory subcategory = subcategoryRepository.findById(this.getId())
+                .orElseThrow(() -> new ResponseStatusException(NOT_FOUND,
+                        format("Subcategory with code %s not found", this.getId())));
 
-    public Subcategory toModel() {
-        return new Subcategory(this.name, this.codeUrl, this.orderVisualization, this.description, this.studyGuide,
-                this.status, this.category);
+        subcategory.update(this);
+        return subcategory;
     }
 }
