@@ -1,7 +1,6 @@
 package br.com.harbitech.school.category;
 
 import br.com.harbitech.school.course.Course;
-import br.com.harbitech.school.course.CourseFormUpdate;
 import br.com.harbitech.school.course.CourseRepository;
 import br.com.harbitech.school.course.CourseVisibility;
 import br.com.harbitech.school.subcategory.SubCategoryStatus;
@@ -83,6 +82,7 @@ public class CategoryApiControllerTest {
                 .andExpect(jsonPath("$[0].subcategory[0].studyGuide", is("Dê os primeiros passos no linux" +
                         " até se tornar avançado")))
                 .andExpect(jsonPath("$[0].subcategory[0].course[0].name", is("Linux I: Conhecendo e " +
-                        "utilizando o terminal")));
+                        "utilizando o terminal")))
+                        .andExpect(jsonPath("$[0].subcategory[0].course[0].codeUrl", is("linux-primeiros-passos")));
     }
 }
