@@ -1,23 +1,26 @@
 package br.com.harbitech.school.category;
 
 import br.com.harbitech.school.course.Course;
+import br.com.harbitech.school.course.CourseRepository;
 import br.com.harbitech.school.course.CourseVisibility;
 import br.com.harbitech.school.subcategory.SubCategoryStatus;
 import br.com.harbitech.school.subcategory.Subcategory;
+import br.com.harbitech.school.subcategory.SubcategoryRepository;
 import br.com.harbitech.school.util.builder.CategoryBuilder;
 import br.com.harbitech.school.util.builder.CourseBuilder;
 import br.com.harbitech.school.util.builder.SubcategoryBuilder;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
+import org.springframework.test.annotation.DirtiesContext;
+import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.ActiveProfiles;
 
-import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
-import java.util.Random;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
@@ -31,7 +34,20 @@ public class CategoryRepositoryTest {
     private CategoryRepository categoryRepository;
 
     @Autowired
+    private SubcategoryRepository subcategoryRepository;
+
+    @Autowired
+    private CourseRepository courseRepository;
+
+    @Autowired
     private TestEntityManager em;
+
+    @BeforeEach
+    void setUp(){
+        courseRepository.deleteAll();
+        subcategoryRepository.deleteAll();
+        categoryRepository.deleteAll();
+    }
 
     @Test
     void should_load_one_category_searching_by_code_url() {
@@ -165,20 +181,19 @@ public class CategoryRepositoryTest {
         em.persist(new CategoryBuilder("Programação Antiga", "programacao-antiga")
                 .withStatus(CategoryStatus.INACTIVE).create());
 
-        Category programacao = em.persist(new CategoryBuilder("Programação", "programacao")
+        Category dataScience = em.persist(new CategoryBuilder("Data science", "data-science")
                 .withStatus(CategoryStatus.ACTIVE).create());
 
-        Subcategory javaSubcategory = em.persist(new SubcategoryBuilder("sub java", "java", programacao)
+        Subcategory linux = em.persist(new SubcategoryBuilder("Linux", "linux", dataScience)
                 .withStatus(SubCategoryStatus.ACTIVE).create());
 
-        Subcategory phpSubcategory = em.persist(new SubcategoryBuilder("sub php", "php", programacao)
+        Subcategory docker = em.persist(new SubcategoryBuilder("Docker", "docker", dataScience)
                 .withStatus(SubCategoryStatus.ACTIVE).create());
 
-        programacao.setSubCategories(List.of(javaSubcategory, phpSubcategory));
+        dataScience.setSubCategories(List.of(linux, docker));
 
-        em.persist(publicCourse("curso-spring", javaSubcategory));
-        em.persist(publicCourse("cursao-laravel", phpSubcategory));
-
+        em.persist(publicCourse("certificacao-linux-lpi-essentials", linux));
+        em.persist(publicCourse("docker-swarm-orquestrador", docker));
 
         List<Category> categories = categoryRepository.findAllActiveCategoriesWithPublicCourses();
 
@@ -189,7 +204,7 @@ public class CategoryRepositoryTest {
         assertThat(subcategories)
                 .hasSize(2)
                 .extracting(Subcategory::getCodeUrl)
-                .containsExactly("java", "php");
+                .containsExactly("linux", "docker");
     }
 
     private Course publicCourse(String codeUrl, Subcategory subcategory) {

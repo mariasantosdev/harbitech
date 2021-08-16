@@ -1,8 +1,10 @@
 package br.com.harbitech.school.subcategory;
 
 import br.com.harbitech.school.category.Category;
+import br.com.harbitech.school.category.CategoryRepository;
 import br.com.harbitech.school.category.CategoryStatus;
 import br.com.harbitech.school.course.Course;
+import br.com.harbitech.school.course.CourseRepository;
 import br.com.harbitech.school.course.CourseVisibility;
 import br.com.harbitech.school.util.builder.CategoryBuilder;
 import br.com.harbitech.school.util.builder.CourseBuilder;
@@ -13,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
+import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.ActiveProfiles;
 
 import java.util.List;
@@ -34,6 +37,12 @@ public class SubcategoryRepositoryTest {
     private TestEntityManager em;
 
     private Category mobile;
+
+    @Autowired
+    private CategoryRepository categoryRepository;
+
+    @Autowired
+    private CourseRepository courseRepository;
 
     @BeforeEach
     void setUp() {

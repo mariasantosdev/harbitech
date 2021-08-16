@@ -1,0 +1,5 @@
+CREATE TABLE user(
+    id BIGINT PRIMARY KEY AUTO_INCREMENT,
+    email VARCHAR(150) NOT NULL UNIQUE,
+    password VARCHAR(80) NOT NULL
+                 );
