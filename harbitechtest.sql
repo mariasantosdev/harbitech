@@ -1,5 +1,5 @@
-create database harbitechtest;
-use harbitechtest;
+# create database harbitechtest;
+# use harbitechtest;
 
 CREATE TABLE category(
 id BIGINT PRIMARY KEY AUTO_INCREMENT,
