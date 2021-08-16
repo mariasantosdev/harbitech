@@ -104,6 +104,10 @@ public class Subcategory implements Comparable<Subcategory> {
         return category;
     }
 
+    public void setCourses(List<Course> courses) {
+        this.courses = courses;
+    }
+
     public void setId(Long id) {
         this.id = id;
     }

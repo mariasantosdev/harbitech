@@ -113,40 +113,33 @@ public class CourseRepositoryTest {
         assertTrue(instructors.isEmpty());
     }
 
-//    @Test
-//    void should_load_courses_by_categories() {
-//        dataScienceCategory(CategoryStatus.ACTIVE);
-//        frontEnd(CategoryStatus.ACTIVE);
-//
-//        List<CategoriesByCourseProjection> categories = courseRepository.findAllCoursesCountByCategories();
-//
-//        String codeUrlFromFirstCategory = categories.get(0).getName();
-//
-//        assertThat(categories)
-//                .hasSize(3)
-//                .allMatch(category -> codeUrlFromFirstCategory.equals("Mobile"));
-//
-//        assertThat(categories)
-//                .hasSize(2)
-//                .extracting(Category::getCodeUrl)
-//                .containsExactly("android","flutter");
-//
-//    }
+    @Test
+    void should_load_courses_by_categories() {
+        dataScienceCategory(CategoryStatus.ACTIVE);
+        frontEnd(CategoryStatus.ACTIVE);
 
-//    @Test
-//    void should_load_courses_by_subcategory() {
-//        androidCourse(CourseVisibility.PUBLIC, subcategory);
-//        androidTestsCourse(CourseVisibility.PUBLIC, subcategory);
-//
-//        Pageable pageable = PageRequest.of(0, 2);
-//
-//        Page<Course> courses = courseRepository.findAllBySubcategory(subcategory, pageable);
-//
-//        assertThat(courses)
-//                .hasSize(2)
-//                .
-//        //TODO DA PARA MELHORAR O ASSERT PARA VERIFICAR MELHOR A SAIDA.
-//    }
+        List<CategoriesByCourseProjection> categories = courseRepository.findAllCoursesCountByCategories();
+
+        assertThat(categories)
+                .hasSize(2)
+                .extracting(CategoriesByCourseProjection::getName)
+                .containsExactly("android","flutter");
+    }
+
+    @Test
+    void should_load_courses_by_subcategory() {
+        androidCourse(CourseVisibility.PUBLIC, subcategory);
+        androidTestsCourse(CourseVisibility.PUBLIC, subcategory);
+
+        Pageable pageable = PageRequest.of(0, 2);
+
+        Page<Course> courses = courseRepository.findAllBySubcategory(subcategory, pageable);
+
+        assertThat(courses)
+                .hasSize(2)
+                .extracting(Course::getCodeUrl)
+                .contains("android-refinando-projeto","android-tdd");
+    }
 
     @Test
     void should_load_only_one_course_by_subcategory_according_to_pagination() {
@@ -158,8 +151,9 @@ public class CourseRepositoryTest {
         Page<Course> courses = courseRepository.findAllBySubcategory(subcategory, pageable);
 
         assertThat(courses)
-                .hasSize(1);
-        //TODO DA PARA MELHORAR O ASSERT PARA VERIFICAR MELHOR A SAIDA.
+                .hasSize(1)
+                .extracting(Course::getCodeUrl)
+                .containsExactly("android-refinando-projeto");
     }
 
     @Test

@@ -1,11 +1,6 @@
 package br.com.harbitech.school.category;
 
-import static org.springframework.http.HttpStatus.NOT_FOUND;
-import org.springframework.web.server.ResponseStatusException;
-
 import javax.validation.constraints.*;
-
-import static java.lang.String.format;
 
 public class CategoryForm {
 

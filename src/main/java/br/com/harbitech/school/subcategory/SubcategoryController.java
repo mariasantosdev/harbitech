@@ -52,7 +52,7 @@ public class SubcategoryController {
 
         String formAction = "/admin/subcategories";
 
-        model.addAllAttributes(this.setupForm(formAction, subcategoryform, null));
+        model.addAllAttributes(this.setupForm(formAction, subcategoryform));
 
         return "admin/subcategory/formSubcategory";
     }
@@ -61,7 +61,7 @@ public class SubcategoryController {
     String save(@Valid SubcategoryForm subcategoryForm, BindingResult result, Model model) {
         if (result.hasErrors()) {
             String formAction = "/admin/subcategories";
-            model.addAllAttributes(this.setupForm(formAction, subcategoryForm, null));
+            model.addAllAttributes(this.setupForm(formAction, subcategoryForm));
             return "admin/subcategory/formSubcategory";
         }
         subcategoryRepository.save(subcategoryForm.toModel());
@@ -80,7 +80,7 @@ public class SubcategoryController {
 
         String formAction = "/admin/subcategories/" + categoryCodeUrl + "/" + subcategoryCodeUrl;
 
-        model.addAllAttributes(this.setupForm(formAction,null ,new SubcategoryFormUpdate(subcategory)));
+        model.addAllAttributes(this.setupFormUpdate(formAction,new SubcategoryFormUpdate(subcategory)));
 
         return "admin/subcategory/formUpdateSubcategory";
     }
@@ -91,7 +91,7 @@ public class SubcategoryController {
                   @PathVariable("subcategoryCodeUrl") String subcategoryCodeUrl) {
         if (result.hasErrors()) {
             String formAction = "/admin/subcategories/" + categoryCodeUrl + "/" + subcategoryCodeUrl;
-            model.addAllAttributes(this.setupForm(formAction, null ,subcategoryFormUpdate));
+            model.addAllAttributes(this.setupFormUpdate(formAction,subcategoryFormUpdate));
             return "admin/subcategory/formUpdateSubcategory";
         }
         subcategoryRepository.save(subcategoryFormUpdate.toModel(subcategoryRepository));
@@ -111,12 +111,21 @@ public class SubcategoryController {
         return "category/category";
     }
 
-    private Map<String,Object> setupForm(String formAction, SubcategoryForm subcategoryForm,
-                                         SubcategoryFormUpdate subcategoryFormUpdate) {
+    private Map<String,Object> setupForm(String formAction, SubcategoryForm subcategoryForm) {
         Map<String,Object> attributes = new HashMap<>();
         List<Category> categories = categoryRepository.findAllByOrderByName();
 
         attributes.put("subcategoryForm", subcategoryForm);
+        attributes.put("categories", categories);
+        attributes.put("formAction", formAction);
+
+        return attributes;
+    }
+
+    private Map<String,Object> setupFormUpdate(String formAction, SubcategoryFormUpdate subcategoryFormUpdate) {
+        Map<String,Object> attributes = new HashMap<>();
+        List<Category> categories = categoryRepository.findAllByOrderByName();
+
         attributes.put("subcategoryFormUpdate", subcategoryFormUpdate);
         attributes.put("categories", categories);
         attributes.put("formAction", formAction);

@@ -19,7 +19,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static br.com.harbitech.school.course.CourseForm.*;
 import static org.springframework.http.HttpStatus.NOT_FOUND;
 
 @Controller
@@ -94,22 +93,22 @@ public class CourseController {
 
         String formAction = "/admin/courses/" + categoryCodeUrl + "/" + subcategoryCodeUrl + "/" + courseCodeUrl;
 
-        model.addAllAttributes(this.setupForm(formAction, from(course)));
+        model.addAllAttributes(this.setupFormUpdate(formAction, new CourseFormUpdate(course)));
 
         return "admin/course/formCourse";
     }
 
     @PostMapping("/admin/courses/{category}/{subcategory}/{courseCodeUrl}")
-    String update(@Valid CourseForm courseForm, BindingResult result, Model model,
+    String update(@Valid CourseFormUpdate courseFormUpdate, BindingResult result, Model model,
                   @PathVariable("category") String categoryCodeUrl,
                   @PathVariable("subcategory") String subcategoryCodeUrl,
                   @PathVariable("courseCodeUrl") String courseCodeUrl) {
         if (result.hasErrors()) {
             String formAction = "/admin/courses/" + categoryCodeUrl + "/" + subcategoryCodeUrl + "/" + courseCodeUrl;
-            model.addAllAttributes(this.setupForm(formAction, courseForm));
+            model.addAllAttributes(this.setupFormUpdate(formAction, courseFormUpdate));
             return "admin/course/formCourse";
         }
-        courseRepository.save(CourseForm.toModel(courseForm, courseRepository));
+        courseRepository.save(courseFormUpdate.toModel(courseRepository));
         return "redirect:/admin/courses/" + categoryCodeUrl + "/" +subcategoryCodeUrl;
     }
 
@@ -118,6 +117,17 @@ public class CourseController {
         List<Subcategory> subcategories = subcategoryRepository.findAllByOrderByName();
 
         attributes.put("courseForm", courseForm);
+        attributes.put("subcategories", subcategories);
+        attributes.put("formAction", formAction);
+
+        return attributes;
+    }
+
+    private Map<String,Object> setupFormUpdate(String formAction, CourseFormUpdate courseFormUpdate) {
+        Map<String,Object> attributes = new HashMap<>();
+        List<Subcategory> subcategories = subcategoryRepository.findAllByOrderByName();
+
+        attributes.put("courseFormUpdate", courseFormUpdate);
         attributes.put("subcategories", subcategories);
         attributes.put("formAction", formAction);
 

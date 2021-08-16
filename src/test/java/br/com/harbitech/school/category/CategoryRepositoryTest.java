@@ -165,21 +165,23 @@ public class CategoryRepositoryTest {
         em.persist(new CategoryBuilder("Programação Antiga", "programacao-antiga")
                 .withStatus(CategoryStatus.INACTIVE).create());
 
-        Category programacao = em.persist(new CategoryBuilder("Programação", "programacao").withStatus(CategoryStatus.ACTIVE).create());
+        Category programacao = em.persist(new CategoryBuilder("Programação", "programacao")
+                .withStatus(CategoryStatus.ACTIVE).create());
 
-        Subcategory javaSubcategoria = em.persist(new SubcategoryBuilder("sub java", "sub-java", programacao)
+        Subcategory javaSubcategory = em.persist(new SubcategoryBuilder("sub java", "java", programacao)
                 .withStatus(SubCategoryStatus.ACTIVE).create());
 
-        Subcategory phpSubcategoria = em.persist(new SubcategoryBuilder("sub php", "sub-php", programacao)
+        Subcategory phpSubcategory = em.persist(new SubcategoryBuilder("sub php", "php", programacao)
                 .withStatus(SubCategoryStatus.ACTIVE).create());
 
-        programacao.setSubCategories(List.of(javaSubcategoria, phpSubcategoria));
+        programacao.setSubCategories(List.of(javaSubcategory, phpSubcategory));
 
-        em.persist(publicCourse("curso-spring", javaSubcategoria));
-        em.persist(publicCourse("cursao-laravel", phpSubcategoria));
+        em.persist(publicCourse("curso-spring", javaSubcategory));
+        em.persist(publicCourse("cursao-laravel", phpSubcategory));
 
 
         List<Category> categories = categoryRepository.findAllActiveCategoriesWithPublicCourses();
+
         assertThat(categories.size()).isEqualTo(1);
 
         List<Subcategory> subcategories = categories.get(0).getSubCategories();
@@ -187,7 +189,7 @@ public class CategoryRepositoryTest {
         assertThat(subcategories)
                 .hasSize(2)
                 .extracting(Subcategory::getCodeUrl)
-                .containsExactly(javaSubcategoria.getCodeUrl(), phpSubcategoria.getCodeUrl());
+                .containsExactly("java", "php");
     }
 
     private Course publicCourse(String codeUrl, Subcategory subcategory) {
