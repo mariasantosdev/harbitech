@@ -5,7 +5,9 @@ import br.com.harbitech.school.category.CategoryRepository;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.server.ResponseStatusException;
@@ -24,9 +26,27 @@ public class SubcategoryController {
 
     private final CategoryRepository categoryRepository;
 
-    SubcategoryController(SubcategoryRepository subcategoryRepository, CategoryRepository categoryRepository){
+    private final SubcategoryFormValidator subcategoryFormValidator;
+
+    private final SubcategoryFormUpdateValidator subcategoryFormUpdateValidator;
+
+    SubcategoryController(SubcategoryRepository subcategoryRepository, CategoryRepository categoryRepository,
+                          SubcategoryFormValidator subcategoryFormValidator,
+                          SubcategoryFormUpdateValidator subcategoryFormUpdateValidator){
         this.subcategoryRepository = subcategoryRepository;
         this.categoryRepository = categoryRepository;
+        this.subcategoryFormValidator = subcategoryFormValidator;
+        this.subcategoryFormUpdateValidator = subcategoryFormUpdateValidator;
+    }
+
+    @InitBinder("subcategoryForm")
+    void initBinderCategoryForm(WebDataBinder webDataBinder){
+        webDataBinder.addValidators(subcategoryFormValidator);
+    }
+
+    @InitBinder("subcategoryFormUpdate")
+    void initBinderCategoryFormUpdate(WebDataBinder webDataBinder){
+        webDataBinder.addValidators(subcategoryFormUpdateValidator);
     }
 
     @GetMapping("/admin/categories/{category}/subcategories")

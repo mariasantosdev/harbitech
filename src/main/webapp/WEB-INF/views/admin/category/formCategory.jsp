@@ -1,6 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<c:set var="formTitle" value="${categoryForm.id == null ? 'Nova Categoria' : 'Atualizando Categoria'}"/>
 <!DOCTYPE html>
 <html>
 <head>
@@ -35,8 +36,7 @@
                 <label for="codeUrl" class="col-sm-2 control-label">Código</label>
                 <div class="col-sm-7">
                     <form:input type="text" class="form-control" id="codeUrl" name="codeUrl"
-                                placeholder="por exemplo: desenvolvimento, mobile (não use letras maiúsculas, acentos
-                                 ou caracteres especiais)"
+                                placeholder="por exemplo: desenvolvimento, mobile (não use letras maiúsculas, acentos ou caracteres especiais)"
                                 path="codeUrl"/>
                     <form:errors path="codeUrl" cssClass="error"/>
                 </div>

@@ -36,8 +36,7 @@
       <label for="codeUrl" class="col-sm-2 control-label">Código</label>
       <div class="col-sm-7">
         <form:input type="text" class="form-control" id="codeUrl" name="codeUrl"
-                    placeholder="por exemplo: desenvolvimento, mobile (não use letras maiúsculas, acentos
-                                 ou caracteres especiais)"
+                    placeholder="por exemplo: desenvolvimento, mobile (não use letras maiúsculas, acentos ou caracteres especiais)"
                     path="codeUrl"/>
         <form:errors path="codeUrl" cssClass="error"/>
       </div>

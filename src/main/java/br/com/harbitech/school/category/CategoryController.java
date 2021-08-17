@@ -19,14 +19,23 @@ public class CategoryController {
 
     private final CategoryFormValidator categoryFormValidator;
 
-    CategoryController(CategoryRepository categoryRepository, CategoryFormValidator categoryFormValidator){
+    private final CategoryFormUpdateValidator categoryFormUpdateValidator;
+
+    CategoryController(CategoryRepository categoryRepository, CategoryFormValidator categoryFormValidator,
+                       CategoryFormUpdateValidator categoryFormUpdateValidator){
         this.categoryRepository = categoryRepository;
         this.categoryFormValidator = categoryFormValidator;
+        this.categoryFormUpdateValidator = categoryFormUpdateValidator;
     }
 
     @InitBinder("categoryForm")
-    void initBinder(WebDataBinder webDataBinder){
+    void initBinderCategoryForm(WebDataBinder webDataBinder){
         webDataBinder.addValidators(categoryFormValidator);
+    }
+
+    @InitBinder("categoryFormUpdate")
+    void initBinderCategoryFormUpdate(WebDataBinder webDataBinder){
+        webDataBinder.addValidators(categoryFormUpdateValidator);
     }
 
     @GetMapping("/admin/categories")

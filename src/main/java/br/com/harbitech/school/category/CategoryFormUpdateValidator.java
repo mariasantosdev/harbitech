@@ -5,23 +5,23 @@ import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
 
 @Component
-public class CategoryFormValidator implements Validator {
+public class CategoryFormUpdateValidator implements Validator {
 
     private final CategoryRepository categoryRepository;
 
-    public CategoryFormValidator(CategoryRepository categoryRepository) {
+    public CategoryFormUpdateValidator(CategoryRepository categoryRepository) {
         this.categoryRepository = categoryRepository;
     }
 
     @Override
     public boolean supports(Class<?> aClass) {
-        return CategoryForm.class.isAssignableFrom(aClass);
+        return CategoryFormUpdate.class.isAssignableFrom(aClass);
     }
 
     @Override
     public void validate(Object target, Errors errors) {
-        CategoryForm categoryForm = (CategoryForm) target;
-        if (categoryRepository.existsByCodeUrl(categoryForm.getCodeUrl())) {
+        CategoryFormUpdate categoryFormUpdate = (CategoryFormUpdate) target;
+        if (categoryRepository.existsByCodeUrlWithDifferentId(categoryFormUpdate.getCodeUrl(), categoryFormUpdate.getId())) {
             errors.rejectValue("codeUrl", "category.codeUrl.already.exists");
         }
     }

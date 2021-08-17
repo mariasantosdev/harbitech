@@ -20,5 +20,12 @@ public interface CategoryRepository extends JpaRepository<Category,Long> {
             "ORDER BY c.orderVisualization, sc.orderVisualization")
     List<Category> findAllActiveCategoriesWithPublicCourses();
 
-    boolean existsByNameAndCodeUrl (String name, String codeUrl);
+    boolean existsByCodeUrl(String codeUrl);
+
+    @Deprecated
+    boolean existsByCodeUrlAndIdNot(String codeUrl, Long id);
+
+    default boolean existsByCodeUrlWithDifferentId(String codeUrl, Long id){
+        return existsByCodeUrlAndIdNot(codeUrl, id);
+    }
 }
