@@ -19,4 +19,6 @@ public interface CategoryRepository extends JpaRepository<Category,Long> {
             "WHERE c.status = 'ACTIVE' AND co.visibility = 'PUBLIC' AND sc.status = 'ACTIVE'" +
             "ORDER BY c.orderVisualization, sc.orderVisualization")
     List<Category> findAllActiveCategoriesWithPublicCourses();
+
+    boolean existsByNameAndCodeUrl (String name, String codeUrl);
 }

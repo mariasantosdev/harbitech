@@ -3,6 +3,7 @@ package br.com.harbitech.school.category;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -16,8 +17,16 @@ public class CategoryController {
 
     private final CategoryRepository categoryRepository;
 
-    CategoryController(CategoryRepository categoryRepository){
+    private final CategoryFormValidator categoryFormValidator;
+
+    CategoryController(CategoryRepository categoryRepository, CategoryFormValidator categoryFormValidator){
         this.categoryRepository = categoryRepository;
+        this.categoryFormValidator = categoryFormValidator;
+    }
+
+    @InitBinder("categoryForm")
+    void initBinder(WebDataBinder webDataBinder){
+        webDataBinder.addValidators(categoryFormValidator);
     }
 
     @GetMapping("/admin/categories")

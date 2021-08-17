@@ -1,6 +1,6 @@
 CREATE TABLE category(
     id BIGINT PRIMARY KEY AUTO_INCREMENT,
-    name VARCHAR(70) NOT NULL,
+    name VARCHAR(70) NOT NULL UNIQUE,
     code_url VARCHAR (70) NOT NULL UNIQUE,
     description TEXT,
     study_guide TEXT,

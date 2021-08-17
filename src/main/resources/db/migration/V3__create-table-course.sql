@@ -1,6 +1,6 @@
 CREATE TABLE course(
     id BIGINT PRIMARY KEY AUTO_INCREMENT,
-    name VARCHAR(70) NOT NULL,
+    name VARCHAR(70) NOT NULL UNIQUE,
     code_url VARCHAR (70) NOT NULL UNIQUE,
     completion_time_in_hours INT NOT NULL,
     visibility ENUM('PUBLIC','PRIVATE') DEFAULT 'PRIVATE',
