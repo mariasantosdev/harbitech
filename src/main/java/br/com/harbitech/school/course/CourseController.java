@@ -9,7 +9,9 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.server.ResponseStatusException;
@@ -30,11 +32,28 @@ public class CourseController {
 
     private final CourseRepository courseRepository;
 
+    private final CourseFormValidator courseFormValidator;
+
+    private final CourseFormUpdateValidator courseFormUpdateValidator;
+
     CourseController(SubcategoryRepository subcategoryRepository, CourseRepository courseRepository,
-                     CategoryRepository categoryRepository){
+                     CategoryRepository categoryRepository, CourseFormValidator courseFormValidator,
+                     CourseFormUpdateValidator courseFormUpdateValidator){
         this.categoryRepository = categoryRepository;
         this.subcategoryRepository = subcategoryRepository;
         this.courseRepository = courseRepository;
+        this.courseFormValidator = courseFormValidator;
+        this.courseFormUpdateValidator = courseFormUpdateValidator;
+    }
+
+    @InitBinder("courseForm")
+    void initBinderCourseForm(WebDataBinder webDataBinder){
+        webDataBinder.addValidators(courseFormValidator);
+    }
+
+    @InitBinder("courseFormUpdate")
+    void initBinderCourseFormUpdate(WebDataBinder webDataBinder){
+        webDataBinder.addValidators(courseFormUpdateValidator);
     }
 
     @GetMapping("/admin/courses/{category}/{subcategoryCodeUrl}")
@@ -95,7 +114,7 @@ public class CourseController {
 
         model.addAllAttributes(this.setupFormUpdate(formAction, new CourseFormUpdate(course)));
 
-        return "admin/course/formCourse";
+        return "admin/course/formCourseUpdate";
     }
 
     @PostMapping("/admin/courses/{category}/{subcategory}/{courseCodeUrl}")
@@ -106,7 +125,7 @@ public class CourseController {
         if (result.hasErrors()) {
             String formAction = "/admin/courses/" + categoryCodeUrl + "/" + subcategoryCodeUrl + "/" + courseCodeUrl;
             model.addAllAttributes(this.setupFormUpdate(formAction, courseFormUpdate));
-            return "admin/course/formCourse";
+            return "admin/course/formCourseUpdate";
         }
         courseRepository.save(courseFormUpdate.toModel(courseRepository));
         return "redirect:/admin/courses/" + categoryCodeUrl + "/" +subcategoryCodeUrl;

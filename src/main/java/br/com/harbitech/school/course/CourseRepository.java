@@ -26,4 +26,13 @@ public interface CourseRepository extends JpaRepository<Course,Long>, PagingAndS
    Page<Course> findAllBySubcategory(Subcategory subcategory, Pageable pageable);
 
     Optional<Course> findByCodeUrl(String codeUrl);
+
+    boolean existsByCodeUrl(String codeUrl);
+
+    @Deprecated
+    boolean existsByCodeUrlAndIdNot(String codeUrl, Long id);
+
+    default boolean existsByCodeUrlWithDifferentId(String codeUrl, Long id){
+        return existsByCodeUrlAndIdNot(codeUrl, id);
+    }
 }

@@ -40,12 +40,12 @@ public class SubcategoryController {
     }
 
     @InitBinder("subcategoryForm")
-    void initBinderCategoryForm(WebDataBinder webDataBinder){
+    void initBinderSubcategoryForm(WebDataBinder webDataBinder){
         webDataBinder.addValidators(subcategoryFormValidator);
     }
 
     @InitBinder("subcategoryFormUpdate")
-    void initBinderCategoryFormUpdate(WebDataBinder webDataBinder){
+    void initBinderSubcategoryFormUpdate(WebDataBinder webDataBinder){
         webDataBinder.addValidators(subcategoryFormUpdateValidator);
     }
 
