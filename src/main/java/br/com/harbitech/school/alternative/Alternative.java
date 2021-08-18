@@ -1,6 +1,7 @@
 package br.com.harbitech.school.alternative;
 
 import br.com.harbitech.school.question.Question;
+import lombok.ToString;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
@@ -8,6 +9,7 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 @Entity
+@ToString
 public class Alternative {
    @Id
    @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -25,22 +27,4 @@ public class Alternative {
 
    @Deprecated
    public Alternative() {}
-
-   public Alternative(String text, Question question, boolean correct) {
-      this.text = text;
-      this.question = question;
-      this.correct = correct;
-   }
-
-   @Override
-   public String toString() {
-      return "Alternative{" +
-              "id=" + id +
-              ", text='" + text + '\'' +
-              ", orderVisualization=" + orderVisualization +
-              ", correct=" + correct +
-              ", justification='" + justification + '\'' +
-              ", question=" + question +
-              '}';
-   }
 }

@@ -1,6 +1,7 @@
 package br.com.harbitech.school.activity;
 
 import br.com.harbitech.school.section.Section;
+import lombok.ToString;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
@@ -11,6 +12,7 @@ import javax.validation.constraints.Size;
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
 @DiscriminatorColumn(name = "subtype", columnDefinition = "ENUM('VIDEO','QUESTION','EXPLANATION')")
+@ToString
 public abstract class Activity {
 
     @Id
@@ -40,17 +42,5 @@ public abstract class Activity {
         this.codeUrl = codeUrl;
         this.section = section;
         this.status = ActivityStatus.INACTIVITE;
-    }
-
-    @Override
-    public String toString() {
-        return "Activity{" +
-                "id=" + id +
-                ", title='" + title + '\'' +
-                ", codeUrl='" + codeUrl + '\'' +
-                ", text='" + text + '\'' +
-                ", status=" + status +
-                ", section=" + section +
-                '}';
     }
 }
