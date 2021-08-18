@@ -7,13 +7,13 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public record CategoryResponse(
-    String name,
-    String codeUrl,
-    String studyGuide,
-    int orderVisualization,
-    String iconPath,
-    String htmlHexColorCode,
-    List<SubcategoryResponse> subcategory) {
+        String name,
+        String codeUrl,
+        String studyGuide,
+        int orderVisualization,
+        String iconPath,
+        String htmlHexColorCode,
+        List<SubcategoryResponse> subcategory) {
 
     @JsonProperty
     public int totalCourses() {
