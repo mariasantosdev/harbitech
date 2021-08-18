@@ -1,5 +1,6 @@
 package br.com.harbitech.school.course;
 
+import br.com.harbitech.school.category.CategoryFormUpdate;
 import br.com.harbitech.school.subcategory.Subcategory;
 import org.springframework.util.Assert;
 
@@ -160,8 +161,6 @@ public class Course {
     public String getCategoryCodeUrl(){
         return this.subcategory.getCategoryCodeUrl();
     }
-
-
     @Override
     public String toString() {
         return "Course{" +
@@ -176,5 +175,17 @@ public class Course {
                 ", developedSkills='" + developedSkills + '\'' +
                 ", subCategory=" + subcategory +
                 '}';
+    }
+
+    public void  update(CourseFormUpdate courseFormUpdate) {
+        this.name = courseFormUpdate.getName();
+        this.codeUrl = courseFormUpdate.getCodeUrl();
+        this.description = courseFormUpdate.getDescription();
+        this.completionTimeInHours = courseFormUpdate.getCompletionTimeInHours();
+        this.visibility = courseFormUpdate.getVisibility();
+        this.targetAudience = courseFormUpdate.getTargetAudience();
+        this.instructor = courseFormUpdate.getInstructor();
+        this.developedSkills = courseFormUpdate.getDevelopedSkills();
+        this.subcategory = courseFormUpdate.getSubcategory();
     }
 }

@@ -16,7 +16,7 @@ public interface CategoryRepository extends JpaRepository<Category,Long> {
     List<Category> findAllByOrderByName();
 
     @Query(value = "SELECT DISTINCT c FROM Category c JOIN FETCH c.subCategories sc JOIN sc.courses co " +
-            "WHERE c.status = 'ACTIVE' AND co.visibility = 'PUBLIC' " +
+            "WHERE c.status = 'ACTIVE' AND co.visibility = 'PUBLIC' AND sc.status = 'ACTIVE'" +
             "ORDER BY c.orderVisualization, sc.orderVisualization")
     List<Category> findAllActiveCategoriesWithPublicCourses();
 }

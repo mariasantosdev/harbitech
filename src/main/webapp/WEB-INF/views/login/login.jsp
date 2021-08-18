@@ -125,6 +125,7 @@
         .category-card__icon {
             opacity: .6;
             width: 100%;
+            max-width: 128px;
         }
         .category-card__icon img {
             max-width: 128px;
@@ -195,7 +196,7 @@
                         <h3 class="category-card__title">${category.getName()}</h3>
                     <c:forEach begin="0" end="2" items="${category.getSubCategories()}" var="subcategory">
                         <p class="category-card__details">
-                            ${subcategory.getCodeUrl()}
+                            ${subcategory.getName()}
                         </p>
                     </c:forEach>
                     </a>
