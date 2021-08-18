@@ -4,7 +4,6 @@ import br.com.harbitech.school.category.Category;
 import br.com.harbitech.school.course.Course;
 import lombok.Getter;
 import lombok.Setter;
-import lombok.ToString;
 import org.springframework.util.Assert;
 
 import javax.persistence.*;
@@ -21,7 +20,6 @@ import static br.com.harbitech.school.validation.ValidationUtil.validateUrl;
         "OR s.description IS NULL")
 @Getter
 @Setter
-@ToString
 public class Subcategory implements Comparable<Subcategory> {
 
     @Id
@@ -80,6 +78,20 @@ public class Subcategory implements Comparable<Subcategory> {
 
     public String getCategoryCodeUrl(){
         return this.category.getCodeUrl();
+    }
+
+    @Override
+    public String toString() {
+        return "SubCategory{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", codeUrl='" + codeUrl + '\'' +
+                ", description='" + description + '\'' +
+                ", studyGuide='" + studyGuide + '\'' +
+                ", status=" + status +
+                ", orderVisualization=" + orderVisualization +
+                ", category=" + category +
+                '}';
     }
 
     @Override
