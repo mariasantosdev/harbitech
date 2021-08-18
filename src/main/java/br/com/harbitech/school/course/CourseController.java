@@ -95,7 +95,7 @@ public class CourseController {
 
         model.addAllAttributes(this.setupFormUpdate(formAction, new CourseFormUpdate(course)));
 
-        return "admin/course/formCourse";
+        return "admin/course/formCourseUpdate";
     }
 
     @PostMapping("/admin/courses/{category}/{subcategory}/{courseCodeUrl}")
@@ -106,7 +106,7 @@ public class CourseController {
         if (result.hasErrors()) {
             String formAction = "/admin/courses/" + categoryCodeUrl + "/" + subcategoryCodeUrl + "/" + courseCodeUrl;
             model.addAllAttributes(this.setupFormUpdate(formAction, courseFormUpdate));
-            return "admin/course/formCourse";
+            return "admin/course/formCourseUpdate";
         }
         courseRepository.save(courseFormUpdate.toModel(courseRepository));
         return "redirect:/admin/courses/" + categoryCodeUrl + "/" +subcategoryCodeUrl;

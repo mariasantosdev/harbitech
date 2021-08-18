@@ -177,15 +177,15 @@ public class Course {
                 '}';
     }
 
-    public void  update(CourseFormUpdate categoryFormUpdate) {
-        this.name = categoryFormUpdate.getName();
-        this.codeUrl = categoryFormUpdate.getCodeUrl();
-        this.description = categoryFormUpdate.getDescription();
-        this.completionTimeInHours = categoryFormUpdate.getCompletionTimeInHours();
-        this.visibility = categoryFormUpdate.getVisibility();
-        this.targetAudience = categoryFormUpdate.getTargetAudience();
-        this.instructor = categoryFormUpdate.getInstructor();
-        this.description = categoryFormUpdate.getDevelopedSkills();
-        this.subcategory = categoryFormUpdate.getSubcategory();
+    public void  update(CourseFormUpdate courseFormUpdate) {
+        this.name = courseFormUpdate.getName();
+        this.codeUrl = courseFormUpdate.getCodeUrl();
+        this.description = courseFormUpdate.getDescription();
+        this.completionTimeInHours = courseFormUpdate.getCompletionTimeInHours();
+        this.visibility = courseFormUpdate.getVisibility();
+        this.targetAudience = courseFormUpdate.getTargetAudience();
+        this.instructor = courseFormUpdate.getInstructor();
+        this.developedSkills = courseFormUpdate.getDevelopedSkills();
+        this.subcategory = courseFormUpdate.getSubcategory();
     }
 }
