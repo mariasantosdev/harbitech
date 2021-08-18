@@ -1,26 +1,14 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
-<!DOCTYPE html>
-<html>
-<head>
-  <meta charset="ISO-8859-1">
-  <title>Atualização de categoria</title>
-  <link rel="stylesheet" type="text/css" href="/css/bootstrap.min.css"/>
-  <link rel="stylesheet" type="text/css" href="/css/style.css"/>
-</head>
-<body>
-<nav class="navbar navbar-inverse navbar-static-top">
-  <div class="container-fluid">
-    <div class="navbar-header">
-    </div>
-  </div>
-</nav>
+<%@ taglib prefix="templates" tagdir="/WEB-INF/tags/templates" %>
+
+<templates:admin-template title="Edita Categoria">
 <form:form class="form-horizontal" modelAttribute="categoryFormUpdate" method="post"
            action="/admin/categories/${categoryFormUpdate.codeUrl}">
 <div class="panel panel-default">
   <div class="panel-heading">
-    <h1 class="panel-title">Atualização da categoria</h1>
+    <h1 class="panel-title">Atualização da Categoria</h1>
   </div>
 
   <div class="panel-body">
@@ -108,5 +96,4 @@
     </div>
   </div>
   </form:form>
-</body>
-</html>
+</templates:admin-template>

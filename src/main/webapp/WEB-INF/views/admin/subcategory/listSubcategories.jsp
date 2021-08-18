@@ -1,22 +1,8 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix="templates" tagdir="/WEB-INF/tags/templates" %>
 
-<!DOCTYPE html>
-<html>
-<head>
-    <meta charset="ISO-8859-1"/>
-    <title>Subcategorias</title>
-    <link rel="stylesheet" type="text/css" href="/css/bootstrap.min.css" />
-    <link rel="stylesheet" type="text/css" href="/css/style.css" />
-</head>
-<body>
-<nav class="navbar navbar-inverse navbar-static-top">
-    <div class="container-fluid">
-        <div class="navbar-header">
-        </div>
-    </div>
-</nav>
-
+<templates:admin-template title="Lista Subcategorias">
 <div class="col-sm-offset--1 col-sm-10">
     <h4>${category.name}</h4>
 <h1>Subcategorias</h1> <br/>
@@ -49,5 +35,4 @@
      </c:if>
     </tbody>
 </table>
-</body>
-</html>
+</templates:admin-template>
