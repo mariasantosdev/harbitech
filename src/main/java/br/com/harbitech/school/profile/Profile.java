@@ -1,10 +1,14 @@
 package br.com.harbitech.school.profile;
 
+import lombok.Getter;
+import lombok.Setter;
 import org.springframework.security.core.GrantedAuthority;
 
 import javax.persistence.*;
 
 @Entity
+@Getter
+@Setter
 public class Profile implements GrantedAuthority {
 
     @Id
@@ -13,22 +17,6 @@ public class Profile implements GrantedAuthority {
     @Enumerated(EnumType.STRING)
     @Column(columnDefinition = "ENUM")
     private ProfileType type = ProfileType.ROLE_STUDENT;
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public ProfileType getType() {
-        return type;
-    }
-
-    public void setType(ProfileType type) {
-        this.type = type;
-    }
 
     @Override
     public String getAuthority() {

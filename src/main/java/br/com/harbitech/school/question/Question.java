@@ -2,14 +2,14 @@ package br.com.harbitech.school.question;
 
 import br.com.harbitech.school.activity.Activity;
 import br.com.harbitech.school.section.Section;
-import com.fasterxml.jackson.databind.PropertyNamingStrategy;
-import com.fasterxml.jackson.databind.annotation.JsonNaming;
+import lombok.ToString;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 
 @Entity
 @DiscriminatorValue("QUESTION")
+@ToString
 public class Question extends Activity {
     @Column(columnDefinition = "TEXT")
     @NotBlank(message = "O enunciado da questão é obrigatório")
@@ -25,13 +25,5 @@ public class Question extends Activity {
         super(title, codeUrl, section);
         this.text = text;
         this.type = AnswerType.SINGLE_CHOICE;
-    }
-
-    @Override
-    public String toString() {
-        return "Question{" +
-                "text='" + text + '\'' +
-                ", type=" + type +
-                '}';
     }
 }

@@ -2,6 +2,9 @@ package br.com.harbitech.school.subcategory;
 
 import br.com.harbitech.school.category.Category;
 import br.com.harbitech.school.course.Course;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 import org.springframework.util.Assert;
 
 import javax.persistence.*;
@@ -16,6 +19,9 @@ import static br.com.harbitech.school.validation.ValidationUtil.validateUrl;
         "s.orderVisualization")
 @NamedQuery(name = "Subcategory.AllWithoutDescription", query = "SELECT s.name FROM Subcategory s WHERE s.description = '' " +
         "OR s.description IS NULL")
+@Getter
+@Setter
+@ToString
 public class Subcategory implements Comparable<Subcategory> {
 
     @Id
@@ -68,99 +74,12 @@ public class Subcategory implements Comparable<Subcategory> {
         this.id = id;
     }
 
-    public int getOrderVisualization() {
-        return orderVisualization;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public String getCodeUrl() {
-        return codeUrl;
-    }
-
-    public SubCategoryStatus getStatus() {
-        return status;
-    }
-
-    public String getStudyGuide() {
-        return studyGuide;
-    }
-
-    public List<Course> getCourses() {
-        return courses;
-    }
-
-    public Category getCategory() {
-        return category;
-    }
-
-    public void setCourses(List<Course> courses) {
-        this.courses = courses;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public void setCodeUrl(String codeUrl) {
-        this.codeUrl = codeUrl;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public void setStudyGuide(String studyGuide) {
-        this.studyGuide = studyGuide;
-    }
-
-    public void setStatus(SubCategoryStatus status) {
-        this.status = status;
-    }
-
-    public void setOrderVisualization(int orderVisualization) {
-        this.orderVisualization = orderVisualization;
-    }
-
-    public void setCategory(Category category) {
-        this.category = category;
-    }
-
     public String getStatusDescription(){
         return this.status.getDescription();
     }
 
     public String getCategoryCodeUrl(){
         return this.category.getCodeUrl();
-    }
-
-
-    @Override
-    public String toString() {
-        return "SubCategory{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", codeUrl='" + codeUrl + '\'' +
-                ", description='" + description + '\'' +
-                ", studyGuide='" + studyGuide + '\'' +
-                ", status=" + status +
-                ", orderVisualization=" + orderVisualization +
-                ", category=" + category +
-                '}';
     }
 
     @Override

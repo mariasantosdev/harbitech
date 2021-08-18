@@ -1,6 +1,5 @@
 package br.com.harbitech.school.course;
 
-import br.com.harbitech.school.category.CategoryFormUpdate;
 import br.com.harbitech.school.subcategory.Subcategory;
 import org.springframework.util.Assert;
 

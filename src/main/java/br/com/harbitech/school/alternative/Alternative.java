@@ -27,4 +27,10 @@ public class Alternative {
 
    @Deprecated
    public Alternative() {}
+
+   public Alternative(String text, Question question, boolean correct) {
+      this.text = text;
+      this.question = question;
+      this.correct = correct;
+   }
 }
