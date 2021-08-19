@@ -2,6 +2,7 @@ package br.com.harbitech.school.category;
 
 import br.com.harbitech.school.subcategory.Subcategory;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.util.Assert;
 
@@ -16,7 +17,9 @@ import static br.com.harbitech.school.validation.ValidationUtil.validateUrl;
         "c.orderVisualization")
 @Getter
 @Setter
+@NoArgsConstructor(onConstructor = @__(@Deprecated))
 public class Category {
+    
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -34,9 +37,6 @@ public class Category {
     private String htmlHexColorCode;
     @OneToMany(mappedBy = "category")
     private List<Subcategory> subCategories = new ArrayList<>();
-
-    @Deprecated
-    public Category(){}
 
     public Category(String name, String codeUrl) {
         Assert.hasText(name, "{category.name.required}");

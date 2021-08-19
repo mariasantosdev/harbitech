@@ -1,6 +1,7 @@
 package br.com.harbitech.school.alternative;
 
 import br.com.harbitech.school.question.Question;
+import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 import javax.persistence.*;
@@ -10,7 +11,9 @@ import javax.validation.constraints.Size;
 
 @Entity
 @ToString
+@NoArgsConstructor(onConstructor = @__(@Deprecated))
 public class Alternative {
+
    @Id
    @GeneratedValue(strategy = GenerationType.IDENTITY)
    private Long id;
@@ -24,9 +27,6 @@ public class Alternative {
    @ManyToOne
    @NotNull(message = "A alternativa precisa ter uma questão associada.")
    private Question question;
-
-   @Deprecated
-   public Alternative() {}
 
    public Alternative(String text, Question question, boolean correct) {
       this.text = text;

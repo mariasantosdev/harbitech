@@ -20,7 +20,7 @@ public class SubcategoryFormValidatorTest {
     }
 
     @Test
-    void should_validate_incorrect_code_url_because_already_exists() {
+    void should_validate_incorrect_code_url_when_already_exists() {
         when(subcategoryRepository.existsByCodeUrl("cobol")).thenReturn(true);
 
         var form = new SubcategoryForm();

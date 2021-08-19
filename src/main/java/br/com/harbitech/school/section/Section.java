@@ -3,6 +3,7 @@ package br.com.harbitech.school.section;
 import br.com.harbitech.school.course.Course;
 import com.fasterxml.jackson.databind.PropertyNamingStrategy;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
+import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 import javax.persistence.*;
@@ -13,6 +14,7 @@ import javax.validation.constraints.Size;
 
 @Entity
 @ToString
+@NoArgsConstructor(onConstructor = @__(@Deprecated))
 public class Section {
 
     @Id
@@ -43,7 +45,4 @@ public class Section {
         this.status = SectionStatus.INACTIVE;
         this.type = SectionType.LECTURE;
     }
-
-    @Deprecated
-    public Section(){}
 }

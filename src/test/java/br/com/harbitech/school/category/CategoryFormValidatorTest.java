@@ -22,7 +22,7 @@ public class CategoryFormValidatorTest {
     }
 
     @Test
-    void should_validate_incorrect_code_url_because_already_exists() {
+    void should_validate_incorrect_code_url_when_already_exists() {
         when(categoryRepository.existsByCodeUrl("programacao")).thenReturn(true);
 
         var form = new CategoryForm();

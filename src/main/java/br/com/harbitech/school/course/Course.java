@@ -2,6 +2,7 @@ package br.com.harbitech.school.course;
 
 import br.com.harbitech.school.subcategory.Subcategory;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.springframework.util.Assert;
 
 import javax.persistence.*;
@@ -12,7 +13,9 @@ import static br.com.harbitech.school.validation.ValidationUtil.validateUrl;
 @Entity
 @NamedQuery(name = "Course.allWithPublicVisibility", query = "SELECT c FROM Course c WHERE c.visibility = :visibility")
 @Data
+@NoArgsConstructor(onConstructor = @__(@Deprecated))
 public class Course {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -32,9 +35,6 @@ public class Course {
     @ManyToOne(fetch = FetchType.LAZY)
     @NotNull(message = "{subcategory.course.required}")
     private Subcategory subcategory;
-
-    @Deprecated
-    public Course(){}
 
     public Course(String name, String codeUrl, int completionTimeInHours, String instructor, Subcategory subcategory){
         Assert.hasText(name, "{course.name.required}");

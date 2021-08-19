@@ -2,6 +2,7 @@ package br.com.harbitech.school.subcategory;
 
 import br.com.harbitech.school.category.Category;
 import br.com.harbitech.school.category.CategoryRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -20,6 +21,7 @@ import java.util.Map;
 import static org.springframework.http.HttpStatus.NOT_FOUND;
 
 @Controller
+@RequiredArgsConstructor
 public class SubcategoryController {
 
     private final SubcategoryRepository subcategoryRepository;
@@ -29,15 +31,6 @@ public class SubcategoryController {
     private final SubcategoryFormValidator subcategoryFormValidator;
 
     private final SubcategoryFormUpdateValidator subcategoryFormUpdateValidator;
-
-    SubcategoryController(SubcategoryRepository subcategoryRepository, CategoryRepository categoryRepository,
-                          SubcategoryFormValidator subcategoryFormValidator,
-                          SubcategoryFormUpdateValidator subcategoryFormUpdateValidator){
-        this.subcategoryRepository = subcategoryRepository;
-        this.categoryRepository = categoryRepository;
-        this.subcategoryFormValidator = subcategoryFormValidator;
-        this.subcategoryFormUpdateValidator = subcategoryFormUpdateValidator;
-    }
 
     @InitBinder("subcategoryForm")
     void initBinderSubcategoryForm(WebDataBinder webDataBinder){

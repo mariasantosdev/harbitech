@@ -22,10 +22,9 @@ public class CategoryFormUpdateValidator implements Validator {
     @Override
     public void validate(Object target, Errors errors) {
         CategoryFormUpdate categoryFormUpdate = (CategoryFormUpdate) target;
-        if (categoryRepository.existsByCodeUrlWithDifferentId(categoryFormUpdate.getId(),
-                categoryFormUpdate.getCodeUrl(),categoryFormUpdate.getName())) {
+        if (categoryRepository.existsByCodeUrlWithDifferentId(categoryFormUpdate.getCodeUrl(),
+                categoryFormUpdate.getId())) {
             errors.rejectValue("codeUrl", "category.codeUrl.already.exists");
-            errors.rejectValue("name", "category.name.already.exists");
         }
     }
 }

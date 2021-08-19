@@ -23,7 +23,7 @@ public class SubcategoryFormUpdateValidatorTest {
     }
 
     @Test
-    void should_validate_correct_because_the_code_url_exists_and_id_is_same(){
+    void should_validate_correct_when_code_url_exists_and_id_is_same(){
         var form = new SubcategoryFormUpdate();
         form.setId(1L);
         form.setCodeUrl("java");

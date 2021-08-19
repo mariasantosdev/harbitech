@@ -3,6 +3,7 @@ package br.com.harbitech.school.course;
 import br.com.harbitech.school.category.CategoryRepository;
 import br.com.harbitech.school.subcategory.Subcategory;
 import br.com.harbitech.school.subcategory.SubcategoryRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
@@ -24,6 +25,7 @@ import java.util.Map;
 import static org.springframework.http.HttpStatus.NOT_FOUND;
 
 @Controller
+@RequiredArgsConstructor
 public class CourseController {
 
     private final CategoryRepository categoryRepository;
@@ -35,16 +37,6 @@ public class CourseController {
     private final CourseFormValidator courseFormValidator;
 
     private final CourseFormUpdateValidator courseFormUpdateValidator;
-
-    CourseController(SubcategoryRepository subcategoryRepository, CourseRepository courseRepository,
-                     CategoryRepository categoryRepository, CourseFormValidator courseFormValidator,
-                     CourseFormUpdateValidator courseFormUpdateValidator){
-        this.categoryRepository = categoryRepository;
-        this.subcategoryRepository = subcategoryRepository;
-        this.courseRepository = courseRepository;
-        this.courseFormValidator = courseFormValidator;
-        this.courseFormUpdateValidator = courseFormUpdateValidator;
-    }
 
     @InitBinder("courseForm")
     void initBinderCourseForm(WebDataBinder webDataBinder){

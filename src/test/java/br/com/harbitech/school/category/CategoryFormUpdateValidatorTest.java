@@ -17,13 +17,15 @@ public class CategoryFormUpdateValidatorTest {
     @BeforeEach
     void setUp() {
         categoryRepository = mock(CategoryRepository.class);
-        when(categoryRepository.existsByCodeUrlWithDifferentId(not(eq(1L)),eq("programacao"), eq("Programação"))).thenReturn(true);
+        when(categoryRepository.existsByCodeUrlWithDifferentId(eq("programacao"),(not(eq(1L)))))
+                .thenReturn(true);
+
         categoryFormUpdateValidator = new CategoryFormUpdateValidator(categoryRepository);
         errors = mock(Errors.class);
     }
 
     @Test
-    void should_validate_correct_because_the_code_url_exists_and_id_is_same(){
+    void should_validate_correct_when_code_url_exists_and_id_is_same(){
         var form = new CategoryFormUpdate();
         form.setId(1L);
         form.setCodeUrl("programacao");
@@ -38,12 +40,10 @@ public class CategoryFormUpdateValidatorTest {
         var form = new CategoryFormUpdate();
         form.setId(24L);
         form.setCodeUrl("programacao");
-        form.setName("Programação");
 
         categoryFormUpdateValidator.validate(form, errors);
 
         verify(errors).rejectValue("codeUrl", "category.codeUrl.already.exists");
-        verify(errors).rejectValue("name", "category.name.already.exists");
     }
 
     @Test

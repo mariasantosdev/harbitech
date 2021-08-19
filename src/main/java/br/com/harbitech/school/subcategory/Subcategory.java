@@ -3,6 +3,7 @@ package br.com.harbitech.school.subcategory;
 import br.com.harbitech.school.category.Category;
 import br.com.harbitech.school.course.Course;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.util.Assert;
 
@@ -20,6 +21,7 @@ import static br.com.harbitech.school.validation.ValidationUtil.validateUrl;
         "OR s.description IS NULL")
 @Getter
 @Setter
+@NoArgsConstructor(onConstructor = @__(@Deprecated))
 public class Subcategory implements Comparable<Subcategory> {
 
     @Id
@@ -40,9 +42,6 @@ public class Subcategory implements Comparable<Subcategory> {
     @OneToMany(mappedBy = "subcategory")
     @NotNull(message = "{subcategory.course.required}")
     private List<Course> courses = new ArrayList<>();
-
-    @Deprecated
-    public Subcategory(){}
 
     public Subcategory(String name, String codeUrl, Category category){
         Assert.hasText(name, "{subcategory.name.required}");
