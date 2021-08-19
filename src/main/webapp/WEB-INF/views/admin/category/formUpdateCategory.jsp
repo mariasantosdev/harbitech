@@ -2,6 +2,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="templates" tagdir="/WEB-INF/tags/templates" %>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 
 <templates:admin-template title="Edita Categoria">
 <form:form class="form-horizontal" modelAttribute="categoryFormUpdate" method="post"
@@ -18,6 +19,7 @@
         <form:input type="text" class="form-control" id="name" name="name"
                     placeholder="Digite aqui o nome da categoria" path="name"/>
         <form:errors path="name" cssClass="error"/>
+
       </div>
     </div>
     <div class="form-group">

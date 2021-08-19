@@ -1,5 +1,6 @@
 package br.com.harbitech.school.category;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -13,6 +14,7 @@ import java.util.List;
 import static org.springframework.http.HttpStatus.NOT_FOUND;
 
 @Controller
+@RequiredArgsConstructor
 public class CategoryController {
 
     private final CategoryRepository categoryRepository;
@@ -20,13 +22,6 @@ public class CategoryController {
     private final CategoryFormValidator categoryFormValidator;
 
     private final CategoryFormUpdateValidator categoryFormUpdateValidator;
-
-    CategoryController(CategoryRepository categoryRepository, CategoryFormValidator categoryFormValidator,
-                       CategoryFormUpdateValidator categoryFormUpdateValidator){
-        this.categoryRepository = categoryRepository;
-        this.categoryFormValidator = categoryFormValidator;
-        this.categoryFormUpdateValidator = categoryFormUpdateValidator;
-    }
 
     @InitBinder("categoryForm")
     void initBinderCategoryForm(WebDataBinder webDataBinder){

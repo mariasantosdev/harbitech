@@ -3,6 +3,7 @@ package br.com.harbitech.school.section;
 import br.com.harbitech.school.course.Course;
 import com.fasterxml.jackson.databind.PropertyNamingStrategy;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
+import lombok.ToString;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
@@ -11,6 +12,7 @@ import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
 @Entity
+@ToString
 public class Section {
 
     @Id
@@ -44,17 +46,4 @@ public class Section {
 
     @Deprecated
     public Section(){}
-
-    @Override
-    public String toString() {
-        return "Section{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", codeUrl='" + codeUrl + '\'' +
-                ", orderVisualization=" + orderVisualization +
-                ", status=" + status +
-                ", type=" + type +
-                ", course=" + course +
-                '}';
-    }
 }

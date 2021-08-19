@@ -1,8 +1,5 @@
 package br.com.harbitech.school.subcategory;
 
-import br.com.harbitech.school.course.CourseFormUpdate;
-import br.com.harbitech.school.course.CourseFormUpdateValidator;
-import br.com.harbitech.school.course.CourseRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.validation.Errors;

@@ -2,6 +2,7 @@ package br.com.harbitech.school.category;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -23,9 +24,10 @@ public interface CategoryRepository extends JpaRepository<Category,Long> {
     boolean existsByCodeUrl(String codeUrl);
 
     @Deprecated
-    boolean existsByCodeUrlAndIdNot(String codeUrl, Long id);
+    @Query(value = "select count (c.id) > 0 from Category c where (c.codeUrl = :codeUrl or c.name = :name) and c.id <> :id")
+    boolean existsByCodeUrlAndIdNotLikeOrNameAndIdNotLike(String codeUrl,Long id,String name);
 
-    default boolean existsByCodeUrlWithDifferentId(String codeUrl, Long id){
-        return existsByCodeUrlAndIdNot(codeUrl, id);
+    default boolean existsByCodeUrlWithDifferentId(Long id,String codeUrl,String name){
+        return existsByCodeUrlAndIdNotLikeOrNameAndIdNotLike(codeUrl,id,name);
     }
 }

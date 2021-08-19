@@ -6,7 +6,7 @@
 <html>
 <head>
     <meta charset="ISO-8859-1">
-    <title></title>
+    <title>${title}</title>
     <link rel="stylesheet" type="text/css" href="/css/bootstrap.min.css"/>
     <link rel="stylesheet" type="text/css" href="/css/style.css"/>
 </head>

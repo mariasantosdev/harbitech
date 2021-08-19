@@ -17,7 +17,7 @@ public class CategoryFormUpdateValidatorTest {
     @BeforeEach
     void setUp() {
         categoryRepository = mock(CategoryRepository.class);
-        when(categoryRepository.existsByCodeUrlWithDifferentId(eq("programacao"), not(eq(1L)))).thenReturn(true);
+        when(categoryRepository.existsByCodeUrlWithDifferentId(not(eq(1L)),eq("programacao"), eq("Programação"))).thenReturn(true);
         categoryFormUpdateValidator = new CategoryFormUpdateValidator(categoryRepository);
         errors = mock(Errors.class);
     }
@@ -38,10 +38,12 @@ public class CategoryFormUpdateValidatorTest {
         var form = new CategoryFormUpdate();
         form.setId(24L);
         form.setCodeUrl("programacao");
+        form.setName("Programação");
 
         categoryFormUpdateValidator.validate(form, errors);
 
         verify(errors).rejectValue("codeUrl", "category.codeUrl.already.exists");
+        verify(errors).rejectValue("name", "category.name.already.exists");
     }
 
     @Test

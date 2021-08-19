@@ -4,7 +4,6 @@
 <%@ taglib prefix="templates" tagdir="/WEB-INF/tags/templates" %>
 
 <templates:admin-template title="Edita Curso">
-
 <form:form class="form-horizontal" modelAttribute="courseFormUpdate" method="post" action="${formAction}">
 <div class="panel panel-default">
     <div class="panel-heading">

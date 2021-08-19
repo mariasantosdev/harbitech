@@ -4,7 +4,6 @@
 <%@ taglib prefix="templates" tagdir="/WEB-INF/tags/templates" %>
 
 <templates:admin-template title="Nova Categoria">
-
 <form:form class="form-horizontal" modelAttribute="subcategoryForm" method="post" action="${formAction}">
 <div class="panel panel-default">
     <div class="panel-heading">

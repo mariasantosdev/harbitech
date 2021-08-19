@@ -6,6 +6,7 @@ import br.com.harbitech.school.course.CourseVisibility;
 import br.com.harbitech.school.subcategory.SubCategoryStatus;
 import br.com.harbitech.school.subcategory.Subcategory;
 import br.com.harbitech.school.subcategory.SubcategoryRepository;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -41,6 +42,13 @@ public class CategoryApiControllerTest {
 
     @Autowired
     private CourseRepository courseRepository;
+
+    @BeforeEach
+    void setUp() {
+        courseRepository.deleteAll();
+        subcategoryRepository.deleteAll();
+        categoryRepository.deleteAll();
+    }
 
     @Test
     @Transactional

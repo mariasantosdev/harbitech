@@ -3,7 +3,6 @@
 <%@ taglib prefix="templates" tagdir="/WEB-INF/tags/templates" %>
 
 <templates:admin-template title="Lista Cursos">
-
 <div class="col-sm-offset--1 col-sm-10">
     <h4>${subcategory.name}</h4>
 <h1>Cursos</h1> <br/>

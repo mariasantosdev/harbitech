@@ -23,7 +23,7 @@ public class CourseFormUpdateValidatorTest {
     }
 
     @Test
-    void should_validate_correct_because_the_code_url_exists_and_id_is_same(){
+    void should_validate_correct_when_code_url_exists_and_id_is_same(){
         var form = new CourseFormUpdate();
         form.setId(3L);
         form.setCodeUrl("java-introducao-orientacao-objetos");
