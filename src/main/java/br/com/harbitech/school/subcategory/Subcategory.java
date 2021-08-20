@@ -20,7 +20,6 @@ import static br.com.harbitech.school.validation.ValidationUtil.validateUrl;
 @NamedQuery(name = "Subcategory.AllWithoutDescription", query = "SELECT s.name FROM Subcategory s WHERE s.description = '' " +
         "OR s.description IS NULL")
 @Getter
-@Setter
 @NoArgsConstructor(onConstructor = @__(@Deprecated))
 public class Subcategory implements Comparable<Subcategory> {
 
@@ -79,6 +78,10 @@ public class Subcategory implements Comparable<Subcategory> {
         return this.category.getCodeUrl();
     }
 
+    public void setCourses(List<Course> courses) {
+        this.courses = courses;
+    }
+
     @Override
     public String toString() {
         return "SubCategory{" +
@@ -114,4 +117,5 @@ public class Subcategory implements Comparable<Subcategory> {
         this.studyGuide = subcategoryFormUpdate.getStudyGuide();
         this.category = subcategoryFormUpdate.getCategory();
     }
+
 }

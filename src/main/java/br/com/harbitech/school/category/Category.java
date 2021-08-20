@@ -16,7 +16,6 @@ import static br.com.harbitech.school.validation.ValidationUtil.validateUrl;
 @NamedQuery(name = "Category.allWithStatus", query = "SELECT c FROM Category c WHERE c.status = :status ORDER BY " +
         "c.orderVisualization")
 @Getter
-@Setter
 @NoArgsConstructor(onConstructor = @__(@Deprecated))
 public class Category {
     
@@ -60,16 +59,6 @@ public class Category {
         this.studyGuide = studyGuide;
     }
 
-    public Category(Long id, String name, String codeUrl, CategoryStatus status, int orderVisualization,
-                    String studyGuide, String iconPath,String htmlHexColorCode,String description) {
-        this(name,codeUrl,status,orderVisualization,iconPath,htmlHexColorCode, description, studyGuide);
-        this.id = id;
-    }
-
-    public String getStatusDescription(){
-        return this.status.getDescription();
-    }
-
     @Override
     public String toString() {
         return "Category{" +
@@ -83,6 +72,10 @@ public class Category {
                 ", iconPath='" + iconPath + '\'' +
                 ", htmlHexColorCode='" + htmlHexColorCode + '\'' +
                 '}';
+    }
+
+    public void setSubCategories(List<Subcategory> subCategories) {
+        this.subCategories = subCategories;
     }
 
     public void addSubcategory(Subcategory subCategory) {

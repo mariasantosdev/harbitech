@@ -43,16 +43,9 @@ public class CategoryApiControllerTest {
     @Autowired
     private CourseRepository courseRepository;
 
-    @BeforeEach
-    void setUp() {
-        courseRepository.deleteAll();
-        subcategoryRepository.deleteAll();
-        categoryRepository.deleteAll();
-    }
-
     @Test
     @Transactional
-     void should_retrieve_all_categories_by_status() throws Exception {
+    void should_retrieve_all_categories_by_status() throws Exception {
 
         Category devOps = categoryRepository.save(new Category("DevOps", "dev-ops", CategoryStatus.ACTIVE,
                 1, "https://www.alura.com.br/assets/api/formacoes/categorias/128/devops.png",
@@ -91,6 +84,6 @@ public class CategoryApiControllerTest {
                         " até se tornar avançado")))
                 .andExpect(jsonPath("$[0].subcategory[0].course[0].name", is("Linux I: Conhecendo e " +
                         "utilizando o terminal")))
-                        .andExpect(jsonPath("$[0].subcategory[0].course[0].codeUrl", is("linux-primeiros-passos")));
+                .andExpect(jsonPath("$[0].subcategory[0].course[0].codeUrl", is("linux-primeiros-passos")));
     }
 }

@@ -56,7 +56,6 @@ public class CategoryFormUpdateValidatorTest {
         verify(errors, never()).rejectValue(anyString(), anyString());
     }
 
-
     @Test
     void should_validate_correct_when_code_url_dont_exists_and_id_is_different() {
         var form = new CategoryFormUpdate();

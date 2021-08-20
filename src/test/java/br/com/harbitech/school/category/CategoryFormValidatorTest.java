@@ -25,8 +25,8 @@ public class CategoryFormValidatorTest {
     void should_validate_incorrect_code_url_when_already_exists() {
         when(categoryRepository.existsByCodeUrl("programacao")).thenReturn(true);
 
-        var form = new CategoryForm();
-        form.setCodeUrl("programacao");
+        var form = new CategoryForm(1L, "Programação","programacao",null,null,
+                CategoryStatus.ACTIVE,3,null,"#123g");
 
         categoryFormValidator.validate(form, errors);
 
@@ -35,8 +35,8 @@ public class CategoryFormValidatorTest {
 
     @Test
     void when_code_url_doesnt_exist_should_validate_correct() {
-        var form = new CategoryForm();
-        form.setCodeUrl("programacao");
+        var form = new CategoryForm(1L, "Programação","programacao",null,null,
+                CategoryStatus.ACTIVE,3,null,"#123g");
 
         categoryFormValidator.validate(form, errors);
 
