@@ -9,13 +9,12 @@ import static org.mockito.Mockito.*;
 
 public class CourseFormUpdateValidatorTest {
 
-    private CourseRepository courseRepository;
     private CourseFormUpdateValidator courseFormUpdateValidator;
     private Errors errors;
 
     @BeforeEach
     void setUp() {
-        courseRepository = mock(CourseRepository.class);
+        CourseRepository courseRepository = mock(CourseRepository.class);
         when(courseRepository.existsByCodeUrlWithDifferentId(eq("java-introducao-orientacao-objetos"),
                 not(eq(3L)))).thenReturn(true);
         courseFormUpdateValidator = new CourseFormUpdateValidator(courseRepository);

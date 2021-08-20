@@ -37,5 +37,5 @@
             </div>
         </div>
     </div>
-    <a class="btn btn-link aw-link-panel" href="/admin/categories">Ir para Categorias</a></td>
+    <a class="btn btn-link aw-link-panel" href="/admin/categories">Ir para Categorias</a>
 </templates:admin-template>

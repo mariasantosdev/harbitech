@@ -47,6 +47,5 @@
      </c:if>
 
 </table>
-</body>
-</html>
+</div>
 </templates:admin-template>

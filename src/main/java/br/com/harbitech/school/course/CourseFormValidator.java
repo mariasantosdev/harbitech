@@ -1,6 +1,5 @@
 package br.com.harbitech.school.course;
 
-import br.com.harbitech.school.category.CategoryForm;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;

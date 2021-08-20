@@ -9,13 +9,12 @@ import static org.mockito.Mockito.*;
 
 public class SubcategoryFormUpdateValidatorTest {
 
-    private SubcategoryRepository subcategoryRepository;
     private SubcategoryFormUpdateValidator subcategoryFormUpdateValidator;
     private Errors errors;
 
     @BeforeEach
     void setUp() {
-        subcategoryRepository = mock(SubcategoryRepository.class);
+        SubcategoryRepository subcategoryRepository = mock(SubcategoryRepository.class);
         when(subcategoryRepository.existsByCodeUrlWithDifferentId(eq("java"),
                 not(eq(1L)))).thenReturn(true);
         subcategoryFormUpdateValidator = new SubcategoryFormUpdateValidator(subcategoryRepository);

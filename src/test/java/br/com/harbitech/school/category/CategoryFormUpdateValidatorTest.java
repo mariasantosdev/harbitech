@@ -10,13 +10,12 @@ import static org.mockito.Mockito.*;
 
 public class CategoryFormUpdateValidatorTest {
 
-    private CategoryRepository categoryRepository;
     private CategoryFormUpdateValidator categoryFormUpdateValidator;
     private Errors errors;
 
     @BeforeEach
     void setUp() {
-        categoryRepository = mock(CategoryRepository.class);
+        CategoryRepository categoryRepository = mock(CategoryRepository.class);
         when(categoryRepository.existsByCodeUrlWithDifferentId(eq("programacao"),(not(eq(1L)))))
                 .thenReturn(true);
 
