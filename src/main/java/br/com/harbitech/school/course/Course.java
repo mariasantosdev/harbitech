@@ -2,7 +2,9 @@ package br.com.harbitech.school.course;
 
 import br.com.harbitech.school.subcategory.Subcategory;
 import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 import org.springframework.util.Assert;
 
 import javax.persistence.*;
@@ -12,7 +14,8 @@ import static br.com.harbitech.school.validation.ValidationUtil.validateUrl;
 
 @Entity
 @NamedQuery(name = "Course.allWithPublicVisibility", query = "SELECT c FROM Course c WHERE c.visibility = :visibility")
-@Data
+@Getter
+@ToString
 @NoArgsConstructor(onConstructor = @__(@Deprecated))
 public class Course {
 

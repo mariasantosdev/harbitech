@@ -82,6 +82,10 @@ public class Category {
         this.subCategories.add(subCategory);
     }
 
+    public String getStatusDescription(){
+        return this.status.getDescription();
+    }
+
     public void  update(CategoryFormUpdate categoryFormUpdate) {
         this.name = categoryFormUpdate.getName();
         this.codeUrl = categoryFormUpdate.getCodeUrl();
