@@ -4,8 +4,8 @@ import br.com.harbitech.school.category.Category;
 import br.com.harbitech.school.category.CategoryStatus;
 
 public class CategoryBuilder {
-    private String name;
-    private String codeUrl;
+    private String name = "Uma categoria";
+    private String codeUrl = "categoria";
     private String description;
     private String studyGuide;
     private CategoryStatus status;
@@ -13,9 +13,23 @@ public class CategoryBuilder {
     private String iconPath;
     private String htmlHexColorCode;
 
-    public CategoryBuilder(String name, String codeUrl) {
+    private CategoryBuilder () {
+
+    }
+
+    private CategoryBuilder(String name, String codeUrl) {
         this.name = name;
         this.codeUrl = codeUrl;
+    }
+
+    public CategoryBuilder withCodeUrl(String codeUrl) {
+        this.codeUrl = codeUrl;
+        return this;
+    }
+
+    public CategoryBuilder withName(String name){
+        this.name = name;
+        return this;
     }
 
     public CategoryBuilder withDescription(String description){
@@ -50,6 +64,10 @@ public class CategoryBuilder {
 
     public Category create(){
         return new Category(name, codeUrl, status, orderVisualization, iconPath, htmlHexColorCode, description, studyGuide);
+    }
+
+    public static CategoryBuilder aCategory() {
+        return new CategoryBuilder();
     }
 
     public static Category dataScienceCategory(CategoryStatus status) {

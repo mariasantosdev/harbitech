@@ -22,4 +22,13 @@ public interface SubcategoryRepository extends JpaRepository<Subcategory,Long> {
     @Query(value = "SELECT DISTINCT sc FROM Subcategory sc JOIN FETCH sc.courses c " +
             "WHERE c.visibility = 'PUBLIC' AND sc.status = 'ACTIVE' AND sc.category = :category")
     List<Subcategory> findAllActiveSubcategories(@Param("category") Category category);
+
+    boolean existsByCodeUrl(String codeUrl);
+
+    @Deprecated
+    boolean existsByCodeUrlAndIdNot(String codeUrl, Long id);
+
+    default boolean existsByCodeUrlWithDifferentId(String codeUrl, Long id){
+        return existsByCodeUrlAndIdNot(codeUrl, id);
+    }
 }

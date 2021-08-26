@@ -1,26 +1,13 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
-<c:set var="formTitle" value="${categoryForm.id == null ? 'Nova Categoria' : 'Atualizando Categoria'}"/>
-<!DOCTYPE html>
-<html>
-<head>
-    <meta charset="ISO-8859-1">
-    <title>Cadastro de categoria</title>
-    <link rel="stylesheet" type="text/css" href="/css/bootstrap.min.css"/>
-    <link rel="stylesheet" type="text/css" href="/css/style.css"/>
-</head>
-<body>
-<nav class="navbar navbar-inverse navbar-static-top">
-    <div class="container-fluid">
-        <div class="navbar-header">
-        </div>
-    </div>
-</nav>
+<%@ taglib prefix="templates" tagdir="/WEB-INF/tags/templates" %>
+
+<templates:admin-template title="Nova Categoria">
 <form:form class="form-horizontal" modelAttribute="categoryForm" method="post">
     <div class="panel panel-default">
         <div class="panel-heading">
-            <h1 class="panel-title">${formTitle}</h1>
+            <h1 class="panel-title">Nova Categoria</h1>
         </div>
 
         <div class="panel-body">
@@ -36,8 +23,7 @@
                 <label for="codeUrl" class="col-sm-2 control-label">Código</label>
                 <div class="col-sm-7">
                     <form:input type="text" class="form-control" id="codeUrl" name="codeUrl"
-                                placeholder="por exemplo: desenvolvimento, mobile (não use letras maiúsculas, acentos
-                                 ou caracteres especiais)"
+                                placeholder="por exemplo: desenvolvimento, mobile (não use letras maiúsculas, acentos ou caracteres especiais)"
                                 path="codeUrl"/>
                     <form:errors path="codeUrl" cssClass="error"/>
                 </div>
@@ -109,5 +95,4 @@
         </div>
     </div>
 </form:form>
-</body>
-</html>
+</templates:admin-template>

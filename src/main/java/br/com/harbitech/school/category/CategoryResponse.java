@@ -6,53 +6,14 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class CategoryResponse {
-    private final String name;
-    private final String codeUrl;
-    private final String studyGuide;
-    private final int orderVisualization;
-    private final String iconPath;
-    private final String htmlHexColorCode;
-    private final List<SubcategoryResponse> subcategory;
-
-    public CategoryResponse(String name, String codeUrl, String studyGuide, int orderVisualization, String iconPath,
-                            String htmlHexColorCode, List<SubcategoryResponse> subcategoryResponse) {
-        this.name = name;
-        this.codeUrl = codeUrl;
-        this.studyGuide = studyGuide;
-        this.orderVisualization = orderVisualization;
-        this.iconPath = iconPath;
-        this.htmlHexColorCode = htmlHexColorCode;
-        this.subcategory = subcategoryResponse;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public String getCodeUrl() {
-        return codeUrl;
-    }
-
-    public String getStudyGuide() {
-        return studyGuide;
-    }
-
-    public int getOrderVisualization() {
-        return orderVisualization;
-    }
-
-    public String getIconPath() {
-        return iconPath;
-    }
-
-    public String getHtmlHexColorCode() {
-        return htmlHexColorCode;
-    }
-
-    public List<SubcategoryResponse> getSubcategory() {
-        return subcategory;
-    }
+public record CategoryResponse(
+        String name,
+        String codeUrl,
+        String studyGuide,
+        int orderVisualization,
+        String iconPath,
+        String htmlHexColorCode,
+        List<SubcategoryResponse> subcategory) {
 
     @JsonProperty
     public int totalCourses() {
@@ -71,3 +32,4 @@ public class CategoryResponse {
                 SubcategoryResponse.convert(category.getSubCategories()));
     }
 }
+

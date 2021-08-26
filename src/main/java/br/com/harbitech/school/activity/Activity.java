@@ -1,6 +1,8 @@
 package br.com.harbitech.school.activity;
 
 import br.com.harbitech.school.section.Section;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
@@ -11,6 +13,8 @@ import javax.validation.constraints.Size;
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
 @DiscriminatorColumn(name = "subtype", columnDefinition = "ENUM('VIDEO','QUESTION','EXPLANATION')")
+@ToString
+@NoArgsConstructor(onConstructor = @__(@Deprecated))
 public abstract class Activity {
 
     @Id
@@ -32,25 +36,10 @@ public abstract class Activity {
     @NotNull(message = "A atividade precisa ter uma seção associada.")
     private Section section;
 
-    @Deprecated
-    public Activity() {}
-
     public Activity(String title, String codeUrl, Section section){
         this.title = title;
         this.codeUrl = codeUrl;
         this.section = section;
         this.status = ActivityStatus.INACTIVITE;
-    }
-
-    @Override
-    public String toString() {
-        return "Activity{" +
-                "id=" + id +
-                ", title='" + title + '\'' +
-                ", codeUrl='" + codeUrl + '\'' +
-                ", text='" + text + '\'' +
-                ", status=" + status +
-                ", section=" + section +
-                '}';
     }
 }

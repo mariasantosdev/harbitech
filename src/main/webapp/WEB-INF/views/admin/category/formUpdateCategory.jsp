@@ -1,26 +1,15 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
-<!DOCTYPE html>
-<html>
-<head>
-  <meta charset="ISO-8859-1">
-  <title>Atualização de categoria</title>
-  <link rel="stylesheet" type="text/css" href="/css/bootstrap.min.css"/>
-  <link rel="stylesheet" type="text/css" href="/css/style.css"/>
-</head>
-<body>
-<nav class="navbar navbar-inverse navbar-static-top">
-  <div class="container-fluid">
-    <div class="navbar-header">
-    </div>
-  </div>
-</nav>
+<%@ taglib prefix="templates" tagdir="/WEB-INF/tags/templates" %>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
+
+<templates:admin-template title="Edita Categoria">
 <form:form class="form-horizontal" modelAttribute="categoryFormUpdate" method="post"
            action="/admin/categories/${categoryFormUpdate.codeUrl}">
 <div class="panel panel-default">
   <div class="panel-heading">
-    <h1 class="panel-title">Atualização da categoria</h1>
+    <h1 class="panel-title">Atualização da Categoria</h1>
   </div>
 
   <div class="panel-body">
@@ -30,14 +19,14 @@
         <form:input type="text" class="form-control" id="name" name="name"
                     placeholder="Digite aqui o nome da categoria" path="name"/>
         <form:errors path="name" cssClass="error"/>
+
       </div>
     </div>
     <div class="form-group">
       <label for="codeUrl" class="col-sm-2 control-label">Código</label>
       <div class="col-sm-7">
         <form:input type="text" class="form-control" id="codeUrl" name="codeUrl"
-                    placeholder="por exemplo: desenvolvimento, mobile (não use letras maiúsculas, acentos
-                                 ou caracteres especiais)"
+                    placeholder="por exemplo: desenvolvimento, mobile (não use letras maiúsculas, acentos ou caracteres especiais)"
                     path="codeUrl"/>
         <form:errors path="codeUrl" cssClass="error"/>
       </div>
@@ -109,5 +98,4 @@
     </div>
   </div>
   </form:form>
-</body>
-</html>
+</templates:admin-template>

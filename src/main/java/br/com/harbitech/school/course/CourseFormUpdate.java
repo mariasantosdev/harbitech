@@ -1,6 +1,9 @@
 package br.com.harbitech.school.course;
 
 import br.com.harbitech.school.subcategory.Subcategory;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.springframework.web.server.ResponseStatusException;
 
 import javax.validation.constraints.*;
@@ -8,6 +11,9 @@ import javax.validation.constraints.*;
 import static java.lang.String.format;
 import static org.springframework.http.HttpStatus.NOT_FOUND;
 
+@NoArgsConstructor
+@Getter
+@Setter
 public class CourseFormUpdate {
     private Long id;
     @NotBlank(message = "{course.name.required}")
@@ -31,8 +37,6 @@ public class CourseFormUpdate {
     @NotNull(message = "{subcategory.category.required}")
     private Subcategory subcategory;
 
-    public CourseFormUpdate() {}
-
     public CourseFormUpdate(Course course) {
         this.id = course.getId();
         this.name = course.getName();
@@ -44,86 +48,6 @@ public class CourseFormUpdate {
         this.instructor = course.getInstructor();
         this.developedSkills = course.getDevelopedSkills();
         this.subcategory = getSubcategory();
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getCodeUrl() {
-        return codeUrl;
-    }
-
-    public void setCodeUrl(String codeUrl) {
-        this.codeUrl = codeUrl;
-    }
-
-    public int getCompletionTimeInHours() {
-        return completionTimeInHours;
-    }
-
-    public void setCompletionTimeInHours(int completionTimeInHours) {
-        this.completionTimeInHours = completionTimeInHours;
-    }
-
-    public CourseVisibility getVisibility() {
-        return visibility;
-    }
-
-    public void setVisibility(CourseVisibility visibility) {
-        this.visibility = visibility;
-    }
-
-    public String getTargetAudience() {
-        return targetAudience;
-    }
-
-    public void setTargetAudience(String targetAudience) {
-        this.targetAudience = targetAudience;
-    }
-
-    public String getInstructor() {
-        return instructor;
-    }
-
-    public void setInstructor(String instructor) {
-        this.instructor = instructor;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public String getDevelopedSkills() {
-        return developedSkills;
-    }
-
-    public void setDevelopedSkills(String developedSkills) {
-        this.developedSkills = developedSkills;
-    }
-
-    public Subcategory getSubcategory() {
-        return subcategory;
-    }
-
-    public void setSubcategory(Subcategory subcategory) {
-        this.subcategory = subcategory;
     }
 
     public Course toModel(CourseRepository courseRepository) {

@@ -1,6 +1,9 @@
 package br.com.harbitech.school.subcategory;
 
 import br.com.harbitech.school.category.Category;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.springframework.web.server.ResponseStatusException;
 
 import javax.validation.constraints.*;
@@ -8,6 +11,9 @@ import javax.validation.constraints.*;
 import static java.lang.String.format;
 import static org.springframework.http.HttpStatus.NOT_FOUND;
 
+@Getter
+@Setter
+@NoArgsConstructor
 public class SubcategoryFormUpdate {
     private Long id;
     @NotBlank(message = "{subcategory.name.required}")
@@ -35,68 +41,6 @@ public class SubcategoryFormUpdate {
         this.status = subcategory.getStatus();
         this.orderVisualization = subcategory.getOrderVisualization();
         this.category = subcategory.getCategory();
-    }
-
-    public SubcategoryFormUpdate(){}
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getCodeUrl() {
-        return codeUrl;
-    }
-
-    public void setCodeUrl(String codeUrl) {
-        this.codeUrl = codeUrl;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public String getStudyGuide() {
-        return studyGuide;
-    }
-
-    public void setStudyGuide(String studyGuide) {
-        this.studyGuide = studyGuide;
-    }
-
-    public SubCategoryStatus getStatus() {
-        return status;
-    }
-
-    public void setStatus(SubCategoryStatus status) {
-        this.status = status;
-    }
-
-    public int getOrderVisualization() {
-        return orderVisualization;
-    }
-
-    public void setOrderVisualization(int orderVisualization) {
-        this.orderVisualization = orderVisualization;
-    }
-
-    public Category getCategory() {
-        return category;
     }
 
     public void setCategory(Category category) {

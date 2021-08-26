@@ -1,22 +1,8 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix="templates" tagdir="/WEB-INF/tags/templates" %>
 
-<!DOCTYPE html>
-<html>
-<head>
-    <meta charset="ISO-8859-1"/>
-    <title>Cursos</title>
-    <link rel="stylesheet" type="text/css" href="/css/bootstrap.min.css" />
-    <link rel="stylesheet" type="text/css" href="/css/style.css" />
-</head>
-<body>
-<nav class="navbar navbar-inverse navbar-static-top">
-    <div class="container-fluid">
-        <div class="navbar-header">
-        </div>
-    </div>
-</nav>
-
+<templates:admin-template title="Lista Cursos">
 <div class="col-sm-offset--1 col-sm-10">
     <h4>${subcategory.name}</h4>
 <h1>Cursos</h1> <br/>
@@ -61,5 +47,5 @@
      </c:if>
 
 </table>
-</body>
-</html>
+</div>
+</templates:admin-template>

@@ -176,10 +176,14 @@ class CategoryRepositoryTest {
 
     @Test
     void should_load_active_categories_with_public_courses_in_order_of_subcategory() {
-        em.persist(new CategoryBuilder("Programação Antiga", "programacao-antiga")
+        em.persist(aCategory()
+                .withName("Programação Antiga")
+                .withCodeUrl("programacao-antiga")
                 .withStatus(CategoryStatus.INACTIVE).create());
 
-        Category programacao = em.persist(new CategoryBuilder("Programação", "programacao")
+        Category programacao = em.persist(aCategory()
+                .withName("Programação")
+                .withCodeUrl("programacao")
                 .withStatus(CategoryStatus.ACTIVE).create());
 
         Subcategory javaSubcategory = em.persist(new SubcategoryBuilder("sub java", "java", programacao)
@@ -204,7 +208,7 @@ class CategoryRepositoryTest {
 
         List<Category> categories = categoryRepository.findAllActiveCategoriesWithPublicCourses();
 
-        assertThat(categories.size()).isEqualTo(1);
+        assertThat(categories).hasSize(1);
 
         List<Subcategory> subcategories = categories.get(0).getSubCategories();
 

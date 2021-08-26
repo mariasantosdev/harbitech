@@ -1,27 +1,13 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
-<c:set var="formTitle" value="${courseForm.id == null ? 'Novo Curso' : 'Atualizando Curso'}"/>
-<!DOCTYPE html>
-<html>
-<head>
-    <meta charset="ISO-8859-1"/>
-    <title>Cursos</title>
-    <link rel="stylesheet" type="text/css" href="/css/bootstrap.min.css" />
-    <link rel="stylesheet" type="text/css" href="/css/style.css" />
-</head>
-<body>
-<nav class="navbar navbar-inverse navbar-static-top">
-    <div class="container-fluid">
-        <div class="navbar-header">
-        </div>
-    </div>
-</nav>
+<%@ taglib prefix="templates" tagdir="/WEB-INF/tags/templates" %>
 
+<templates:admin-template title="Novo Curso">
 <form:form class="form-horizontal" modelAttribute="courseForm" method="post" action="${formAction}">
 <div class="panel panel-default">
     <div class="panel-heading">
-        <h1 class="panel-title">${formTitle}</h1>
+        <h1 class="panel-title">Novo Curso</h1>
     </div>
     <div class="panel-body">
         <div class="form-group">
@@ -114,5 +100,4 @@
         </div>
     </div>
     </form:form>
-</body>
-</html>
+</templates:admin-template>

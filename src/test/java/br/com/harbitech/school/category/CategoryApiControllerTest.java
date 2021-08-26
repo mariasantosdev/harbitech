@@ -6,6 +6,7 @@ import br.com.harbitech.school.course.CourseVisibility;
 import br.com.harbitech.school.subcategory.SubCategoryStatus;
 import br.com.harbitech.school.subcategory.Subcategory;
 import br.com.harbitech.school.subcategory.SubcategoryRepository;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -44,7 +45,7 @@ public class CategoryApiControllerTest {
 
     @Test
     @Transactional
-     void should_retrieve_all_categories_by_status() throws Exception {
+    void should_retrieve_all_categories_by_status() throws Exception {
 
         Category devOps = categoryRepository.save(new Category("DevOps", "dev-ops", CategoryStatus.ACTIVE,
                 1, "https://www.alura.com.br/assets/api/formacoes/categorias/128/devops.png",
@@ -83,6 +84,6 @@ public class CategoryApiControllerTest {
                         " até se tornar avançado")))
                 .andExpect(jsonPath("$[0].subcategory[0].course[0].name", is("Linux I: Conhecendo e " +
                         "utilizando o terminal")))
-                        .andExpect(jsonPath("$[0].subcategory[0].course[0].codeUrl", is("linux-primeiros-passos")));
+                .andExpect(jsonPath("$[0].subcategory[0].course[0].codeUrl", is("linux-primeiros-passos")));
     }
 }

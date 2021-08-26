@@ -3,13 +3,16 @@ package br.com.harbitech.school.course;
 import br.com.harbitech.school.category.CategoryRepository;
 import br.com.harbitech.school.subcategory.Subcategory;
 import br.com.harbitech.school.subcategory.SubcategoryRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.server.ResponseStatusException;
@@ -22,6 +25,7 @@ import java.util.Map;
 import static org.springframework.http.HttpStatus.NOT_FOUND;
 
 @Controller
+@RequiredArgsConstructor
 public class CourseController {
 
     private final CategoryRepository categoryRepository;
@@ -30,11 +34,18 @@ public class CourseController {
 
     private final CourseRepository courseRepository;
 
-    CourseController(SubcategoryRepository subcategoryRepository, CourseRepository courseRepository,
-                     CategoryRepository categoryRepository){
-        this.categoryRepository = categoryRepository;
-        this.subcategoryRepository = subcategoryRepository;
-        this.courseRepository = courseRepository;
+    private final CourseFormValidator courseFormValidator;
+
+    private final CourseFormUpdateValidator courseFormUpdateValidator;
+
+    @InitBinder("courseForm")
+    void initBinderCourseForm(WebDataBinder webDataBinder){
+        webDataBinder.addValidators(courseFormValidator);
+    }
+
+    @InitBinder("courseFormUpdate")
+    void initBinderCourseFormUpdate(WebDataBinder webDataBinder){
+        webDataBinder.addValidators(courseFormUpdateValidator);
     }
 
     @GetMapping("/admin/courses/{category}/{subcategoryCodeUrl}")

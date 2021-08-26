@@ -1,21 +1,8 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix="templates" tagdir="/WEB-INF/tags/templates" %>
 
-<!DOCTYPE html>
-<html>
-<head>
-    <meta charset="ISO-8859-1"/>
-    <title>home</title>
-    <link rel="stylesheet" type="text/css" href="/css/bootstrap.min.css" />
-    <link rel="stylesheet" type="text/css" href="/css/style.css" />
-
-    <nav class="navbar navbar-inverse navbar-static-top">
-        <div class="container-fluid">
-            <div class="navbar-header">
-            </div>
-        </div>
-    </nav>
-
+<templates:admin-template title="Dashboard">
     <div class="col-sm-4">
     <div class="panel panel-default">
         <div class="panel-heading">Cursos por categoria</div>
@@ -50,8 +37,5 @@
             </div>
         </div>
     </div>
-    <a class="btn btn-link aw-link-panel" href="/admin/categories">Ir para Categorias</a></td>
-</head>
-<body>
-</body>
-</html>
+    <a class="btn btn-link aw-link-panel" href="/admin/categories">Ir para Categorias</a>
+</templates:admin-template>

@@ -19,10 +19,10 @@ public class CourseBuilder {
     private String developedSkills = "Muitas habilidades serão desenvolvidas";
     private Subcategory subCategory;
 
-    public CourseBuilder() {
+    private CourseBuilder() {
     }
 
-    public CourseBuilder(String name, String codeUrl, String instructor, Subcategory subCategory) {
+    private CourseBuilder(String name, String codeUrl, String instructor, Subcategory subCategory) {
         this.name = name;
         this.codeUrl = codeUrl;
         this.instructor = instructor;
@@ -76,24 +76,6 @@ public class CourseBuilder {
 
     public static CourseBuilder aCourse() {
         return new CourseBuilder();
-    }
-
-    public static Course androidCourse(String codeUrl, CourseVisibility courseVisibility, Subcategory subcategory) {
-        Course androidCourse = new CourseBuilder("Android parte 3: Refinando o projeto",
-                codeUrl, "Alex Felipe", subcategory)
-                .withCompletionTimeInHours(10)
-                .withVisibility(courseVisibility)
-                .withTargetAudience("Pessoas com foco em java/kotlin/desenvolvimento mobile")
-                .withDescription("""
-                            Implementar um layout personalizado para um AdapterView
-                            Entender e utilizar a entidade Application do Android Framework
-                            Interagir com o usuário por meio de dialogs
-                            Analisar possíveis melhorias no projeto por meio do inspetor de código
-                            Compreender e resolver tópicos apresentado no resultado da inspeção de código
-                        """)
-                .withDevelopedSkills("Aprenda a refatorar, usando os principios de SOLID nesse curso")
-                .create();
-        return androidCourse;
     }
 
     public static Course androidCourse(CourseVisibility visibility, Subcategory subcategory) {
