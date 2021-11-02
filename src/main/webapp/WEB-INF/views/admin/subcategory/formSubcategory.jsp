@@ -76,7 +76,6 @@
                         </form:select>
                     </div>
                 </div>
-
             <form:input type="hidden" path="id"/>
             <div class="form-group">
                 <div class="col-sm-offset-2 col-sm-10">

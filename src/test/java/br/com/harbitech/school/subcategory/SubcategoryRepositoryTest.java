@@ -132,5 +132,4 @@ public class SubcategoryRepositoryTest {
 
         assertTrue(subcategories.isEmpty());
     }
-
 }
