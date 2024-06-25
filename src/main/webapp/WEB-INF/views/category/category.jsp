@@ -197,6 +197,9 @@
         </ul>
     </div>
     </c:forEach>
+    <a href="https://discord.com/channels/1255292852024381513/1255293613361987664" class="discord-link">
+        Link para a comunidade do discord
+    </a>
 </main>
 </body>
 </html>
