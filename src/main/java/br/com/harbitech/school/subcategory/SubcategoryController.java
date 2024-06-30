@@ -109,7 +109,7 @@ public class SubcategoryController {
         }
         subcategoryRepository.save(subcategoryFormUpdate.toModel(subcategoryRepository));
         return "redirect:/admin/subcategories/" + categoryCodeUrl;
-        }
+    }
 
     @GetMapping("/{categoryCode}")
     String subcategoryByCategoryCodeUrl(@PathVariable("categoryCode") String categoryCodeUrl, Model model){

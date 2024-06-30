@@ -32,11 +32,13 @@ public class SubcategoryForm {
     private SubCategoryStatus status = SubCategoryStatus.INACTIVE;
     @Min(value = -1, message = "{subcategory.orderVisualization.min}")
     private int orderVisualization;
+    @PositiveOrZero(message = "O nível precisa ser maior ou igual a zero")
+    private int level;
     @NotNull(message = "{subcategory.category.required}")
     private Category category;
 
     public Subcategory toModel() {
         return new Subcategory(this.name, this.codeUrl, this.orderVisualization, this.description, this.studyGuide,
-                this.status, this.category);
+                this.status, this.category, level);
     }
 }

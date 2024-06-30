@@ -9,6 +9,7 @@ import org.springframework.util.Assert;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.PositiveOrZero;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -35,20 +36,23 @@ public class Subcategory implements Comparable<Subcategory> {
     @Enumerated(EnumType.STRING)
     @Column(columnDefinition = "ENUM")
     private SubCategoryStatus status = SubCategoryStatus.INACTIVE;
-    private int orderVisualization = 0;
+    private int orderVisualization;
     @ManyToOne(fetch = FetchType.LAZY)
     private Category category;
+    @PositiveOrZero
+    private int level;
     @OneToMany(mappedBy = "subcategory")
     @NotNull(message = "{subcategory.course.required}")
     private List<Course> courses = new ArrayList<>();
 
-    public Subcategory(String name, String codeUrl, Category category){
+    public Subcategory(String name, String codeUrl, Category category, int level){
         Assert.hasText(name, "{subcategory.name.required}");
         Assert.hasText(codeUrl, "{subcategory.codeUrl.required}");
         Assert.notNull(category, "{subcategory.category.required}");
         validateUrl(codeUrl, "{subcategory.codeUrl.pattern}" + codeUrl);
 
         this.name = name;
+        this.level = level;
         this.codeUrl = codeUrl;
         this.category = category;
         this.status = SubCategoryStatus.INACTIVE;
@@ -56,8 +60,8 @@ public class Subcategory implements Comparable<Subcategory> {
     }
 
     public Subcategory(String name, String codeUrl, int orderVisualization, String description, String studyGuide,
-                       SubCategoryStatus status, Category category) {
-        this(name, codeUrl, category);
+                       SubCategoryStatus status, Category category, int level) {
+        this(name, codeUrl, category, level);
         this.description = description;
         this.studyGuide = studyGuide;
         this.status = status;
@@ -65,8 +69,8 @@ public class Subcategory implements Comparable<Subcategory> {
     }
 
     public Subcategory(Long id,String name, String codeUrl, int orderVisualization, String description, String studyGuide,
-                       SubCategoryStatus status, Category category){
-        this(name,codeUrl,orderVisualization,description,studyGuide,status,category);
+                       SubCategoryStatus status, Category category, int level){
+        this(name,codeUrl,orderVisualization,description,studyGuide,status,category, level);
         this.id = id;
     }
 
@@ -111,6 +115,7 @@ public class Subcategory implements Comparable<Subcategory> {
     public void  update(SubcategoryFormUpdate subcategoryFormUpdate) {
         this.name = subcategoryFormUpdate.getName();
         this.codeUrl = subcategoryFormUpdate.getCodeUrl();
+        this.level = subcategoryFormUpdate.getLevel();
         this.description = subcategoryFormUpdate.getDescription();
         this.status = subcategoryFormUpdate.getStatus();
         this.orderVisualization = subcategoryFormUpdate.getOrderVisualization();

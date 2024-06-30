@@ -51,6 +51,16 @@
                     <form:errors path="orderVisualization" cssClass="error"/>
                 </div>
             </div>
+
+            <div class="form-group">
+                <label for="level" class="col-sm-2 control-label">Nível</label>
+                <div class="col-sm-7">
+                    <form:input type="number" class="form-control" id="level" name="level"
+                                placeholder="por exemplo: conhecimentos essenciais são nível 0 já os mais avançados seriam níveis superiores" path="level"/>
+                    <form:errors path="level" cssClass="error"/>
+                </div>
+            </div>
+
             <div class="form-group">
                 <label class="col-sm-2 control-label" for="studyGuide">Guias de estudo</label>
                 <div class="col-sm-7">

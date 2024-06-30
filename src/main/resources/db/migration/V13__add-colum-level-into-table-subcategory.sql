@@ -1,0 +1,1 @@
+ALTER TABLE subcategory ADD COLUMN level int DEFAULT 0 NOT NULL;
