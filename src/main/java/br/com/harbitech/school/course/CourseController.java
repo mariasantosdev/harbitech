@@ -1,5 +1,6 @@
 package br.com.harbitech.school.course;
 
+import br.com.harbitech.school.category.Category;
 import br.com.harbitech.school.category.CategoryRepository;
 import br.com.harbitech.school.subcategory.Subcategory;
 import br.com.harbitech.school.subcategory.SubcategoryRepository;
@@ -121,6 +122,14 @@ public class CourseController {
         }
         courseRepository.save(courseFormUpdate.toModel(courseRepository));
         return "redirect:/admin/courses/" + categoryCodeUrl + "/" +subcategoryCodeUrl;
+    }
+
+    @GetMapping("/all-courses")
+    String listAllCourses(Model model) {
+        List<Category> categories = categoryRepository.findAllActiveCategoriesWithPublicCourses();
+
+        model.addAttribute("categories", categories);
+        return "/course/listAllCourses";
     }
 
     private Map<String,Object> setupForm(String formAction, CourseForm courseForm) {

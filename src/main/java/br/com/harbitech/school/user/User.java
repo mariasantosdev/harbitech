@@ -30,6 +30,7 @@ public class User implements UserDetails {
     @Size(max = 80)
     @NotBlank
     private String password;
+//    private boolean firstLogin = true;
     @ManyToMany(fetch = FetchType.EAGER)
     private List<Profile> profiles = new ArrayList<>();
 
@@ -37,6 +38,14 @@ public class User implements UserDetails {
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return this.profiles;
     }
+//
+//    public boolean isFirstLogin() {
+//        return firstLogin;
+//    }
+//
+//    public void setFirstLogin(boolean firstLogin) {
+//        this.firstLogin = firstLogin;
+//    }
 
     @Override
     public String getPassword() {
