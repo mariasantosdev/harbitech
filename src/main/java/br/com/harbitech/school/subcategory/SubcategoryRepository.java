@@ -14,7 +14,7 @@ import java.util.List;
 @Repository
 public interface SubcategoryRepository extends JpaRepository<Subcategory,Long> {
     Optional<Subcategory> findByCodeUrl(String codeUrl);
-
+    List<Subcategory> findAllByCategory(Category category);
     List<Subcategory> findAllByCategoryOrderByOrderVisualization(Category category);
 
     List<Subcategory> findAllByOrderByName();
@@ -22,6 +22,9 @@ public interface SubcategoryRepository extends JpaRepository<Subcategory,Long> {
     @Query(value = "SELECT DISTINCT sc FROM Subcategory sc JOIN FETCH sc.courses c " +
             "WHERE c.visibility = 'PUBLIC' AND sc.status = 'ACTIVE' AND sc.category = :category")
     List<Subcategory> findAllActiveSubcategories(@Param("category") Category category);
+
+    @Query(value = "SELECT MAX(level) FROM subcategory", nativeQuery = true)
+    int findMaxLevel();
 
     boolean existsByCodeUrl(String codeUrl);
 

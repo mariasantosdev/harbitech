@@ -1,10 +1,11 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
 <!DOCTYPE html>
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>Escolha seu modo de estudo</title>
+    <title>Auto-avaliação</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -28,43 +29,44 @@
             font-weight: 700;
         }
 
-        .button-container {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 20px;
+        .subcategory {
+            margin-bottom: 20px;
         }
 
-        .btn {
+        .subcategory input[type="radio"] {
+            margin-right: 10px;
+        }
+
+        .subcategory label {
             font-size: 1.2em;
-            padding: 15px 30px;
-            border: 2px solid #ccc;
-            border-radius: 5px;
-            background-color: #747c81;
-            color: white;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
-            width: calc(50% - 10px);
-            box-sizing: border-box;
         }
 
-        @media (max-width: 768px) {
-            .btn {
-                width: 100%;
-            }
+        .subcategory ul {
+            list-style-type: none;
+            padding-left: 0;
         }
 
+        .subcategory li {
+            margin-bottom: 5px;
+        }
     </style>
 </head>
 <body>
 <div class="container">
-    <h1>Escolha seu modo de estudo</h1>
-    <div class="button-container">
-        <button class="btn btn-see-all-courses" onclick="seeAllCourses()">Quero ver o catálogo completo de cursos
-        </button>
-        <button class="btn" onclick="platformHelpWithTheWay()">Quero uma jornada de aprendizado
-            guiada pela plataforma
-        </button>
+    <h1>Selecione qual seu nível</h1>
+    <div class="select-container">
+        <c:forEach items="${allActiveSubcategories}" var="subcategory">
+            <div class="subcategory">
+                <input type="radio" id="subcategory${subcategory.id}" name="subcategory" value="${subcategory.id}">
+                <label for="subcategory${subcategory.id}">Nível ${subcategory.level}: ${subcategory.name}</label>
+                <ul>
+                    <h4>Cursos abordados no nível</h4>
+                    <c:forEach items="${subcategory.courses}" var="course">
+                        <li>${course.name}</li>
+                    </c:forEach>
+                </ul>
+            </div>
+        </c:forEach>
     </div>
 </div>
 <script>

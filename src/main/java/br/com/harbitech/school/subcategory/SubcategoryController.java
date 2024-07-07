@@ -124,6 +124,42 @@ public class SubcategoryController {
         return "category/category";
     }
 
+    //TODO depois renomear isso aqui e o de baixo
+    @GetMapping("/{categoryCode}/self-assessment")
+    String selfAssessment(@PathVariable("categoryCode") String categoryCodeUrl, Model model){
+        Category category = categoryRepository.findByCodeUrl(categoryCodeUrl)
+                .orElseThrow(() -> new ResponseStatusException(NOT_FOUND, categoryCodeUrl));
+
+        List<Subcategory> allActiveSubcategories = subcategoryRepository.findAllActiveSubcategories(category);
+
+        model.addAttribute("allActiveSubcategories", allActiveSubcategories);
+        model.addAttribute("maxSubcategoryLevel", subcategoryRepository.findMaxLevel());
+        model.addAttribute("category",category);
+
+        return "category/self-assessment";
+    }
+
+    @GetMapping("/{categoryCode}/self-assessment2")
+    String selfAssessment2(@PathVariable("categoryCode") String categoryCodeUrl, Model model){
+        Category category = categoryRepository.findByCodeUrl(categoryCodeUrl)
+                .orElseThrow(() -> new ResponseStatusException(NOT_FOUND, categoryCodeUrl));
+
+        List<Subcategory> allActiveSubcategories = subcategoryRepository.findAllActiveSubcategories(category);
+        model.addAttribute("allActiveSubcategories", allActiveSubcategories);
+        model.addAttribute("maxSubcategoryLevel", subcategoryRepository.findMaxLevel());
+        model.addAttribute("category",category);
+
+        return "category/self-assessment2";
+    }
+
+    @GetMapping("/all-subcategories")
+    String listAllSubcategories(Model model) {
+        List<Category> allCategories = categoryRepository.findAllActiveCategoriesWithPublicCourses();
+
+        model.addAttribute("categories", allCategories);
+        return "/subcategory/chooseASubcategory";
+    }
+
     private Map<String,Object> setupForm(String formAction, SubcategoryForm subcategoryForm) {
         Map<String,Object> attributes = new HashMap<>();
         List<Category> categories = categoryRepository.findAllByOrderByName();

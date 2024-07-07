@@ -184,7 +184,6 @@
         </section>
         <section class="signup">
             <h2 class="signup__title">Ainda não estuda com a gente?</h2>
-            <p class="signup__text">São mais de mil cursos nas seguintes áreas</p>
             <ul class="categories">
 
                 <c:forEach items="${categories}" var="category">
