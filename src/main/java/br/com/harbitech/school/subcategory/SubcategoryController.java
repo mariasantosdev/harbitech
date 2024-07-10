@@ -124,8 +124,7 @@ public class SubcategoryController {
         return "category/category";
     }
 
-    //TODO depois renomear isso aqui e o de baixo
-    @GetMapping("/{categoryCode}/self-assessment")
+    @GetMapping("/{categoryCode}/courses-by-levels")
     String selfAssessment(@PathVariable("categoryCode") String categoryCodeUrl, Model model){
         Category category = categoryRepository.findByCodeUrl(categoryCodeUrl)
                 .orElseThrow(() -> new ResponseStatusException(NOT_FOUND, categoryCodeUrl));
@@ -136,10 +135,10 @@ public class SubcategoryController {
         model.addAttribute("maxSubcategoryLevel", subcategoryRepository.findMaxLevel());
         model.addAttribute("category",category);
 
-        return "category/self-assessment";
+        return "category/courses-by-levels";
     }
 
-    @GetMapping("/{categoryCode}/self-assessment2")
+    @GetMapping("/{categoryCode}/self-assessment")
     String selfAssessment2(@PathVariable("categoryCode") String categoryCodeUrl, Model model){
         Category category = categoryRepository.findByCodeUrl(categoryCodeUrl)
                 .orElseThrow(() -> new ResponseStatusException(NOT_FOUND, categoryCodeUrl));
@@ -149,7 +148,7 @@ public class SubcategoryController {
         model.addAttribute("maxSubcategoryLevel", subcategoryRepository.findMaxLevel());
         model.addAttribute("category",category);
 
-        return "category/self-assessment2";
+        return "category/self-assessment";
     }
 
     @GetMapping("/all-subcategories")

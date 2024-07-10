@@ -1,209 +1,126 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>${category.name} | Cursos online de tecnologia</title>
+    <title>Auto-avaliação</title>
     <style>
-        *, :after, :before {
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f9fbfd;
+            text-align: center;
             margin: 0;
             padding: 0;
-            box-sizing: border-box;
-        }
-        body {
-            background-color: #f9fbfd;
-        }
-        body, input, select, textarea {
-            font: normal 14px sans-serif;
-        }
-        a {
-            outline: none;
-        }
-        ul {
-            list-style: none;
-        }
-        .container {
-            margin: 0 auto;
-            max-width: 1200px;
-            width: 96%;
-        }
-        .category-banner__wrapper {
-            background-color: #a1b0c0;
-        }
-        .category-banner {
-            display: flex;
-            flex-direction: row;
-            align-items: center;
-            justify-content: flex-start;
-        }
-        .category-banner__icon img {
-            max-height: 32px;
-        }
-        .category-banner__title {
-            margin-left: 10px;
-            display: inline-block;
-            font-size: 2.4em;
-            padding: 1em 0;
-            letter-spacing: -1.2px;
-            font-weight: 900;
-            text-transform: uppercase;
-            color: #fff;
-        }
-        .subcategories {
-            margin-top: 24px;
-        }
-        .subcategories__label {
-            font-size: 0.938em;
-            line-height: 1.4;
-            color: #4a535a;
-            margin-bottom: 10px;
-        }
-        .subcategories__list {
-            display: flex;
-            flex-wrap: wrap;
-            list-style: none;
-            margin-top: 5px;
-        }
-        .subcategories__item {
-            margin: 0 5px 16px 0;
-            transition: all .2s ease;
-        }
-        .subcategories__link {
-            text-decoration: none;
-            padding: 4px 20px 8px;
-            border-radius: 4px;
-            background-color: #e2e6ee;
-        }
-        .subcategories__name {
-            font-size: 0.813em;
-            color: #4a535a;
-            opacity: .8;
-        }
-        .subcategory__name {
-            color: #6e767b;
-            font-size: 1.313em;
-            text-align: left;
-            margin-top: 50px;
-        }
-        .courses__list {
-            margin-top: 20px;
-        }
-        .course-card {
-            display: flex;
-            flex-direction: column;
-            box-shadow: 4px 4px 20px 0 rgb(120 135 182 / 10%);
-            background-color: #fff;
-            border: 1px solid #eff1f9;
-            border-radius: 4px;
-            color: #747c81;
-            transition: all.3s ease;
-            padding: 15px;
-            margin: 5px;
-        }
-        .course-card__name {
-            font-weight: 600;
-            opacity: .7;
-            line-height: 1.29;
-            font-size: 1em;
-        }
-        .course-card__hours {
-            margin-top: 5px;
-            font-size: 0.8750em;
         }
 
-        @media (min-width: 540px) {
-            .subcategories {
-                padding: 15px 20px;
-                border-radius: 4px;
-                border: 1px solid #eff3fb;
-            }
-            .courses__list {
-                display: flex;
-                flex-wrap: wrap;
-            }
-            .course-card {
-                width: calc(49% - 7.5px);
-            }
+        .container {
+            max-width: 1200px;
+            width: 96%;
+            margin: 50px auto;
+            padding: 30px;
+            border: 5px solid hsla(0, 0%, 100%, .3);
         }
-        @media (min-width: 940px) {
-            .subcategories {
-                display: flex;
-                justify-content: flex-start;
-                padding: 20px 20px 10px;
-                margin-top: 20px;
-            }
-            .subcategories__label {
-                margin-right: 10px;
-                margin-bottom: 0;
-            }
-            .subcategories__list {
-                display: flex;
-                flex-wrap: wrap;
-                list-style: none;
-                margin-top: 5px;
-            }
-            .subcategories__item {
-                margin: 0 10px 20px 0;
-            }
-            .course-card {
-                width: calc(33.33333% - 10px);
-            }
+
+        h1 {
+            font-size: 2em;
+            margin-bottom: 30px;
+            font-weight: 700;
         }
-        @media (min-width: 1024px) {
-            .course-card {
-                width: calc(25% - 15px);
-            }
-            .course-card__name {
-                line-height: 1.36;
-            }
+
+        .subcategory {
+            margin-bottom: 20px;
+        }
+
+        .subcategory input[type="radio"] {
+            margin-right: 10px;
+        }
+
+        .subcategory label {
+            font-size: 1.2em;
+        }
+
+        .subcategory ul {
+            list-style-type: none;
+            padding-left: 0;
+        }
+
+        .subcategory li {
+            margin-bottom: 5px;
+        }
+
+        .btn {
+            margin-top: 20px;
+            padding: 10px 20px;
+            font-size: 1em;
+            cursor: pointer;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+        }
+
+        .btn:hover {
+            background-color: #0056b3;
         }
     </style>
 </head>
 <body>
-<section class="category-banner__wrapper">
-    <div class="container category-banner">
-            <span class="category-banner__icon">
-                <img src="${category.iconPath}">
-            </span>
-        <h1 class="category-banner__title">${category.name}</h1>
-    </div>
-</section>
-<main class="container">
-    <div class="subcategories">
-        <p class="subcategories__label">Quais conhecimentos você já tem?</p>
-        <ul class="subcategories__list">
-            <c:forEach items="${allActiveSubcategories}" var="subcategory">
-                <li class="subcategories__item">
-                    <a href="#${subcategory.codeUrl}" class="subcategories__link">
-                        <span class="subcategories__name">${subcategory.name}</span>
-                    </a>
-                </li>
-            </c:forEach>
-        </ul>
-    </div>
-    <c:forEach var="level" begin="0" end="${maxSubcategoryLevel}">
+<div class="container">
+    <h1>Selecione qual seu nível</h1>
+    <div class="select-container">
         <c:forEach items="${allActiveSubcategories}" var="subcategory">
-            <c:if test="${subcategory.level == level}">
-                <div class="subcategory">
-                    <h2 id="${subcategory.codeUrl}" class="subcategory__name">${subcategory.name}</h2>
-                    <ul class="courses__list">
-                        <c:forEach items="${subcategory.getCourses()}" var="course">
-                            <li class="course-card">
-                                <h3 class="course-card__name">${course.name}</h3>
-                                <p class="course-card__hours">${course.completionTimeInHours}h</p>
-                            </li>
-                        </c:forEach>
-                    </ul>
-                </div>
-            </c:if>
+            <div class="subcategory">
+                <input type="radio" id="subcategory${subcategory.id}" name="subcategory" value="${subcategory.id}">
+                <label for="subcategory${subcategory.id}">
+                    Nível ${subcategory.level}: ${subcategory.name}
+                    <c:if test="${subcategory.level == 0}">
+                        * (caso você não saiba por onde começar comece por aqui)
+                    </c:if>
+                </label>
+                <ul>
+                    <h4>Cursos abordados no nível</h4>
+                    <c:forEach items="${subcategory.courses}" var="course">
+                        <li>${course.name}</li>
+                    </c:forEach>
+                </ul>
+            </div>
         </c:forEach>
-    </c:forEach>
-    <a href="https://discord.com/channels/1255292852024381513/1255293613361987664" class="discord-link">
-        Link para a comunidade do discord
-    </a>
-</main>
+    </div>
+    <button class="btn" onclick="handleButtonClick()">Seguir com a jornada</button>
+</div>
 </body>
+<script>
+    function handleButtonClick() {
+        const selectedSubcategory = document.querySelector('input[name="subcategory"]:checked');
+        if (selectedSubcategory) {
+            const subcategoryId = selectedSubcategory.value;
+            console.log('Subcategory ID selecionado:', subcategoryId);
+
+            fetch('/user-self-assessment', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({subcategoryId: parseInt(subcategoryId)})
+            })
+                .then(response => {
+                    if (response.redirected) {
+                        window.location.href = response.url;
+                    } else {
+                        return response.json();
+                    }
+                })
+                .then(data => {
+                    console.log('Success:', data);
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                });
+        } else {
+            alert('Selecione um nível para continuar');
+        }
+    }
+</script>
 </html>

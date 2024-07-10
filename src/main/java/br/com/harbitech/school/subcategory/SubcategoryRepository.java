@@ -20,7 +20,8 @@ public interface SubcategoryRepository extends JpaRepository<Subcategory,Long> {
     List<Subcategory> findAllByOrderByName();
 
     @Query(value = "SELECT DISTINCT sc FROM Subcategory sc JOIN FETCH sc.courses c " +
-            "WHERE c.visibility = 'PUBLIC' AND sc.status = 'ACTIVE' AND sc.category = :category")
+            "WHERE c.visibility = 'PUBLIC' AND sc.status = 'ACTIVE' AND sc.category = :category " +
+            "ORDER BY sc.level")
     List<Subcategory> findAllActiveSubcategories(@Param("category") Category category);
 
     @Query(value = "SELECT MAX(level) FROM subcategory", nativeQuery = true)
