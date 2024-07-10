@@ -33,12 +33,12 @@ public class SubcategoryController {
     private final SubcategoryFormUpdateValidator subcategoryFormUpdateValidator;
 
     @InitBinder("subcategoryForm")
-    void initBinderSubcategoryForm(WebDataBinder webDataBinder){
+    void initBinderSubcategoryForm(WebDataBinder webDataBinder) {
         webDataBinder.addValidators(subcategoryFormValidator);
     }
 
     @InitBinder("subcategoryFormUpdate")
-    void initBinderSubcategoryFormUpdate(WebDataBinder webDataBinder){
+    void initBinderSubcategoryFormUpdate(WebDataBinder webDataBinder) {
         webDataBinder.addValidators(subcategoryFormUpdateValidator);
     }
 
@@ -60,7 +60,7 @@ public class SubcategoryController {
     }
 
     @GetMapping(value = "/admin/subcategories/new")
-    String formNew(SubcategoryForm subcategoryform, Model model){
+    String formNew(SubcategoryForm subcategoryform, Model model) {
         categoryRepository.findAllByOrderByName();
 
         String formAction = "/admin/subcategories";
@@ -78,7 +78,7 @@ public class SubcategoryController {
             return "admin/subcategory/formSubcategory";
         }
         subcategoryRepository.save(subcategoryForm.toModel());
-      
+
         return "redirect:/admin/subcategories/" + subcategoryForm.getCategory().getCodeUrl();
     }
 
@@ -93,7 +93,7 @@ public class SubcategoryController {
 
         String formAction = "/admin/subcategories/" + categoryCodeUrl + "/" + subcategoryCodeUrl;
 
-        model.addAllAttributes(this.setupFormUpdate(formAction,new SubcategoryFormUpdate(subcategory)));
+        model.addAllAttributes(this.setupFormUpdate(formAction, new SubcategoryFormUpdate(subcategory)));
 
         return "admin/subcategory/formUpdateSubcategory";
     }
@@ -104,7 +104,7 @@ public class SubcategoryController {
                   @PathVariable("subcategoryCodeUrl") String subcategoryCodeUrl) {
         if (result.hasErrors()) {
             String formAction = "/admin/subcategories/" + categoryCodeUrl + "/" + subcategoryCodeUrl;
-            model.addAllAttributes(this.setupFormUpdate(formAction,subcategoryFormUpdate));
+            model.addAllAttributes(this.setupFormUpdate(formAction, subcategoryFormUpdate));
             return "admin/subcategory/formUpdateSubcategory";
         }
         subcategoryRepository.save(subcategoryFormUpdate.toModel(subcategoryRepository));
@@ -112,20 +112,20 @@ public class SubcategoryController {
     }
 
     @GetMapping("/{categoryCode}")
-    String subcategoryByCategoryCodeUrl(@PathVariable("categoryCode") String categoryCodeUrl, Model model){
+    String subcategoryByCategoryCodeUrl(@PathVariable("categoryCode") String categoryCodeUrl, Model model) {
         Category category = categoryRepository.findByCodeUrl(categoryCodeUrl)
                 .orElseThrow(() -> new ResponseStatusException(NOT_FOUND, categoryCodeUrl));
 
         List<Subcategory> allActiveSubcategories = subcategoryRepository.findAllActiveSubcategories(category);
 
         model.addAttribute("allActiveSubcategories", allActiveSubcategories);
-        model.addAttribute("category",category);
+        model.addAttribute("category", category);
 
         return "category/category";
     }
 
     @GetMapping("/{categoryCode}/courses-by-levels")
-    String selfAssessment(@PathVariable("categoryCode") String categoryCodeUrl, Model model){
+    String coursesByLevel(@PathVariable("categoryCode") String categoryCodeUrl, Model model) {
         Category category = categoryRepository.findByCodeUrl(categoryCodeUrl)
                 .orElseThrow(() -> new ResponseStatusException(NOT_FOUND, categoryCodeUrl));
 
@@ -133,21 +133,18 @@ public class SubcategoryController {
 
         model.addAttribute("allActiveSubcategories", allActiveSubcategories);
         model.addAttribute("maxSubcategoryLevel", subcategoryRepository.findMaxLevel());
-        model.addAttribute("category",category);
+        model.addAttribute("category", category);
 
         return "category/courses-by-levels";
     }
 
     @GetMapping("/{categoryCode}/self-assessment")
-    String selfAssessment2(@PathVariable("categoryCode") String categoryCodeUrl, Model model){
+    String selfAssessment(@PathVariable("categoryCode") String categoryCodeUrl, Model model) {
         Category category = categoryRepository.findByCodeUrl(categoryCodeUrl)
                 .orElseThrow(() -> new ResponseStatusException(NOT_FOUND, categoryCodeUrl));
 
         List<Subcategory> allActiveSubcategories = subcategoryRepository.findAllActiveSubcategories(category);
         model.addAttribute("allActiveSubcategories", allActiveSubcategories);
-        model.addAttribute("maxSubcategoryLevel", subcategoryRepository.findMaxLevel());
-        model.addAttribute("category",category);
-
         return "category/self-assessment";
     }
 
@@ -159,8 +156,8 @@ public class SubcategoryController {
         return "/subcategory/chooseASubcategory";
     }
 
-    private Map<String,Object> setupForm(String formAction, SubcategoryForm subcategoryForm) {
-        Map<String,Object> attributes = new HashMap<>();
+    private Map<String, Object> setupForm(String formAction, SubcategoryForm subcategoryForm) {
+        Map<String, Object> attributes = new HashMap<>();
         List<Category> categories = categoryRepository.findAllByOrderByName();
 
         attributes.put("subcategoryForm", subcategoryForm);
@@ -170,8 +167,8 @@ public class SubcategoryController {
         return attributes;
     }
 
-    private Map<String,Object> setupFormUpdate(String formAction, SubcategoryFormUpdate subcategoryFormUpdate) {
-        Map<String,Object> attributes = new HashMap<>();
+    private Map<String, Object> setupFormUpdate(String formAction, SubcategoryFormUpdate subcategoryFormUpdate) {
+        Map<String, Object> attributes = new HashMap<>();
         List<Category> categories = categoryRepository.findAllByOrderByName();
 
         attributes.put("subcategoryFormUpdate", subcategoryFormUpdate);
