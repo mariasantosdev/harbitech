@@ -6,8 +6,6 @@ import br.com.harbitech.school.user.CurrentUser;
 import br.com.harbitech.school.user.User;
 import br.com.harbitech.school.user.UserRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -40,6 +38,7 @@ public class UserSelfAssessmentController {
 
         if (existingAssessment.isPresent()) {
             UserSelfAssessment assessmentToUpdate = existingAssessment.get();
+            assessmentToUpdate.setSubcategory(subcategory);
             userSelfAssessmentRepository.save(assessmentToUpdate);
             return "redirect:/"  + subcategory.getCategoryCodeUrl() + "/courses-by-levels";
         } else {

@@ -2,6 +2,9 @@ package br.com.harbitech.school.subcategory;
 
 import br.com.harbitech.school.category.Category;
 import br.com.harbitech.school.category.CategoryRepository;
+import br.com.harbitech.school.user.CurrentUser;
+import br.com.harbitech.school.user.User;
+import br.com.harbitech.school.user.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -28,9 +31,12 @@ public class SubcategoryController {
 
     private final CategoryRepository categoryRepository;
 
+    private final CurrentUser currentUser;
+
     private final SubcategoryFormValidator subcategoryFormValidator;
 
     private final SubcategoryFormUpdateValidator subcategoryFormUpdateValidator;
+    private final UserRepository userRepository;
 
     @InitBinder("subcategoryForm")
     void initBinderSubcategoryForm(WebDataBinder webDataBinder) {
@@ -129,10 +135,20 @@ public class SubcategoryController {
         Category category = categoryRepository.findByCodeUrl(categoryCodeUrl)
                 .orElseThrow(() -> new ResponseStatusException(NOT_FOUND, categoryCodeUrl));
 
-        List<Subcategory> allActiveSubcategories = subcategoryRepository.findAllActiveSubcategories(category);
+        String userName = currentUser.getCurrentUsername().stream().findFirst().orElseThrow(() ->
+                new ResponseStatusException(NOT_FOUND, "User not found"));
+
+        User user = userRepository.findByEmail(userName)
+                .orElseThrow(() -> new IllegalArgumentException("User not found"));
+
+        List<Subcategory> allActiveSubcategories = subcategoryRepository
+                .findAllActiveSubcategories(category);
+
+        int userLevel = subcategoryRepository.userLevel(user.getId(), category.getId());
 
         model.addAttribute("allActiveSubcategories", allActiveSubcategories);
         model.addAttribute("maxSubcategoryLevel", subcategoryRepository.findMaxLevel());
+        model.addAttribute("userLevel", userLevel);
         model.addAttribute("category", category);
 
         return "category/courses-by-levels";

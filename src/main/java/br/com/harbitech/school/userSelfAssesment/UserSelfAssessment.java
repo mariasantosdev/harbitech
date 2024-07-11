@@ -23,4 +23,8 @@ public class UserSelfAssessment {
         this.user = user;
         this.subcategory = subcategory;
     }
+
+    public void setSubcategory(Subcategory subcategory) {
+        this.subcategory = subcategory;
+    }
 }

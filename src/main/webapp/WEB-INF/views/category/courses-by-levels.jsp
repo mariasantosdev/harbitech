@@ -62,6 +62,19 @@
             color: #fff;
         }
 
+        .discord-link-wrapper {
+            position: fixed;
+            bottom: 10px;
+            width: 100%;
+            text-align: center;
+            padding: 10px 0;
+        }
+
+        .discord-link {
+            text-decoration: none;
+            font-size: 1em;
+        }
+
         .subcategories {
             margin-top: 24px;
         }
@@ -83,6 +96,11 @@
         .subcategories__item {
             margin: 0 5px 16px 0;
             transition: all .2s ease;
+        }
+
+        .all-courses-finished-message {
+            color: #4a535a;
+            font-size: 26px;
         }
 
         .subcategories__link {
@@ -213,26 +231,57 @@
             </c:forEach>
         </ul>
     </div>
-    <c:forEach var="level" begin="0" end="${maxSubcategoryLevel}">
-        <c:forEach items="${allActiveSubcategories}" var="subcategory">
-            <c:if test="${subcategory.level == level}">
-                <div class="subcategory">
-                    <h2 id="${subcategory.codeUrl}" class="subcategory__name">${subcategory.name}</h2>
-                    <ul class="courses__list">
-                        <c:forEach items="${subcategory.getCourses()}" var="course">
-                            <li class="course-card">
-                                <h3 class="course-card__name">${course.name}</h3>
-                                <p class="course-card__hours">${course.completionTimeInHours}h</p>
-                            </li>
-                        </c:forEach>
-                    </ul>
-                </div>
-            </c:if>
-        </c:forEach>
-    </c:forEach>
-    <a href="https://discord.com/channels/1255292852024381513/1255293613361987664" class="discord-link">
-        Link para a comunidade do discord
-    </a>
+    <c:if test="${maxSubcategoryLevel == userLevel}">
+        <h3 class="all-courses-finished-message">Você ja chegou no final dessa jornada! explore tudo oque a plataforma
+            pode te oferecer <a
+                    href="/onboarding/study-mode">aqui</a></h3>
+    </c:if>
+
+    <c:choose>
+        <c:when test="${userLevel == 0}">
+            <c:forEach var="level" begin="${userLevel}" end="${maxSubcategoryLevel}">
+                <c:forEach items="${allActiveSubcategories}" var="subcategory">
+                    <c:if test="${subcategory.level == level}">
+                        <div class="subcategory">
+                            <h2 id="${subcategory.codeUrl}" class="subcategory__name">${subcategory.name}</h2>
+                            <ul class="courses__list">
+                                <c:forEach items="${subcategory.getCourses()}" var="course">
+                                    <li class="course-card">
+                                        <h3 class="course-card__name">${course.name}</h3>
+                                        <p class="course-card__hours">${course.completionTimeInHours}h</p>
+                                    </li>
+                                </c:forEach>
+                            </ul>
+                        </div>
+                    </c:if>
+                </c:forEach>
+            </c:forEach>
+        </c:when>
+        <c:otherwise>
+            <c:forEach var="level" begin="${userLevel + 1}" end="${maxSubcategoryLevel}">
+                <c:forEach items="${allActiveSubcategories}" var="subcategory">
+                    <c:if test="${subcategory.level == level}">
+                        <div class="subcategory">
+                            <h2 id="${subcategory.codeUrl}" class="subcategory__name">${subcategory.name}</h2>
+                            <ul class="courses__list">
+                                <c:forEach items="${subcategory.getCourses()}" var="course">
+                                    <li class="course-card">
+                                        <h3 class="course-card__name">${course.name}</h3>
+                                        <p class="course-card__hours">${course.completionTimeInHours}h</p>
+                                    </li>
+                                </c:forEach>
+                            </ul>
+                        </div>
+                    </c:if>
+                </c:forEach>
+            </c:forEach>
+        </c:otherwise>
+    </c:choose>
+    <div class="discord-link-wrapper">
+        <a href="https://discord.com/channels/1255292852024381513/1255293613361987664" class="discord-link">
+            Link para a comunidade do discord
+        </a>
+    </div>
 </main>
 </body>
 </html>
