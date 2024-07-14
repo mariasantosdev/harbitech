@@ -152,7 +152,7 @@
             font-size: 0.8750em;
         }
 
-        .course-card__finish-course  {
+        .course-card__finish-course {
             margin-block: 16px;
         }
 
@@ -273,7 +273,9 @@
                                     <li class="course-card">
                                         <h3 class="course-card__name">${course.name}</h3>
                                         <p class="course-card__hours">${course.completionTimeInHours}h</p>
-                                        <a class="course-card__finish-course" onclick="postRequest()">Finalizar curso</a>
+                                        <button class="course-card__finish-course" data-course-code="${course.codeUrl}"
+                                                onclick="postRequest(this)">Finalizar curso
+                                        </button>
                                     </li>
                                 </c:forEach>
                             </ul>
@@ -291,34 +293,28 @@
 </main>
 </body>
 <script>
-    function postRequest() {
-        // URL para a qual você deseja enviar a requisição POST
-        const url = 'URL_DO_CURSO';
-
-        // Dados que você deseja enviar na requisição POST
-        const data = {
-            // exemplo de dados
-            cursoId: 1234,
-            status: 'finalizado'
-        };
+    function postRequest(element) {
+        console.log(`caiu na primeira linha do metodo postRequest`);
+        const courseCode = element.getAttribute('data-course-code');
+        const url = `/courses/` + courseCode + `/enroll`;
 
         fetch(url, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify(data),
         })
-            .then(response => response.json())
-            .then(data => {
-                console.log('Sucesso:', data);
-                // Redirecionar para outra página ou fazer outra ação
+            .then(response => {
+                if (response.ok) {
+                    console.log('Sucesso:', response.status);
+                } else {
+                    console.error('Erro:', response.status);
+                }
             })
             .catch((error) => {
                 console.error('Erro:', error);
             });
 
-        // Impede que o link padrão seja seguido
         return false;
     }
 </script>
