@@ -24,20 +24,23 @@ public class Enrollment {
     @ManyToOne
     private Course course;
 
+    private boolean finished;
+
     @Deprecated
     protected Enrollment() {
     }
 
-    public Enrollment(User user, Course course) {
+    public Enrollment(User user, Course course, boolean finished) {
         this.user = user;
         this.course = course;
+        this.finished = finished;
     }
 
     User getUser() {
         return user;
     }
 
-    Course getCourse() {
+    public Course getCourse() {
         return course;
     }
 

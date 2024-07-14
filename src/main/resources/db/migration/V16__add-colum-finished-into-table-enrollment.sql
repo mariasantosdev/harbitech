@@ -1,0 +1,2 @@
+ALTER TABLE enrollment
+    ADD COLUMN finished BOOLEAN DEFAULT FALSE;

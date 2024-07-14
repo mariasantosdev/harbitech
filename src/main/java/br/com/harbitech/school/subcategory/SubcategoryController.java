@@ -2,6 +2,9 @@ package br.com.harbitech.school.subcategory;
 
 import br.com.harbitech.school.category.Category;
 import br.com.harbitech.school.category.CategoryRepository;
+import br.com.harbitech.school.course.Course;
+import br.com.harbitech.school.enrollment.Enrollment;
+import br.com.harbitech.school.enrollment.EnrollmentRepository;
 import br.com.harbitech.school.user.CurrentUser;
 import br.com.harbitech.school.user.User;
 import br.com.harbitech.school.user.UserRepository;
@@ -37,6 +40,7 @@ public class SubcategoryController {
 
     private final SubcategoryFormUpdateValidator subcategoryFormUpdateValidator;
     private final UserRepository userRepository;
+    private final EnrollmentRepository enrollmentRepository;
 
     @InitBinder("subcategoryForm")
     void initBinderSubcategoryForm(WebDataBinder webDataBinder) {
@@ -146,7 +150,16 @@ public class SubcategoryController {
 
         int userLevel = subcategoryRepository.userLevel(user.getId(), category.getId());
 
+        List<Course> courses = allActiveSubcategories.stream()
+                .flatMap(s -> s.getCourses().stream())
+                .toList();
+
+        List<Long> allEnrollmentsIdByLoggedUser = enrollmentRepository.findAllByUserAndCourses(user, courses).stream()
+                .map(enrollment -> enrollment.getCourse().getId())
+                .toList();
+
         model.addAttribute("allActiveSubcategories", allActiveSubcategories);
+        model.addAttribute("enrolledCourseIds", allEnrollmentsIdByLoggedUser);
         model.addAttribute("maxSubcategoryLevel", subcategoryRepository.findMaxLevel());
         model.addAttribute("userLevel", userLevel);
         model.addAttribute("category", category);

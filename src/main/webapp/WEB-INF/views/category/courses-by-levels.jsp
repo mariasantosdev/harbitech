@@ -1,5 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -75,45 +77,9 @@
             font-size: 1em;
         }
 
-        .subcategories {
-            margin-top: 24px;
-        }
-
-        .subcategories__label {
-            font-size: 0.938em;
-            line-height: 1.4;
-            color: #4a535a;
-            margin-bottom: 10px;
-        }
-
-        .subcategories__list {
-            display: flex;
-            flex-wrap: wrap;
-            list-style: none;
-            margin-top: 5px;
-        }
-
-        .subcategories__item {
-            margin: 0 5px 16px 0;
-            transition: all .2s ease;
-        }
-
         .all-courses-finished-message {
             color: #4a535a;
             font-size: 26px;
-        }
-
-        .subcategories__link {
-            text-decoration: none;
-            padding: 4px 20px 8px;
-            border-radius: 4px;
-            background-color: #e2e6ee;
-        }
-
-        .subcategories__name {
-            font-size: 0.813em;
-            color: #4a535a;
-            opacity: .8;
         }
 
         .subcategory__name {
@@ -156,12 +122,13 @@
             margin-block: 16px;
         }
 
+        .all-courses-finished-message {
+            margin-block: 16px;
+            font-size: 15px;
+            color: green;
+        }
+
         @media (min-width: 540px) {
-            .subcategories {
-                padding: 15px 20px;
-                border-radius: 4px;
-                border: 1px solid #eff3fb;
-            }
 
             .courses__list {
                 display: flex;
@@ -174,28 +141,6 @@
         }
 
         @media (min-width: 940px) {
-            .subcategories {
-                display: flex;
-                justify-content: flex-start;
-                padding: 20px 20px 10px;
-                margin-top: 20px;
-            }
-
-            .subcategories__label {
-                margin-right: 10px;
-                margin-bottom: 0;
-            }
-
-            .subcategories__list {
-                display: flex;
-                flex-wrap: wrap;
-                list-style: none;
-                margin-top: 5px;
-            }
-
-            .subcategories__item {
-                margin: 0 10px 20px 0;
-            }
 
             .course-card {
                 width: calc(33.33333% - 10px);
@@ -223,18 +168,6 @@
     </div>
 </section>
 <main class="container">
-    <div class="subcategories">
-        <p class="subcategories__label">Quais conhecimentos você já tem?</p>
-        <ul class="subcategories__list">
-            <c:forEach items="${allActiveSubcategories}" var="subcategory">
-                <li class="subcategories__item">
-                    <a href="#${subcategory.codeUrl}" class="subcategories__link">
-                        <span class="subcategories__name">${subcategory.name}</span>
-                    </a>
-                </li>
-            </c:forEach>
-        </ul>
-    </div>
     <c:if test="${maxSubcategoryLevel == userLevel}">
         <h3 class="all-courses-finished-message">Você ja chegou no final dessa jornada! explore tudo oque a plataforma
             pode te oferecer <a
@@ -273,9 +206,17 @@
                                     <li class="course-card">
                                         <h3 class="course-card__name">${course.name}</h3>
                                         <p class="course-card__hours">${course.completionTimeInHours}h</p>
-                                        <button class="course-card__finish-course" data-course-code="${course.codeUrl}"
-                                                onclick="postRequest(this)">Finalizar curso
-                                        </button>
+                                        <c:choose>
+                                            <c:when test="${!fn:contains(enrolledCourseIds, course.id)}">
+                                                <button class="course-card__finish-course"
+                                                        data-course-code="${course.codeUrl}"
+                                                        onclick="postRequest(this)">Finalizar curso
+                                                </button>
+                                            </c:when>
+                                            <c:otherwise>
+                                                <p class="all-courses-finished-message">Curso finalizado!</p>
+                                            </c:otherwise>
+                                        </c:choose>
                                     </li>
                                 </c:forEach>
                             </ul>
@@ -307,6 +248,12 @@
             .then(response => {
                 if (response.ok) {
                     console.log('Sucesso:', response.status);
+                    const parentElement = element.parentElement;
+                    parentElement.removeChild(element);
+                    const message = document.createElement('p');
+                    message.textContent = 'Curso finalizado!';
+                    message.classList.add('all-courses-finished-message');
+                    parentElement.appendChild(message);
                 } else {
                     console.error('Erro:', response.status);
                 }

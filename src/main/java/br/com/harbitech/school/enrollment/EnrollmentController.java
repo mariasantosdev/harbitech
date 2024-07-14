@@ -41,11 +41,11 @@ class EnrollmentController {
 
         User user = userRepository.findByEmail(userName).orElseThrow(() -> new IllegalArgumentException("User not found"));
 
-        if (enrollmentRepository.existsByCourseAndUser(course, user)) {
+        if (enrollmentRepository.existsByCourseAndUserAndFinished(course, user, true)) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }
 
-        Enrollment enrollment = new Enrollment(user, course);
+        Enrollment enrollment = new Enrollment(user, course, true);
         enrollmentRepository.save(enrollment);
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
