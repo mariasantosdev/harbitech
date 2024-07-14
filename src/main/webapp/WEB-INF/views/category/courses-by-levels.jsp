@@ -195,7 +195,6 @@
             </c:forEach>
         </c:when>
         <c:otherwise>
-            TODO so mostrar todos aqui se o usuario tiver completado todos os cursos do nivel anterior
             <c:forEach var="level" begin="${userLevel + 1}" end="${maxSubcategoryLevel}">
                 <c:forEach items="${allActiveSubcategories}" var="subcategory">
                     <c:if test="${subcategory.level == level}">
