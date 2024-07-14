@@ -152,6 +152,10 @@
             font-size: 0.8750em;
         }
 
+        .course-card__finish-course  {
+            margin-block: 16px;
+        }
+
         @media (min-width: 540px) {
             .subcategories {
                 padding: 15px 20px;
@@ -258,6 +262,7 @@
             </c:forEach>
         </c:when>
         <c:otherwise>
+            TODO so mostrar todos aqui se o usuario tiver completado todos os cursos do nivel anterior
             <c:forEach var="level" begin="${userLevel + 1}" end="${maxSubcategoryLevel}">
                 <c:forEach items="${allActiveSubcategories}" var="subcategory">
                     <c:if test="${subcategory.level == level}">
@@ -268,6 +273,7 @@
                                     <li class="course-card">
                                         <h3 class="course-card__name">${course.name}</h3>
                                         <p class="course-card__hours">${course.completionTimeInHours}h</p>
+                                        <a class="course-card__finish-course" onclick="postRequest()">Finalizar curso</a>
                                     </li>
                                 </c:forEach>
                             </ul>
@@ -284,4 +290,36 @@
     </div>
 </main>
 </body>
+<script>
+    function postRequest() {
+        // URL para a qual você deseja enviar a requisição POST
+        const url = 'URL_DO_CURSO';
+
+        // Dados que você deseja enviar na requisição POST
+        const data = {
+            // exemplo de dados
+            cursoId: 1234,
+            status: 'finalizado'
+        };
+
+        fetch(url, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(data),
+        })
+            .then(response => response.json())
+            .then(data => {
+                console.log('Sucesso:', data);
+                // Redirecionar para outra página ou fazer outra ação
+            })
+            .catch((error) => {
+                console.error('Erro:', error);
+            });
+
+        // Impede que o link padrão seja seguido
+        return false;
+    }
+</script>
 </html>
