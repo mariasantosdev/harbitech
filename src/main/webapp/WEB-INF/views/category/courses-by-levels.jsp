@@ -186,7 +186,6 @@
                                         <p class="course-card__hours">${course.completionTimeInHours}h</p>
                                         <c:choose>
                                             <c:when test="${fn:contains(enrolledCourseIds, course.id)}">
-                                                <h1> cai aqui</h1>
                                                 <p class="all-courses-finished-message">Curso finalizado!</p>
                                             </c:when>
                                             <c:otherwise>
