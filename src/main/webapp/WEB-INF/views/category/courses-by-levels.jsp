@@ -75,9 +75,10 @@
         .discord-link {
             text-decoration: none;
             font-size: 1em;
+            margin-left: 700px;
         }
 
-        .all-courses-finished-message {
+        .all-courses-finished-message-the-last-level {
             color: #4a535a;
             font-size: 26px;
         }
@@ -116,10 +117,6 @@
         .course-card__hours {
             margin-top: 5px;
             font-size: 0.8750em;
-        }
-
-        .course-card__finish-course {
-            margin-block: 16px;
         }
 
         .all-courses-finished-message {
@@ -169,7 +166,8 @@
 </section>
 <main class="container">
     <c:if test="${maxSubcategoryLevel == userLevel}">
-        <h3 class="all-courses-finished-message">Você ja chegou no final dessa jornada! explore tudo oque a plataforma
+        <h3 class="all-courses-finished-message-the-last-level">Você ja chegou no final dessa jornada! explore tudo oque
+            a plataforma
             pode te oferecer <a
                     href="/onboarding/study-mode">aqui</a></h3>
     </c:if>
@@ -186,6 +184,19 @@
                                     <li class="course-card">
                                         <h3 class="course-card__name">${course.name}</h3>
                                         <p class="course-card__hours">${course.completionTimeInHours}h</p>
+                                        <c:choose>
+                                            <c:when test="${fn:contains(enrolledCourseIds, course.id)}">
+                                                <h1> cai aqui</h1>
+                                                <p class="all-courses-finished-message">Curso finalizado!</p>
+                                            </c:when>
+                                            <c:otherwise>
+                                                <button class="course-card__finish-course"
+                                                        style="margin-block: 16px;background-color: #747c81;border: none;color: white;padding: 4px 6px;text-align: center;display: inline-block;font-size: 16px;cursor: pointer;"
+                                                        data-course-code="${course.codeUrl}"
+                                                        onclick="postRequest(this)">Finalizar curso
+                                                </button>
+                                            </c:otherwise>
+                                        </c:choose>
                                     </li>
                                 </c:forEach>
                             </ul>
@@ -206,14 +217,14 @@
                                         <h3 class="course-card__name">${course.name}</h3>
                                         <p class="course-card__hours">${course.completionTimeInHours}h</p>
                                         <c:choose>
-                                            <c:when test="${!fn:contains(enrolledCourseIds, course.id)}">
+                                            <c:when test="${fn:contains(enrolledCourseIds, course.id)}">
+                                                <p class="all-courses-finished-message">Curso finalizado!</p>
+                                            </c:when>
+                                            <c:otherwise>
                                                 <button class="course-card__finish-course"
                                                         data-course-code="${course.codeUrl}"
                                                         onclick="postRequest(this)">Finalizar curso
                                                 </button>
-                                            </c:when>
-                                            <c:otherwise>
-                                                <p class="all-courses-finished-message">Curso finalizado!</p>
                                             </c:otherwise>
                                         </c:choose>
                                     </li>
@@ -234,7 +245,6 @@
 </body>
 <script>
     function postRequest(element) {
-        console.log(`caiu na primeira linha do metodo postRequest`);
         const courseCode = element.getAttribute('data-course-code');
         const url = `/courses/` + courseCode + `/enroll`;
 
