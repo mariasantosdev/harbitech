@@ -48,8 +48,7 @@ public interface SubcategoryRepository extends JpaRepository<Subcategory, Long> 
     List<Subcategory> findNextLevelSubcategories(@Param("categoryId") Long categoryId);
 
     @Query(value = """
-
-            WITH LevelOfCurrentKnowledge AS (
+    WITH LevelOfCurrentKnowledge AS (
          SELECT s.level, s.id AS subcategoryId, e.course_id AS courseId
          FROM course
              JOIN subcategory s ON s.id = course.subcategory_id
@@ -73,6 +72,7 @@ public interface SubcategoryRepository extends JpaRepository<Subcategory, Long> 
      ELSE 'false'
      END AS allCoursesCompleted, kock.subcategoryId
      FROM LevelOfCurrentKnowledge kock	
+     WHERE kock.level = 1
      GROUP BY kock.subcategoryId
      ORDER BY kock.level DESC
      LIMIT 1

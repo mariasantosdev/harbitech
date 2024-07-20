@@ -231,6 +231,9 @@
                                                 <c:set var="allCoursesCompleted" value="false"/>
                                                 <button class="course-card__finish-course"
                                                         data-course-code="${course.codeUrl}"
+                                                        style="margin-block: 16px;background-color: #747c81;border:
+                                                        none;color: white;padding: 4px 6px;text-align: center;display: inline-block;
+                                                        font-size: 16px;cursor: pointer;"
                                                         onclick="postRequest(this)">Finalizar curso
                                                 </button>
                                             </c:otherwise>
