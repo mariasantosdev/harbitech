@@ -72,6 +72,17 @@
             padding: 10px 0;
         }
 
+        .btn {
+            margin-top: 20px;
+            padding: 10px 20px;
+            font-size: 1em;
+            cursor: pointer;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+        }
+
         .discord-link {
             text-decoration: none;
             font-size: 1em;
@@ -207,7 +218,7 @@
                 </c:forEach>
             </c:forEach>
             <c:if test="${allCoursesCompleted}">
-                <button class="next-steps-btn" style="margin-top: 20px;">Carregar próximos passos da jornada
+                <button class="next-steps-btn btn" style="margin-top: 20px;">Carregar próximos passos da jornada
                 </button>
             </c:if>
         </c:when>
@@ -245,7 +256,7 @@
                     </c:if>
                 </c:forEach>
                 <c:if test="${allCoursesCompleted}">
-                    <button class="next-steps-btn" style="margin-top: 20px;">Carregar próximos passos da jornada
+                    <button class="next-steps-btn btn" style="margin-top: 20px;">Carregar próximos passos da jornada
                     </button>
                 </c:if>
             </c:forEach>
