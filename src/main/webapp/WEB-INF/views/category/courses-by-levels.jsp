@@ -175,6 +175,7 @@
     <c:choose>
         <c:when test="${userLevel == 0}">
             <c:forEach var="level" begin="${userLevel}" end="${maxSubcategoryLevel}">
+                <c:set var="allCoursesCompleted" value="${isAllCompletedCousesInCurrentLevel}"/>
                 <c:forEach items="${allActiveSubcategories}" var="subcategory">
                     <c:if test="${subcategory.level == level}">
                         <div class="subcategory">
@@ -190,7 +191,9 @@
                                             </c:when>
                                             <c:otherwise>
                                                 <button class="course-card__finish-course"
-                                                        style="margin-block: 16px;background-color: #747c81;border: none;color: white;padding: 4px 6px;text-align: center;display: inline-block;font-size: 16px;cursor: pointer;"
+                                                        style="margin-block: 16px;background-color: #747c81;border:
+                                                        none;color: white;padding: 4px 6px;text-align: center;display: inline-block;
+                                                        font-size: 16px;cursor: pointer;"
                                                         data-course-code="${course.codeUrl}"
                                                         onclick="postRequest(this)">Finalizar curso
                                                 </button>
@@ -203,9 +206,14 @@
                     </c:if>
                 </c:forEach>
             </c:forEach>
+            <c:if test="${allCoursesCompleted}">
+                <button class="next-steps-btn" style="margin-top: 20px;">Carregar próximos passos da jornada
+                </button>
+            </c:if>
         </c:when>
         <c:otherwise>
             <c:forEach var="level" begin="${userLevel + 1}" end="${maxSubcategoryLevel}">
+                <c:set var="allCoursesCompleted" value="true"/>
                 <c:forEach items="${allActiveSubcategories}" var="subcategory">
                     <c:if test="${subcategory.level == level}">
                         <div class="subcategory">
@@ -220,6 +228,7 @@
                                                 <p class="all-courses-finished-message">Curso finalizado!</p>
                                             </c:when>
                                             <c:otherwise>
+                                                <c:set var="allCoursesCompleted" value="false"/>
                                                 <button class="course-card__finish-course"
                                                         data-course-code="${course.codeUrl}"
                                                         onclick="postRequest(this)">Finalizar curso
@@ -232,6 +241,10 @@
                         </div>
                     </c:if>
                 </c:forEach>
+                <c:if test="${allCoursesCompleted}">
+                    <button class="next-steps-btn" style="margin-top: 20px;">Carregar próximos passos da jornada
+                    </button>
+                </c:if>
             </c:forEach>
         </c:otherwise>
     </c:choose>

@@ -3,7 +3,6 @@ package br.com.harbitech.school.subcategory;
 import br.com.harbitech.school.category.Category;
 import br.com.harbitech.school.category.CategoryRepository;
 import br.com.harbitech.school.course.Course;
-import br.com.harbitech.school.enrollment.Enrollment;
 import br.com.harbitech.school.enrollment.EnrollmentRepository;
 import br.com.harbitech.school.user.CurrentUser;
 import br.com.harbitech.school.user.User;
@@ -23,6 +22,7 @@ import javax.validation.Valid;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 import static org.springframework.http.HttpStatus.NOT_FOUND;
 
@@ -146,7 +146,7 @@ public class SubcategoryController {
                 .orElseThrow(() -> new IllegalArgumentException("User not found"));
 
         List<Subcategory> allActiveSubcategories = subcategoryRepository
-                .findAllActiveSubcategories(category);
+                .findNextLevelSubcategories(category.getId());
 
         int userLevel = subcategoryRepository.userLevel(user.getId(), category.getId());
 
@@ -160,6 +160,15 @@ public class SubcategoryController {
 
         model.addAttribute("allActiveSubcategories", allActiveSubcategories);
         model.addAttribute("enrolledCourseIds", allEnrollmentsIdByLoggedUser);
+
+        Optional<Boolean> possibleAllCoursesCompleted = subcategoryRepository.getAllCoursesCompleted(user.getId());
+
+        if (possibleAllCoursesCompleted.isPresent()) {
+            model.addAttribute("isAllCompletedCousesInCurrentLevel", possibleAllCoursesCompleted.get());
+        } else {
+            model.addAttribute("isAllCompletedCousesInCurrentLevel", false);
+        }
+
         model.addAttribute("maxSubcategoryLevel", subcategoryRepository.findMaxLevel());
         model.addAttribute("userLevel", userLevel);
         model.addAttribute("category", category);
