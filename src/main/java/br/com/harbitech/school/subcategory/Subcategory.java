@@ -11,6 +11,7 @@ import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.PositiveOrZero;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,7 +24,7 @@ import static br.com.harbitech.school.validation.ValidationUtil.validateUrl;
         "OR s.description IS NULL")
 @Getter
 @NoArgsConstructor(onConstructor = @__(@Deprecated))
-public class Subcategory implements Comparable<Subcategory> {
+public class Subcategory implements Comparable<Subcategory>, Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

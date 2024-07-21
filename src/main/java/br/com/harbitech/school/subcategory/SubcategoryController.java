@@ -192,29 +192,6 @@ public class SubcategoryController {
         return "/subcategory/chooseASubcategory";
     }
 
-    @GetMapping("next-level-subcategory/{subcategoryId}")
-    @ResponseBody
-    public ResponseEntity<?> nextLevelSubcategory(@PathVariable Long subcategoryId) {
-        String userName = currentUser.getCurrentUsername().stream().findFirst().orElseThrow(() ->
-                new ResponseStatusException(NOT_FOUND, "User not found"));
-
-        userRepository.findByEmail(userName)
-                .orElseThrow(() -> new IllegalArgumentException("User not found"));
-
-        Subcategory subcategory = subcategoryRepository.findById(subcategoryId)
-                .orElseThrow(() -> new ResponseStatusException(NOT_FOUND, "Subcategory not found"));
-
-        int nextLevel = subcategory.getLevel() + 1;
-
-        Optional<Subcategory> possibleSubcategory = subcategoryRepository.findByLevel(nextLevel);
-
-        if (possibleSubcategory.isPresent()) {
-            return ResponseEntity.ok(possibleSubcategory.get());
-        } else {
-            return ResponseEntity.notFound().build();
-        }
-    }
-
     private Map<String, Object> setupForm(String formAction, SubcategoryForm subcategoryForm) {
         Map<String, Object> attributes = new HashMap<>();
         List<Category> categories = categoryRepository.findAllByOrderByName();

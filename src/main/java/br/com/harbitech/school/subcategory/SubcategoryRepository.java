@@ -27,23 +27,23 @@ public interface SubcategoryRepository extends JpaRepository<Subcategory, Long> 
 
     @Query(value = """
             WITH LevelOfCurrentKnowledge AS(
-            SELECT
-            	COALESCE(max(s.`level`), 0) AS currentKnowledge, COALESCE(max(s.`level`) + 1, 0) AS nextLevel, s.id
-            FROM
-            	user_self_assessment usa
-            JOIN subcategory s ON
-            	s.id = usa.subcategory_id
-            JOIN category c ON
-            	c.id = s.category_id AND s.category_id = :categoryId
-            ),
-            PublicSubcatoriesWithCourses AS(
-            	SELECT sub.* FROM subcategory sub
-            JOIN course c ON c.subcategory_id = sub.id
-            AND c.visibility = 'PUBLIC'
-            AND sub.status = 'ACTIVE'
-            AND sub.category_id = :categoryId
-            GROUP BY sub.id)
-            SELECT * FROM PublicSubcatoriesWithCourses pswc WHERE pswc.level = (SELECT nextLevel FROM LevelOfCurrentKnowledge)
+                      SELECT
+                      	COALESCE(max(s.`level`), 0) AS currentKnowledge, COALESCE(max(s.`level`) + 1, 0) AS nextLevel, s.id
+                      FROM
+                      	user_self_assessment usa
+                      JOIN subcategory s ON
+                      	s.id = usa.subcategory_id
+                      JOIN category c ON
+                      	c.id = s.category_id AND s.category_id = :categoryId
+                      ),
+                      PublicSubcatoriesWithCourses AS(
+                      	SELECT sub.* FROM subcategory sub
+                      JOIN course c ON c.subcategory_id = sub.id
+                      AND c.visibility = 'PUBLIC'
+                      AND sub.status = 'ACTIVE'
+                      AND sub.category_id = :categoryId
+                      GROUP BY sub.id)
+                      SELECT * FROM PublicSubcatoriesWithCourses pswc WHERE pswc.level >= (SELECT nextLevel FROM LevelOfCurrentKnowledge)
      """, nativeQuery = true)
     List<Subcategory> findNextLevelSubcategories(@Param("categoryId") Long categoryId);
 
@@ -102,5 +102,4 @@ public interface SubcategoryRepository extends JpaRepository<Subcategory, Long> 
         return existsByCodeUrlAndIdNot(codeUrl, id);
     }
 
-    Optional<Subcategory> findByLevel(int nexLevel);
 }
