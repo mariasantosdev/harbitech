@@ -8,14 +8,12 @@ import br.com.harbitech.school.user.CurrentUser;
 import br.com.harbitech.school.user.User;
 import br.com.harbitech.school.user.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.InitBinder;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
 import javax.validation.Valid;
@@ -193,6 +191,23 @@ public class SubcategoryController {
         model.addAttribute("categories", allCategories);
         return "/subcategory/chooseASubcategory";
     }
+
+    @GetMapping("next-level-subcategory/{subcategoryId}")
+    @ResponseBody
+    public List<Subcategory> nextLevelSubcategory(@PathVariable Long subcategoryId) {
+        String userName = currentUser.getCurrentUsername().stream().findFirst().orElseThrow(() ->
+                new ResponseStatusException(NOT_FOUND, "User not found"));
+
+        User user = userRepository.findByEmail(userName)
+                .orElseThrow(() -> new IllegalArgumentException("User not found"));
+
+        Subcategory subcategory = subcategoryRepository.findById(subcategoryId)
+                .orElseThrow(() -> new ResponseStatusException(NOT_FOUND, "Subcategory not found"));
+
+        int nexLevel = subcategoryRepository.nextLevel(user.getId(), subcategory.getCategory().getId());
+        return subcategoryRepository.findAllByLevel(nexLevel);
+    }
+
 
     private Map<String, Object> setupForm(String formAction, SubcategoryForm subcategoryForm) {
         Map<String, Object> attributes = new HashMap<>();
