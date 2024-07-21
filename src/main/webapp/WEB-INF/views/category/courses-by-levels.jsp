@@ -187,8 +187,11 @@
         <c:when test="${userLevel == 0}">
             <c:forEach var="level" begin="${userLevel}" end="${maxSubcategoryLevel}">
                 <c:set var="allCoursesCompleted" value="${isAllCompletedCousesInCurrentLevel}"/>
+                <c:set var="lastSubcategoryId" value=""/>
+
                 <c:forEach items="${allActiveSubcategories}" var="subcategory">
                     <c:if test="${subcategory.level == level}">
+                        <c:set var="lastSubcategoryId" value="${subcategory.id}"/>
                         <div class="subcategory">
                             <h2 id="${subcategory.codeUrl}" class="subcategory__name">${subcategory.name}</h2>
                             <ul class="courses__list">
@@ -203,8 +206,8 @@
                                             <c:otherwise>
                                                 <button class="course-card__finish-course"
                                                         style="margin-block: 16px;background-color: #747c81;border:
-                                                        none;color: white;padding: 4px 6px;text-align: center;display: inline-block;
-                                                        font-size: 16px;cursor: pointer;"
+                                                    none;color: white;padding: 4px 6px;text-align: center;display: inline-block;
+                                                    font-size: 16px;cursor: pointer;"
                                                         data-course-code="${course.codeUrl}"
                                                         onclick="postRequest(this)">Finalizar curso
                                                 </button>
@@ -216,17 +219,23 @@
                         </div>
                     </c:if>
                 </c:forEach>
+                <c:if test="${allCoursesCompleted && lastSubcategoryId != ''}">
+                    <button class="next-steps-btn btn" style="margin-top: 20px;" onclick="getRequestForNextLevel(this)"
+                            data-subcategory-id="${lastSubcategoryId}">
+                        Carregar próximos passos da jornada
+                    </button>
+                </c:if>
             </c:forEach>
-            <c:if test="${allCoursesCompleted}">
-                <button class="next-steps-btn btn" style="margin-top: 20px;">Carregar próximos passos da jornada
-                </button>
-            </c:if>
         </c:when>
         <c:otherwise>
             <c:forEach var="level" begin="${userLevel + 1}" end="${maxSubcategoryLevel}">
                 <c:set var="allCoursesCompleted" value="true"/>
+
+                <c:set var="lastSubcategoryId" value=""/>
+
                 <c:forEach items="${allActiveSubcategories}" var="subcategory">
                     <c:if test="${subcategory.level == level}">
+                        <c:set var="lastSubcategoryId" value="${subcategory.id}"/>
                         <div class="subcategory">
                             <h2 id="${subcategory.codeUrl}" class="subcategory__name">${subcategory.name}</h2>
                             <ul class="courses__list">
@@ -243,8 +252,8 @@
                                                 <button class="course-card__finish-course"
                                                         data-course-code="${course.codeUrl}"
                                                         style="margin-block: 16px;background-color: #747c81;border:
-                                                        none;color: white;padding: 4px 6px;text-align: center;display: inline-block;
-                                                        font-size: 16px;cursor: pointer;"
+                                                    none;color: white;padding: 4px 6px;text-align: center;display: inline-block;
+                                                    font-size: 16px;cursor: pointer;"
                                                         onclick="postRequest(this)">Finalizar curso
                                                 </button>
                                             </c:otherwise>
@@ -255,8 +264,11 @@
                         </div>
                     </c:if>
                 </c:forEach>
-                <c:if test="${allCoursesCompleted}">
-                    <button class="next-steps-btn btn" style="margin-top: 20px;">Carregar próximos passos da jornada
+
+                <c:if test="${allCoursesCompleted && lastSubcategoryId != ''}">
+                    <button class="next-steps-btn btn" style="margin-top: 20px;" onclick="getRequestForNextLevel(this)"
+                            data-subcategory-id="${lastSubcategoryId}">
+                        Carregar próximos passos da jornada
                     </button>
                 </c:if>
             </c:forEach>
@@ -299,5 +311,33 @@
 
         return false;
     }
+
+    function getRequestForNextLevel(element) {
+        const subcategoryId = element.getAttribute('data-subcategory-id');
+        console.log(subcategoryId)
+        const url = `/next-level-subcategory/` + subcategoryId;
+
+        fetch(url, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        })
+            .then(response => response.json())
+            .then(data => {
+                console.log('Sucesso:', data);
+                appendSubcategories(data);
+            })
+            .catch((error) => {
+                console.error('Erro:', error);
+            });
+
+        return false;
+    }
+
+    function appendSubcategories(subcategories) {
+        console.log(subcategories)
+    }
+
 </script>
 </html>

@@ -88,6 +88,10 @@ public class Subcategory implements Comparable<Subcategory> {
         this.courses = courses;
     }
 
+    public Long getId() {
+        return id;
+    }
+
     @Override
     public String toString() {
         return "SubCategory{" +
