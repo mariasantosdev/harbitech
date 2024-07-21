@@ -80,16 +80,6 @@ public interface SubcategoryRepository extends JpaRepository<Subcategory, Long> 
     Optional<Boolean> getAllCoursesCompleted(Long userId);
 
     @Query(value = """
-    select COALESCE(max(s.`level`) + 1, 0) AS nextLevel
-     from subcategory s
-     	join user_self_assessment usa ON usa.subcategory_id = s.id
-     	join category c on c.id = s.category_id\s
-     and usa.user_id = :userId
-     and c.id = :categoryId	
-     """, nativeQuery = true)
-    int nextLevel(Long userId, Long categoryId);
-
-    @Query(value = """
             SELECT COALESCE(MAX(s.`level`), 0) FROM user_self_assessment usa
                 JOIN subcategory s ON s.id = usa.subcategory_id
                 JOIN category c ON c.id = :categoryId
@@ -112,5 +102,5 @@ public interface SubcategoryRepository extends JpaRepository<Subcategory, Long> 
         return existsByCodeUrlAndIdNot(codeUrl, id);
     }
 
-    List<Subcategory> findAllByLevel(int nexLevel);
+    Optional<Subcategory> findByLevel(int nexLevel);
 }

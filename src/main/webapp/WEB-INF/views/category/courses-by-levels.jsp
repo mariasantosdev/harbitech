@@ -314,7 +314,7 @@
 
     function getRequestForNextLevel(element) {
         const subcategoryId = element.getAttribute('data-subcategory-id');
-        console.log(subcategoryId)
+        console.log(subcategoryId);
         const url = `/next-level-subcategory/` + subcategoryId;
 
         fetch(url, {
@@ -323,10 +323,17 @@
                 'Content-Type': 'application/json',
             },
         })
-            .then(response => response.json())
-            .then(data => {
-                console.log('Sucesso:', data);
-                appendSubcategories(data);
+            .then(response => response.text()) // Leia a resposta como texto
+            .then(text => {
+                console.log('Resposta do servidor:', text); // Verifique o conteúdo completo da resposta
+                try {
+                    const data = JSON.parse(text); // Tente converter o texto para JSON
+                    console.log('Sucesso:', data);
+                    appendSubcategories(data);
+                } catch (error) {
+                    console.error('Erro ao parsear JSON:', error);
+                    console.error('Conteúdo da resposta:', text); // Exiba o conteúdo da resposta para ajudar na depuração
+                }
             })
             .catch((error) => {
                 console.error('Erro:', error);
@@ -334,6 +341,7 @@
 
         return false;
     }
+
 
     function appendSubcategories(subcategories) {
         console.log(subcategories)
