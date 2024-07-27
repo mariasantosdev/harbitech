@@ -192,7 +192,7 @@
                 <c:forEach items="${allActiveSubcategories}" var="subcategory" varStatus="status">
                     <c:if test="${subcategory.level == level}">
                         <c:set var="lastSubcategoryId" value="${subcategory.id}"/>
-                        <div class="subcategory ${status.index > 0 ? 'hidden' : ''}">
+                        <div class="subcategory" ${status.index > 0 ? 'hidden' : ''}>
                             <h2 id="${subcategory.codeUrl}" class="subcategory__name">${subcategory.name}</h2>
                             <ul class="courses__list">
                                 <c:forEach items="${subcategory.getCourses()}" var="course">
@@ -259,7 +259,8 @@
 
                 <button class="load-next-steps"
                         style="margin-top: 20px;background-color: #4CAF50;border: none;color: white;padding: 10px 20px;text-align: center;display: block;font-size: 16px;cursor: pointer;"
-                        onclick="loadNextSteps()">Carregar próximos passos da jornada</button>
+                        onclick="loadNextSteps()">Carregar próximos passos da jornada
+                </button>
 
             </c:forEach>
         </c:otherwise>
