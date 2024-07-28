@@ -146,6 +146,7 @@
 <main class="container">
     <c:forEach items="${allActiveSubcategories}" var="subcategory" varStatus="status">
         <div class="subcategory" id="subcategory-${status.index}" ${status.index != 0 ? 'hidden' : ''}
+             data-is-last="${status.last}"
              data-courses-count="${fn:length(subcategory.getCourses())}">
             <h2 id="${subcategory.codeUrl}" class="subcategory__name">${subcategory.name}</h2>
             <ul class="courses__list">
@@ -177,6 +178,12 @@
                     center;display: ${allCoursesCompleted ? "block" : "none"};font-size: 16px;cursor: pointer;">
         Carregar próximos passos da jornada
     </button>
+
+    <div id="congratulations-message" style="display: none; margin-top: 20px; font-size: 16px;">
+        Parabéns, sua jornada do herói dentro da plataforma foi concluída com sucesso!
+        Mas não se esqueça de que a jornada pelo conhecimento nunca termina.
+    </div>
+
 </main>
 <a href="https://discord.com/channels/1255292852024381513/1255293613361987664" class="discord-link">
     Link para a comunidade do discord
@@ -188,42 +195,46 @@
         this.style.display = 'none';
 
         const subcategories = document.querySelectorAll('.subcategory');
+        let lastVisibleSubcategory = null;
 
         for (let i = 0; i < subcategories.length; i++) {
             if (subcategories[i].hasAttribute('hidden')) {
                 subcategories[i].removeAttribute('hidden');
+                lastVisibleSubcategory = subcategories[i];
                 break;
             }
         }
 
-        checkAllCoursesCompletion();
+        checkAllCoursesCompletion(lastVisibleSubcategory);
     });
 
-    function checkAllCoursesCompletion() {
+    function checkAllCoursesCompletion(lastVisibleSubcategory) {
         const subcategories = document.querySelectorAll('.subcategory');
         let allCompleted = true;
+        let isLastSubcategoryCompleted = true;
 
         subcategories.forEach(subcategory => {
             if (!subcategory.hasAttribute('hidden')) {
                 const courses = subcategory.querySelectorAll('.course-card');
+                let subcategoryCompleted = true;
                 courses.forEach(course => {
                     if (!course.querySelector('.all-courses-finished-message')) {
                         allCompleted = false;
+                        subcategoryCompleted = false;
                     }
                 });
+
+                if (subcategory === lastVisibleSubcategory && !subcategoryCompleted) {
+                    isLastSubcategoryCompleted = false;
+                }
             }
         });
 
-        const loadNextStepsButton = document.getElementById('load-next-steps');
-        if (allCompleted) {
-            loadNextStepsButton.style.display = 'block';
+        if (isLastSubcategoryCompleted && lastVisibleSubcategory.getAttribute('data-is-last') === 'true') {
+            document.getElementById('congratulations-message').style.display = 'block';
         } else {
-            loadNextStepsButton.style.display = 'none';
+            document.getElementById('load-next-steps').style.display = 'block';
         }
-    }
-
-    function completeCourse() {
-
     }
 
     function postRequest(element) {
@@ -257,17 +268,20 @@
         return false;
     }
 
-
     function updateCourseCompletion(subcategory) {
         const totalCourses = subcategory.getAttribute('data-courses-count');
         const completedCourses = subcategory.querySelectorAll('.all-courses-finished-message').length;
 
         if (completedCourses == totalCourses) {
-            document.getElementById('load-next-steps').style.display = 'block';
+            if (subcategory.getAttribute('data-is-last') === 'true') {
+                document.getElementById('congratulations-message').style.display = 'block';
+            } else {
+                document.getElementById('load-next-steps').style.display = 'block';
+            }
         }
     }
 
-    checkAllCoursesCompletion();
+    checkAllCoursesCompletion(document.querySelector('.subcategory:not([hidden])'));
 
 
 </script>
