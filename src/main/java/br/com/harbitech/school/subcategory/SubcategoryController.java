@@ -131,7 +131,7 @@ public class SubcategoryController {
     }
 
     @GetMapping("/{categoryCode}/courses-by-levels")
-    String coursesByLevel(@PathVariable("categoryCode") String categoryCodeUrl, @RequestParam  Long subcategoryId, Model model) {
+    String coursesByLevel(@PathVariable("categoryCode") String categoryCodeUrl, @RequestParam Long subcategoryId, Model model) {
         Category category = categoryRepository.findByCodeUrl(categoryCodeUrl)
                 .orElseThrow(() -> new ResponseStatusException(NOT_FOUND, categoryCodeUrl));
 

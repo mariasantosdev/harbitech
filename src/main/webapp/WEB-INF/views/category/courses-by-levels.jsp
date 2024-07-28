@@ -15,35 +15,44 @@
             padding: 0;
             box-sizing: border-box;
         }
+
         body {
             background-color: #f9fbfd;
         }
+
         body, input, select, textarea {
             font: normal 14px sans-serif;
         }
+
         a {
             outline: none;
         }
+
         ul {
             list-style: none;
         }
+
         .container {
             margin: 0 auto;
             max-width: 1200px;
             width: 96%;
         }
+
         .category-banner__wrapper {
             background-color: #a1b0c0;
         }
+
         .category-banner {
             display: flex;
             flex-direction: row;
             align-items: center;
             justify-content: flex-start;
         }
+
         .category-banner__icon img {
             max-height: 32px;
         }
+
         .category-banner__title {
             margin-left: 10px;
             display: inline-block;
@@ -54,20 +63,24 @@
             text-transform: uppercase;
             color: #fff;
         }
+
         .all-courses-finished-message {
             margin-block: 16px;
             font-size: 15px;
             color: green;
         }
+
         .subcategory__name {
             color: #6e767b;
             font-size: 1.313em;
             text-align: left;
             margin-top: 50px;
         }
+
         .courses__list {
             margin-top: 20px;
         }
+
         .course-card {
             display: flex;
             flex-direction: column;
@@ -76,16 +89,18 @@
             border: 1px solid #eff1f9;
             border-radius: 4px;
             color: #747c81;
-            transition: all.3s ease;
+            transition: all .3s ease;
             padding: 15px;
             margin: 5px;
         }
+
         .course-card__name {
             font-weight: 600;
             opacity: .7;
             line-height: 1.29;
             font-size: 1em;
         }
+
         .course-card__hours {
             margin-top: 5px;
             font-size: 0.8750em;
@@ -97,14 +112,17 @@
                 border-radius: 4px;
                 border: 1px solid #eff3fb;
             }
+
             .courses__list {
                 display: flex;
                 flex-wrap: wrap;
             }
+
             .course-card {
                 width: calc(49% - 7.5px);
             }
         }
+
         @media (min-width: 940px) {
             .subcategories {
                 display: flex;
@@ -112,27 +130,33 @@
                 padding: 20px 20px 10px;
                 margin-top: 20px;
             }
+
             .subcategories__label {
                 margin-right: 10px;
                 margin-bottom: 0;
             }
+
             .subcategories__list {
                 display: flex;
                 flex-wrap: wrap;
                 list-style: none;
                 margin-top: 5px;
             }
+
             .subcategories__item {
                 margin: 0 10px 20px 0;
             }
+
             .course-card {
                 width: calc(33.33333% - 10px);
             }
         }
+
         @media (min-width: 1024px) {
             .course-card {
                 width: calc(25% - 15px);
             }
+
             .course-card__name {
                 line-height: 1.36;
             }
@@ -150,7 +174,7 @@
 </section>
 <main class="container">
     <c:forEach items="${allActiveSubcategories}" var="subcategory" varStatus="status">
-        <div class="subcategory" id="subcategory-${status.index}" ${status.index != 0 ?  'hidden' :  ''}>
+        <div class="subcategory" id="subcategory-${status.index}" ${status.index != 0 ? 'hidden' : ''}>
             <h2 id="${subcategory.codeUrl}" class="subcategory__name">${subcategory.name}</h2>
             <ul class="courses__list">
                 <c:forEach items="${subcategory.getCourses()}" var="course">
@@ -181,15 +205,16 @@
                     center;display: ${allCoursesCompleted ? "block" : "none"};font-size: 16px;cursor: pointer;">
         Carregar próximos passos da jornada
     </button>
-
-    <a href="https://discord.com/channels/1255292852024381513/1255293613361987664" class="discord-link">
-        Link para a comunidade do discord
-    </a>
 </main>
+<a href="https://discord.com/channels/1255292852024381513/1255293613361987664" class="discord-link">
+    Link para a comunidade do discord
+</a>
 </body>
 <script>
 
     document.getElementById('load-next-steps').addEventListener('click', function() {
+        this.style.display = 'none';
+
         const subcategories = document.querySelectorAll('.subcategory');
 
         for (let i = 0; i < subcategories.length; i++) {
@@ -198,7 +223,32 @@
                 break;
             }
         }
+
+        checkAllCoursesCompletion();
     });
+
+    function checkAllCoursesCompletion() {
+        const subcategories = document.querySelectorAll('.subcategory');
+        let allCompleted = true;
+
+        subcategories.forEach(subcategory => {
+            if (!subcategory.hasAttribute('hidden')) {
+                const courses = subcategory.querySelectorAll('.course-card');
+                courses.forEach(course => {
+                    if (!course.querySelector('.all-courses-finished-message')) {
+                        allCompleted = false;
+                    }
+                });
+            }
+        });
+
+        const loadNextStepsButton = document.getElementById('load-next-steps');
+        if (allCompleted) {
+            loadNextStepsButton.style.display = 'block';
+        } else {
+            loadNextStepsButton.style.display = 'none';
+        }
+    }
 
     function postRequest(element) {
         const courseCode = element.getAttribute('data-course-code');
