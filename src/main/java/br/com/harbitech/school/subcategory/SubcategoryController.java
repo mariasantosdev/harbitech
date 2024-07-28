@@ -17,10 +17,8 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
 import javax.validation.Valid;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.math.BigInteger;
+import java.util.*;
 
 import static org.springframework.http.HttpStatus.NOT_FOUND;
 
@@ -133,7 +131,7 @@ public class SubcategoryController {
     }
 
     @GetMapping("/{categoryCode}/courses-by-levels")
-    String coursesByLevel(@PathVariable("categoryCode") String categoryCodeUrl, Model model) {
+    String coursesByLevel(@PathVariable("categoryCode") String categoryCodeUrl, @RequestParam  Long subcategoryId, Model model) {
         Category category = categoryRepository.findByCodeUrl(categoryCodeUrl)
                 .orElseThrow(() -> new ResponseStatusException(NOT_FOUND, categoryCodeUrl));
 
@@ -143,10 +141,7 @@ public class SubcategoryController {
         User user = userRepository.findByEmail(userName)
                 .orElseThrow(() -> new IllegalArgumentException("User not found"));
 
-        List<Subcategory> allActiveSubcategories = subcategoryRepository
-                .findNextLevelSubcategories(category.getId());
-
-        int userLevel = subcategoryRepository.userLevel(user.getId(), category.getId());
+        List<Subcategory> allActiveSubcategories = subcategoryRepository.findCurrentKnowLevelSubcategories(category.getId());
 
         List<Course> courses = allActiveSubcategories.stream()
                 .flatMap(s -> s.getCourses().stream())
@@ -156,19 +151,12 @@ public class SubcategoryController {
                 .map(enrollment -> enrollment.getCourse().getId())
                 .toList();
 
-        model.addAttribute("allActiveSubcategories", allActiveSubcategories);
+        Boolean allCoursesCompleted = subcategoryRepository
+                .getAllCoursesCompleted(user.getId(), subcategoryId);
+
+        model.addAttribute("allCoursesCompleted", allCoursesCompleted);
         model.addAttribute("enrolledCourseIds", allEnrollmentsIdByLoggedUser);
-
-        Optional<Boolean> possibleAllCoursesCompleted = subcategoryRepository.getAllCoursesCompleted(user.getId());
-
-        if (possibleAllCoursesCompleted.isPresent()) {
-            model.addAttribute("isAllCompletedCousesInCurrentLevel", possibleAllCoursesCompleted.get());
-        } else {
-            model.addAttribute("isAllCompletedCousesInCurrentLevel", false);
-        }
-
-        model.addAttribute("maxSubcategoryLevel", subcategoryRepository.findMaxLevel());
-        model.addAttribute("userLevel", userLevel);
+        model.addAttribute("allActiveSubcategories", allActiveSubcategories);
         model.addAttribute("category", category);
 
         return "category/courses-by-levels";

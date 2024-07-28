@@ -40,10 +40,10 @@ public class UserSelfAssessmentController {
             UserSelfAssessment assessmentToUpdate = existingAssessment.get();
             assessmentToUpdate.setSubcategory(subcategory);
             userSelfAssessmentRepository.save(assessmentToUpdate);
-            return "redirect:/"  + subcategory.getCategoryCodeUrl() + "/courses-by-levels";
+            return "redirect:/" + subcategory.getCategoryCodeUrl() + "/courses-by-levels?subcategoryId=" + subcategory.getId();
         } else {
             userSelfAssessmentRepository.save(new UserSelfAssessment(user, subcategory));
-            return "redirect:/"  + subcategory.getCategoryCodeUrl() + "/courses-by-levels";
+            return "redirect:/" + subcategory.getCategoryCodeUrl() + "/courses-by-levels?subcategoryId=" + subcategory.getId();
         }
     }
 }

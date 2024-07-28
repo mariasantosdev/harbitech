@@ -38,7 +38,6 @@ public class Subcategory implements Comparable<Subcategory>, Serializable {
     @Enumerated(EnumType.STRING)
     @Column(columnDefinition = "ENUM")
     private SubCategoryStatus status = SubCategoryStatus.INACTIVE;
-    //TODO talvez dropar essa coluna
     private int orderVisualization;
     @ManyToOne(fetch = FetchType.LAZY)
     private Category category;

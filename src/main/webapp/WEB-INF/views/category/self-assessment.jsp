@@ -68,7 +68,7 @@
 </head>
 <body>
 <div class="container">
-    <h1>Selecione qual seu nível</h1>
+    <h1>Selecione por onde você quer começar</h1>
     <div class="select-container">
         <c:forEach items="${allActiveSubcategories}" var="subcategory">
             <div class="subcategory">
