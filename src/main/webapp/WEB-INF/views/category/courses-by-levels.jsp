@@ -107,12 +107,6 @@
         }
 
         @media (min-width: 540px) {
-            .subcategories {
-                padding: 15px 20px;
-                border-radius: 4px;
-                border: 1px solid #eff3fb;
-            }
-
             .courses__list {
                 display: flex;
                 flex-wrap: wrap;
@@ -124,29 +118,6 @@
         }
 
         @media (min-width: 940px) {
-            .subcategories {
-                display: flex;
-                justify-content: flex-start;
-                padding: 20px 20px 10px;
-                margin-top: 20px;
-            }
-
-            .subcategories__label {
-                margin-right: 10px;
-                margin-bottom: 0;
-            }
-
-            .subcategories__list {
-                display: flex;
-                flex-wrap: wrap;
-                list-style: none;
-                margin-top: 5px;
-            }
-
-            .subcategories__item {
-                margin: 0 10px 20px 0;
-            }
-
             .course-card {
                 width: calc(33.33333% - 10px);
             }
@@ -174,7 +145,8 @@
 </section>
 <main class="container">
     <c:forEach items="${allActiveSubcategories}" var="subcategory" varStatus="status">
-        <div class="subcategory" id="subcategory-${status.index}" ${status.index != 0 ? 'hidden' : ''}>
+        <div class="subcategory" id="subcategory-${status.index}" ${status.index != 0 ? 'hidden' : ''}
+             data-courses-count="${fn:length(subcategory.getCourses())}">
             <h2 id="${subcategory.codeUrl}" class="subcategory__name">${subcategory.name}</h2>
             <ul class="courses__list">
                 <c:forEach items="${subcategory.getCourses()}" var="course">
@@ -212,7 +184,7 @@
 </body>
 <script>
 
-    document.getElementById('load-next-steps').addEventListener('click', function() {
+    document.getElementById('load-next-steps').addEventListener('click', function () {
         this.style.display = 'none';
 
         const subcategories = document.querySelectorAll('.subcategory');
@@ -250,6 +222,10 @@
         }
     }
 
+    function completeCourse() {
+
+    }
+
     function postRequest(element) {
         const courseCode = element.getAttribute('data-course-code');
         const url = `/courses/` + courseCode + `/enroll`;
@@ -269,6 +245,7 @@
                     message.textContent = 'Curso finalizado!';
                     message.classList.add('all-courses-finished-message');
                     parentElement.appendChild(message);
+                    updateCourseCompletion(parentElement.closest('.subcategory'));
                 } else {
                     console.error('Erro:', response.status);
                 }
@@ -279,6 +256,19 @@
 
         return false;
     }
+
+
+    function updateCourseCompletion(subcategory) {
+        const totalCourses = subcategory.getAttribute('data-courses-count');
+        const completedCourses = subcategory.querySelectorAll('.all-courses-finished-message').length;
+
+        if (completedCourses == totalCourses) {
+            document.getElementById('load-next-steps').style.display = 'block';
+        }
+    }
+
+    checkAllCoursesCompletion();
+
 
 </script>
 </html>
