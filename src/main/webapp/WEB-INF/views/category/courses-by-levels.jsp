@@ -150,7 +150,7 @@
 </section>
 <main class="container">
     <c:forEach items="${allActiveSubcategories}" var="subcategory" varStatus="status">
-        <div class="subcategory" ${status.index != 0 ?  'hidden' :  ''}>
+        <div class="subcategory" id="subcategory-${status.index}" ${status.index != 0 ?  'hidden' :  ''}>
             <h2 id="${subcategory.codeUrl}" class="subcategory__name">${subcategory.name}</h2>
             <ul class="courses__list">
                 <c:forEach items="${subcategory.getCourses()}" var="course">
@@ -164,8 +164,8 @@
                             <c:otherwise>
                                 <button class="course-card__finish-course"
                                         style="margin-block: 16px;background-color: #747c81;border:
-                                                    none;color: white;padding: 4px 6px;text-align: center;display: inline-block;
-                                                    font-size: 16px;cursor: pointer;"
+                                                none;color: white;padding: 4px 6px;text-align: center;display: inline-block;
+                                                font-size: 16px;cursor: pointer;"
                                         data-course-code="${course.codeUrl}"
                                         onclick="postRequest(this)">Finalizar curso
                                 </button>
@@ -176,9 +176,10 @@
             </ul>
         </div>
     </c:forEach>
-    <button class="load-next-steps"
+    <button id="load-next-steps" class="load-next-steps"
             style="margin-top: 20px;background-color: #4CAF50;border: none;color: white;padding: 10px 20px;text-align:
-            center;display: ${allCoursesCompleted ? "block" : "none"};font-size: 16px;cursor: pointer;">Carregar próximos passos da jornada
+                    center;display: ${allCoursesCompleted ? "block" : "none"};font-size: 16px;cursor: pointer;">
+        Carregar próximos passos da jornada
     </button>
 
     <a href="https://discord.com/channels/1255292852024381513/1255293613361987664" class="discord-link">
@@ -187,6 +188,18 @@
 </main>
 </body>
 <script>
+
+    document.getElementById('load-next-steps').addEventListener('click', function() {
+        const subcategories = document.querySelectorAll('.subcategory');
+
+        for (let i = 0; i < subcategories.length; i++) {
+            if (subcategories[i].hasAttribute('hidden')) {
+                subcategories[i].removeAttribute('hidden');
+                break;
+            }
+        }
+    });
+
     function postRequest(element) {
         const courseCode = element.getAttribute('data-course-code');
         const url = `/courses/` + courseCode + `/enroll`;
