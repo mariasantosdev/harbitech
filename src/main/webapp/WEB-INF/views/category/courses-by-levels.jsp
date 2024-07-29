@@ -180,8 +180,9 @@
     </button>
 
     <div id="congratulations-message" style="display: none; margin-top: 20px; font-size: 16px;">
-        Parabéns, sua jornada do herói dentro da plataforma foi concluída com sucesso!
-        Mas não se esqueça de que a jornada pelo conhecimento nunca termina.
+        Parabéns, sua jornada do herói dentro dessa categoria foi concluída com sucesso!
+        Mas não se esqueça de que a jornada pelo conhecimento nunca termina. Para explorar outras categorias,
+        <a href="/onboarding/study-mode">clique aqui</a>.
     </div>
 
 </main>
@@ -208,32 +209,24 @@
         checkAllCoursesCompletion(lastVisibleSubcategory);
     });
 
-    function checkAllCoursesCompletion(lastVisibleSubcategory) {
+    function checkAllCoursesCompletion() {
         const subcategories = document.querySelectorAll('.subcategory');
         let allCompleted = true;
-        let isLastSubcategoryCompleted = true;
-
         subcategories.forEach(subcategory => {
             if (!subcategory.hasAttribute('hidden')) {
                 const courses = subcategory.querySelectorAll('.course-card');
-                let subcategoryCompleted = true;
                 courses.forEach(course => {
                     if (!course.querySelector('.all-courses-finished-message')) {
                         allCompleted = false;
-                        subcategoryCompleted = false;
                     }
                 });
-
-                if (subcategory === lastVisibleSubcategory && !subcategoryCompleted) {
-                    isLastSubcategoryCompleted = false;
-                }
             }
         });
-
-        if (isLastSubcategoryCompleted && lastVisibleSubcategory.getAttribute('data-is-last') === 'true') {
-            document.getElementById('congratulations-message').style.display = 'block';
+        const loadNextStepsButton = document.getElementById('load-next-steps');
+        if (allCompleted) {
+            loadNextStepsButton.style.display = 'block';
         } else {
-            document.getElementById('load-next-steps').style.display = 'block';
+            loadNextStepsButton.style.display = 'none';
         }
     }
 
@@ -271,7 +264,6 @@
     function updateCourseCompletion(subcategory) {
         const totalCourses = subcategory.getAttribute('data-courses-count');
         const completedCourses = subcategory.querySelectorAll('.all-courses-finished-message').length;
-
         if (completedCourses == totalCourses) {
             if (subcategory.getAttribute('data-is-last') === 'true') {
                 document.getElementById('congratulations-message').style.display = 'block';

@@ -110,6 +110,32 @@ SELECT CASE
             """, nativeQuery = true)
     int userLevel(@Param("userId") Long userId, Long categoryId);
 
+    @Query(value = """
+            WITH AllCoursesByCategory AS (
+                SELECT DISTINCT c.id
+                FROM subcategory sc
+                JOIN course c ON c.subcategory_id = sc.id
+                WHERE c.visibility = 'PUBLIC'
+                  AND sc.status = 'ACTIVE'
+                  AND sc.category_id = :categoryId
+            )
+            SELECT
+                CASE
+                    WHEN NOT EXISTS (
+                        SELECT 1
+                        FROM AllCoursesByCategory ac
+                        WHERE NOT EXISTS (
+                            SELECT 1
+                            FROM enrollment e
+                            WHERE e.course_id = ac.id
+                            AND e.user_id = :userId
+                        )
+                    ) THEN 'true'
+                    ELSE 'false'
+                END AS all_courses_enrolled
+                """, nativeQuery = true)
+    Boolean isFinishedAllCourses(Long categoryId, Long userId);
+
     @Query(value = "SELECT MAX(level) FROM subcategory s WHERE s.category_id = :categoryId", nativeQuery = true)
     int findMaxLevel(Long categoryId);
 

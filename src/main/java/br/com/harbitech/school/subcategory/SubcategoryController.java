@@ -151,6 +151,11 @@ public class SubcategoryController {
                 .map(enrollment -> enrollment.getCourse().getId())
                 .toList();
 
+        if(subcategoryRepository.isFinishedAllCourses(category.getId(), user.getId())) {
+            model.addAttribute("category", category);
+            return "category/finished-all-courses";
+        }
+
         Boolean allCoursesCompleted = subcategoryRepository
                 .getAllCoursesCompleted(user.getId(), subcategoryId);
 
