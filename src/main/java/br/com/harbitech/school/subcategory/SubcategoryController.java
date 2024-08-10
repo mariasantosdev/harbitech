@@ -167,6 +167,23 @@ public class SubcategoryController {
         return "category/courses-by-levels";
     }
 
+    @GetMapping("/{categoryCode}/courses-by-levels/next-level")
+    String nextLevel(@PathVariable("categoryCode") String categoryCodeUrl, Model model) {
+        Category category = categoryRepository.findByCodeUrl(categoryCodeUrl)
+                .orElseThrow(() -> new ResponseStatusException(NOT_FOUND, categoryCodeUrl));
+
+        String userName = currentUser.getCurrentUsername().stream().findFirst().orElseThrow(() ->
+                new ResponseStatusException(NOT_FOUND, "User not found"));
+
+        User user = userRepository.findByEmail(userName)
+                .orElseThrow(() -> new IllegalArgumentException("User not found"));
+
+        List<Subcategory> nextLevelSubcategories = subcategoryRepository.findNextLevelSubcategories(category.getId(), user.getId());
+
+        model.addAttribute("category", nextLevelSubcategories);
+        return "category/courses-by-levels";
+    }
+
     @GetMapping("/{categoryCode}/self-assessment")
     String selfAssessment(@PathVariable("categoryCode") String categoryCodeUrl, Model model) {
         Category category = categoryRepository.findByCodeUrl(categoryCodeUrl)

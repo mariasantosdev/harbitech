@@ -191,6 +191,10 @@
 </a>
 </body>
 <script>
+    document.getElementById('load-next-steps').addEventListener('click', function () {
+        this.style.display = 'none';
+
+    })
 
     function postRequest(element) {
         const courseCode = element.getAttribute('data-course-code');

@@ -36,6 +36,7 @@ public interface SubcategoryRepository extends JpaRepository<Subcategory, Long> 
                              	s.id = usa.subcategory_id
                              JOIN category c ON
                              	c.id = s.category_id AND s.category_id = :categoryId
+                             WHERE usa.user_id = :userId
                              ),
                              PublicSubcatoriesWithCourses AS(
                              	SELECT sub.* FROM subcategory sub
@@ -47,7 +48,7 @@ public interface SubcategoryRepository extends JpaRepository<Subcategory, Long> 
                              SELECT * FROM PublicSubcatoriesWithCourses pswc WHERE pswc.level >= (SELECT nextLevel FROM LevelOfCurrentKnowledge)
                              ORDER BY level
      """, nativeQuery = true)
-    List<Subcategory> findNextLevelSubcategories(@Param("categoryId") Long categoryId);
+    List<Subcategory> findNextLevelSubcategories(@Param("categoryId") Long categoryId, @Param("userId") Long userId);
 
 
     @Query(value = """
