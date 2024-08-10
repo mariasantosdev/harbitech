@@ -106,6 +106,11 @@
             font-size: 0.8750em;
         }
 
+        .container-next-steps {
+            display: flex;
+            justify-content: center;
+        }
+
         @media (min-width: 540px) {
             .courses__list {
                 display: flex;
@@ -210,6 +215,7 @@
             .then(html => {
                 if (html) {
                     const contentContainer = document.createElement('div');
+                    contentContainer.classList.add('container-next-steps');
                     contentContainer.innerHTML = html;
 
                     const discordLink = document.querySelector('.discord-link');
@@ -267,8 +273,6 @@
             }
         }
     }
-
-
 
 </script>
 </html>
