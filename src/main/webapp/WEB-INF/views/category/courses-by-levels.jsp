@@ -64,6 +64,20 @@
             color: #fff;
         }
 
+        .subcategory-box {
+            width: 200px;
+            height: 100px;
+            background-color: #a1b0c0;
+            margin: 10px;
+            display: inline-block;
+            text-align: center;
+            line-height: 100px;
+            color: #fff;
+            font-size: 18px;
+            font-weight: bold;
+            border-radius: 10px;
+        }
+
         .all-courses-finished-message {
             margin-block: 16px;
             font-size: 15px;

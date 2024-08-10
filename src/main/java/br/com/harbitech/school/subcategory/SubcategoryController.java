@@ -180,7 +180,7 @@ public class SubcategoryController {
 
         List<Subcategory> nextLevelSubcategories = subcategoryRepository.findNextLevelSubcategories(category.getId(), user.getId());
 
-        model.addAttribute("category", nextLevelSubcategories);
+        model.addAttribute("subcategories", nextLevelSubcategories);
         return "category/courses-by-levels-next-step";
     }
 
