@@ -194,7 +194,36 @@
     document.getElementById('load-next-steps').addEventListener('click', function () {
         this.style.display = 'none';
 
-    })
+        const categoryCode = '${category.codeUrl}';
+
+        const url = `/${categoryCode}/courses-by-levels/next-level`;
+
+        fetch(url)
+            .then(response => {
+                if (response.ok) {
+                    return response.text();
+                } else {
+                    console.error('Erro na requisição:', response.status);
+                    return null;
+                }
+            })
+            .then(html => {
+                if (html) {
+                    const contentContainer = document.createElement('div');
+                    contentContainer.innerHTML = html;
+
+                    const discordLink = document.querySelector('.discord-link');
+
+                    discordLink.parentNode.insertBefore(contentContainer, discordLink);
+
+                    console.log('Sucesso: Página carregada com sucesso.');
+                }
+            })
+            .catch(error => {
+                console.error('Erro:', error);
+            });
+    });
+
 
     function postRequest(element) {
         const courseCode = element.getAttribute('data-course-code');

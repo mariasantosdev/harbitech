@@ -181,7 +181,7 @@ public class SubcategoryController {
         List<Subcategory> nextLevelSubcategories = subcategoryRepository.findNextLevelSubcategories(category.getId(), user.getId());
 
         model.addAttribute("category", nextLevelSubcategories);
-        return "category/courses-by-levels";
+        return "category/courses-by-levels-next-step";
     }
 
     @GetMapping("/{categoryCode}/self-assessment")
