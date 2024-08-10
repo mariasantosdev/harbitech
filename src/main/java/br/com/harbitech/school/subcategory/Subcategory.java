@@ -5,6 +5,7 @@ import br.com.harbitech.school.course.Course;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.lang.Nullable;
 import org.springframework.util.Assert;
 
 import javax.persistence.*;
@@ -46,6 +47,10 @@ public class Subcategory implements Comparable<Subcategory>, Serializable {
     @OneToMany(mappedBy = "subcategory")
     @NotNull(message = "{subcategory.course.required}")
     private List<Course> courses = new ArrayList<>();
+    @Nullable
+    @ManyToOne
+    @JoinColumn(name = "subcategory_base")
+    private Subcategory subcategoryBase;
 
     public Subcategory(String name, String codeUrl, Category category, int level){
         Assert.hasText(name, "{subcategory.name.required}");
