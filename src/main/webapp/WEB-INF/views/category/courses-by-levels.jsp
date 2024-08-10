@@ -192,44 +192,6 @@
 </body>
 <script>
 
-    document.getElementById('load-next-steps').addEventListener('click', function () {
-        this.style.display = 'none';
-
-        const subcategories = document.querySelectorAll('.subcategory');
-        let lastVisibleSubcategory = null;
-
-        for (let i = 0; i < subcategories.length; i++) {
-            if (subcategories[i].hasAttribute('hidden')) {
-                subcategories[i].removeAttribute('hidden');
-                lastVisibleSubcategory = subcategories[i];
-                break;
-            }
-        }
-
-        checkAllCoursesCompletion(lastVisibleSubcategory);
-    });
-
-    function checkAllCoursesCompletion() {
-        const subcategories = document.querySelectorAll('.subcategory');
-        let allCompleted = true;
-        subcategories.forEach(subcategory => {
-            if (!subcategory.hasAttribute('hidden')) {
-                const courses = subcategory.querySelectorAll('.course-card');
-                courses.forEach(course => {
-                    if (!course.querySelector('.all-courses-finished-message')) {
-                        allCompleted = false;
-                    }
-                });
-            }
-        });
-        const loadNextStepsButton = document.getElementById('load-next-steps');
-        if (allCompleted) {
-            loadNextStepsButton.style.display = 'block';
-        } else {
-            loadNextStepsButton.style.display = 'none';
-        }
-    }
-
     function postRequest(element) {
         const courseCode = element.getAttribute('data-course-code');
         const url = `/courses/` + courseCode + `/enroll`;
@@ -273,7 +235,6 @@
         }
     }
 
-    checkAllCoursesCompletion(document.querySelector('.subcategory:not([hidden])'));
 
 
 </script>
