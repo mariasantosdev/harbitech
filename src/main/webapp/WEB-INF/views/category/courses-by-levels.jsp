@@ -259,10 +259,38 @@
     function getSubcategoryDataCode() {
         document.querySelectorAll('.subcategory-button').forEach(button => {
             button.addEventListener('click', function () {
-                const codeUrl = this.getAttribute('data-code-url');
-                console.log('Data code URL:', codeUrl);
+                const subcategoryCodeUrl = this.getAttribute('data-code-url');
+                const url = "/" + subcategoryCodeUrl + "/courses";
+
+                fetch(url)
+                    .then(response => {
+                        if (response.ok) {
+                            return response.text();
+                        } else {
+                            console.error('Erro na requisição:', response.status);
+                            return null;
+                        }
+                    })
+                    .then(html => {
+                        if (html) {
+                            const contentContainer = document.createElement('div');
+                            contentContainer.classList.add('container-next-steps');
+                            contentContainer.innerHTML = html;
+
+                            const discordLink = document.querySelector('.discord-link');
+
+                            discordLink.parentNode.insertBefore(contentContainer, discordLink);
+
+                            getSubcategoryDataCode();
+
+                            console.log('Sucesso: Página carregada com sucesso.');
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Erro:', error);
+                    });
             });
-        });
+        })
     }
 
     function postRequest(element) {

@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
-public interface CourseRepository extends JpaRepository<Course,Long>, PagingAndSortingRepository<Course, Long> {
+public interface CourseRepository extends JpaRepository<Course, Long>, PagingAndSortingRepository<Course, Long> {
 
     @Query(value = "SELECT instructor, COUNT(*) AS amount FROM course GROUP BY instructor ORDER BY amount DESC " +
             "LIMIT 1", nativeQuery = true)
@@ -23,7 +23,16 @@ public interface CourseRepository extends JpaRepository<Course,Long>, PagingAndS
             "GROUP BY category.id ORDER BY amount DESC", nativeQuery = true)
     List<CategoriesByCourseProjection> findAllCoursesCountByCategories();
 
-   Page<Course> findAllBySubcategory(Subcategory subcategory, Pageable pageable);
+    @Query(value = """
+            select c.* from subcategory sc
+            	join course c on c.subcategory_id = sc.id
+            where sc.code_url = :codeUrl
+            and sc.status = 'ACTIVE'
+            and c.visibility = 'PUBLIC'
+            """, nativeQuery = true)
+    List<Course> findAllBySubcategoryCodeUrl(String codeUrl);
+
+    Page<Course> findAllBySubcategory(Subcategory subcategory, Pageable pageable);
 
     Optional<Course> findByCodeUrl(String codeUrl);
 
@@ -32,7 +41,7 @@ public interface CourseRepository extends JpaRepository<Course,Long>, PagingAndS
     @Deprecated
     boolean existsByCodeUrlAndIdNot(String codeUrl, Long id);
 
-    default boolean existsByCodeUrlWithDifferentId(String codeUrl, Long id){
+    default boolean existsByCodeUrlWithDifferentId(String codeUrl, Long id) {
         return existsByCodeUrlAndIdNot(codeUrl, id);
     }
 }

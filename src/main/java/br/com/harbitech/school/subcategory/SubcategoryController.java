@@ -3,6 +3,7 @@ package br.com.harbitech.school.subcategory;
 import br.com.harbitech.school.category.Category;
 import br.com.harbitech.school.category.CategoryRepository;
 import br.com.harbitech.school.course.Course;
+import br.com.harbitech.school.course.CourseRepository;
 import br.com.harbitech.school.enrollment.EnrollmentRepository;
 import br.com.harbitech.school.user.CurrentUser;
 import br.com.harbitech.school.user.User;
@@ -29,6 +30,7 @@ public class SubcategoryController {
     private final SubcategoryRepository subcategoryRepository;
 
     private final CategoryRepository categoryRepository;
+    private final CourseRepository courseRepository;
 
     private final CurrentUser currentUser;
 
@@ -182,6 +184,17 @@ public class SubcategoryController {
 
         model.addAttribute("subcategories", nextLevelSubcategories);
         return "category/courses-by-levels-next-step";
+    }
+
+    @GetMapping("/{subcategoryCode}/courses")
+    String courses(@PathVariable("subcategoryCode") String subcategoryCodeUrl, Model model) {
+        subcategoryRepository.findByCodeUrl(subcategoryCodeUrl)
+                .orElseThrow(() -> new ResponseStatusException(NOT_FOUND, subcategoryCodeUrl));
+
+        List<Course> courses = courseRepository.findAllBySubcategoryCodeUrl(subcategoryCodeUrl);
+
+        model.addAttribute("courses", courses);
+        return "subcategory/courses";
     }
 
     @GetMapping("/{categoryCode}/self-assessment")
