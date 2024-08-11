@@ -283,6 +283,8 @@
 
                             getSubcategoryDataCode();
 
+                            document.querySelector('.container-next-steps').remove();
+
                             console.log('Sucesso: Página carregada com sucesso.');
                         }
                     })

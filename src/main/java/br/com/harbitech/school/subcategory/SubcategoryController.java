@@ -188,12 +188,24 @@ public class SubcategoryController {
 
     @GetMapping("/{subcategoryCode}/courses")
     String courses(@PathVariable("subcategoryCode") String subcategoryCodeUrl, Model model) {
-        subcategoryRepository.findByCodeUrl(subcategoryCodeUrl)
+        Subcategory subcategory = subcategoryRepository.findByCodeUrl(subcategoryCodeUrl)
                 .orElseThrow(() -> new ResponseStatusException(NOT_FOUND, subcategoryCodeUrl));
 
         List<Course> courses = courseRepository.findAllBySubcategoryCodeUrl(subcategoryCodeUrl);
 
+        String userName = currentUser.getCurrentUsername().stream().findFirst().orElseThrow(() ->
+                new ResponseStatusException(NOT_FOUND, "User not found"));
+
+        User user = userRepository.findByEmail(userName)
+                .orElseThrow(() -> new IllegalArgumentException("User not found"));
+
+        List<Long> allEnrollmentsIdByLoggedUser = enrollmentRepository.findAllByUserAndCourses(user, courses).stream()
+                .map(enrollment -> enrollment.getCourse().getId())
+                .toList();
+
         model.addAttribute("courses", courses);
+        model.addAttribute("enrolledCourseIds", allEnrollmentsIdByLoggedUser);
+        model.addAttribute("subcategory", subcategory);
         return "subcategory/courses";
     }
 
