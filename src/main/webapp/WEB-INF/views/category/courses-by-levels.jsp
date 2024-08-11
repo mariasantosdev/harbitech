@@ -64,19 +64,29 @@
             color: #fff;
         }
 
-        .subcategory-box {
+        .subcategory-button {
             width: 200px;
             height: 100px;
             background-color: #a1b0c0;
             margin: 10px;
-            display: inline-block;
             text-align: center;
-            line-height: 100px;
             color: #fff;
             font-size: 18px;
             font-weight: bold;
             border-radius: 10px;
+            border: none;
+            cursor: pointer;
+            display: inline-block;
+            line-height: 100px;
+            outline: none;
+            padding: 0;
+            box-shadow: none;
         }
+
+        .subcategory-button:hover {
+            background-color: #92a0b0;
+        }
+
 
         .all-courses-finished-message {
             margin-block: 16px;
@@ -236,7 +246,7 @@
 
                     discordLink.parentNode.insertBefore(contentContainer, discordLink);
 
-                    setupDynamicContent();
+                    getSubcategoryDataCode();
 
                     console.log('Sucesso: Página carregada com sucesso.');
                 }
@@ -246,16 +256,14 @@
             });
     });
 
-    function setupDynamicContent() {
-        // Adicione eventos aos elementos dinâmicos aqui
-        const ablubleButton = document.getElementById('abluble');
-        if (ablubleButton) {
-            ablubleButton.addEventListener('click', function () {
-                console.log("abluble");
+    function getSubcategoryDataCode() {
+        document.querySelectorAll('.subcategory-button').forEach(button => {
+            button.addEventListener('click', function () {
+                const codeUrl = this.getAttribute('data-code-url');
+                console.log('Data code URL:', codeUrl);
             });
-        }
+        });
     }
-
 
     function postRequest(element) {
         const courseCode = element.getAttribute('data-course-code');
