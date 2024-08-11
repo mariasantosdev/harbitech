@@ -236,6 +236,8 @@
 
                     discordLink.parentNode.insertBefore(contentContainer, discordLink);
 
+                    setupDynamicContent();
+
                     console.log('Sucesso: Página carregada com sucesso.');
                 }
             })
@@ -243,6 +245,16 @@
                 console.error('Erro:', error);
             });
     });
+
+    function setupDynamicContent() {
+        // Adicione eventos aos elementos dinâmicos aqui
+        const ablubleButton = document.getElementById('abluble');
+        if (ablubleButton) {
+            ablubleButton.addEventListener('click', function () {
+                console.log("abluble");
+            });
+        }
+    }
 
 
     function postRequest(element) {
