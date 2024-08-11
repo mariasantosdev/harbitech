@@ -2,10 +2,8 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 
 <main class="container">
-    <div class="courses__subcategory_name">
-        <h2 class="subcategory__name">${subcategory.name}</h2>
-    </div>
-    <div class="courses__subcategories">
+    <h2 class="subcategory__name">${subcategory.name}</h2>
+    <div>
         <ul class="courses__list">
             <c:forEach items="${courses}" var="course">
                 <li class="course-card">
