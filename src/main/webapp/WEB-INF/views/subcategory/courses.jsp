@@ -29,7 +29,7 @@
             </c:forEach>
         </ul>
     </div>
-    <button id="load-next-steps" class="load-next-steps"
+    <button id="load-next-steps" class="load-next-steps" onclick="loadNextSteps()"
             style="margin-top: 20px;background-color: #4CAF50;border: none;color: white;padding: 10px 20px;text-align:
                     center;display: ${allCoursesCompleted ? "block" : "none"};font-size: 16px;cursor: pointer;">
         Carregar próximos passos da jornada
