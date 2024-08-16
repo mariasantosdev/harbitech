@@ -169,6 +169,8 @@ public class SubcategoryController {
         return "category/courses-by-levels";
     }
 
+    //TODO oque ta zoando na hora de mostrar e porque esta pegando com base no user_self_assessment, talvez fosse legal
+    //TODO atualizar esse role via js ou ate mesmo bater em outro endpoint que tenha uma query que nao de from nisso...
     @GetMapping("/{categoryCode}/courses-by-levels/next-level")
     String nextLevel(@PathVariable("categoryCode") String categoryCodeUrl, Model model) {
         Category category = categoryRepository.findByCodeUrl(categoryCodeUrl)
