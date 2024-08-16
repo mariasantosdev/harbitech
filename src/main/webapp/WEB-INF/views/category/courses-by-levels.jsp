@@ -328,7 +328,6 @@
     }
 
     function updateCourseCompletion(subcategory) {
-        console.log('Atualizando subcategoria:', subcategory);
         const totalCourses = subcategory.getAttribute('data-courses-count');
         const completedCourses = subcategory.querySelectorAll('.all-courses-finished-message').length;
         if (completedCourses == totalCourses) {
