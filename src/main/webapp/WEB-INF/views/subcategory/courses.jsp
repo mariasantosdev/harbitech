@@ -4,7 +4,8 @@
 
 <main class="container">
     <h2 class="subcategory__name">${subcategory.name}</h2>
-    <div>
+    <div class="subcategory"
+         data-courses-count="${fn:length(subcategory.getCourses())}">
         <ul class="courses__list">
             <c:forEach items="${courses}" var="course">
                 <li class="course-card">

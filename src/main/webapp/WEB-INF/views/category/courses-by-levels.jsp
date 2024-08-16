@@ -284,7 +284,7 @@
                             getSubcategoryDataCode();
 
                             document.querySelector('.container-next-steps').remove();
-                            
+
 
                             console.log('Sucesso: Página carregada com sucesso.');
                         }
@@ -328,6 +328,7 @@
     }
 
     function updateCourseCompletion(subcategory) {
+        console.log('Atualizando subcategoria:', subcategory);
         const totalCourses = subcategory.getAttribute('data-courses-count');
         const completedCourses = subcategory.querySelectorAll('.all-courses-finished-message').length;
         if (completedCourses == totalCourses) {
@@ -337,32 +338,6 @@
                 document.getElementById('load-next-steps').style.display = 'block';
             }
         }
-    }
-
-    function loadButtonNextStep2(allCoursesCompleted) {
-        const button = document.createElement('button');
-        const contentContainer = document.createElement('div');
-
-        button.id = 'load-next-steps';
-        button.className = 'load-next-steps';
-
-        button.style.marginTop = '20px';
-        button.style.backgroundColor = '#4CAF50';
-        button.style.border = 'none';
-        button.style.color = 'white';
-        button.style.padding = '10px 20px';
-        button.style.textAlign = 'center';
-        button.style.display = allCoursesCompleted ? 'block' : 'none';
-        button.style.fontSize = '16px';
-        button.style.cursor = 'pointer';
-
-        button.textContent = 'Carregar próximos passos da jornada';
-        contentContainer.appendChild(button);
-
-        console.log("caiu aqui")
-        button.addEventListener('click', function() {
-            console.log('Botão clicado!');
-        });
     }
 
 </script>
