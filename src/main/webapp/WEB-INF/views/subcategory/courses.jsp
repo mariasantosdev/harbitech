@@ -1,3 +1,4 @@
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 
@@ -26,5 +27,16 @@
                 </li>
             </c:forEach>
         </ul>
+    </div>
+    <button id="load-next-steps" class="load-next-steps"
+            style="margin-top: 20px;background-color: #4CAF50;border: none;color: white;padding: 10px 20px;text-align:
+                    center;display: ${allCoursesCompleted ? "block" : "none"};font-size: 16px;cursor: pointer;">
+        Carregar próximos passos da jornada
+    </button>
+
+    <div id="congratulations-message" style="display: none; margin-top: 20px; font-size: 16px;">
+        Parabéns, sua jornada do herói dentro dessa categoria foi concluída com sucesso!
+        Mas não se esqueça de que a jornada pelo conhecimento nunca termina. Para explorar outras categorias,
+        <a href="/onboarding/study-mode">clique aqui</a>.
     </div>
 </main>

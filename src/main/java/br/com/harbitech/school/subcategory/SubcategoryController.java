@@ -203,6 +203,10 @@ public class SubcategoryController {
                 .map(enrollment -> enrollment.getCourse().getId())
                 .toList();
 
+        Boolean allCoursesCompleted = subcategoryRepository
+                .getAllCoursesCompletedFromStep2(user.getId(), subcategory.getId());
+
+        model.addAttribute("allCoursesCompleted", allCoursesCompleted);
         model.addAttribute("courses", courses);
         model.addAttribute("enrolledCourseIds", allEnrollmentsIdByLoggedUser);
         model.addAttribute("subcategory", subcategory);
