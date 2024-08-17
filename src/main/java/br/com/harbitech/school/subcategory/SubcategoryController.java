@@ -8,7 +8,10 @@ import br.com.harbitech.school.enrollment.EnrollmentRepository;
 import br.com.harbitech.school.user.CurrentUser;
 import br.com.harbitech.school.user.User;
 import br.com.harbitech.school.user.UserRepository;
+import br.com.harbitech.school.userSelfAssesment.UserSelfAssessment;
+import br.com.harbitech.school.userSelfAssesment.UserSelfAssessmentRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -18,7 +21,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
 import javax.validation.Valid;
-import java.math.BigInteger;
 import java.util.*;
 
 import static org.springframework.http.HttpStatus.NOT_FOUND;
@@ -39,6 +41,7 @@ public class SubcategoryController {
     private final SubcategoryFormUpdateValidator subcategoryFormUpdateValidator;
     private final UserRepository userRepository;
     private final EnrollmentRepository enrollmentRepository;
+    private final UserSelfAssessmentRepository userSelfAssessmentRepository;
 
     @InitBinder("subcategoryForm")
     void initBinderSubcategoryForm(WebDataBinder webDataBinder) {
@@ -153,7 +156,7 @@ public class SubcategoryController {
                 .map(enrollment -> enrollment.getCourse().getId())
                 .toList();
 
-        if(subcategoryRepository.isFinishedAllCourses(category.getId(), user.getId())) {
+        if (subcategoryRepository.isFinishedAllCourses(category.getId(), user.getId())) {
             model.addAttribute("category", category);
             return "category/finished-all-courses";
         }
@@ -169,8 +172,7 @@ public class SubcategoryController {
         return "category/courses-by-levels";
     }
 
-    //TODO oque ta zoando na hora de mostrar e porque esta pegando com base no user_self_assessment, talvez fosse legal
-    //TODO atualizar esse role via js ou ate mesmo bater em outro endpoint que tenha uma query que nao de from nisso...
+
     @GetMapping("/{categoryCode}/courses-by-levels/next-level")
     String nextLevel(@PathVariable("categoryCode") String categoryCodeUrl, Model model) {
         Category category = categoryRepository.findByCodeUrl(categoryCodeUrl)
@@ -186,6 +188,21 @@ public class SubcategoryController {
 
         model.addAttribute("subcategories", nextLevelSubcategories);
         return "category/courses-by-levels-next-step";
+    }
+
+    @PostMapping("/update/knowledge/{subcategoryCode}")
+    public ResponseEntity<Void> updateKnowledge(@PathVariable("subcategoryCode") String subcategoryCodeUrl) {
+        Subcategory subcategory = subcategoryRepository.findByCodeUrl(subcategoryCodeUrl).orElseThrow(() ->
+                new ResponseStatusException(NOT_FOUND, subcategoryCodeUrl));
+
+        String userName = currentUser.getCurrentUsername().stream().findFirst().orElseThrow(() ->
+                new ResponseStatusException(NOT_FOUND, "User not found"));
+
+        User user = userRepository.findByEmail(userName)
+                .orElseThrow(() -> new IllegalArgumentException("User not found"));
+
+        userSelfAssessmentRepository.save(new UserSelfAssessment(user, subcategory));
+        return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
     @GetMapping("/{subcategoryCode}/courses")
@@ -206,7 +223,7 @@ public class SubcategoryController {
                 .toList();
 
         Boolean allCoursesCompleted = subcategoryRepository
-                .getAllCoursesCompletedFromStep2(user.getId(), subcategory.getId());
+                .getAllCoursesCompleted(user.getId(), subcategory.getId());
 
         model.addAttribute("allCoursesCompleted", allCoursesCompleted);
         model.addAttribute("courses", courses);

@@ -176,7 +176,8 @@
     <c:forEach items="${allActiveSubcategories}" var="subcategory" varStatus="status">
         <div class="subcategory" id="subcategory-${status.index}" ${status.index != 0 ? 'hidden' : ''}
              data-is-last="${status.last}"
-             data-courses-count="${fn:length(subcategory.getCourses())}">
+             data-courses-count="${fn:length(subcategory.getCourses())}"
+             data-subcategory-code="${subcategory.codeUrl}">
             <h2 id="${subcategory.codeUrl}" class="subcategory__name">${subcategory.name}</h2>
             <ul class="courses__list">
                 <c:forEach items="${subcategory.getCourses()}" var="course">
@@ -335,8 +336,33 @@
                 document.getElementById('congratulations-message').style.display = 'block';
             } else {
                 document.getElementById('load-next-steps').style.display = 'block';
+                postRequestForUpdateKnowledge(subcategory);
             }
         }
+    }
+
+    function postRequestForUpdateKnowledge(element) {
+        const subcategoryCode = element.getAttribute('data-subcategory-code');
+        const url = '/update/knowledge/' + subcategoryCode;
+
+        fetch(url, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        })
+            .then(response => {
+                if (response.ok) {
+                    console.log('Sucesso:', response.status);
+                } else {
+                    console.error('Erro:', response.status);
+                }
+            })
+            .catch((error) => {
+                console.error('Erro:', error);
+            });
+
+        return false;
     }
 
 </script>

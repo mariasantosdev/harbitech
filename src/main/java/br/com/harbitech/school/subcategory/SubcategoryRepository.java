@@ -101,31 +101,6 @@ public interface SubcategoryRepository extends JpaRepository<Subcategory, Long> 
     Boolean getAllCoursesCompleted(Long userId, Long subcategoryId);
 
     @Query(value = """
-                    WITH LevelOfCurrentKnowledge AS (
-                    SELECT
-                    COUNT(*) as totalCoursesBySubcatoryAndUser
-                    FROM subcategory s
-                        JOIN course c ON c.subcategory_id = s.id
-                        JOIN enrollment e ON e.course_id = c.id
-                    WHERE s.id =:subcategoryId
-                    AND e.finished = true
-                    AND e.user_id =:userId
-                    AND s.status = 'ACTIVE'
-            ), AllCousesByLevel AS (
-                    SELECT COUNT(c.id) as totalCoursesByCategory
-                    FROM course c
-                        JOIN subcategory s ON s.id = c.subcategory_id
-                    WHERE s.id =:subcategoryId
-            )
-            SELECT CASE
-                    WHEN (SELECT * FROM AllCousesByLevel) = (SELECT * FROM LevelOfCurrentKnowledge)
-                    THEN 'true'
-                    ELSE 'false'
-                END as comparisonResult;
-            """, nativeQuery = true)
-    Boolean getAllCoursesCompletedFromStep2(Long userId, Long subcategoryId);
-
-    @Query(value = """
             SELECT COALESCE(MAX(s.`level`), 0) FROM user_self_assessment usa
                 JOIN subcategory s ON s.id = usa.subcategory_id
                 JOIN category c ON c.id = :categoryId
