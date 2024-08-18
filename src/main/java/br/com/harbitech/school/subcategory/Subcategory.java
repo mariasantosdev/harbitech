@@ -2,6 +2,7 @@ package br.com.harbitech.school.subcategory;
 
 import br.com.harbitech.school.category.Category;
 import br.com.harbitech.school.course.Course;
+import br.com.harbitech.school.course.CourseVisibility;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -122,6 +123,10 @@ public class Subcategory implements Comparable<Subcategory>, Serializable {
             return otherSubCategory.getOrderVisualization();
         }
         return this.orderVisualization;
+    }
+
+    public List<Course> getActiveCourses() {
+        return this.courses.stream().filter(c -> c.getVisibility().equals(CourseVisibility.PUBLIC)).toList();
     }
 
     public void addCourse(Course course) {

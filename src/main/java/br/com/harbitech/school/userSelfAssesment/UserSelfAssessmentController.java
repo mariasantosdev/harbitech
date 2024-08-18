@@ -34,7 +34,7 @@ public class UserSelfAssessmentController {
         User user = userRepository.findByEmail(userName)
                 .orElseThrow(() -> new IllegalArgumentException("User not found"));
 
-        Optional<UserSelfAssessment> existingAssessment = userSelfAssessmentRepository.findByUserAndCategory(user, subcategory.getCategory());
+        Optional<UserSelfAssessment> existingAssessment = userSelfAssessmentRepository.findByUserAndCategory(user.getId(), subcategory.getCategory().getId());
 
         if (existingAssessment.isPresent()) {
             UserSelfAssessment assessmentToUpdate = existingAssessment.get();

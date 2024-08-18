@@ -201,6 +201,10 @@ public class SubcategoryController {
         User user = userRepository.findByEmail(userName)
                 .orElseThrow(() -> new IllegalArgumentException("User not found"));
 
+        Optional<UserSelfAssessment> existingAssessment = userSelfAssessmentRepository.findByUserAndCategory(user.getId(), subcategory.getCategory().getId());
+
+        existingAssessment.ifPresent(userSelfAssessmentRepository::delete);
+
         userSelfAssessmentRepository.save(new UserSelfAssessment(user, subcategory));
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }

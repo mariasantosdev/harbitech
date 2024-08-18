@@ -176,7 +176,7 @@
     <c:forEach items="${allActiveSubcategories}" var="subcategory" varStatus="status">
         <div class="subcategory" id="subcategory-${status.index}" ${status.index != 0 ? 'hidden' : ''}
              data-is-last="${status.last}"
-             data-courses-count="${fn:length(subcategory.getCourses())}"
+             data-courses-count="${fn:length(subcategory.getActiveCourses())}"
              data-subcategory-code="${subcategory.codeUrl}">
             <h2 id="${subcategory.codeUrl}" class="subcategory__name">${subcategory.name}</h2>
             <ul class="courses__list">
@@ -328,6 +328,7 @@
         return false;
     }
 
+    //TODO resolver isso aqui pois parece estar meio bugado assim como a tela de conhecimento inicial :(
     function updateCourseCompletion(subcategory) {
         const totalCourses = subcategory.getAttribute('data-courses-count');
         const completedCourses = subcategory.querySelectorAll('.all-courses-finished-message').length;

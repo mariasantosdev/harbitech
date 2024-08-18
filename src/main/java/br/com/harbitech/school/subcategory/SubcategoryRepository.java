@@ -45,7 +45,7 @@ public interface SubcategoryRepository extends JpaRepository<Subcategory, Long> 
                                     AND sub.status = 'ACTIVE'
                                     AND sub.category_id = :categoryId
                                     GROUP BY sub.id)
-                                    SELECT * FROM PublicSubcatoriesWithCourses pswc WHERE pswc.level >= (SELECT nextLevel FROM LevelOfCurrentKnowledge)
+                                    SELECT * FROM PublicSubcatoriesWithCourses pswc WHERE pswc.level = (SELECT nextLevel FROM LevelOfCurrentKnowledge)
                                     ORDER BY level
             """, nativeQuery = true)
     List<Subcategory> findNextLevelSubcategories(@Param("categoryId") Long categoryId, @Param("userId") Long userId);
