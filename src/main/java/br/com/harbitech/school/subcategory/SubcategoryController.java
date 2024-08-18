@@ -227,7 +227,7 @@ public class SubcategoryController {
                 .toList();
 
         Boolean allCoursesCompleted = subcategoryRepository
-                .getAllCoursesCompleted(user.getId(), subcategory.getId());
+                .getAllCoursesCompleted2(user.getId(), subcategory.getId());
 
         model.addAttribute("allCoursesCompleted", allCoursesCompleted);
         model.addAttribute("courses", courses);
