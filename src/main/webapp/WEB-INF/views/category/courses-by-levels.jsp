@@ -328,7 +328,6 @@
         return false;
     }
 
-    //TODO resolver isso aqui pois parece estar meio bugado assim como a tela de conhecimento inicial :(
     function updateCourseCompletion(subcategory) {
         const totalCourses = subcategory.getAttribute('data-courses-count');
         const completedCourses = subcategory.querySelectorAll('.all-courses-finished-message').length;

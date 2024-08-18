@@ -126,7 +126,7 @@ public class Subcategory implements Comparable<Subcategory>, Serializable {
     }
 
     public List<Course> getActiveCourses() {
-        return this.courses.stream().filter(c -> c.getVisibility().equals(CourseVisibility.PUBLIC)).toList();
+        return this.courses.stream().filter(c -> c.getVisibility().equals(CourseVisibility.PUBLIC)).distinct().toList();
     }
 
     public void addCourse(Course course) {
