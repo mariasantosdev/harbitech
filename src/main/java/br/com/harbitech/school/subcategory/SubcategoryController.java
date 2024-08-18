@@ -190,6 +190,17 @@ public class SubcategoryController {
         return "category/courses-by-levels-next-step";
     }
 
+    @GetMapping("/{subcategoryCode}/courses-by-levels/next-level/by-subcategory")
+    String nextLevelBySubcategory(@PathVariable("subcategoryCode") String subcategoryCodeUrl, Model model) {
+        Subcategory subcategory = subcategoryRepository.findByCodeUrl(subcategoryCodeUrl)
+                .orElseThrow(() -> new ResponseStatusException(NOT_FOUND, subcategoryCodeUrl));
+
+        List<Subcategory> nextLevelSubcategories = subcategoryRepository.findAllActiveByLevel(subcategory.getLevel() + 1);
+
+        model.addAttribute("subcategories", nextLevelSubcategories);
+        return "category/courses-by-levels-next-step";
+    }
+
     @PostMapping("/update/knowledge/{subcategoryCode}")
     public ResponseEntity<Void> updateKnowledge(@PathVariable("subcategoryCode") String subcategoryCodeUrl) {
         Subcategory subcategory = subcategoryRepository.findByCodeUrl(subcategoryCodeUrl).orElseThrow(() ->

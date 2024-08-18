@@ -4,6 +4,7 @@
 
 <main class="container">
     <h2 class="subcategory__name">${subcategory.name}</h2>
+    <c:set var="subcategoryCode" value="${subcategory.codeUrl}" />
     <div class="subcategory"
          data-courses-count="${fn:length(subcategory.getActiveCourses())}"
          data-subcategory-code="${subcategory.codeUrl}">
@@ -30,7 +31,7 @@
             </c:forEach>
         </ul>
     </div>
-    <button id="load-next-steps" class="load-next-steps" onclick="loadNextSteps()"
+    <button id="load-next-steps" class="load-next-steps" onclick="loadNextSteps('${subcategoryCode}')"
             style="margin-top: 20px;background-color: #4CAF50;border: none;color: white;padding: 10px 20px;text-align:
                     center;display: ${allCoursesCompleted ? "block" : "none"};font-size: 16px;cursor: pointer;">
         Carregar próximos passos da jornada

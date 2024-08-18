@@ -15,6 +15,15 @@ import java.util.List;
 public interface SubcategoryRepository extends JpaRepository<Subcategory, Long> {
     Optional<Subcategory> findByCodeUrl(String codeUrl);
 
+    @Query(value = """
+            SELECT * FROM subcategory s
+            	JOIN course c on c.subcategory_id = s.id
+            WHERE s.level =:level
+            AND s.status = 'ACTIVE'
+            GROUP BY s.id; 
+            """, nativeQuery = true)
+    List<Subcategory> findAllActiveByLevel(int level);
+
     Optional<Subcategory> findByCategory(Category category);
 
     List<Subcategory> findAllByCategoryOrderByOrderVisualization(Category category);

@@ -203,7 +203,7 @@
             </ul>
         </div>
     </c:forEach>
-    <button id="load-next-steps" class="load-next-steps" onclick="loadNextSteps()"
+    <button id="load-next-steps" class="load-next-steps" onclick="loadNextSteps('${subcategoryCode}')"
             style="margin-top: 20px;background-color: #4CAF50;border: none;color: white;padding: 10px 20px;text-align:
                     center;display: ${allCoursesCompleted ? "block" : "none"};font-size: 16px;cursor: pointer;">
         Carregar próximos passos da jornada
@@ -221,40 +221,74 @@
 </a>
 </body>
 <script>
-    function loadNextSteps() {
+    function loadNextSteps(subcategoryCode) {
         document.getElementById('load-next-steps').remove();
 
-        const categoryCode = '${category.codeUrl}';
+        if (subcategoryCode && subcategoryCode.trim() !== '') {
+            console.log("caiu no if")
+            const url = "/" + subcategoryCode + "/courses-by-levels/next-level/by-subcategory";
 
-        const url = `/${categoryCode}/courses-by-levels/next-level`;
+            fetch(url)
+                .then(response => {
+                    if (response.ok) {
+                        return response.text();
+                    } else {
+                        console.error('Erro na requisição:', response.status);
+                        return null;
+                    }
+                })
+                .then(html => {
+                    if (html) {
+                        const contentContainer = document.createElement('div');
+                        contentContainer.classList.add('container-next-steps');
+                        contentContainer.innerHTML = html;
 
-        fetch(url)
-            .then(response => {
-                if (response.ok) {
-                    return response.text();
-                } else {
-                    console.error('Erro na requisição:', response.status);
-                    return null;
-                }
-            })
-            .then(html => {
-                if (html) {
-                    const contentContainer = document.createElement('div');
-                    contentContainer.classList.add('container-next-steps');
-                    contentContainer.innerHTML = html;
+                        const discordLink = document.querySelector('.discord-link');
 
-                    const discordLink = document.querySelector('.discord-link');
+                        discordLink.parentNode.insertBefore(contentContainer, discordLink);
 
-                    discordLink.parentNode.insertBefore(contentContainer, discordLink);
+                        getSubcategoryDataCode();
 
-                    getSubcategoryDataCode();
+                        console.log('Sucesso: Página carregada com sucesso.');
+                    }
+                })
+                .catch(error => {
+                    console.error('Erro:', error);
+                });
+        } else {
+            console.log("caiu no else")
+            const categoryCode = '${category.codeUrl}';
 
-                    console.log('Sucesso: Página carregada com sucesso.');
-                }
-            })
-            .catch(error => {
-                console.error('Erro:', error);
-            });
+            const url = `/${categoryCode}/courses-by-levels/next-level`;
+
+            fetch(url)
+                .then(response => {
+                    if (response.ok) {
+                        return response.text();
+                    } else {
+                        console.error('Erro na requisição:', response.status);
+                        return null;
+                    }
+                })
+                .then(html => {
+                    if (html) {
+                        const contentContainer = document.createElement('div');
+                        contentContainer.classList.add('container-next-steps');
+                        contentContainer.innerHTML = html;
+
+                        const discordLink = document.querySelector('.discord-link');
+
+                        discordLink.parentNode.insertBefore(contentContainer, discordLink);
+
+                        getSubcategoryDataCode();
+
+                        console.log('Sucesso: Página carregada com sucesso.');
+                    }
+                })
+                .catch(error => {
+                    console.error('Erro:', error);
+                });
+        }
     }
 
     function getSubcategoryDataCode() {
