@@ -20,6 +20,7 @@ public interface SubcategoryRepository extends JpaRepository<Subcategory, Long> 
             	JOIN course c on c.subcategory_id = s.id
             WHERE s.level =:level
             AND s.status = 'ACTIVE'
+            AND c.visibility = 'PUBLIC'
             GROUP BY s.id; 
             """, nativeQuery = true)
     List<Subcategory> findAllActiveByLevel(int level);
