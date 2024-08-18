@@ -24,7 +24,6 @@ public class CourseFormUpdate {
     @Pattern(regexp = "[-a-z]+", message = "{course.codeUrl.pattern}")
     private String codeUrl;
     @Min(value = 1L, message = "{course.completionTimeInHours.min}")
-    @Max(value = 20L, message = "{course.completionTimeInHours.max}")
     private int completionTimeInHours = 0;
     private CourseVisibility visibility = CourseVisibility.PRIVATE;
     @Size(max = 250, message = "{course.targetAudience.size.max}")
