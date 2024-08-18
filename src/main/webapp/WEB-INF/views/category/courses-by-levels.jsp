@@ -284,8 +284,12 @@
 
                             getSubcategoryDataCode();
 
-                            document.querySelector('.container-next-steps').remove();
-
+                            document.querySelectorAll('.subcategory-button').forEach(function (element) {
+                                element.remove();
+                            });
+                            document.querySelectorAll('.possible-next-step').forEach(function (element) {
+                                element.remove();
+                            });
 
                             console.log('Sucesso: Página carregada com sucesso.');
                         }

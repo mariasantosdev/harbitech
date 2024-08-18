@@ -2,7 +2,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
 
-Possíveis próximos passos
+<div class="possible-next-step">Possíveis próximos passos</div>
 <c:forEach var="subcategory" items="${subcategories}">
     <button class="subcategory-button" id="subcategory-button" data-code-url="${subcategory.codeUrl}">
             ${subcategory.name}
