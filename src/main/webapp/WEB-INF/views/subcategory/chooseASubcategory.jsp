@@ -64,8 +64,7 @@
         </c:forEach>
     </select>
 
-    <%--    TODO preciso fazer essa pagina(mas antes vou levantar todas as categorias que terei)--%>
-    <a href="#" class="help-link">Entenda quais as diferenças entre as categorias</a>
+    <a href="/differences-between-categories" class="help-link" target="_blank">Entenda quais as diferenças entre as categorias</a>
 </div>
 <script>
     document.querySelector('.category-select').addEventListener('change', function () {
