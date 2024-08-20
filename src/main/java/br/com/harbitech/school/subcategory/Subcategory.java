@@ -143,6 +143,7 @@ public class Subcategory implements Comparable<Subcategory>, Serializable {
         this.orderVisualization = subcategoryFormUpdate.getOrderVisualization();
         this.studyGuide = subcategoryFormUpdate.getStudyGuide();
         this.category = subcategoryFormUpdate.getCategory();
+        this.subcategoryBase = subcategoryFormUpdate.getSubcategoryBase();
     }
 
 }
