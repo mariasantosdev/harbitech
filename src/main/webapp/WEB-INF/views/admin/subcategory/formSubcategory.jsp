@@ -86,6 +86,16 @@
                     </div>
                 </div>
 
+                <div class="form-group">
+                    <label for="category" class="col-sm-2 control-label">Subcategoria base</label>
+                    <div class="col-sm-7">
+                        <form:select path="subcategoryBase" class="form-control" id = "category">
+                            <form:option value="" label="-- Selecione uma opção --" />
+                            <form:options items="${subcategories}" itemValue="id" itemLabel="name"/>
+                        </form:select>
+                    </div>
+                </div>
+
             <form:input type="hidden" path="id"/>
             <div class="form-group">
                 <div class="col-sm-offset-2 col-sm-10">

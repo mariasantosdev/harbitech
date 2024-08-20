@@ -268,9 +268,11 @@ public class SubcategoryController {
     private Map<String, Object> setupForm(String formAction, SubcategoryForm subcategoryForm) {
         Map<String, Object> attributes = new HashMap<>();
         List<Category> categories = categoryRepository.findAllByOrderByName();
+        List<Subcategory> subcategories = subcategoryRepository.findAllByOrderByName();
 
         attributes.put("subcategoryForm", subcategoryForm);
         attributes.put("categories", categories);
+        attributes.put("subcategories", subcategories);
         attributes.put("formAction", formAction);
 
         return attributes;
@@ -279,9 +281,11 @@ public class SubcategoryController {
     private Map<String, Object> setupFormUpdate(String formAction, SubcategoryFormUpdate subcategoryFormUpdate) {
         Map<String, Object> attributes = new HashMap<>();
         List<Category> categories = categoryRepository.findAllByOrderByName();
+        List<Subcategory> subcategories = subcategoryRepository.findAllByOrderByName();
 
         attributes.put("subcategoryFormUpdate", subcategoryFormUpdate);
         attributes.put("categories", categories);
+        attributes.put("subcategories", subcategories);
         attributes.put("formAction", formAction);
 
         return attributes;

@@ -9,6 +9,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.lang.Nullable;
 import org.springframework.web.server.ResponseStatusException;
 
 import javax.validation.constraints.*;
@@ -36,9 +37,11 @@ public class SubcategoryForm {
     private int level;
     @NotNull(message = "{subcategory.category.required}")
     private Category category;
+    @Nullable
+    private Subcategory subcategoryBase;
 
     public Subcategory toModel() {
         return new Subcategory(this.name, this.codeUrl, this.orderVisualization, this.description, this.studyGuide,
-                this.status, this.category, level);
+                this.status, this.category, level, subcategoryBase);
     }
 }

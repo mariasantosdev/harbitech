@@ -4,6 +4,7 @@ import br.com.harbitech.school.category.Category;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.lang.Nullable;
 import org.springframework.web.server.ResponseStatusException;
 
 import javax.validation.constraints.*;
@@ -33,6 +34,8 @@ public class SubcategoryFormUpdate {
     private int orderVisualization;
     @NotNull(message = "{subcategory.category.required}")
     private Category category;
+    @Nullable
+    private Subcategory subcategoryBase;
 
     public SubcategoryFormUpdate(Subcategory subcategory){
         this.id = subcategory.getId();
@@ -44,6 +47,7 @@ public class SubcategoryFormUpdate {
         this.status = subcategory.getStatus();
         this.orderVisualization = subcategory.getOrderVisualization();
         this.category = subcategory.getCategory();
+        this.subcategoryBase = subcategory.getSubcategoryBase();
     }
 
     public void setCategory(Category category) {

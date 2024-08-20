@@ -68,17 +68,18 @@ public class Subcategory implements Comparable<Subcategory>, Serializable {
     }
 
     public Subcategory(String name, String codeUrl, int orderVisualization, String description, String studyGuide,
-                       SubCategoryStatus status, Category category, int level) {
+                       SubCategoryStatus status, Category category, int level, Subcategory subcategoryBase) {
         this(name, codeUrl, category, level);
         this.description = description;
         this.studyGuide = studyGuide;
         this.status = status;
+        this.subcategoryBase = subcategoryBase;
         this.orderVisualization = orderVisualization;
     }
 
     public Subcategory(Long id,String name, String codeUrl, int orderVisualization, String description, String studyGuide,
-                       SubCategoryStatus status, Category category, int level){
-        this(name,codeUrl,orderVisualization,description,studyGuide,status,category, level);
+                       SubCategoryStatus status, Category category, int level, Subcategory subcategoryBase){
+        this(name,codeUrl,orderVisualization,description,studyGuide,status,category, level, subcategoryBase);
         this.id = id;
     }
 
