@@ -225,7 +225,6 @@
         document.getElementById('load-next-steps').remove();
 
         if (subcategoryCode && subcategoryCode.trim() !== '') {
-            console.log("caiu no if")
             const url = "/" + subcategoryCode + "/courses-by-levels/next-level/by-subcategory";
 
             fetch(url)
@@ -256,7 +255,6 @@
                     console.error('Erro:', error);
                 });
         } else {
-            console.log("caiu no else")
             const categoryCode = '${category.codeUrl}';
 
             const url = `/${categoryCode}/courses-by-levels/next-level`;

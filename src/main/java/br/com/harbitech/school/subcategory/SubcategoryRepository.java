@@ -25,7 +25,16 @@ public interface SubcategoryRepository extends JpaRepository<Subcategory, Long> 
             """, nativeQuery = true)
     List<Subcategory> findAllActiveByLevel(int level);
 
-    Optional<Subcategory> findByCategory(Category category);
+    @Query(value = """
+            SELECT * FROM subcategory s
+            	JOIN course c on c.subcategory_id = s.id
+            WHERE s.level =:level
+            AND s.status = 'ACTIVE'
+            AND c.visibility = 'PUBLIC'
+            AND s.subcategory_base =:subcategoryBaseId
+            GROUP BY s.id; 
+            """, nativeQuery = true)
+    List<Subcategory> findAllActiveByLevelWithSubcategoryBase(int level, Long subcategoryBaseId);
 
     List<Subcategory> findAllByCategoryOrderByOrderVisualization(Category category);
 
@@ -59,6 +68,32 @@ public interface SubcategoryRepository extends JpaRepository<Subcategory, Long> 
                                     ORDER BY level
             """, nativeQuery = true)
     List<Subcategory> findNextLevelSubcategories(@Param("categoryId") Long categoryId, @Param("userId") Long userId);
+
+    @Query(value = """
+                                  WITH LevelOfCurrentKnowledge AS(
+                                                SELECT
+                                                	COALESCE(max(s.`level`), 0) AS currentKnowledge, COALESCE(max(s.`level`) + 1, 0) AS nextLevel,\s
+                                                	s.id as subcategoryId
+                                                FROM
+                                                	user_self_assessment usa
+                                                JOIN subcategory s ON
+                                                	s.id = usa.subcategory_id
+                                                JOIN category c ON
+                                                	c.id = s.category_id AND s.category_id = :categoryId
+                                                WHERE usa.user_id = :userId
+                                                ),
+                                                PublicSubcatoriesWithCourses AS(
+                                                	SELECT sub.* FROM subcategory sub
+                                                JOIN course c ON c.subcategory_id = sub.id
+                                                AND c.visibility = 'PUBLIC'
+                                                AND sub.status = 'ACTIVE'
+                                                AND sub.category_id = :categoryId
+                                                AND sub.subcategory_base = (SELECT subcategoryId FROM LevelOfCurrentKnowledge)
+                                                GROUP BY sub.id)
+                                                SELECT * FROM PublicSubcatoriesWithCourses pswc WHERE pswc.level = (SELECT nextLevel FROM LevelOfCurrentKnowledge)
+                                                ORDER BY level
+            """, nativeQuery = true)
+    List<Subcategory> findNextLevelSubcategoriesWithSubcategoryBase(@Param("categoryId") Long categoryId, @Param("userId") Long userId);
 
 
     @Query(value = """
