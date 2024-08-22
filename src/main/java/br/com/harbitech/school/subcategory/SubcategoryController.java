@@ -197,21 +197,21 @@ public class SubcategoryController {
         return "category/courses-by-levels-next-step";
     }
 
-    //TODO provavelmente tenha que arrumar esse endpoint aqui tambem
     @GetMapping("/{subcategoryCode}/courses-by-levels/next-level/by-subcategory")
     String nextLevelBySubcategory(@PathVariable("subcategoryCode") String subcategoryCodeUrl, Model model) {
         Subcategory subcategory = subcategoryRepository.findByCodeUrl(subcategoryCodeUrl)
                 .orElseThrow(() -> new ResponseStatusException(NOT_FOUND, subcategoryCodeUrl));
 
-        if(subcategory.getSubcategoryBase() != null){
-            List<Subcategory> nextLevelSubcategories = subcategoryRepository
-                    .findAllActiveByLevelWithSubcategoryBase(subcategory.getLevel() + 1, subcategory.getSubcategoryBase().getId());
+        List<Subcategory> nextLevelSubcategories = subcategoryRepository.findAllActiveByLevel(subcategory.getLevel() + 1);
 
-            model.addAttribute("subcategories", nextLevelSubcategories);
+        List<Subcategory> nextLevelWithSubcategoryBase = nextLevelSubcategories.stream()
+                .filter(s -> s.getSubcategoryBase() != null)
+                .peek(s -> subcategoryRepository.findAllActiveByLevelWithSubcategoryBase(s.getLevel(), s.getSubcategoryBase().getId())).toList();
+
+        if (!nextLevelWithSubcategoryBase.isEmpty()) {
+            model.addAttribute("subcategories", nextLevelWithSubcategoryBase);
             return "category/courses-by-levels-next-step";
         }
-
-        List<Subcategory> nextLevelSubcategories = subcategoryRepository.findAllActiveByLevel(subcategory.getLevel() + 1);
 
         model.addAttribute("subcategories", nextLevelSubcategories);
         return "category/courses-by-levels-next-step";

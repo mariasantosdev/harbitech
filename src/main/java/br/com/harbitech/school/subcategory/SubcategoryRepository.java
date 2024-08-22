@@ -31,8 +31,8 @@ public interface SubcategoryRepository extends JpaRepository<Subcategory, Long> 
             WHERE s.level =:level
             AND s.status = 'ACTIVE'
             AND c.visibility = 'PUBLIC'
-            AND s.subcategory_base =:subcategoryBaseId
-            GROUP BY s.id; 
+            AND s.subcategory_base = :subcategoryBaseId
+            GROUP BY s.id
             """, nativeQuery = true)
     List<Subcategory> findAllActiveByLevelWithSubcategoryBase(int level, Long subcategoryBaseId);
 
