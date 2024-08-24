@@ -35,6 +35,7 @@ public class Course {
     private String description;
     @Column(columnDefinition = "TEXT")
     private String developedSkills;
+    private int orderVisualization;
     @ManyToOne(fetch = FetchType.LAZY)
     @NotNull(message = "{subcategory.course.required}")
     private Subcategory subcategory;
