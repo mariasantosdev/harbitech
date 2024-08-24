@@ -29,6 +29,7 @@ public interface CourseRepository extends JpaRepository<Course, Long>, PagingAnd
             where sc.code_url = :codeUrl
             and sc.status = 'ACTIVE'
             and c.visibility = 'PUBLIC'
+            ORDER BY c.order_visualization
             """, nativeQuery = true)
     List<Course> findAllBySubcategoryCodeUrl(String codeUrl);
 

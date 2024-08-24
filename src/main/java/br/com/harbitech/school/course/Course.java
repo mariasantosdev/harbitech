@@ -35,6 +35,7 @@ public class Course {
     private String description;
     @Column(columnDefinition = "TEXT")
     private String developedSkills;
+    @PositiveOrZero
     private int orderVisualization;
     @ManyToOne(fetch = FetchType.LAZY)
     @NotNull(message = "{subcategory.course.required}")
@@ -57,6 +58,7 @@ public class Course {
         this.subcategory = subcategory;
     }
 
+
     public Course(String name, String codeUrl, int completionTimeInHours, CourseVisibility visibility,
                   String targetAudience, String instructor, String description, String developedSkills,
                   Subcategory subcategory) {
@@ -65,6 +67,13 @@ public class Course {
         this.targetAudience = targetAudience;
         this.description = description;
         this.developedSkills = developedSkills;
+    }
+
+    public Course(String name, String codeUrl, int completionTimeInHours, CourseVisibility visibility,
+                  int orderVisualization, String targetAudience, String instructor, String description,
+                  String developedSkills, Subcategory subcategory) {
+        this(name, codeUrl, completionTimeInHours, visibility, targetAudience, instructor, description, developedSkills, subcategory);
+        this.orderVisualization = orderVisualization;
     }
 
     public String getVisibilityDescription(){
@@ -89,5 +98,6 @@ public class Course {
         this.instructor = courseFormUpdate.getInstructor();
         this.developedSkills = courseFormUpdate.getDevelopedSkills();
         this.subcategory = courseFormUpdate.getSubcategory();
+        this.orderVisualization = courseFormUpdate.getOrderVisualization();
     }
 }

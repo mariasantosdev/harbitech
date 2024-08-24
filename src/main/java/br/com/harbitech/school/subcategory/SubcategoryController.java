@@ -150,6 +150,7 @@ public class SubcategoryController {
 
         List<Course> courses = allActiveSubcategories.stream()
                 .flatMap(s -> s.getCourses().stream())
+                .sorted(Comparator.comparing(Course::getOrderVisualization))
                 .toList();
 
         List<Long> allEnrollmentsIdByLoggedUser = enrollmentRepository.findAllByUserAndCourses(user, courses).stream()
