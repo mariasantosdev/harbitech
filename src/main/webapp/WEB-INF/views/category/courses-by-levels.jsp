@@ -65,7 +65,6 @@
         }
 
         .subcategory-button {
-            width: 200px;
             height: 100px;
             background-color: #a1b0c0;
             margin: 10px;
