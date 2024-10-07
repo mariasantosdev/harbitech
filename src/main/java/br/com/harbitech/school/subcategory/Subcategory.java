@@ -82,6 +82,10 @@ public class Subcategory implements Comparable<Subcategory> {
         this.courses = courses;
     }
 
+    public void setOrderVisualization(int orderVisualization) {
+        this.orderVisualization = orderVisualization;
+    }
+
     @Override
     public String toString() {
         return "SubCategory{" +
@@ -102,10 +106,6 @@ public class Subcategory implements Comparable<Subcategory> {
             return otherSubCategory.getOrderVisualization();
         }
         return this.orderVisualization;
-    }
-
-    public void addCourse(Course course) {
-        this.courses.add(course);
     }
 
     public void  update(SubcategoryFormUpdate subcategoryFormUpdate) {

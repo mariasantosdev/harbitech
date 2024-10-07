@@ -46,7 +46,6 @@ public class CategoryApiControllerTest {
     @Test
     @Transactional
     void should_retrieve_all_categories_by_status() throws Exception {
-
         Category devOps = categoryRepository.save(new Category("DevOps", "dev-ops", CategoryStatus.ACTIVE,
                 1, "https://www.alura.com.br/assets/api/formacoes/categorias/128/devops.png",
                 "hf#400", " Aprenda Git, Docker e Kubernetes e entenda a entrega contínua. " +

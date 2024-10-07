@@ -7,7 +7,7 @@ import org.springframework.validation.Errors;
 import static org.mockito.AdditionalMatchers.not;
 import static org.mockito.Mockito.*;
 
-public class CourseFormUpdateValidatorTest {
+class CourseFormUpdateValidatorTest {
 
     private CourseFormUpdateValidator courseFormUpdateValidator;
     private Errors errors;

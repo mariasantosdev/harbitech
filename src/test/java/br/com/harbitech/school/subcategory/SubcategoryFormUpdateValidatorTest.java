@@ -7,7 +7,7 @@ import org.springframework.validation.Errors;
 import static org.mockito.AdditionalMatchers.not;
 import static org.mockito.Mockito.*;
 
-public class SubcategoryFormUpdateValidatorTest {
+class SubcategoryFormUpdateValidatorTest {
 
     private SubcategoryFormUpdateValidator subcategoryFormUpdateValidator;
     private Errors errors;

@@ -1,5 +1,6 @@
 package br.com.harbitech.school.category;
 
+import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -7,6 +8,7 @@ import org.junit.jupiter.params.provider.NullAndEmptySource;
 import org.junit.jupiter.params.provider.ValueSource;
 
 
+import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 
 class CategoryTest {
@@ -49,13 +51,11 @@ class CategoryTest {
 
         category.update(categoryFormUpdate);
 
-        assertEquals("Ux", category.getName());
-        assertEquals("ux", category.getCodeUrl());
-        assertEquals("New description", category.getDescription());
-        assertEquals(CategoryStatus.ACTIVE, category.getStatus());
-        assertEquals(1, category.getOrderVisualization());
-        assertEquals("/path/to/icon", category.getIconPath());
-        assertEquals("#FFFFFF", category.getHtmlHexColorCode());
-        assertEquals("New Study Guide", category.getStudyGuide());
+        assertThat(category).extracting(Category::getName, Category::getCodeUrl, Category::getDescription,
+                Category::getStatus, Category::getOrderVisualization, Category::getIconPath, Category::getHtmlHexColorCode,
+                Category::getStudyGuide)
+                .containsExactly("Ux", "ux", "New description",
+                        CategoryStatus.ACTIVE, 1,
+                "/path/to/icon", "#FFFFFF", "New Study Guide");
     }
 }
