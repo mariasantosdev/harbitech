@@ -8,7 +8,7 @@ import org.junit.jupiter.api.Test;
 
 import static org.mockito.Mockito.*;
 
-public class CategoryFormValidatorTest {
+class CategoryFormValidatorTest {
 
     private CategoryRepository categoryRepository;
     private CategoryFormValidator categoryFormValidator;

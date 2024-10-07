@@ -39,15 +39,14 @@ class CategoryRepositoryTest {
 
         Optional<Category> possibleCategory = categoryRepository.findByCodeUrl("mobile");
 
-        assertTrue(possibleCategory.isPresent());
-        assertEquals("mobile", possibleCategory.get().getCodeUrl());
+        assertThat(possibleCategory).isNotEmpty().get().extracting(Category::getCodeUrl).isEqualTo("mobile");
     }
 
     @Test
-    void should_not_load_one_category_because_doesnt_have_one_category_with_the_code_url_passed() {
+    void should_not_load_one_category_when_doesnt_have_one_category_with_the_code_url_passed() {
         Optional<Category> possibleCategory = categoryRepository.findByCodeUrl("categoryDoesntExist");
 
-        assertTrue(possibleCategory.isEmpty());
+        assertThat(possibleCategory).isEmpty();
     }
 
     @Test
@@ -64,10 +63,10 @@ class CategoryRepositoryTest {
     }
 
     @Test
-    void should_not_load_any_categories_because_dont_have() {
+    void should_not_load_any_categories_when_dont_have() {
         List<Category> categories = categoryRepository.findAllByOrderByName();
 
-        assertTrue(categories.isEmpty());
+        assertThat(categories).isEmpty();
     }
 
     @Test
@@ -84,10 +83,10 @@ class CategoryRepositoryTest {
     }
 
     @Test
-    void should_not_load_categories_because_dont_have_with_the_status_passed() {
+    void should_not_load_categories_when_dont_have_with_the_status_passed() {
         List<Category> categories = categoryRepository.findAllByStatus(CategoryStatus.ACTIVE);
 
-        assertTrue(categories.isEmpty());
+        assertThat(categories).isEmpty();
     }
 
     @Test
@@ -105,55 +104,55 @@ class CategoryRepositoryTest {
     }
 
     @Test
-    void should_not_load_any_categories_because_the_course_is_private() {
+    void should_not_load_any_categories_when_the_course_is_private() {
         Category mobileCategory = em.persist(mobileCategory(CategoryStatus.ACTIVE));
         Subcategory androidSubcategory = em.persist(androidSubcategory(SubCategoryStatus.ACTIVE, mobileCategory));
         em.persist(androidCourse(CourseVisibility.PRIVATE, androidSubcategory));
 
         List<Category> categories = categoryRepository.findAllActiveCategoriesWithPublicCourses();
 
-        assertTrue(categories.isEmpty());
+        assertThat(categories).isEmpty();
     }
 
     @Test
-    void should_not_load_any_categories_because_the_category_is_inactive() {
+    void should_not_load_any_categories_when_the_category_is_inactive() {
         Category mobileCategory = em.persist(mobileCategory(CategoryStatus.INACTIVE));
         Subcategory androidSubcategory = em.persist(androidSubcategory(SubCategoryStatus.ACTIVE, mobileCategory));
         em.persist(androidCourse(CourseVisibility.PUBLIC, androidSubcategory));
 
         List<Category> categories = categoryRepository.findAllActiveCategoriesWithPublicCourses();
 
-        assertTrue(categories.isEmpty());
+        assertThat(categories).isEmpty();
     }
 
     @Test
-    void should_not_load_any_categories_because_the_subCategory_is_inactive() {
+    void should_not_load_any_categories_when_the_subCategory_is_inactive() {
         Category mobileCategory = em.persist(mobileCategory(CategoryStatus.ACTIVE));
         Subcategory androidSubcategory = em.persist(androidSubcategory(SubCategoryStatus.INACTIVE, mobileCategory));
         em.persist(androidCourse(CourseVisibility.PUBLIC, androidSubcategory));
 
         List<Category> categories = categoryRepository.findAllActiveCategoriesWithPublicCourses();
 
-        assertTrue(categories.isEmpty());
+        assertThat(categories).isEmpty();
     }
 
     @Test
-    void should_not_load_any_categories_because_the_category_has_not_subcategory() {
+    void should_not_load_any_categories_when_the_category_has_not_subcategory() {
         em.persist(dataScienceCategory(CategoryStatus.ACTIVE));
 
         List<Category> categories = categoryRepository.findAllActiveCategoriesWithPublicCourses();
 
-        assertTrue(categories.isEmpty());
+        assertThat(categories).isEmpty();
     }
 
     @Test
-    void should_not_load_any_categories_because_the_category_has_not_course() {
+    void should_not_load_any_categories_when_the_category_has_not_course() {
         Category dataScienceCategory = em.persist(dataScienceCategory(CategoryStatus.ACTIVE));
         em.persist(sqlSubcategory(SubCategoryStatus.ACTIVE, dataScienceCategory));
 
         List<Category> categories = categoryRepository.findAllActiveCategoriesWithPublicCourses();
 
-        assertTrue(categories.isEmpty());
+        assertThat(categories).isEmpty();
     }
 
     @Test
@@ -171,7 +170,7 @@ class CategoryRepositoryTest {
         assertThat(categories)
                 .hasSize(2)
                 .extracting(Category::getCodeUrl)
-                .containsExactly("mobile","front-end");
+                .containsExactly("mobile", "front-end");
     }
 
     @Test

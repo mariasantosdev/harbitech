@@ -8,7 +8,7 @@ import org.junit.jupiter.api.Test;
 import static org.mockito.AdditionalMatchers.not;
 import static org.mockito.Mockito.*;
 
-public class CategoryFormUpdateValidatorTest {
+class CategoryFormUpdateValidatorTest {
 
     private CategoryFormUpdateValidator categoryFormUpdateValidator;
     private Errors errors;
