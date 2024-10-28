@@ -33,6 +33,16 @@ public class User implements UserDetails {
     @ManyToMany(fetch = FetchType.EAGER)
     private List<Profile> profiles = new ArrayList<>();
 
+    public User(String email, String password, List<Profile> profiles) {
+        this.email = email;
+        this.password = password;
+        this.profiles = profiles;
+    }
+
+    @Deprecated
+    public User() {
+    }
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return this.profiles;

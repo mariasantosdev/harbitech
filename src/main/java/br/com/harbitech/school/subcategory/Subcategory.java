@@ -36,7 +36,7 @@ public class Subcategory implements Comparable<Subcategory> {
     @Column(columnDefinition = "ENUM")
     private SubCategoryStatus status = SubCategoryStatus.INACTIVE;
     private int orderVisualization = 0;
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     private Category category;
     @OneToMany(mappedBy = "subcategory")
     @NotNull(message = "{subcategory.course.required}")

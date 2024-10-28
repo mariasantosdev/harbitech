@@ -35,7 +35,7 @@ public class Course {
     private String description;
     @Column(columnDefinition = "TEXT")
     private String developedSkills;
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @NotNull(message = "{subcategory.course.required}")
     private Subcategory subcategory;
 
@@ -44,7 +44,8 @@ public class Course {
         Assert.hasText(codeUrl, "{course.codeUrl.required}");
         Assert.hasText(instructor, "{course.instructor.required}");
 
-        Assert.isTrue(completionTimeInHours >= 1 && completionTimeInHours <= 20, "O tempo estimado deve estar entre 1 hora até 20 horas.");
+        Assert.isTrue(completionTimeInHours >= 1 && completionTimeInHours <= 20,
+                "O tempo estimado deve estar entre 1 hora até 20 horas.");
         Assert.notNull(subcategory, "{course.subcategory.required}");
         validateUrl(codeUrl, "{course.codeUrl.pattern}" + codeUrl);
 
