@@ -59,7 +59,6 @@ public class CourseController {
 
         model.addAttribute("category", category);
         model.addAttribute("subcategory", subcategory);
-
         model.addAttribute("courses", coursesPages.getContent());
         model.addAttribute("totalPages", coursesPages.getTotalPages());
 

@@ -3,20 +3,37 @@ package br.com.harbitech.school.course;
 import br.com.harbitech.school.category.Category;
 import br.com.harbitech.school.category.CategoryRepository;
 import br.com.harbitech.school.subcategory.Subcategory;
+import br.com.harbitech.school.subcategory.SubcategoryConverter;
 import br.com.harbitech.school.subcategory.SubcategoryRepository;
 import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
+import org.springframework.format.support.FormattingConversionService;
 import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
+import java.util.Collections;
+
+import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
+import static org.assertj.core.internal.bytebuddy.matcher.ElementMatchers.is;
+import static org.hamcrest.Matchers.hasProperty;
 import static org.hamcrest.Matchers.hasSize;
 
+import static org.junit.matchers.JUnitMatchers.hasItem;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.eq;
+import static org.mockito.Mockito.when;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
@@ -39,29 +56,32 @@ class CourseControllerTest {
     @Autowired
     private CourseRepository courseRepository;
 
+    @Autowired
+    private SubcategoryConverter subcategoryConverter;
+
+    @Autowired
+    private CourseFormValidator courseFormValidator;
+
+    @Autowired
+    private CourseFormUpdateValidator courseFormUpdateValidator;
+
+    @BeforeEach
+    public void init() {
+        FormattingConversionService conversionService = new FormattingConversionService();
+        conversionService.addConverter(subcategoryConverter);
+
+        mockMvc = MockMvcBuilders.standaloneSetup(new CourseController(
+                        categoryRepository,
+                        subcategoryRepository, courseRepository, courseFormValidator, courseFormUpdateValidator))
+                .setConversionService(conversionService)
+                .build();
+    }
+
     @AfterEach
     public void tearDown() {
         courseRepository.deleteAll();
         subcategoryRepository.deleteAll();
         categoryRepository.deleteAll();
-    }
-
-    @Test
-    @DisplayName("Should show list of courses successfully")
-    @WithMockUser(roles = "MANAGER", username = "maria@gmail.com", password = "123456")
-    void list__should_show_list_of_courses_successfully() throws Exception {
-        Category category = new Category("Programação", "programacao");
-        Subcategory subcategory = new Subcategory("Java", "java", category);
-        categoryRepository.save(category);
-        subcategoryRepository.save(subcategory);
-
-        Course course = new Course("Java Basics", "java-basics",10, "Anne", subcategory);
-        courseRepository.save(course);
-
-        mockMvc.perform(get("/admin/courses/{category}/{subcategoryCodeUrl}", category.getCodeUrl(), subcategory.getCodeUrl()))
-                .andExpect(status().isOk())
-                .andExpect(view().name("admin/course/listCourses"))
-                .andExpect(model().attribute("courses", hasSize(1)));
     }
 
     @Test
@@ -100,31 +120,28 @@ class CourseControllerTest {
 
     }
 
-    //TODO ARRUME-ME
-//    @Test
-//    @DisplayName("Should create a course successfully")
-//    @WithMockUser(roles = "MANAGER", username = "maria@gmail.com", password = "123456")
-//    void save__should_create_a_course_successfully() throws Exception {
-//        Category category = new Category("Programação", "programacao");
-//        Subcategory subcategory = new Subcategory("Java", "java", category);
-//        categoryRepository.save(category);
-//        subcategoryRepository.save(subcategory);
-//
-//        mockMvc.perform(post("/admin/courses")
-//                        .with(csrf())
-//                        .contentType(MediaType.APPLICATION_FORM_URLENCODED)
-//                        .param("name", "Java Basics")
-//                        .param("codeUrl", "java-basics")
-//                        .param("instructor", "Anne")
-//                        .param("completionTimeInHours", "18")
-//                        .param("subcategory", subcategory.toString())
-//                        .param("subcategoryCodeUrl", subcategory.getCodeUrl())
-//                        .param("categoryCodeUrl", category.getCodeUrl()))
-//                .andExpect(status().is3xxRedirection())
-//                .andExpect(redirectedUrl("/admin/courses/programacao/java"));
-//
-//        assertThat(courseRepository.findByCodeUrl("java-basics")).isPresent();
-//    }
+    @Test
+    @DisplayName("Should create a course successfully")
+    @WithMockUser(roles = "MANAGER", username = "maria@gmail.com", password = "123456")
+    void save__should_create_a_course_successfully() throws Exception {
+        Category category = new Category("Programação", "programacao");
+        Subcategory subcategory = new Subcategory("Java", "java", category);
+        categoryRepository.save(category);
+        subcategoryRepository.save(subcategory);
+
+        mockMvc.perform(post("/admin/courses")
+                        .with(csrf())
+                        .contentType(MediaType.APPLICATION_FORM_URLENCODED)
+                        .param("name", "Java Basics")
+                        .param("codeUrl", "java-basics")
+                        .param("instructor", "Madu")
+                        .param("completionTimeInHours", "18")
+                        .param("subcategory", subcategory.getId().toString()))
+                .andExpect(status().is3xxRedirection())
+                .andExpect(redirectedUrl("/admin/courses/programacao/java"));
+
+        assertThat(courseRepository.findByCodeUrl("java-basics")).isPresent();
+    }
 
     @Test
     @DisplayName("Should show course update form successfully")
@@ -136,7 +153,7 @@ class CourseControllerTest {
         subcategoryRepository.save(subcategory);
 
         Course course = new Course("Java Basics", "java-basics", 18,
-                "Anne",subcategory);
+                "Anne", subcategory);
         courseRepository.save(course);
 
         mockMvc.perform(get("/admin/courses/{category}/{subcategory}/{course}", category.getCodeUrl(),
@@ -156,50 +173,61 @@ class CourseControllerTest {
                 .andExpect(status().isNotFound());
     }
 
-//    @Test
-//    @DisplayName("Should update a course successfully")
-//    @WithMockUser(roles = "MANAGER", username = "maria@gmail.com", password = "123456")
-//    void update__should_update_a_course_successfully() throws Exception {
-//        Category category = new Category("Programação", "programacao");
-//        Subcategory subcategory = new Subcategory("Java", "java", category);
-//        categoryRepository.save(category);
-//        subcategoryRepository.save(subcategory);
-//
-//        Course course = new Course("Java Basics", "java-basics", 15,
-//                "Anne",subcategory);
-//        courseRepository.save(course);
-//
-//        mockMvc.perform(post("/admin/courses/{category}/{subcategory}/{course}", category.getCodeUrl(),
-//                        subcategory.getCodeUrl(), course.getCodeUrl())
-//                        .with(csrf())
-//                        .contentType(MediaType.APPLICATION_FORM_URLENCODED)
-//                        .param("name", "Java Basics Updated"))
-//                .andExpect(status().is3xxRedirection())
-//                .andExpect(redirectedUrl("/admin/courses/programacao/java"));
-//
-//        Course updatedCourse = courseRepository.findByCodeUrl("java-basics").orElseThrow();
-//        assertThat(updatedCourse.getName()).isEqualTo("Java Basics Updated");
-//    }
+    @Test
+    @DisplayName("Should update a course successfully")
+    @WithMockUser(roles = "MANAGER", username = "maria@gmail.com", password = "123456")
+    void update__should_update_a_course_successfully() throws Exception {
+        Category category = new Category("Programação", "programacao");
+        Subcategory subcategory = new Subcategory("Java", "java", category);
+        categoryRepository.save(category);
+        subcategoryRepository.save(subcategory);
 
-//    @Test
-//    @DisplayName("Should show errors when updating course with invalid data")
-//    @WithMockUser(roles = "MANAGER", username = "maria@gmail.com", password = "123456")
-//    void update__should_have_errors_when_data_is_invalid() throws Exception {
-//        Category category = new Category("Programação", "programacao");
-//        Subcategory subcategory = new Subcategory("Java", "java", category);
-//        categoryRepository.save(category);
-//        subcategoryRepository.save(subcategory);
-//
-//        Course course = new Course("Java Basics", "java-basics", 15, "Anne",
-//                subcategory);
-//        courseRepository.save(course);
-//
-//        mockMvc.perform(post("/admin/courses/{category}/{subcategory}/{course}", category.getCodeUrl(), subcategory.getCodeUrl(), course.getCodeUrl())
-//                        .with(csrf())
-//                        .contentType(MediaType.APPLICATION_FORM_URLENCODED)
-//                        .param("name", ""))
-//                .andExpect(status().isOk())
-//                .andExpect(view().name("admin/course/formCourseUpdate"))
-//                .andExpect(model().attributeHasFieldErrors("courseFormUpdate", "name"));
-//    }
+        Course course = new Course("Java Basics", "java-basics", 15,
+                "Madu", subcategory);
+        courseRepository.save(course);
+
+        mockMvc.perform(post("/admin/courses/{category}/{subcategory}/{courseCodeUrl}", category.getCodeUrl(),
+                        subcategory.getCodeUrl(), course.getCodeUrl())
+                        .with(csrf())
+                        .contentType(MediaType.APPLICATION_FORM_URLENCODED)
+                        .param("id", course.getId().toString())
+                        .param("name", "Java Basics")
+                        .param("codeUrl", "java")
+                        .param("instructor", "Anne")
+                        .param("completionTimeInHours", "15")
+                        .param("subcategory", subcategory.getId().toString()))
+                .andExpect(status().is3xxRedirection())
+                .andExpect(redirectedUrl("/admin/courses/programacao/java"));
+
+        assertThat(courseRepository.findByCodeUrl("java").isPresent());
+        assertThat(courseRepository.findByCodeUrl("java-basics")).isEmpty();
+    }
+
+    @Test
+    @DisplayName("Should show errors when updating course with invalid data")
+    @WithMockUser(roles = "MANAGER", username = "maria@gmail.com", password = "123456")
+    void update__should_have_errors_when_data_is_invalid() throws Exception {
+        Category category = new Category("Programação", "programacao");
+        Subcategory subcategory = new Subcategory("Java", "java", category);
+        categoryRepository.save(category);
+        subcategoryRepository.save(subcategory);
+
+        Course course = new Course("Java Basics", "java-basics", 15, "Anne",
+                subcategory);
+        courseRepository.save(course);
+
+        mockMvc.perform(post("/admin/courses/{category}/{subcategory}/{course}",
+                        category.getCodeUrl(), subcategory.getCodeUrl(), course.getCodeUrl())
+                        .with(csrf())
+                        .contentType(MediaType.APPLICATION_FORM_URLENCODED)
+                        .param("id", course.getId().toString())
+                        .param("name", "")
+                        .param("codeUrl", "java")
+                        .param("instructor", "Anne")
+                        .param("completionTimeInHours", "15")
+                        .param("subcategory", subcategory.getId().toString()))
+                .andExpect(status().isOk())
+                .andExpect(view().name("admin/course/formCourseUpdate"))
+                .andExpect(model().attributeHasFieldErrors("courseFormUpdate", "name"));
+    }
 }
