@@ -117,4 +117,41 @@ class CourseTest {
                 .containsExactly("New Course Name", "new-code-url", "Updated course description",
                         5, "PÚBLICA", "Developers", "Updated Instructor", "Updated skills", subCategory);
     }
+
+    @Test
+    @DisplayName("should give 50 points for public course")
+    void should_give_higher_score_for_public_course() {
+        Subcategory subcategory = new Subcategory("Java", "java-basico", new Category("Programação",
+                "programacao"));
+        Course course = new Course("Java Basics", "java-basico", 10, "John Doe", subcategory);
+        course.setVisibility(CourseVisibility.PUBLIC);
+
+        int score = course.calculatePopularityScore();
+
+        assertEquals(60, score);
+    }
+
+    @Test
+    @DisplayName("should increase 1 point for each hour of completion time")
+    void should_increase_score_for_completion_time() {
+        Subcategory subcategory = new Subcategory("Python", "python-intro",  new Category("Programação",
+                "programacao"));
+        Course course = new Course("Python Intro", "python-intro", 5, "Jane Doe", subcategory);
+
+        int score = course.calculatePopularityScore();
+
+        assertEquals(5, score);
+    }
+
+    @Test
+    @DisplayName("should not give negative score")
+    void score_should_not_be_negative() {
+        Subcategory subcategory = new Subcategory("C++", "cpp-basics",  new Category("Programação",
+                "programacao"));
+        Course course = new Course("C++ Basics", "cpp-basics", 1, "John Developer", subcategory);
+
+        int score = course.calculatePopularityScore();
+
+        assertEquals(1, score);
+    }
 }

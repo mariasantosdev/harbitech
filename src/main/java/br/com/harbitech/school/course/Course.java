@@ -1,10 +1,7 @@
 package br.com.harbitech.school.course;
 
 import br.com.harbitech.school.subcategory.Subcategory;
-import lombok.Data;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+import lombok.*;
 import org.springframework.util.Assert;
 
 import javax.persistence.*;
@@ -17,7 +14,11 @@ import static br.com.harbitech.school.validation.ValidationUtil.validateUrl;
 @Getter
 @ToString
 @NoArgsConstructor(onConstructor = @__(@Deprecated))
+@Setter
 public class Course {
+
+    private static final int MINIMUM_TIME_COMPLETION_TIME_IN_HOURS = 1;
+    private static final int MAXIMUM_TIME_COMPLETION_TIME_IN_HOURS = 20;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -38,13 +39,15 @@ public class Course {
     @ManyToOne(fetch = FetchType.EAGER)
     @NotNull(message = "{subcategory.course.required}")
     private Subcategory subcategory;
+    private int score;
 
     public Course(String name, String codeUrl, int completionTimeInHours, String instructor, Subcategory subcategory){
         Assert.hasText(name, "{course.name.required}");
         Assert.hasText(codeUrl, "{course.codeUrl.required}");
         Assert.hasText(instructor, "{course.instructor.required}");
 
-        Assert.isTrue(completionTimeInHours >= 1 && completionTimeInHours <= 20,
+        Assert.isTrue(completionTimeInHours >= MINIMUM_TIME_COMPLETION_TIME_IN_HOURS && completionTimeInHours
+                        <= MAXIMUM_TIME_COMPLETION_TIME_IN_HOURS,
                 "O tempo estimado deve estar entre 1 hora até 20 horas.");
         Assert.notNull(subcategory, "{course.subcategory.required}");
         validateUrl(codeUrl, "{course.codeUrl.pattern}" + codeUrl);
@@ -89,5 +92,13 @@ public class Course {
         this.instructor = courseFormUpdate.getInstructor();
         this.developedSkills = courseFormUpdate.getDevelopedSkills();
         this.subcategory = courseFormUpdate.getSubcategory();
+    }
+
+
+    public int calculatePopularityScore() {
+        if (CourseVisibility.isPublic(this.visibility)) score += 50;
+
+        score += this.completionTimeInHours;
+        return score;
     }
 }

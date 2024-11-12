@@ -15,6 +15,10 @@ public enum CourseVisibility {
         return description;
     }
 
+    public static boolean isPublic(CourseVisibility visibility) {
+        return visibility == PUBLIC;
+    }
+
     public static final CourseVisibility from(String text) {
         return Arrays.stream(CourseVisibility.values())
                 .filter(visibility -> visibility.getDescription().equals(text))
