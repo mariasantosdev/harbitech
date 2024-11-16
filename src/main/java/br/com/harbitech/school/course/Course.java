@@ -41,7 +41,7 @@ public class Course {
     private Subcategory subcategory;
     private int score;
 
-    public Course(String name, String codeUrl, int completionTimeInHours, String instructor, Subcategory subcategory){
+    public Course(String name, String codeUrl, int completionTimeInHours, String instructor, Subcategory subcategory) {
         Assert.hasText(name, "{course.name.required}");
         Assert.hasText(codeUrl, "{course.codeUrl.required}");
         Assert.hasText(instructor, "{course.instructor.required}");
@@ -63,26 +63,26 @@ public class Course {
     public Course(String name, String codeUrl, int completionTimeInHours, CourseVisibility visibility,
                   String targetAudience, String instructor, String description, String developedSkills,
                   Subcategory subcategory) {
-        this(name, codeUrl, completionTimeInHours, instructor,subcategory);
+        this(name, codeUrl, completionTimeInHours, instructor, subcategory);
         this.visibility = visibility;
         this.targetAudience = targetAudience;
         this.description = description;
         this.developedSkills = developedSkills;
     }
 
-    public String getVisibilityDescription(){
+    public String getVisibilityDescription() {
         return this.visibility.getDescription();
     }
 
-    public String getSubcategoryCodeUrl(){
+    public String getSubcategoryCodeUrl() {
         return this.subcategory.getCodeUrl();
     }
 
-    public String getCategoryCodeUrl(){
+    public String getCategoryCodeUrl() {
         return this.subcategory.getCategoryCodeUrl();
     }
 
-    public void  update(CourseFormUpdate courseFormUpdate) {
+    public void update(CourseFormUpdate courseFormUpdate) {
         this.name = courseFormUpdate.getName();
         this.codeUrl = courseFormUpdate.getCodeUrl();
         this.description = courseFormUpdate.getDescription();
@@ -96,13 +96,19 @@ public class Course {
 
 
     public int calculatePopularityScore() {
-        if (CourseVisibility.isPublic(this.visibility)) score += 50;
+        if (CourseVisibility.isPublic(this.visibility)) {
+            score += 50;
+        }
 
         if (this.subcategory.getStudyGuide() != null && !this.subcategory.getStudyGuide().isEmpty()) {
             int length = this.subcategory.getStudyGuide().length();
-            if (length > 200) score += 15;
-            else if (length > 100) score += 10;
-            else if (length > 50) score += 5;
+            if (length > 200) {
+                score += 15;
+            } else if (length > 100) {
+                score += 10;
+            } else if (length > 50) {
+                score += 5;
+            }
         }
 
         score += this.completionTimeInHours;
