@@ -98,33 +98,19 @@ public class Course {
     public int calculatePopularityScore() {
         if (CourseVisibility.isPublic(this.visibility)) {
             score += 50;
-            if (this.subcategory.getStudyGuide() != null && !this.subcategory.getStudyGuide().isEmpty()) {
-                int length = this.subcategory.getStudyGuide().length();
-                if (length > 200) {
-                    score += 15;
-                } else if (length > 100) {
-                    score += 10;
-                } else if (length > 50) {
-                    score += 5;
-                }
-            }
-
-            score += this.completionTimeInHours;
-            return score;
-        } else {
-            if (this.subcategory.getStudyGuide() != null && !this.subcategory.getStudyGuide().isEmpty()) {
-                int length = this.subcategory.getStudyGuide().length();
-                if (length > 200) {
-                    score += 15;
-                } else if (length > 100) {
-                    score += 10;
-                } else if (length > 50) {
-                    score += 5;
-                }
-            }
-
-            score += this.completionTimeInHours;
-            return score;
         }
+
+        if (this.subcategory.getStudyGuide() != null && !this.subcategory.getStudyGuide().isEmpty()) {
+            int length = this.subcategory.getStudyGuide().length();
+            if (length > 200) {
+                score += 15;
+            } else if (length > 100) {
+                score += 10;
+            } else if (length > 50) {
+                score += 5;
+            }
+        }
+        score += this.completionTimeInHours;
+        return score;
     }
 }
