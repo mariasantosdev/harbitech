@@ -96,23 +96,17 @@ public class Course {
 
 
     public int calculatePopularityScore() {
-        int score = 0;
         if (CourseVisibility.isPublic(this.visibility)) {
             score += 50;
-        }
-        else {
-            score = 0;
         }
 
         if (this.subcategory.getStudyGuide() != null && !this.subcategory.getStudyGuide().isEmpty()) {
             int length = this.subcategory.getStudyGuide().length();
             if (length > 200) {
                 score += 15;
-            } else
-                if (length > 100) {
+            } else if (length > 100) {
                 score += 10;
-            } else
-                if (length > 50) {
+            } else if (length > 50) {
                 score += 5;
             }
         }
