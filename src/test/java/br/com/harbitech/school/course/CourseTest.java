@@ -6,6 +6,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.NullAndEmptySource;
 import org.junit.jupiter.params.provider.ValueSource;
 
@@ -141,6 +142,44 @@ class CourseTest {
 
         int score = course.calculatePopularityScore();
 
-        assertEquals(0, score);
+        assertEquals(10, score);
+    }
+
+    @ParameterizedTest
+    @DisplayName("should give a point for each completionTimeInHours for courses")
+    @CsvSource({"1, 1", "2, 2", "3, 3", "4, 4", "5, 5", "6, 6", "7, 7", "8, 8", "9, 9", "10, 10", "11, 11",
+            "12, 12", "13, 13", "14, 14", "15, 15", "16, 16", "17, 17", "18, 18", "19, 19", "20, 20"})
+    void should_give_a_point_for_each_completion_time_in_hours_for_courses(int completionTimeInHours, int expectedScore) {
+        Subcategory subcategory = new Subcategory("Java", "java-basico", new Category("Programação",
+                "programacao"));
+        Course course = new Course("Java Basics", "java-basico", completionTimeInHours, "John Doe",
+                subcategory);
+        course.setVisibility(CourseVisibility.PRIVATE);
+
+        int score = course.calculatePopularityScore();
+
+        assertEquals(expectedScore, score);
+    }
+
+    @Test
+    void should_verify_if_study_guide_length_is_greater_than_200() {
+        Subcategory subcategory = new Subcategory("Java", "java-basico", new Category("Programação",
+                "programacao"));
+        subcategory.setStudyGuide("""
+        Este é o guia de estudos para o curso de Java Básico. 
+        Certifique-se de revisar os seguintes tópicos antes de começar:
+        1. Introdução à Programação Orientada a Objetos.
+        2. Sintaxe básica da linguagem Java.
+        3. Classes, Objetos, e Métodos.
+        4. Controle de Fluxo e Estruturas Condicionais.
+        5. Estruturas de Dados como Arrays e Listas.
+        6. Práticas recomendadas no desenvolvimento com Java.
+        """);
+        Course course = new Course("Java Basics", "java-basico", 1, "John Doe", subcategory);
+        course.setVisibility(CourseVisibility.PRIVATE);
+
+        int score = course.calculatePopularityScore();
+
+        assertEquals(16, score);
     }
 }

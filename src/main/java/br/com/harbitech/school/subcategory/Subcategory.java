@@ -86,6 +86,10 @@ public class Subcategory implements Comparable<Subcategory> {
         this.orderVisualization = orderVisualization;
     }
 
+    public void setStudyGuide(String studyGuide) {
+        this.studyGuide = studyGuide;
+    }
+
     @Override
     public String toString() {
         return "SubCategory{" +
@@ -117,5 +121,4 @@ public class Subcategory implements Comparable<Subcategory> {
         this.studyGuide = subcategoryFormUpdate.getStudyGuide();
         this.category = subcategoryFormUpdate.getCategory();
     }
-
 }
