@@ -95,13 +95,29 @@ public class Course {
         this.subcategory = courseFormUpdate.getSubcategory();
     }
 
-    public int calculatePopularityScore() {
+    public int calculatePopularityScore2() {
         if (CourseVisibility.isPublic(this.visibility)) score += 50;
         if (hasStudyGuide()) {
             int length = this.subcategory.getStudyGuide().length();
             if (length >= 200) score += 15;
             else if (length >= 100) score += 10;
             else if (length >= 50) score += 5;
+        }
+        score += this.completionTimeInHours;
+        return score;
+    }
+
+    public int calculatePopularityScore() {
+        if (CourseVisibility.isPublic(this.visibility)) score += 50;
+        if (this.subcategory.getStudyGuide() != null && !this.subcategory.getStudyGuide().isEmpty()) {
+            int length = this.subcategory.getStudyGuide().length();
+            if (length >= 200) {
+                score += 15;
+            } else if (length >= 100) {
+                score += 10;
+            } else if (length >= 50) {
+                score += 5;
+            }
         }
         score += this.completionTimeInHours;
         return score;
