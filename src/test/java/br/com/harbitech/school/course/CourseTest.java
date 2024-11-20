@@ -146,102 +146,102 @@ class CourseTest {
         assertEquals(10, score);
     }
 
-//    @ParameterizedTest
-//    @DisplayName("should give a point for each completionTimeInHours for courses")
-//    @CsvSource({"1, 1", "2, 2", "3, 3", "4, 4", "5, 5", "6, 6", "7, 7", "8, 8", "9, 9", "10, 10", "11, 11",
-//            "12, 12", "13, 13", "14, 14", "15, 15", "16, 16", "17, 17", "18, 18", "19, 19", "20, 20"})
-//    void should_give_a_point_for_each_completion_time_in_hours_for_courses(int completionTimeInHours, int expectedScore) {
-//        Subcategory subcategory = new Subcategory("Java", "java-basico", new Category("Programação",
-//                "programacao"));
-//        Course course = new Course("Java Basics", "java-basico", completionTimeInHours, "John Doe",
-//                subcategory);
-//        course.setVisibility(CourseVisibility.PRIVATE);
-//
-//        int score = course.calculatePopularityScore();
-//
-//        assertEquals(expectedScore, score);
-//    }
-//
-//    @Test
-//    @DisplayName("should give 15 points for study guide with equal 200 characters")
-//    void should_give_15_points_for_study_guide_with_equal_200_characters() {
-//        Subcategory subcategory = new Subcategory("Java", "java-basico", new Category("Programação",
-//                "programacao"));
-//        subcategory.setStudyGuide("""
-//                Este é o guia de estudos para o curso de Java Básico. Certifique-se de revisar os seguintes tópicos:
-//                1. Introdução à Programação Orientada a Objetos.
-//                2. Sintaxe básica da linguagem Java.
-//                3. Uso de IDEs para desenvolvimento.
-//                """);
-//        Course course = new Course("Java Basics", "java-basico", 1, "John Doe", subcategory);
-//        course.setVisibility(CourseVisibility.PRIVATE);
-//
-//        int score = course.calculatePopularityScore();
-//
-//        assertEquals(16, score);
-//    }
-//
-//    @Test
-//    @DisplayName("should give 15 points for study guide with more than 200 characters")
-//    void should_give_15_points_for_study_guide_with_more_than_200_characters() {
-//        Subcategory subcategory = new Subcategory("Java", "java-basico", new Category("Programação",
-//                "programacao"));
-//        subcategory.setStudyGuide("""
-//                Este é o guia de estudos para o curso de Java Básico.
-//                Certifique-se de revisar os seguintes tópicos antes de começar:
-//                1. Introdução à Programação Orientada a Objetos.
-//                2. Sintaxe básica da linguagem Java.
-//                3. Classes, Objetos, e Métodos.
-//                4. Controle de Fluxo e Estruturas Condicionais.
-//                5. Estruturas de Dados como Arrays e Listas.
-//                6. Práticas recomendadas no desenvolvimento com Java.
-//                7. SOLID com java
-//                8. design pattern com java
-//                """);
-//        Course course = new Course("Java Basics", "java-basico", 1, "John Doe", subcategory);
-//        course.setVisibility(CourseVisibility.PUBLIC);
-//
-//        int score = course.calculatePopularityScore();
-//
-//        assertEquals(66, score);
-//    }
-//
-//    @Test
-//    void should_not_add_points_when_study_guide_length_is_less_than_200() {
-//        Subcategory subcategory = mock(Subcategory.class);
-//        when(subcategory.getStudyGuide()).thenReturn("Short guide.");
-//        Course course = new Course("Java Basics", "java-basico", 1, "John Doe", subcategory);
-//        course.setVisibility(CourseVisibility.PRIVATE);
-//
-//        int score = course.calculatePopularityScore();
-//
-//        assertEquals(1, score);
-//        verify(subcategory, times(3)).getStudyGuide();
-//    }
-//
-//    @Test
-//    void should_not_add_points_when_study_guide_is_empty() {
-//        Subcategory subcategory = mock(Subcategory.class);
-//        when(subcategory.getStudyGuide()).thenReturn("");
-//        Course course = new Course("Java Basics", "java-basico", 1, "John Doe", subcategory);
-//        course.setVisibility(CourseVisibility.PRIVATE);
-//
-//        int score = course.calculatePopularityScore();
-//
-//        assertEquals(1, score);
-//    }
-//
-//    @Test
-//    void should_not_add_points_when_study_guide_is_null() {
-//        Subcategory subcategory = mock(Subcategory.class);
-//        when(subcategory.getStudyGuide()).thenReturn(null);
-//        Course course = new Course("Java Basics", "java-basico", 1, "John Doe", subcategory);
-//        course.setVisibility(CourseVisibility.PRIVATE);
-//
-//        int score = course.calculatePopularityScore();
-//
-//        assertEquals(1, score);
-//    }
+    @ParameterizedTest
+    @DisplayName("should give a point for each completionTimeInHours for courses")
+    @CsvSource({"1, 1", "2, 2", "3, 3", "4, 4", "5, 5", "6, 6", "7, 7", "8, 8", "9, 9", "10, 10", "11, 11",
+            "12, 12", "13, 13", "14, 14", "15, 15", "16, 16", "17, 17", "18, 18", "19, 19", "20, 20"})
+    void should_give_a_point_for_each_completion_time_in_hours_for_courses(int completionTimeInHours, int expectedScore) {
+        Subcategory subcategory = new Subcategory("Java", "java-basico", new Category("Programação",
+                "programacao"));
+        Course course = new Course("Java Basics", "java-basico", completionTimeInHours, "John Doe",
+                subcategory);
+        course.setVisibility(CourseVisibility.PRIVATE);
+
+        int score = course.calculatePopularityScore();
+
+        assertEquals(expectedScore, score);
+    }
+
+    @Test
+    @DisplayName("should give 15 points for study guide with equal 200 characters")
+    void should_give_15_points_for_study_guide_with_equal_200_characters() {
+        Subcategory subcategory = new Subcategory("Java", "java-basico", new Category("Programação",
+                "programacao"));
+        subcategory.setStudyGuide("""
+                Este é o guia de estudos para o curso de Java Básico. Certifique-se de revisar os seguintes tópicos:
+                1. Introdução à Programação Orientada a Objetos.
+                2. Sintaxe básica da linguagem Java.
+                3. Uso de IDEs para desenvolvimento.
+                """);
+        Course course = new Course("Java Basics", "java-basico", 1, "John Doe", subcategory);
+        course.setVisibility(CourseVisibility.PRIVATE);
+
+        int score = course.calculatePopularityScore();
+
+        assertEquals(16, score);
+    }
+
+    @Test
+    @DisplayName("should give 15 points for study guide with more than 200 characters")
+    void should_give_15_points_for_study_guide_with_more_than_200_characters() {
+        Subcategory subcategory = new Subcategory("Java", "java-basico", new Category("Programação",
+                "programacao"));
+        subcategory.setStudyGuide("""
+                Este é o guia de estudos para o curso de Java Básico.
+                Certifique-se de revisar os seguintes tópicos antes de começar:
+                1. Introdução à Programação Orientada a Objetos.
+                2. Sintaxe básica da linguagem Java.
+                3. Classes, Objetos, e Métodos.
+                4. Controle de Fluxo e Estruturas Condicionais.
+                5. Estruturas de Dados como Arrays e Listas.
+                6. Práticas recomendadas no desenvolvimento com Java.
+                7. SOLID com java
+                8. design pattern com java
+                """);
+        Course course = new Course("Java Basics", "java-basico", 1, "John Doe", subcategory);
+        course.setVisibility(CourseVisibility.PUBLIC);
+
+        int score = course.calculatePopularityScore();
+
+        assertEquals(66, score);
+    }
+
+    @Test
+    void should_not_add_points_when_study_guide_length_is_less_than_200() {
+        Subcategory subcategory = mock(Subcategory.class);
+        when(subcategory.getStudyGuide()).thenReturn("Short guide.");
+        Course course = new Course("Java Basics", "java-basico", 1, "John Doe", subcategory);
+        course.setVisibility(CourseVisibility.PRIVATE);
+
+        int score = course.calculatePopularityScore();
+
+        assertEquals(1, score);
+        verify(subcategory, times(3)).getStudyGuide();
+    }
+
+    @Test
+    void should_not_add_points_when_study_guide_is_empty() {
+        Subcategory subcategory = mock(Subcategory.class);
+        when(subcategory.getStudyGuide()).thenReturn("");
+        Course course = new Course("Java Basics", "java-basico", 1, "John Doe", subcategory);
+        course.setVisibility(CourseVisibility.PRIVATE);
+
+        int score = course.calculatePopularityScore();
+
+        assertEquals(1, score);
+    }
+
+    @Test
+    void should_not_add_points_when_study_guide_is_null() {
+        Subcategory subcategory = mock(Subcategory.class);
+        when(subcategory.getStudyGuide()).thenReturn(null);
+        Course course = new Course("Java Basics", "java-basico", 1, "John Doe", subcategory);
+        course.setVisibility(CourseVisibility.PRIVATE);
+
+        int score = course.calculatePopularityScore();
+
+        assertEquals(1, score);
+    }
 //
 //    @Test
 //    void should_give_10_points_for_study_guide_with_more_than_100_characters_and_less_than_200() {
