@@ -168,10 +168,7 @@ class CourseTest {
         Subcategory subcategory = new Subcategory("Java", "java-basico", new Category("Programação",
                 "programacao"));
         subcategory.setStudyGuide("""
-                Este é o guia de estudos para o curso de Java Básico. Certifique-se de revisar os seguintes tópicos:
-                1. Introdução à Programação Orientada a Objetos.
-                2. Sintaxe básica da linguagem Java.
-                3. Uso de IDEs para desenvolvimento.
+                Este é o guia de estudos para o curso de Java Básico. Certifique-se de revisar os seguintes tópicos antes de começar: 1. Introdução à Programação Orientada a Objetos. 2. Sintaxe básica da linguagem Ja
                 """);
         Course course = new Course("Java Basics", "java-basico", 1, "John Doe", subcategory);
         course.setVisibility(CourseVisibility.PRIVATE);
@@ -187,16 +184,7 @@ class CourseTest {
         Subcategory subcategory = new Subcategory("Java", "java-basico", new Category("Programação",
                 "programacao"));
         subcategory.setStudyGuide("""
-                Este é o guia de estudos para o curso de Java Básico.
-                Certifique-se de revisar os seguintes tópicos antes de começar:
-                1. Introdução à Programação Orientada a Objetos.
-                2. Sintaxe básica da linguagem Java.
-                3. Classes, Objetos, e Métodos.
-                4. Controle de Fluxo e Estruturas Condicionais.
-                5. Estruturas de Dados como Arrays e Listas.
-                6. Práticas recomendadas no desenvolvimento com Java.
-                7. SOLID com java
-                8. design pattern com java
+                Este é o guia de estudos para o curso de Java Básico. Certifique-se de revisar os seguintes tópicos antes de começar: 1. Introdução à Programação Orientada a Objetos. 2. Sintaxe básica da linguagem Jav
                 """);
         Course course = new Course("Java Basics", "java-basico", 1, "John Doe", subcategory);
         course.setVisibility(CourseVisibility.PUBLIC);
@@ -245,7 +233,7 @@ class CourseTest {
 
     @ParameterizedTest
     @ValueSource(strings = {"Guia de estudos Java Básico: revise POO, sintaxe Java, classes, objetos, controle de fluxo, arrays et",
-            "Guia de estudos Java Básico: revise POO, sintaxe, classes, objetos, controle de fluxo, arrays, métodos, encapsulamento, herança, polimorfismo, interfaces, exceções, coleções, e boas práticas, solid."})
+            "Guia de estudos Java Básico: revise POO, sintaxe, classes, objetos, controle de fluxo, arrays, métodos, encapsulamento, herança, polimorfismo, interfaces, exceções, coleções, e boas práticas, solid.."})
     void should_give_10_points_for_study_guide_with_more_than_100_characters_and_less_than_200() {
         Subcategory subcategory = new Subcategory("Java", "java-basico", new Category("Programação",
                 "programacao"));
