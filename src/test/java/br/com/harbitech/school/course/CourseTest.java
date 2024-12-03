@@ -242,65 +242,67 @@ class CourseTest {
 
         assertEquals(1, score);
     }
-//
-//    @Test
-//    void should_give_10_points_for_study_guide_with_more_than_100_characters_and_less_than_200() {
-//        Subcategory subcategory = new Subcategory("Java", "java-basico", new Category("Programação",
-//                "programacao"));
-//        subcategory.setStudyGuide("""
-//                Guia de estudos Java Básico: revise POO, sintaxe Java, classes, objetos, controle de fluxo, arrays, listas,
-//                boas práticas, SOLID e design patterns antes de começar o curso.
-//                """);
-//        Course course = new Course("Java Basics", "java-basico", 1, "John Doe", subcategory);
-//        course.setVisibility(CourseVisibility.PRIVATE);
-//
-//        int score = course.calculatePopularityScore();
-//
-//        assertEquals(11, score);
-//    }
-//
-//    @Test
-//    void should_give_10_points_for_study_guide_with_equal_100_characters() {
-//        Subcategory subcategory = new Subcategory("Java", "java-basico", new Category("Programação",
-//                "programacao"));
-//        subcategory.setStudyGuide("""
-//                Guia de estudos Java Básico: POO, sintaxe, classes, controle de fluxo, arrays, listas, SOLID e design.
-//                """);
-//        Course course = new Course("Java Basics", "java-basico", 1, "John Doe", subcategory);
-//        course.setVisibility(CourseVisibility.PRIVATE);
-//
-//        int score = course.calculatePopularityScore();
-//
-//        assertEquals(11, score);
-//    }
-//
-//    @Test
-//    void should_give_5_points_for_study_guide_with_more_than_50_characters_and_less_than_100() {
-//        Subcategory subcategory = new Subcategory("Java", "java-basico", new Category("Programação",
-//                "programacao"));
-//        subcategory.setStudyGuide("""
-//                Guia de estudos Java Básico: POO, sintaxe, classes.
-//                """);
-//        Course course = new Course("Java Basics", "java-basico", 1, "John Doe", subcategory);
-//        course.setVisibility(CourseVisibility.PRIVATE);
-//
-//        int score = course.calculatePopularityScore();
-//
-//        assertEquals(6, score);
-//    }
-//
-//    @Test
-//    void should_give_5_points_for_study_guide_with_equal_50_characters() {
-//        Subcategory subcategory = new Subcategory("Java", "java-basico", new Category("Programação",
-//                "programacao"));
-//        subcategory.setStudyGuide("""
-//                Guia de estudos Java: POO, sintaxe e conceitos ja
-//                """);
-//        Course course = new Course("Java Basics", "java-basico", 1, "John Doe", subcategory);
-//        course.setVisibility(CourseVisibility.PRIVATE);
-//
-//        int score = course.calculatePopularityScore();
-//
-//        assertEquals(6, score);
-//    }
+
+    @ParameterizedTest
+    @ValueSource(strings = {"Guia de estudos Java Básico: revise POO, sintaxe Java, classes, objetos, controle de fluxo, arrays et",
+            "Guia de estudos Java Básico: revise POO, sintaxe, classes, objetos, controle de fluxo, arrays, métodos, encapsulamento, herança, polimorfismo, interfaces, exceções, coleções, e boas práticas, solid."})
+    void should_give_10_points_for_study_guide_with_more_than_100_characters_and_less_than_200() {
+        Subcategory subcategory = new Subcategory("Java", "java-basico", new Category("Programação",
+                "programacao"));
+        subcategory.setStudyGuide("""
+                Guia de estudos Java Básico: revise POO, sintaxe Java, classes, objetos, controle de fluxo, arrays, listas,
+                boas práticas, SOLID e design patterns antes de começar o curso.
+                """);
+        Course course = new Course("Java Basics", "java-basico", 1, "John Doe", subcategory);
+        course.setVisibility(CourseVisibility.PRIVATE);
+
+        int score = course.calculatePopularityScore();
+
+        assertEquals(11, score);
+    }
+
+    @Test
+    void should_give_10_points_for_study_guide_with_equal_100_characters() {
+        Subcategory subcategory = new Subcategory("Java", "java-basico", new Category("Programação",
+                "programacao"));
+        subcategory.setStudyGuide("""
+                Guia de estudos Java Básico: POO, sintaxe, classes, controle de fluxo, arrays, listas, SOLID e desig
+                """);
+        Course course = new Course("Java Basics", "java-basico", 1, "John Doe", subcategory);
+        course.setVisibility(CourseVisibility.PRIVATE);
+
+        int score = course.calculatePopularityScore();
+
+        assertEquals(11, score);
+    }
+
+    @ParameterizedTest
+    @ValueSource(strings = {"Guia de estudos Java: POO, sintaxe e conceitos ja..", "Guia de Estudos Java: POO, sintaxe e conceitos de programação para iniciantes como interfaces etc.."})
+    void should_give_5_points_for_study_guide_with_more_than_50_characters_and_less_than_100() {
+        Subcategory subcategory = new Subcategory("Java", "java-basico", new Category("Programação",
+                "programacao"));
+        subcategory.setStudyGuide("""
+                Guia de estudos Java Básico: POO, sintaxe, classes.
+                """);
+        Course course = new Course("Java Basics", "java-basico", 1, "John Doe", subcategory);
+        course.setVisibility(CourseVisibility.PRIVATE);
+
+        int score = course.calculatePopularityScore();
+
+        assertEquals(6, score);
+    }
+
+    @ParameterizedTest
+    @ValueSource(strings = {"Guia de estudos Java: POO, sintaxe e conceitos ja."})
+    void should_give_5_points_for_study_guide_with_equal_50_characters(String studyGuide) {
+        Subcategory subcategory = new Subcategory("Java", "java-basico", new Category("Programação",
+                "programacao"));
+        subcategory.setStudyGuide(studyGuide);
+        Course course = new Course("Java Basics", "java-basico", 1, "John Doe", subcategory);
+        course.setVisibility(CourseVisibility.PRIVATE);
+
+        int score = course.calculatePopularityScore();
+
+        assertEquals(6, score);
+    }
 }
