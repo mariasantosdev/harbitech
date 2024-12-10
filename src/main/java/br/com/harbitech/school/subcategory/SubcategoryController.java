@@ -44,7 +44,7 @@ public class SubcategoryController {
     private final UserSelfAssessmentRepository userSelfAssessmentRepository;
 
     @InitBinder("subcategoryForm")
-    void initBinderSubcategoryForm(WebDataBinder webDataBinder) {
+    void initBinderSubcategoryForm(WebDataBinder webDataBinder){
         webDataBinder.addValidators(subcategoryFormValidator);
     }
 

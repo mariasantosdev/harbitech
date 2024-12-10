@@ -37,6 +37,7 @@ public class Category {
     @OneToMany(mappedBy = "category")
     private List<Subcategory> subCategories = new ArrayList<>();
 
+
     public Category(String name, String codeUrl) {
         Assert.hasText(name, "{category.name.required}");
         Assert.hasText(codeUrl, "{category.codeUrl.required}");

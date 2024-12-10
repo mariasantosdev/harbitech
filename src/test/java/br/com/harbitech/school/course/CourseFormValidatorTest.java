@@ -6,7 +6,7 @@ import org.springframework.validation.Errors;
 
 import static org.mockito.Mockito.*;
 
-public class CourseFormValidatorTest {
+class CourseFormValidatorTest {
 
     private CourseRepository courseRepository;
     private CourseFormValidator courseFormValidator;

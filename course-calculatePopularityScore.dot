@@ -1,0 +1,29 @@
+digraph G {
+node2 [label="Visibilidade do curso é publica?", shape=ellipse, color=green, fillcolor=white, style=solid];
+node3 [label="soma 50 ao score", shape=ellipse, color=green, fillcolor=white, style=solid];
+node4 [label="Tem guia de estudos vinculado?", shape=ellipse, color=green, fillcolor=white, style=solid];
+node6 [label="tem 200 ou mais caracteres?", shape=ellipse, color=green, fillcolor=white, style=solid];
+node7 [label="soma 15 ao score", shape=ellipse, color=green, fillcolor=white, style=solid];
+node8 [label="tem 100 ou mais caracteres?", shape=ellipse, color=green, fillcolor=white, style=solid];
+node9 [label="soma 10 ao score", shape=ellipse, color=green, fillcolor=white, style=solid];
+node10 [label="tem 50 ou mais caracteres?", shape=ellipse, color=green, fillcolor=white, style=solid];
+node11 [label="soma 5 ao score", shape=ellipse, color=green, fillcolor=white, style=solid];
+node12 [label="aumentar 1 score para cada hora de conclusão do curso", shape=ellipse, color=green, fillcolor=white, style=solid];
+node13 [label="returna score", shape=ellipse, color=green, fillcolor=white, style=solid];
+
+node2 -> node3 [label="true"];
+node3 -> node4;
+node2 -> node4 [label="false"];
+node4 -> node6 [label="true"];
+node6 -> node7 [label="true"];
+node6 -> node8 [label="false"];
+node7 -> node12;
+node8 -> node9 [label="true"];
+node9 -> node12;
+node8 -> node10 [label="false"];
+node10 -> node11 [label="true"];
+node10 -> node12 [label="false"];
+node11 -> node12;
+node4 -> node12 [label="false"];
+node12 -> node13;
+}

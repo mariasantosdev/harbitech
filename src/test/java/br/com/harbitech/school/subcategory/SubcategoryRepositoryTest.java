@@ -5,6 +5,7 @@ import br.com.harbitech.school.category.CategoryStatus;
 import br.com.harbitech.school.course.CourseVisibility;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.shadow.com.univocity.parsers.annotations.Nested;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
@@ -25,7 +26,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 @ActiveProfiles("test")
-public class SubcategoryRepositoryTest {
+class SubcategoryRepositoryTest {
 
     @Autowired
     private SubcategoryRepository subcategoryRepository;
@@ -40,97 +41,108 @@ public class SubcategoryRepositoryTest {
         this.mobileCategory = em.persist(mobileCategory(CategoryStatus.ACTIVE));
     }
 
-    @Test
-    void should_load_one_subcategory_searching_by_code_url() {
-        em.persist(flutterSubcategory(SubCategoryStatus.ACTIVE, mobileCategory));
+    @org.junit.jupiter.api.Nested
+    class FindByCodeUrl {
+        @Test
+        void should_load_one_subcategory_searching_by_code_url() {
+            em.persist(androidSubcategory(SubCategoryStatus.ACTIVE, mobileCategory));
 
-        Optional<Subcategory> possibleSubcategory = subcategoryRepository.findByCodeUrl("flutter");
+            Optional<Subcategory> possibleSubcategory = subcategoryRepository.findByCodeUrl("android");
 
-        assertTrue(possibleSubcategory.isPresent());
-        assertEquals("flutter", possibleSubcategory.get().getCodeUrl());
+            assertTrue(possibleSubcategory.isPresent());
+            assertEquals("android", possibleSubcategory.get().getCodeUrl());
+        }
+
+        @Test
+        void should_not_load_one_subcategory_when_doesnt_have_one_subcategory_with_the_code_url_passed() {
+            Optional<Subcategory> possibleSubcategory = subcategoryRepository.findByCodeUrl("subcategoryDoesntExist");
+
+            assertThat(possibleSubcategory).isEmpty();
+        }
     }
 
-    @Test
-    void should_not_load_one_subcategory_because_doesnt_have_one_subcategory_with_the_code_url_passed() {
-        Optional<Subcategory> possibleSubcategory = subcategoryRepository.findByCodeUrl("subcategoryDoesntExist");
+    @org.junit.jupiter.api.Nested
+    class FindAllByOrderByName {
+        @Test
+        void should_load_all_categories_orderly_by_name() {
+            em.persist(androidSubcategory(SubCategoryStatus.ACTIVE, mobileCategory));
+            em.persist(flutterSubcategory(SubCategoryStatus.ACTIVE, mobileCategory));
 
-        assertTrue(possibleSubcategory.isEmpty());
+            List<Subcategory> subcategories = subcategoryRepository.findAllByOrderByName();
+
+            assertThat(subcategories)
+                    .hasSize(2)
+                    .extracting(Subcategory::getName)
+                    .containsExactly("Android", "Flutter");
+        }
     }
 
-    @Test
-    void should_load_all_categories_orderly_by_name() {
-        em.persist(androidSubcategory(SubCategoryStatus.ACTIVE, mobileCategory));
-        em.persist(flutterSubcategory(SubCategoryStatus.ACTIVE, mobileCategory));
+    @org.junit.jupiter.api.Nested
+    class FindAllByCategoryOrderByOrderVisualization {
+        @Test
+        void should_not_load_any_subcategory_when_doesnt_have_one_category_found() {
+            List<Subcategory> subcategories = subcategoryRepository
+                    .findAllByCategoryOrderByOrderVisualization(mobileCategory);
 
-        List<Subcategory> subcategories = subcategoryRepository.findAllByOrderByName();
+            assertThat(subcategories).isEmpty();
+        }
 
-        assertThat(subcategories)
-                .hasSize(2)
-                .extracting(Subcategory::getName)
-                .containsExactly("Android","Flutter");
-}
+        @Test
+        void should_load_all_categories_orderly_by_order_visualization() {
+            em.persist(androidSubcategory(SubCategoryStatus.ACTIVE, mobileCategory));
+            em.persist(flutterSubcategory(SubCategoryStatus.ACTIVE, mobileCategory));
 
-    @Test
-    void should_not_load_any_subcategory_because_doesnt_have_one_category_bound() {
-        List<Subcategory> subcategories = subcategoryRepository
-                .findAllByCategoryOrderByOrderVisualization(mobileCategory);
+            List<Subcategory> subcategories = subcategoryRepository.findAllByCategoryOrderByOrderVisualization(mobileCategory);
 
-        assertTrue(subcategories.isEmpty());
+            assertThat(subcategories)
+                    .hasSize(2)
+                    .extracting(Subcategory::getCodeUrl)
+                    .containsExactly("android", "flutter");
+        }
     }
 
-    @Test
-    void should_load_all_categories_orderly_by_order_visualization() {
-        em.persist(androidSubcategory(SubCategoryStatus.ACTIVE, mobileCategory));
-        em.persist(flutterSubcategory(SubCategoryStatus.ACTIVE, mobileCategory));
+    @org.junit.jupiter.api.Nested
+    class FindAllActiveSubcategories {
+        @Test
+        void should_load_all_active_subcategories_with_public_courses() {
+            Subcategory androidSubcategory = em.persist(androidSubcategory(SubCategoryStatus.ACTIVE, mobileCategory));
+            em.persist(androidCourse(CourseVisibility.PUBLIC, androidSubcategory));
 
-        List<Subcategory> subcategories = subcategoryRepository.findAllByCategoryOrderByOrderVisualization(mobileCategory);
+            List<Subcategory> subcategories = subcategoryRepository.findAllActiveSubcategories(mobileCategory);
 
-        assertThat(subcategories)
-                .hasSize(2)
-                .extracting(Subcategory::getCodeUrl)
-                .containsExactly("android","flutter");
+            assertThat(subcategories)
+                    .hasSize(1)
+                    .extracting(Subcategory::getCodeUrl)
+                    .containsExactly("android");
+        }
+
+        @Test
+        void should_not_load_any_subcategories_when_the_course_is_private() {
+            Subcategory androidSubcategory = em.persist(androidSubcategory(SubCategoryStatus.ACTIVE, mobileCategory));
+            androidCourse(CourseVisibility.PRIVATE, androidSubcategory);
+
+            List<Subcategory> subcategories = subcategoryRepository.findAllActiveSubcategories(mobileCategory);
+
+            assertThat(subcategories).isEmpty();
+        }
+
+        @Test
+        void should_not_load_any_subcategories_when_the_subcategory_has_not_course() {
+            flutterSubcategory(SubCategoryStatus.ACTIVE, mobileCategory);
+
+            List<Subcategory> subcategories = subcategoryRepository.findAllActiveSubcategories(mobileCategory);
+
+            assertThat(subcategories).isEmpty();
+        }
+
+        @Test
+        void should_not_load_any_subcategories_when_the_subcategory_is_inactive() {
+            Subcategory androidSubcategory = em.persist(androidSubcategory(SubCategoryStatus.INACTIVE, mobileCategory));
+            androidCourse(CourseVisibility.PUBLIC, androidSubcategory);
+
+            List<Subcategory> subcategories = subcategoryRepository.findAllActiveSubcategories(mobileCategory);
+
+            assertThat(subcategories).isEmpty();
+        }
     }
-
-    @Test
-    void should_load_all_active_subcategories_with_public_courses() {
-        Subcategory androidSubcategory = em.persist(androidSubcategory(SubCategoryStatus.ACTIVE, mobileCategory));
-        em.persist(androidCourse(CourseVisibility.PUBLIC, androidSubcategory));
-
-        List<Subcategory> subcategories = subcategoryRepository.findAllActiveSubcategories(mobileCategory);
-
-        assertThat(subcategories)
-                .hasSize(1)
-                .extracting(Subcategory::getCodeUrl)
-                .containsExactly("android");
-    }
-
-    @Test
-    void should_not_load_any_subcategories_because_the_course_is_private() {
-        Subcategory androidSubcategory = em.persist(androidSubcategory(SubCategoryStatus.ACTIVE, mobileCategory));
-        androidCourse(CourseVisibility.PRIVATE, androidSubcategory);
-
-        List<Subcategory> subcategories = subcategoryRepository.findAllActiveSubcategories(mobileCategory);
-
-        assertTrue(subcategories.isEmpty());
-    }
-
-    @Test
-    void should_not_load_any_subcategories_because_the_subcategory_has_not_course() {
-        flutterSubcategory(SubCategoryStatus.ACTIVE, mobileCategory);
-
-        List<Subcategory> subcategories = subcategoryRepository.findAllActiveSubcategories(mobileCategory);
-
-        assertTrue(subcategories.isEmpty());
-    }
-
-    @Test
-    void should_not_load_any_subcategories_because_the_subcategory_is_inactive() {
-        Subcategory androidSubcategory = em.persist(androidSubcategory(SubCategoryStatus.INACTIVE, mobileCategory));
-        androidCourse(CourseVisibility.PUBLIC, androidSubcategory);
-
-        List<Subcategory> subcategories = subcategoryRepository.findAllActiveSubcategories(mobileCategory);
-
-        assertTrue(subcategories.isEmpty());
-    }
-
 }

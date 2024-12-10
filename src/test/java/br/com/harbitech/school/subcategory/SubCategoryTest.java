@@ -2,15 +2,21 @@ package br.com.harbitech.school.subcategory;
 
 import br.com.harbitech.school.category.Category;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.NullAndEmptySource;
+import org.junit.jupiter.params.provider.ValueSource;
+
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 
-public class SubCategoryTest {
+class SubCategoryTest {
 
     private Category category;
 
     @BeforeEach
-    void setUp(){
+    void setUp() {
         this.category = new Category("Programação", "programacao");
     }
 
@@ -18,73 +24,91 @@ public class SubCategoryTest {
     void should_add_new_subcategory() {
         Subcategory subCategory = assertDoesNotThrow(() -> new Subcategory("Java", "java", category),
                 "Erro de validação ao criar uma subcategoria");
-        assertEquals("Java",subCategory.getName());
-        assertEquals("java",subCategory.getCodeUrl());
+        assertThat(subCategory).isNotNull().extracting(Subcategory::getName, Subcategory::getCodeUrl)
+                .containsExactly("Java", "java");
     }
 
-    @Test
-    void should_validate_incorrect_code_url_because_have_accent() {
-        assertThrows(IllegalArgumentException.class, () -> new Subcategory("Computação","computação"
-                ,category));
+    @ParameterizedTest
+    @ValueSource(strings = {"computação", "Java", "Lógica de programação", "C#"})
+    @NullAndEmptySource
+    @DisplayName("should throw IllegalArgumentException when codeUrl is invalid")
+    void should_throw_exception_when_code_url_is_invalid(String codeUrl) {
+        assertThrows(IllegalArgumentException.class, () -> new Subcategory("Java", codeUrl, category),
+                "Erro de validação ao criar uma subcategoria");
     }
 
-    @Test
-    void should_validate_incorrect_code_url_because_is_upper_case() {
-        assertThrows(IllegalArgumentException.class, () -> new Subcategory("Java","Java",category));
-    }
-
-    @Test
-    void should_validate_incorrect_code_url_because_have_space() {
-        assertThrows(IllegalArgumentException.class, () -> new Subcategory("Lógica de programação",
-                "logica de programacao",category));
-    }
-
-    @Test
-    void should_validate_incorrect_code_url_because_have_special_characters() {
-        assertThrows(IllegalArgumentException.class, () ->  new Subcategory("C#",
-                "c#",category));
-    }
-
-    @Test
-    void should_validate_incorrect_name_because_is_blank() {
-        assertThrows(IllegalArgumentException.class, () -> new Subcategory("","java",category));
-    }
-
-    @Test
-    void should_validate_incorrect_code_url_because_is_blank() {
-        assertThrows(IllegalArgumentException.class, () ->  new Subcategory("Java","",category));
-    }
-
-    @Test
-    void should_validate_incorrect_name_because_is_null() {
-        assertThrows(IllegalArgumentException.class, () -> new Subcategory(null,"java",category));
-    }
-
-    @Test
-    void should_validate_incorrect_code_url_because_is_null() {
-        assertThrows(IllegalArgumentException.class, () -> new Subcategory("Java",null,category));
+    @ParameterizedTest
+    @NullAndEmptySource
+    @DisplayName("should throw IllegalArgumentException when name is null or blank")
+    void should_throw_exception_when_name_is_invalid(String name) {
+        assertThrows(IllegalArgumentException.class, () -> new Subcategory(name, "java", category),
+                "Erro de validação ao criar uma subcategoria");
     }
 
     @Test
     void should_validate_incorrect_subcategory_because_is_null() {
-        assertThrows(IllegalArgumentException.class, () -> new Subcategory("Java","java",null));
+        assertThrows(IllegalArgumentException.class, () -> new Subcategory("Java", "java", null));
     }
 
     @Test
-    void should_validate_incorrect_description_enum() {
-        assertThrows(IllegalArgumentException.class, () -> new Subcategory("Java", "java",
-                1, "Java é " + "uma grande plataforma presente em todo lugar: de " +
-                "corporações à bancos e governo.  Desenvolva aplicações robustas com um back-end e construa APIs.",
-                "Desde seu primeiro hello world até conceitos mais avançados de POO",
-                SubCategoryStatus.from("UM_STATUS_INVALIDO"),category));
+    void should_update_subcategory_attributes() {
+        Subcategory subCategory = new Subcategory("Java", "java", category);
+
+        SubcategoryFormUpdate subcategoryFormUpdate = new SubcategoryFormUpdate();
+        subcategoryFormUpdate.setName("Updated Name");
+        subcategoryFormUpdate.setCodeUrl("updated-code-url");
+        subcategoryFormUpdate.setDescription("Updated description");
+        subcategoryFormUpdate.setStatus(SubCategoryStatus.ACTIVE);
+        subcategoryFormUpdate.setOrderVisualization(10);
+        subcategoryFormUpdate.setStudyGuide("Updated study guide");
+        subcategoryFormUpdate.setCategory(category);
+
+        subCategory.update(subcategoryFormUpdate);
+
+        assertThat(subCategory).extracting(Subcategory::getName, Subcategory::getCodeUrl, Subcategory::getDescription,
+                        Subcategory::getStatus, Subcategory::getOrderVisualization,
+                        Subcategory::getStudyGuide, Subcategory::getCategory)
+                .containsExactly("Updated Name", "updated-code-url",
+                        "Updated description", SubCategoryStatus.ACTIVE, 10, "Updated study guide", category);
     }
 
     @Test
-    void should_validate_correct_description_enum() {
-        assertDoesNotThrow(() -> new Subcategory("Java", "java",
-                1, "Java é " + "uma grande plataforma presente em todo lugar: de " +
-                "corporações à bancos e governo.  Desenvolva aplicações robustas com um back-end e construa APIs.",
-                "Desde seu primeiro hello world até conceitos mais avançados de POO",
-                SubCategoryStatus.from("ATIVA"), category), "Erro de validação ao criar um curso");
+    void should_return_other_order_visualization_when_its_less_than_this() {
+        Subcategory thisSubcategory = new Subcategory("Java", "java", category);
+        thisSubcategory.setOrderVisualization(5);
+
+        Subcategory otherSubcategory = new Subcategory("Python", "python", category);
+        otherSubcategory.setOrderVisualization(3);
+
+        int result = thisSubcategory.compareTo(otherSubcategory);
+
+        assertEquals(3, result, "Deveria retornar o orderVisualization da outra subcategoria quando é menor");
     }
+
+    @Test
+    void should_return_this_order_visualization_when_other_is_greater() {
+        Subcategory thisSubcategory = new Subcategory("Java", "java", category);
+        thisSubcategory.setOrderVisualization(5);
+
+        Subcategory otherSubcategory = new Subcategory("Python", "python", category);
+        otherSubcategory.setOrderVisualization(7);
+
+        int result = thisSubcategory.compareTo(otherSubcategory);
+
+        assertEquals(5, result, "Deveria retornar o orderVisualization desta subcategoria quando a outra é maior");
+    }
+
+    @Test
+    void should_return_this_order_visualization_when_both_are_equal() {
+        Subcategory thisSubcategory = new Subcategory("Java", "java", category);
+        thisSubcategory.setOrderVisualization(5);
+
+        Subcategory otherSubcategory = new Subcategory("Python", "python", category);
+        otherSubcategory.setOrderVisualization(5);
+
+        int result = thisSubcategory.compareTo(otherSubcategory);
+
+        assertEquals(5, result, "Deveria retornar o orderVisualization quando ambos são iguais");
+    }
+
 }

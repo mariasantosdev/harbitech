@@ -5,12 +5,10 @@ import br.com.harbitech.school.course.Course;
 import br.com.harbitech.school.course.CourseVisibility;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
-import org.springframework.lang.Nullable;
 import org.springframework.util.Assert;
 
+import javax.annotation.Nullable;
 import javax.persistence.*;
-import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.PositiveOrZero;
 import java.io.Serializable;
@@ -40,8 +38,8 @@ public class Subcategory implements Comparable<Subcategory>, Serializable {
     @Enumerated(EnumType.STRING)
     @Column(columnDefinition = "ENUM")
     private SubCategoryStatus status = SubCategoryStatus.INACTIVE;
-    private int orderVisualization;
-    @ManyToOne(fetch = FetchType.LAZY)
+    private int orderVisualization = 0;
+    @ManyToOne(fetch = FetchType.EAGER)
     private Category category;
     @PositiveOrZero
     private int level;
@@ -104,6 +102,14 @@ public class Subcategory implements Comparable<Subcategory>, Serializable {
         return level;
     }
 
+    public void setOrderVisualization(int orderVisualization) {
+        this.orderVisualization = orderVisualization;
+    }
+
+    public void setStudyGuide(String studyGuide) {
+        this.studyGuide = studyGuide;
+    }
+
     @Override
     public String toString() {
         return "SubCategory{" +
@@ -145,5 +151,4 @@ public class Subcategory implements Comparable<Subcategory>, Serializable {
         this.category = subcategoryFormUpdate.getCategory();
         this.subcategoryBase = subcategoryFormUpdate.getSubcategoryBase();
     }
-
 }

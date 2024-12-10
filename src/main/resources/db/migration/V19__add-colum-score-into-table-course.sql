@@ -1,0 +1,2 @@
+ALTER TABLE course
+    ADD COLUMN score INT NOT NULL DEFAULT 0;
