@@ -22,7 +22,6 @@ public class CourseForm {
     @Pattern(regexp = "[-a-z]+", message = "{course.codeUrl.pattern}")
     private String codeUrl;
     @Min(value = 1L, message = "{course.completionTimeInHours.min}")
-    @Max(value = 20L, message = "{course.completionTimeInHours.max}")
     private int completionTimeInHours = 0;
     private CourseVisibility visibility = CourseVisibility.PRIVATE;
     @Size(max = 250, message = "{course.targetAudience.size.max}")
@@ -31,6 +30,8 @@ public class CourseForm {
     @Size(max = 70, message = "{course.instructor.size.max}")
     private String instructor;
     private String description;
+    @PositiveOrZero
+    private int orderVisualization;
     private String developedSkills;
     @NotNull(message = "{subcategory.category.required}")
     private Subcategory subcategory;
@@ -46,7 +47,7 @@ public class CourseForm {
 
     public Course toModel() {
         return new Course(this.name, this.codeUrl, this.completionTimeInHours,
-                this.visibility, this.targetAudience, this.instructor,
+                this.visibility, this.orderVisualization, this.targetAudience, this.instructor,
                 this.description, this.developedSkills, this.subcategory);
     }
 }

@@ -22,7 +22,7 @@ public class LoginController {
         List<Category> categories = categoryRepository.findAllActiveCategoriesWithPublicCourses();
 
         model.addAttribute("categories", categories);
-        return "/login/login";
+        return "login/login";
     }
 }
 

@@ -75,6 +75,14 @@
                 </div>
             </div>
             <div class="form-group">
+                <label for="orderVisualization" class="col-sm-2 control-label">Ordem de visualização</label>
+                <div class="col-sm-7">
+                    <form:input type="text" class="form-control" id="orderVisualization" name="orderVisualization"
+                                placeholder="Ordem de visualização do curso" path="orderVisualization"/>
+                    <form:errors path="orderVisualization" cssClass="error"/>
+                </div>
+            </div>
+            <div class="form-group">
                 <label for="developedSkills" class="col-sm-2 control-label">Habilidades desenvolvidas</label>
                 <div class="col-sm-7">
                     <form:input type="text" class="form-control" id="developedSkills" name="developedSkills"

@@ -15,7 +15,7 @@ public class SecurityConfigurations extends WebSecurityConfigurerAdapter {
 
     private final UserDetailsService authenticationService;
 
-    public SecurityConfigurations(UserDetailsService authenticationService){
+    public SecurityConfigurations(UserDetailsService authenticationService) {
         this.authenticationService = authenticationService;
     }
 
@@ -26,13 +26,14 @@ public class SecurityConfigurations extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-            http.authorizeRequests()
-                    .antMatchers("api/categories").permitAll()
-                    .antMatchers("/admin/**").hasRole("MANAGER")
-                    .antMatchers("/*").hasAnyRole("MANAGER","STUDENT")
-                    .and().formLogin()
-                    .loginPage("/login")
-                    .permitAll();
+        http.authorizeRequests()
+                .antMatchers("api/categories").permitAll()
+                .antMatchers("/admin/**").permitAll()
+                .antMatchers("/*").permitAll()
+                .and().formLogin()
+                .loginPage("/login")
+                .permitAll();
+        http.csrf().disable();
     }
 
     @Override

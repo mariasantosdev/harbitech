@@ -25,39 +25,46 @@ public class CategoryController {
     private final CategoryFormUpdateValidator categoryFormUpdateValidator;
 
     @InitBinder("categoryForm")
-    void initBinderCategoryForm(WebDataBinder webDataBinder){
+    void initBinderCategoryForm(WebDataBinder webDataBinder) {
         webDataBinder.addValidators(categoryFormValidator);
     }
 
     @InitBinder("categoryFormUpdate")
-    void initBinderCategoryFormUpdate(WebDataBinder webDataBinder){
+    void initBinderCategoryFormUpdate(WebDataBinder webDataBinder) {
         webDataBinder.addValidators(categoryFormUpdateValidator);
     }
 
     @GetMapping("/admin/categories")
     String list(Model model) {
-        List<Category> categories =  categoryRepository.findAll();
+        List<Category> categories = categoryRepository.findAll();
         model.addAttribute("categories", categories);
         return "admin/category/listCategories";
     }
 
     @GetMapping(value = "/admin/categories/new")
-    String formNew(Model model){
+    String formNew(Model model) {
         model.addAttribute("categoryForm", new CategoryForm());
         return "admin/category/formCategory";
     }
 
     @PostMapping(value = "/admin/categories/new")
     String save(@Valid CategoryForm categoryForm, BindingResult result) {
-        if (result.hasErrors()){
+        if (result.hasErrors()) {
             return "admin/category/formCategory";
         }
         categoryRepository.save(categoryForm.toModel());
         return "redirect:/admin/categories";
     }
 
+    @GetMapping(value = "/differences-between-categories")
+    String differencesBetweenCategories(Model model) {
+        List<Category> categories = categoryRepository.findAll();
+        model.addAttribute("categories", categories);
+        return "/category/differences-between-categories";
+    }
+
     @GetMapping(value = "/admin/categories/{codeUrl}")
-    String formUpdate(@PathVariable String codeUrl, Model model){
+    String formUpdate(@PathVariable String codeUrl, Model model) {
         Category category = categoryRepository.findByCodeUrl(codeUrl)
                 .orElseThrow(() -> new ResponseStatusException(NOT_FOUND, codeUrl));
 
@@ -67,7 +74,7 @@ public class CategoryController {
 
     @PostMapping("/admin/categories/{codeUrl}")
     String update(@Valid CategoryFormUpdate categoryForm, BindingResult result) {
-        if (result.hasErrors()){
+        if (result.hasErrors()) {
             return "admin/category/formUpdateCategory";
         }
         categoryRepository.save(categoryForm.toModel(categoryRepository));

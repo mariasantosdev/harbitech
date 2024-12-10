@@ -24,7 +24,6 @@ public class CourseFormUpdate {
     @Pattern(regexp = "[-a-z]+", message = "{course.codeUrl.pattern}")
     private String codeUrl;
     @Min(value = 1L, message = "{course.completionTimeInHours.min}")
-    @Max(value = 20L, message = "{course.completionTimeInHours.max}")
     private int completionTimeInHours = 0;
     private CourseVisibility visibility = CourseVisibility.PRIVATE;
     @Size(max = 250, message = "{course.targetAudience.size.max}")
@@ -32,6 +31,8 @@ public class CourseFormUpdate {
     @NotBlank(message = "{course.instructor.required}")
     @Size(max = 70, message = "{course.instructor.size.max}")
     private String instructor;
+    @PositiveOrZero
+    private int orderVisualization;
     private String description;
     private String developedSkills;
     @NotNull(message = "{subcategory.category.required}")
@@ -40,6 +41,7 @@ public class CourseFormUpdate {
     public CourseFormUpdate(Course course) {
         this.id = course.getId();
         this.name = course.getName();
+        this.orderVisualization = course.getOrderVisualization();
         this.codeUrl = course.getCodeUrl();
         this.description = course.getDescription();
         this.completionTimeInHours = course.getCompletionTimeInHours();

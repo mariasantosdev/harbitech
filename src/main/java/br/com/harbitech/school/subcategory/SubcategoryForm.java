@@ -9,6 +9,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.lang.Nullable;
 import org.springframework.web.server.ResponseStatusException;
 
 import javax.validation.constraints.*;
@@ -32,11 +33,15 @@ public class SubcategoryForm {
     private SubCategoryStatus status = SubCategoryStatus.INACTIVE;
     @Min(value = -1, message = "{subcategory.orderVisualization.min}")
     private int orderVisualization;
+    @PositiveOrZero(message = "O nível precisa ser maior ou igual a zero")
+    private int level;
     @NotNull(message = "{subcategory.category.required}")
     private Category category;
+    @Nullable
+    private Subcategory subcategoryBase;
 
     public Subcategory toModel() {
         return new Subcategory(this.name, this.codeUrl, this.orderVisualization, this.description, this.studyGuide,
-                this.status, this.category);
+                this.status, this.category, level, subcategoryBase);
     }
 }

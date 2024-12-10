@@ -3,7 +3,7 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="templates" tagdir="/WEB-INF/tags/templates" %>
 
-<templates:admin-template title="Nova Categoria">
+<templates:admin-template title="Nova Subcategoria">
 <form:form class="form-horizontal" modelAttribute="subcategoryForm" method="post" action="${formAction}">
 <div class="panel panel-default">
     <div class="panel-heading">
@@ -51,6 +51,15 @@
                     <form:errors path="orderVisualization" cssClass="error"/>
                 </div>
             </div>
+           <div class="form-group">
+                <label for="level" class="col-sm-2 control-label">Nível</label>
+                <div class="col-sm-7">
+                        <form:input type="number" class="form-control" id="level" name="level"
+                                    placeholder="por exemplo: conhecimentos essenciais são nível 0 já os mais avançados seriam níveis superiores" path="level"/>
+                        <form:errors path="level" cssClass="error"/>
+                </div>
+           </div>
+
             <div class="form-group">
                 <label class="col-sm-2 control-label" for="studyGuide">Guias de estudo</label>
                 <div class="col-sm-7">
@@ -73,6 +82,16 @@
                     <div class="col-sm-7">
                         <form:select path="category" class="form-control" id = "category">
                             <form:options items="${categories}" itemValue="id" itemLabel="name"/>
+                        </form:select>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="category" class="col-sm-2 control-label">Subcategoria base</label>
+                    <div class="col-sm-7">
+                        <form:select path="subcategoryBase" class="form-control" id = "category">
+                            <form:option value="" label="-- Selecione uma opção --" />
+                            <form:options items="${subcategories}" itemValue="id" itemLabel="name"/>
                         </form:select>
                     </div>
                 </div>
