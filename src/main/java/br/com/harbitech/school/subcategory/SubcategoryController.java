@@ -1,7 +1,6 @@
 package br.com.harbitech.school.subcategory;
 
 import br.com.harbitech.school.category.Category;
-import br.com.harbitech.school.category.CategoryConverter;
 import br.com.harbitech.school.category.CategoryRepository;
 import br.com.harbitech.school.course.Course;
 import br.com.harbitech.school.course.CourseRepository;
@@ -12,7 +11,6 @@ import br.com.harbitech.school.user.UserRepository;
 import br.com.harbitech.school.userSelfAssesment.UserSelfAssessment;
 import br.com.harbitech.school.userSelfAssesment.UserSelfAssessmentRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -46,7 +44,7 @@ public class SubcategoryController {
     private final UserSelfAssessmentRepository userSelfAssessmentRepository;
 
     @InitBinder("subcategoryForm")
-    void initBinderSubcategoryForm(WebDataBinder webDataBinder) {
+    void initBinderSubcategoryForm(WebDataBinder webDataBinder){
         webDataBinder.addValidators(subcategoryFormValidator);
     }
 

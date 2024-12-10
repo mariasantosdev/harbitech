@@ -63,7 +63,6 @@ public class Course {
         this.subcategory = subcategory;
     }
 
-
     public Course(String name, String codeUrl, int completionTimeInHours, CourseVisibility visibility,
                   String targetAudience, String instructor, String description, String developedSkills,
                   Subcategory subcategory) {
@@ -81,7 +80,7 @@ public class Course {
         this.orderVisualization = orderVisualization;
     }
 
-    public String getVisibilityDescription() {
+    public String getVisibilityDescription(){
         return this.visibility.getDescription();
     }
 

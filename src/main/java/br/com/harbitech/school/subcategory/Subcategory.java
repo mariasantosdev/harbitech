@@ -5,9 +5,9 @@ import br.com.harbitech.school.course.Course;
 import br.com.harbitech.school.course.CourseVisibility;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.springframework.lang.Nullable;
 import org.springframework.util.Assert;
 
+import javax.annotation.Nullable;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.PositiveOrZero;
